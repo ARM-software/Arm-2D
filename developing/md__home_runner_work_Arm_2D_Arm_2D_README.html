@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_REA
 Overview</h1>
 <p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex processors.</b></p>
 <ul>
-<li>Initial target: IoT endpoint devices, white goods, hand-held devices and wearables, especially for devices with <b>resource-constrained</b> and <b>low power</b> requirements.</li>
+<li>Initial target: IoT endpoint devices, white goods, handheld devices and wearables, especially those with <b>resource-constrained</b>, <b>low-power</b> requirements.</li>
 <li>Initial focus: Graphical User Interface</li>
 </ul>
 <p ><b>Arm-2D consists of:</b></p>
@@ -124,7 +124,7 @@ Overview</h1>
 <li>Generic software <b>pixel pipeline</b> infrastructure for graphic processing<ul>
 <li>A set of rules for adding new algorithms and colour formats</li>
 <li>A default software implementation and <b>SIMD acceleration</b> when <a href="https://developer.arm.com/architectures/instruction-sets/simd-isas/helium">Helium technology</a> is available.</li>
-<li>Supports adding <b>3rd party hardware accelerators</b> at low-level in a "feature-agnostic" manner.</li>
+<li>Supports adding <b>3rd party hardware accelerators</b> at the low level in a "feature-agnostic" manner.</li>
 </ul>
 </li>
 <li>A <b>CMSIS-Pack</b> for ease of use</li>
@@ -133,24 +133,24 @@ Overview</h1>
 <p ><img src="./documentation/pictures/ReadmeOverview.png" alt="PositionInEcosystem" style="zoom:67%;" class="inline"/></p>
 <p ><b>Position in Ecosystem:</b></p>
 <ul>
-<li><b>Focus on low-level</b> and works as <b>a hardware abstraction layer</b> for 2.5D image processing.</li>
+<li><b>Focuses on low-level</b> and works as <b>a hardware abstraction layer</b> for 2.5D image processing.</li>
 <li><b>Arm-2D is NOT a GUI.</b><ul>
 <li>No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support</li>
 </ul>
 </li>
 <li><b>Provide conveniences for Arm eco-partners to create value through differentiation.</b><ul>
-<li>Provide the default implementation for commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms.</b></li>
+<li>Provide the default implementation of commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms.</b></li>
 </ul>
 </li>
 </ul>
 <p ><b>Current Focus and Objectives:</b></p>
 <ul>
 <li><b>Help industry partners with technology adoption</b><ul>
-<li>Guidance for integration of Arm-2D into graphic stacks</li>
+<li>Guidance for the integration of Arm-2D into graphic stacks</li>
 </ul>
 </li>
 <li><b>Optimisation for ultra-small memory footprint</b><ul>
-<li>Enable existing Cortex-M processors to use modernised GUI with no or few cost increases.</li>
+<li>Enable existing Cortex-M processors to use a modernised GUI with no or few cost increases.</li>
 <li>Helping customers to cost-down</li>
 </ul>
 </li>
@@ -159,9 +159,9 @@ Overview</h1>
 Key Messages for You</h1>
 <ul>
 <li><b>Arm-2D always keeps light-weight</b><ul>
-<li>Arm-2D keeps an ultra-low memory footprint for both ROM and RAM</li>
-<li>Arm-2D uses the commonly available linker features to remove unused functions and data whenever possible.<ul>
-<li>Only functions that are actually used will take up memory</li>
+<li>Arm-2D maintains an ultra-low memory footprint for both ROM and RAM.</li>
+<li>Arm-2D uses standard linker features to remove unused functions and data whenever possible.<ul>
+<li>Only functions that are actually used will take up memory.</li>
 <li>Please use feature-specific APIs whenever possible.<ul>
 <li>For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call <code>arm_2dp_rgb565_copy_with_src_mask_only()</code> rather than the generic one, i.e. <code>arm_2dp_rgb565_copy_with_src_mask()</code> which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.</li>
 </ul>
@@ -219,7 +219,7 @@ Table of Content</h1>
 <li>How to Get Started</li>
 <li>Table of Content</li>
 <li>Features<ul>
-<li>In this version (v1.2.5-dev)</li>
+<li>In this version (v1.2.5)</li>
 <li>New Features Planned in the Future</li>
 </ul>
 </li>
@@ -250,7 +250,7 @@ Table of Content</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Features</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
-In this version (v1.2.5-dev)</h2>
+In this version (v1.2.5)</h2>
 <p >Since Arm-2D provides <b>Low-Level 2D Image Processing Services</b> that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many <b>Deep Embedded Display systems</b> soon after it debuted in 2020. Now you can find its <a href="https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&amp;origin=HASH_TAG_FROM_FEED">precence</a> from the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">tiniest Cortex-M0</a> to the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">Raspberry Pi 5 powerhouse</a>. The supported features include but not limited to:</p>
 <ul>
 <li><b>Alpha-Blending</b> / <b>Masks</b><ul>
@@ -264,6 +264,7 @@ In this version (v1.2.5-dev)</h2>
 <li>Supports an optional Opacity</li>
 </ul>
 </li>
+<li><b>[new]</b> Supports mirroring</li>
 </ul>
 </li>
 </ul>
@@ -286,7 +287,7 @@ In this version (v1.2.5-dev)</h2>
 <li>Ready for <b>monochrome LCD</b> (the 1bit colour) and <b>E-ink devices</b> (the 1bit, 2bits and 4bits colour formats)<ul>
 <li>Using <b>Gray8</b> as the internal processing format and converting to target colour format inside the Display Adapter, e.g. <code>Disp0_DrawBitmap</code></li>
 <li>Provides a dedicated colour solution in the display adapter service for monochrome display devices.</li>
-<li><b>[new]</b> Provides a smart <b>Full-Frame-Refresh</b> mode for e-ink devices to flush the whole frame for any updates on the screen.</li>
+<li>Provides a smart <b>Full-Frame-Refresh</b> mode for e-ink devices to flush the whole frame for any updates on the screen.</li>
 </ul>
 </li>
 </ul>
@@ -324,7 +325,7 @@ In this version (v1.2.5-dev)</h2>
 <li>Provides a helper service for Asynchronous Flushing (i.e. DMA + ISR)</li>
 </ul>
 </li>
-<li><b>[new]</b> Adds an nano-drawing mode as an alternative option of the Scene Player.</li>
+<li>Adds an nano-drawing mode as an alternative option of the Scene Player.</li>
 </ul>
 <p ><b>Transform</b> (i.e. rotation and scaling)</p><ul>
 <li>With/Without Colour-keying</li>
@@ -336,7 +337,8 @@ In this version (v1.2.5-dev)</h2>
 <li>Supports source masks</li>
 <li>Supports specifying different scaling ratios for X and Y axes, respectively</li>
 <li>Supports using floating point numbers (i.e. <code>float</code>) to specify the pivot coordinate.</li>
-<li><b>[new]</b> Supports using negative scaling ratios for x/y mirroring</li>
+<li>Supports using negative scaling ratios for x/y mirroring</li>
+<li><b>[new]</b> Supports colour-filling / tile-copy with a transformed mask, optional source mask and target mask.</li>
 </ul>
 <p ><b>Filters</b></p>
 <ul>
@@ -363,8 +365,11 @@ In this version (v1.2.5-dev)</h2>
 <li><b>Virtual Resource</b><ul>
 <li>Supports loading resources on-demand from external memories which are not mapped into the Cortex-M memory space.</li>
 <li>Supports background-image-loading mode that requests <b>NO</b> extra PFB block.</li>
-<li>JPEG loaders derived from <a href="https://elm-chan.org/fsw/tjpgd/">TJpgDec</a> and <b>[new]</b> <a href="https://github.com/JiapengLi/zjpgd">ZJpgD</a><ul>
-<li>Supports and Optimized for PFB and Dirty Regions</li>
+<li><b>Example Loaders</b> for loading<ul>
+<li>JPEG images</li>
+<li><b>[new]</b> <a href="https://qoiformat.org/">QOI images</a> (a Lossless image compression format)</li>
+<li><b>[new]</b> TrueType fonts via freetype</li>
+<li><b>[new]</b> A generic loader for loading user defined image formats, or drawing shapes/masks directly.</li>
 </ul>
 </li>
 </ul>
@@ -374,7 +379,6 @@ In this version (v1.2.5-dev)</h2>
 <li>Docking, e.g. <code>arm_2d_dock_top</code>,<code>arm_2d_dock_right</code>, <code>arm_2d_dock_vertical</code>, <code>__item_line_dock_horizontal</code> etc.</li>
 <li>Line Stream Layout, e.g. <code>__item_line_horizontal</code> and <code>__item_line_vertical</code></li>
 <li>Stream Layout (with wrapping), e.g. <code>__item_horizontal</code> and <code>__item_vertical</code></li>
-<li>A dedicated layout debug mode</li>
 <li>Users can specify alignment in <code>arm_2d_layout()</code> macro: TOP-DOWN, BOTTOM-UP, RIGHT-TO-LEFT etc.</li>
 </ul>
 </li>
@@ -388,13 +392,13 @@ In this version (v1.2.5-dev)</h2>
 <li><b>Tools</b><ul>
 <li>A <code>img2c.py</code> for generating arm-2d resources from user-specified images</li>
 <li>A <code>ttf2c.py</code> for generating user-customized A1, A2, A4 and A8 fonts from an user-specified TrueType Font</li>
-<li>A <code>jinja2c.py</code> for code generation.</li>
 </ul>
 </li>
 <li><b>Demos</b><ul>
 <li>Demos for various scenarios</li>
 <li>A dedicated demo for Helium-ACI acceleration.</li>
 <li>A set of demos for monochrome devices</li>
+<li><b>[new]</b> A set of demos for drawing masks, waveform etc.</li>
 </ul>
 </li>
 <li><b>Project Templates</b><ul>
@@ -403,8 +407,7 @@ In this version (v1.2.5-dev)</h2>
 </ul>
 </li>
 </ul>
-<p ><b>CMSIS-Pack is available.</b></p>
-<ul>
+<p ><b>CMSIS-Pack is available.</b></p><ul>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
 <li>Accelerating <a href="https://lvgl.io/">LVGL</a> as <a href="https://docs.lvgl.io/master/details/integration/renderers/arm2d.html">soft-GPU</a> when Helium is ready</li>
 <li>Accelerating <a href="https://www.cranksoftware.com/">CrankSoftware</a> as <a href="https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1">soft-GPU</a> when Helium is ready</li>
@@ -426,7 +429,7 @@ New Features Planned in the Future</h2>
 <h2><a class="anchor" id="autotoc_md9"></a>
 1.1 The Background</h2>
 <p >With the increasing introduction of smart IoT edge devices into our daily lives, users accustomed to smartphone-like graphical user interfaces (GUIs) now expect a similar modernized experience, even when using microcontroller-based products. This trend has been long recognized and understood by Arm's ecosystem partners.</p>
-<p >Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to facilitate 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as <a href="https://lvgl.io/">LVGL</a>, are gaining popularity on GitHub.</p>
+<p >Consequently, many silicon vendors have integrated dedicated hardware accelerators into their microcontroller products to improve the 2D image processing. At the same time, GUI service providers have updated their product lines to cater to microcontroller-based GUI applications. Many open-source embedded GUI stacks, such as <a href="https://lvgl.io/">LVGL</a>, are gaining popularity on GitHub.</p>
 <p >In reality, using GUIs with microcontrollers is not a new concept. However, with the recent rise of IoT and AI, the limitations of simple and monotonous GUIs have become more apparent and less tolerable. Pursuing a user experience comparable to a smartphone has become a fundamental requirement for many products.</p>
 <p >Interestingly, seemingly complex GUIs are often created using simple techniques like 2D image copying and tiling. Even translucent effects are achievable on microcontrollers running at tens or hundreds of MHz.</p>
 <p >Technologies for 2D graphics have been mature since the era of 8-bit gaming consoles. If an 8-bit 6502 processor could produce impressive graphics effects, there is no reason why the most advanced Cortex-M processors today cannot achieve even more.</p>
@@ -454,7 +457,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <li>Armv6-M processors: Cortex-M0/M0+/M1/SC000</li>
 <li>Armv7-M processors: Cortex-M3/M4/M7/SC300</li>
 <li>Armv8-M processors: Cortex-M23/M33/Star-MC1/M35P</li>
-<li>Armv8.1-M processors: Cortex-M55/M85/M52</li>
+<li>Armv8.1-M processors: Cortex-M52/M55/M85</li>
 </ul>
 <p ><b>The library is designed with ACI (Arm Custom Instructions) in mind.</b> Accelerations implemented with user-defined instructions can be integrated into the library easily as software extensions and it is transparent for upper-layer software.</p>
 <p ><b>The library is designed with 2D image accelerators in mind and follows the feature-agnostic principle.</b> The support for 2DGPU (or other Accelerators) can be easily added as software extensions and it is transparent for upper-layer software.</p>
@@ -469,6 +472,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 </li>
 <li>The library supports <b>Arm Compiler 6</b>, <b>GCC</b>, <b>LLVM</b> and <b>IAR</b><ul>
 <li>See <b>section 5</b> for details.</li>
+<li>Arm Compiler 5 is deprecated.</li>
 </ul>
 </li>
 </ul>
@@ -488,7 +492,7 @@ The Hierarchy of a Typical Embedded GUI System</div></div>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">[template][bare-metal][helium-aci]   </td><td class="markdownTableBodyLeft">It is a bare-metal project to demonstrate the Cortex-M55 (<a href="https://developer.arm.com/downloads/view/AN552">AN552</a>) Helium ACI running on <a href="https://developer.arm.com/Tools%20and%20Software/MPS3%20FPGA%20Prototyping%20Board">MPS3 platforms</a>.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][helium-aci]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyLeft">[template][bare-metal][STM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for the <a href="https://www.st.com/en/evaluation-tools/32f746gdiscovery.html">STM32F746G-Discovery</a> board.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][cSTM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">Arm Compiler 5, Arm Compiler 6 and GCC    </td></tr>
+<td class="markdownTableBodyLeft">[template][bare-metal][STM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">It is a bare-metal project for the <a href="https://www.st.com/en/evaluation-tools/32f746gdiscovery.html">STM32F746G-Discovery</a> board.   </td><td class="markdownTableBodyLeft">examples/[template][bare-metal][STM32F746G-Discovery]   </td><td class="markdownTableBodyLeft">Arm Compiler 5, Arm Compiler 6 and GCC    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyLeft">[template][cmsis-rtos2]   </td><td class="markdownTableBodyLeft">It is a project template for the RTOS environment, which uses CMSIS-RTOS2 as an example to show how Arm-2D can work with an RTOS.   </td><td class="markdownTableBodyLeft">examples/[template][cmsis-rtos2]   </td><td class="markdownTableBodyLeft"></td></tr>
 <tr class="markdownTableRowOdd">
@@ -639,7 +643,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >12 September 2025 </p>
+<p >05 January 2026 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
