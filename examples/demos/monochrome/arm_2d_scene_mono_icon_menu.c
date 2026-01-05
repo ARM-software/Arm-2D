@@ -225,16 +225,12 @@ static void __on_scene_mono_icon_menu_frame_start(arm_2d_scene_t *ptScene)
         /* move list */
         icon_list_move_selection(&this.tList, 1, 200);
     }
-
-    if (__arm_2d_list_core_is_list_moving(
+    
+    this.bRedrawLabel = !__arm_2d_list_core_is_list_moving(
                             &this.
                                 tList.
                                     use_as____simple_list_t.
-                                        use_as____arm_2d_list_core_t)) {
-        arm_2d_helper_dirty_region_item_suspend_update(&this.tDirtyRegionItems[0], false);
-    } else {
-        arm_2d_helper_dirty_region_item_suspend_update(&this.tDirtyRegionItems[0], true);
-    }
+                                        use_as____arm_2d_list_core_t);
 
     icon_list_on_frame_start(&this.tList);
 
@@ -275,7 +271,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
 
                 __item_line_dock_vertical(10, 0, 0, 0, 4) {
 
-                    do {
+                    if (this.bRedrawLabel) {
                         /* print label */
                         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
                         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
@@ -296,7 +292,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_mono_icon_menu_handler)
                                         (arm_2d_tile_t *)ptTile,
                                         &__item_region,
                                         arm_lcd_text_get_last_display_region());
-                    } while(0);
+                    }
                 }
 
                 __item_line_dock_vertical(0, 0, 4, 0) {
@@ -477,5 +473,3 @@ user_scene_mono_icon_menu_t *__arm_2d_scene_mono_icon_menu_init(   arm_2d_scene_
 #endif
 
 #endif
-
-
