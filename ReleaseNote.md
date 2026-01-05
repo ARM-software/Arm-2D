@@ -1,8 +1,95 @@
 # Release Note
 
+## Release v1.2.5 (06 January 2026)
+
+### Core and Library
+
+* Enhances pixel-pipeline
+  * Fixes the target mask region calculation
+  * Introduces a new channel for an extra source tile and a corresponding mask tile in the Source-and-Origin processing.
+  * Introduces a macro option to disable Source-and-Origin processing, reducing ROM footprint when transform operations are not used.
+* Improves the basic tile operations:
+  * Improves the API: `arm_2d_target_tile_is_new_frame()`.
+  * Introduces a new API: `__arm_2d_tile_generate_child()` and uses it to implement existing variants. 
+* Introduces macro APIs that dispatch user operations to dedicated feature-specific APIs based on the mirroring mode.
+* Introduces new operations (with Helium acceleration): 
+  * **Colour-filling-with-transformed-mask-and-target-mask**, with/without an optional opacity
+  * **Tile-copy-with-transformed-mask** and optional source mask, target mask and opacity. 
+  * **Colour-filling-with-source-mask-and-mirroring**, with/without an optional opacity
+* Distinguishes `ARM_2D_COLOUR_MASK_A8` from `ARM_2D_COLOUR_GRAY8`
+* Renames **fill-colour-with-mask-opacity-and-transform** to **fill-colour-with-transformed-mask-and-opacity**. 
+* Renames **fill-colour-with-mask** to **fill-colour-with-mask-only**
+* Improves the performance of transform operations. 
+* Adds a new API: `arm_2d_calculate_reference_target_region_after_transform()` to calculate the circumscribed rectangle with given reference points. 
+* Fixes the virtual resource child-tile support in transform operations. 
+* Fixes Out-of-boundary memory access in colour-filling-with-alpha-gradient-and-mask operations.
+
+### Helper Services
+
+* Fixes region calculators in the List helper. 
+* Enhances the PFB and the Display Adapter services.
+  * Improves the dirty region helper service.
+  * Improves the transform helper service. 
+  * Introduces new interfaces to improve Virtual Resource Life-cycle Management.
+* Introduces new APIs to `arm_2d_byte_fifo_t`
+  * `arm_2d_byte_fifo_peek_bytes()`
+  * `arm_2d_byte_fifo_squeeze()`
+  * `arm_2d_byte_fifo_get_item_count()`
+  * `arm_2d_byte_fifo_peek_seek()`
+
+### Examples and Templates
+
+* Update Loaders
+  * Adds a loader to load **True Type Fonts** via the **Freetype** library.
+  * Adds a loader to load losslessly compressed images (Quite OK Images, **QOI**)
+  * Adds a generic loader for loading user-defined content. 
+    * Adds a template for deriving classes from the generic loader. 
+  * Improves the performance of **ZJpgD**. Introduces the Inverse-Colour-Mode. 
+  * Introduces a unified I/O interface and basic implementations, e.g., Binary, File, ROM and Window. 
+* Enhances example controls
+  * Introduces No-Scaling detection in `image_box_t` to improve the performance.
+  * Introduces a new event on-update-particles to `dynamic_nebula_t`.
+  * Introduces a built-in dirty region to `foldable_panel_t`.
+  * Enhances the `spin_zoom_widget_t`
+    * Allows users to override the default circumscribed rectangles with user-specified reference points in `spin_zoom_widget_t`
+    * Introduces new transform modes to `spin_zoom_widget_t` for newly added transform operations.
+    * Introduces new APIs to update sources on-fly.
+    * Introduces value saturation protection.
+    * Adds new APIs to `meter_pointer_t` for setting x, y scaling respectively.
+    * Adds new APIs to get the current value. 
+  * Adds a new style to `progress_bar_round_t`.
+  * Introduces a new example control: `ring_indication_t`
+  * Introduces a new example control: `waveform_view_t`
+  * Slightly reduce the memory footprint of the battery gasguage controls.
+* Enhances Demos
+  * Introduces `crt_screen_t` to the demo Rickrolling. 
+  * Introduces a new demo: Radars
+  * Introduces a new demo: Blink
+  * Introduces a new demo: Flight attitude instrument.
+  * Introduces a new demo: Shaped panel
+  * Introduces a new demo: QOI
+  * Introduces a new demo: Ring indicator
+  * Introduces a new demo: Mask generation
+  * Introduces a new demo: Waveform
+  * Adds QOI decoding to existing demos / scene templates, i.e. meter, histogram, knob, rickrolling, progress-status, radars and blink.
+  * Updates the demo progress-status for showing the newly added progress-bar-round style. 
+* Updates the Scene template, the Display Adapter template and the User Control template. 
+* Introduces `__rev()` and `__ror()` to `arm_2d_user_arch_port.h`
+* Minor updates in benchmarks. 
+* Decouples the **Extra-Control** component from the **Transform** component in the cmsis-pack. 
+* Improves the performances of the `arm_2d_user_opcode_draw_circles`
+* Reduces the RAM footprint of the `arm_2d_user_opcode_draw_line`
+* Improves scripts
+  * Fixes bearing and advance issues in `ttf2c.py`.
+  * Introduces an option to add a 1-pixel border when assets are used in transform operations. 
+* Provides a workaround for the Windows-GCC compilation issue.
+* Improves the support for IAR.
+* Update example projects.
+* Other minor fixes
 
 
-## Release v1.2.4 (September 2025)
+
+## Release v1.2.4 (12 September 2025)
 
 ### Core and Library
 
@@ -86,8 +173,6 @@
 * Adds the missing libm in makefile of the PC template.
 * Adds prefix `arm_2d_asset_` to all assets. 
 * Updates documents
-
-
 
 
 
