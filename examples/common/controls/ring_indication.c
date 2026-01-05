@@ -101,6 +101,7 @@ void ring_indication_init( ring_indication_t *ptThis,
             },
             .ptScene = ptCFG->ptScene,
             .bUseFloatPointInCentre = true,
+            .bValueSaturation = true,
         },
 
         .tPISliderCFG = ptCFG->tPISliderCFG,

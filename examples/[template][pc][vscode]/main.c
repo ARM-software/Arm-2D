@@ -515,7 +515,7 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_histogram_loader,
     },
     {
-        10000,
+        120000,
         scene_waveform_loader,
     },
     {

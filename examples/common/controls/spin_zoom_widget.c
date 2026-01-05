@@ -272,7 +272,7 @@ void spin_zoom_widget_on_frame_start( spin_zoom_widget_t *ptThis, int32_t nValue
 static
 float __spin_zoom_valid_value(spin_zoom_widget_t *ptThis, float fValue)
 {
-    if (!this.tCFG.bDisableSaturation) {
+    if (this.tCFG.bValueSaturation) {
         float fLowLimit = this.tCFG.Indicator
                                     .LowerLimit
                                         .nValue;
