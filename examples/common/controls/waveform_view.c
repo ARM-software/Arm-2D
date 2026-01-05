@@ -255,6 +255,35 @@ void waveform_view_depose( waveform_view_t *ptThis)
 }
 
 ARM_NONNULL(1)
+arm_2d_err_t waveform_view_update_chart_scale(  waveform_view_t *ptThis,
+                                        int32_t nUpperLimie, 
+                                        int32_t nLowerLimit)
+{
+    assert(NULL != ptThis);
+
+    if (!this.tCFG.__bValid) {
+        return ARM_2D_ERR_INVALID_STATUS;
+    }
+    if (nUpperLimie <= nLowerLimit) {
+        return ARM_2D_ERR_INVALID_PARAM;
+    }
+
+    arm_irq_safe {
+        this.tCFG.ChartScale.nUpperLimit = nUpperLimie;
+        this.tCFG.ChartScale.nLowerLimit = nLowerLimit;
+
+        int32_t nLength = nUpperLimie - nLowerLimit;
+        this.q16Scale = reinterpret_q16_f32( (float)this.iDiagramHeight 
+                                            / (float)nLength);
+
+        /* request a full update */
+        this.tCFG.__bFullUpdateReq = true;
+    }
+
+    return ARM_2D_ERR_NONE;
+}
+
+ARM_NONNULL(1)
 void waveform_view_on_load( waveform_view_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -408,7 +437,8 @@ void waveform_view_show(waveform_view_t *ptThis,
                 switch (arm_2d_dynamic_dirty_region_wait_next(
                             &this.DirtyRegion.tDirtyRegionItem)) {
                     case WAVEFORM_START:
-                        if ( 0 == this.tCFG.chDirtyRegionItemCount) {
+                        if ( 0 == this.tCFG.chDirtyRegionItemCount || this.tCFG.__bFullUpdateReq) {
+                            this.tCFG.__bFullUpdateReq = false;
                             /* The user doesn't provide dirty region bins, let's update the whole diagram instead */
                             arm_2d_dynamic_dirty_region_update(
                                     &this.DirtyRegion.tDirtyRegionItem,

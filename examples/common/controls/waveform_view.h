@@ -82,7 +82,7 @@ typedef struct waveform_view_cfg_t {
     uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
     uint16_t                        : 2;
     uint16_t u5DotHeight            : 5;
-    uint16_t                        : 1;
+    uint16_t __bFullUpdateReq       : 1;    /* please ignore this */
     uint16_t __bShowGradient        : 1;    /* please ignore this */
     uint16_t __bValid               : 1;    /* please ignore this */
     
@@ -174,6 +174,13 @@ void waveform_view_show(waveform_view_t *ptThis,
                         const arm_2d_tile_t *ptTile,
                         const arm_2d_region_t *ptRegion,
                         bool bIsNewFrame);
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t waveform_view_update_chart_scale(  waveform_view_t *ptThis,
+                                                int32_t nUpperLimie, 
+                                                int32_t nLowerLimit);
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
