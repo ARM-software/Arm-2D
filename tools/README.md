@@ -34,6 +34,7 @@ img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--r
 | --dim ***Width Height***  | Resize the image with the given width and height             | Optional |
 | --rot ***angle***         | Rotate the image with the given angle in degrees             | Optional |
 | --a1, --a2, --a4          | introduce extra A1 / A2 / A4 masks when it is possible.      | Optional |
+| --border                  | Add a 1-pixel-width border to the target asset. It is necessary when the asset is used in the transform operation. | Optional |
 
 ## Example
 
@@ -50,11 +51,11 @@ pip install Pillow
 pip install numpy
 ```
 
-# TrueType Font Convertor (ttf2c.py)
+# TrueType Font Converter (ttf2c.py)
 
 ## 1. Overview
 
-This tool will extract the glyph bitmap from the specified TrueType font file according to the text (dictionary) provided by the user and generate a custom font that arm-2d can use directly.
+This tool extracts the glyph bitmap from the specified TrueType font file based on the user-provided text (dictionary) and generates a custom font that arm-2d can use directly.
 
 ## 2. How to Use
 
@@ -68,11 +69,11 @@ ttf2c.py [-h] <-i <Input File Path>> <-t <Text File Path>>[-o <Output File Path>
 | ------------------------- | ------------------------------------------------------------ | -------- |
 | ***-h, --help***          | show help information                                        |          |
 | -i ***Input File Path***  | Input TTF file (*.ttf)                                       |          |
-| -t **Test File Path**     | A input text file used as reference. ttf2c.py uses the chars in the text file to create a customized font. |          |
-| -o ***Output File Path*** | the path for the output C file containing the customized font using UTF8 coding |          |
+| -t **Text File Path**     | A input text file used as reference. ttf2c.py uses the characters in the text file to create a customised font. When omitted, the visible ASCII subset is used. | Optional |
+| -o ***Output File Path*** | The path for the output C file containing the customised font using UTF8 coding |          |
 | -n ***Font Name***        | the font name: **ARM_2D_FONT_A8_\<Font Name\>**              | Optional |
-| -p Pixel Size             | the desired font size in pixel. The pixel size is only a reference and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
-| -s ***Font Bit Width***   | the font bit width, must be 1,2,4 or 8 bit. If you omitted this option, the ttf2.py will generate all code for all available bit-widths. | Optional |
+| -p Pixel Size             | The desired font size in pixels. The pixel size is only a reference, and the actual size will be slightly larger due to the TrueType Font feature. | Optional |
+| -s ***Font Bit Width***   | The font bit width. It must be 1, 2, 4, or 8 bits. If you omitted this option, the ttf2.py will generate all code for all available bit-widths. | Optional |
 
 ## 3. Installation
 
