@@ -661,59 +661,63 @@ $(document).ready(function(){initNavTree('arm__2d__helper__list_8h_source.html',
 <div class="line"><a id="l00548" name="l00548"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga650dad96347aebfff5f43d65aedafcaf">  548</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga650dad96347aebfff5f43d65aedafcaf" title="check whether the list need a redraw">__arm_2d_list_core_need_redraw</a>(<a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis, <span class="keywordtype">bool</span> bAutoreset);</div>
 <div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span><span class="comment"></span> </div>
 <div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span><span class="comment"> * \brief check whether the list is moving its items</span></div>
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="comment"> * \return true the list is moving</span></div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span><span class="comment"> * \return false the list has no change.</span></div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>extern</div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">  559</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495" title="check whether the list is moving its items">__arm_2d_list_core_is_list_moving</a>(<a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis);</div>
-<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span><span class="comment"></span> </div>
-<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span><span class="comment"> * \brief check whether the list is scrolling or not</span></div>
-<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span><span class="comment"> * \return true the list is scrolling</span></div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span><span class="comment"> * \return false the list isn&#39;t scrolling.</span></div>
-<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>extern</div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8">  570</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8" title="check whether the list is scrolling or not">__arm_2d_list_core_is_list_scrolling</a>(<a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis);</div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span> </div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span><span class="comment"> * \brief Check whether the list is moving its items</span></div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span><span class="comment"> * \note It is not safe to call this function in draw routines as its </span></div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span><span class="comment"> *       value might changes.</span></div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span><span class="comment"> * \return true the list is moving</span></div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span><span class="comment"> * \return false the list has no change.</span></div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>extern</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">  561</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495" title="Check whether the list is moving its items.">__arm_2d_list_core_is_list_moving</a>(<a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis);</div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span><span class="comment"></span> </div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span><span class="comment"> * \brief check whether the list is scrolling or not</span></div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span><span class="comment"> * \note It is not safe to call this function in draw routines as its </span></div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span><span class="comment"> *       value might changes.</span></div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span><span class="comment"> * \return true the list is scrolling</span></div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span><span class="comment"> * \return false the list isn&#39;t scrolling.</span></div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>extern</div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>ARM_NONNULL(1,2)<span class="comment"></span></div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span><span class="comment">/*!</span></div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span><span class="comment"> * \brief get list item with a specified direction instruction</span></div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span><span class="comment"> * </span></div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="comment"> * \param[in] fnIterator a list iterator</span></div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="comment"> * \param[in] tDirection the direction instruction</span></div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span><span class="comment"> * \param[in] hwID the item ID (when required by the direction instruction)</span></div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span><span class="comment"> * \param[in] bIgnoreStatusCheck whether ignore the status checking</span></div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="comment"> * \param[in] bForceRingMode whether force to enable ring mode anyway</span></div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span><span class="comment"> * \return arm_2d_list_item_t* </span></div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span><span class="comment"> */</span></div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f">  585</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__list__item__t" title="the list core item class">arm_2d_list_item_t</a> *<a class="code hl_function" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f" title="get list item with a specified direction instruction">__arm_2d_list_core_get_item</a>(</div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>                        <a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis,</div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>                        <a class="code hl_typedef" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c" title="the list core interator prototype">__arm_2d_list_item_iterator</a> *fnIterator,</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>                        <a class="code hl_enumeration" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b" title="intructions for how to move the list core item iterator">arm_2d_list_iterator_dir_t</a> tDirection,</div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>                        uint16_t hwID,</div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>                        <span class="keywordtype">bool</span> bIgnoreStatusCheck,</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>                        <span class="keywordtype">bool</span> bForceRingMode);</div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span><span class="comment"></span> </div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span><span class="comment">/*! @} */</span></div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span> </div>
-<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span><span class="preprocessor">#if defined(__clang__)</span></div>
-<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>ARM_NONNULL(1)</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8">  574</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8" title="check whether the list is scrolling or not">__arm_2d_list_core_is_list_scrolling</a>(<a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis);</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span> </div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>extern</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>ARM_NONNULL(1,2)<span class="comment"></span></div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span><span class="comment">/*!</span></div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span><span class="comment"> * \brief get list item with a specified direction instruction</span></div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span><span class="comment"> * </span></div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span><span class="comment"> * \param[in] ptThis the target list core object</span></div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span><span class="comment"> * \param[in] fnIterator a list iterator</span></div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span><span class="comment"> * \param[in] tDirection the direction instruction</span></div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span><span class="comment"> * \param[in] hwID the item ID (when required by the direction instruction)</span></div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span><span class="comment"> * \param[in] bIgnoreStatusCheck whether ignore the status checking</span></div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span><span class="comment"> * \param[in] bForceRingMode whether force to enable ring mode anyway</span></div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span><span class="comment"> * \return arm_2d_list_item_t* </span></div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span><span class="comment"> */</span></div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno"><a class="line" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f">  589</a></span><a class="code hl_struct" href="group__gHelper.html#structarm__2d__list__item__t" title="the list core item class">arm_2d_list_item_t</a> *<a class="code hl_function" href="group__gHelper.html#ga18c8ddf5bc649dae08685bcbd69e113f" title="get list item with a specified direction instruction">__arm_2d_list_core_get_item</a>(</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>                        <a class="code hl_struct" href="group__gHelper.html#struct____arm__2d__list__core__t" title="the list core class">__arm_2d_list_core_t</a> *ptThis,</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>                        <a class="code hl_typedef" href="group__gHelper.html#ga9386fa1f341f20129ee0287d2b6b6e5c" title="the list core interator prototype">__arm_2d_list_item_iterator</a> *fnIterator,</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>                        <a class="code hl_enumeration" href="group__gHelper.html#gac01ce105e601b44c5099662ed91a3e9b" title="intructions for how to move the list core item iterator">arm_2d_list_iterator_dir_t</a> tDirection,</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>                        uint16_t hwID,</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>                        <span class="keywordtype">bool</span> bIgnoreStatusCheck,</div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>                        <span class="keywordtype">bool</span> bForceRingMode);</div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="comment"></span> </div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span><span class="comment">/*! @} */</span></div>
 <div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span> </div>
-<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>}</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span><span class="preprocessor">#if defined(__clang__)</span></div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span><span class="preprocessor">#   pragma clang diagnostic pop</span></div>
 <div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span> </div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span><span class="preprocessor">#ifdef   __cplusplus</span></div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>}</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span> </div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

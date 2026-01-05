@@ -808,7 +808,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga650dad96347aebfff5f43d65aedafcaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether the list need a redraw  <a href="group__gHelper.html#ga650dad96347aebfff5f43d65aedafcaf">More...</a><br /></td></tr>
 <tr class="separator:ga650dad96347aebfff5f43d65aedafcaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3a0ec59f6970df21e551b1583aad9495"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">__arm_2d_list_core_is_list_moving</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
-<tr class="memdesc:ga3a0ec59f6970df21e551b1583aad9495"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether the list is moving its items  <a href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">More...</a><br /></td></tr>
+<tr class="memdesc:ga3a0ec59f6970df21e551b1583aad9495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the list is moving its items.  <a href="group__gHelper.html#ga3a0ec59f6970df21e551b1583aad9495">More...</a><br /></td></tr>
 <tr class="separator:ga3a0ec59f6970df21e551b1583aad9495"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga79b0ca527219226a213e1cf07e7b7ed8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8">__arm_2d_list_core_is_list_scrolling</a> (<a class="el" href="group__gHelper.html#struct____arm__2d__list__core__t">__arm_2d_list_core_t</a> *ptThis)</td></tr>
 <tr class="memdesc:ga79b0ca527219226a213e1cf07e7b7ed8"><td class="mdescLeft">&#160;</td><td class="mdescRight">check whether the list is scrolling or not  <a href="group__gHelper.html#ga79b0ca527219226a213e1cf07e7b7ed8">More...</a><br /></td></tr>
@@ -9555,7 +9555,8 @@ false the list has no change. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>check whether the list is moving its items </p>
+<p>Check whether the list is moving its items. </p>
+<dl class="section note"><dt>Note</dt><dd>It is not safe to call this function in draw routines as its value might changes.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
@@ -9585,6 +9586,7 @@ false the list has no change. </dd></dl>
 </div><div class="memdoc">
 
 <p>check whether the list is scrolling or not </p>
+<dl class="section note"><dt>Note</dt><dd>It is not safe to call this function in draw routines as its value might changes.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">ptThis</td><td>the target list core object </td></tr>
