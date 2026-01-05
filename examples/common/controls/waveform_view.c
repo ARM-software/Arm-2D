@@ -256,8 +256,8 @@ void waveform_view_depose( waveform_view_t *ptThis)
 
 ARM_NONNULL(1)
 arm_2d_err_t waveform_view_update_chart_scale(  waveform_view_t *ptThis,
-                                        int32_t nUpperLimie, 
-                                        int32_t nLowerLimit)
+                                                int32_t nUpperLimie, 
+                                                int32_t nLowerLimit)
 {
     assert(NULL != ptThis);
 
