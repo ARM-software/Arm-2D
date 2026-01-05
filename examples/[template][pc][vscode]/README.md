@@ -3,16 +3,16 @@
 
 ## 1 Overview
 
-You can use this project as a template for developing arm-2d based GUI applications on PC.
+You can use this project as a template for developing Arm-2D-based GUI applications on a PC.
 
 ### **Feature**
 
-- **Support Windows, Linux and MacOS**
+- **Support Windows (via WSL2), Linux and MacOS**
 - **Develop arm-2d GUI applications in VSCode**
 - **Compile and run natively on the PC** platform (this isn't a simulation)
-- **Use the same set of methods for microcontrollers** on PC to develop arm-2d-based GUI applications
-- **Develop on PC and run on MCU**
-  - The **application code and the resource files can be used directly on MCU** as they are hardware independent.
+- **Use the same set of methods for microcontrollers** on PC to develop Arm-2D-based GUI applications.
+- **Develop on PC and run on MCUs**
+  - The **application code and resource files can be used directly on MCUs because they are hardware-independent.
 
 
 
@@ -22,28 +22,7 @@ This example project supports **Windows**, **Linux** and **MacOS**. Please follo
 
 ### 2.1 For Windows
 
-#### 2.1.1 Install GCC (mingw32) and Make
-
-Second, please 
-
-- Download and install GCC. You **MUST** download the [latest mingw32](https://github.com/niXman/mingw-builds-binaries/releases/). For example, [i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z) Unzip the package and copy it to your desired location. 
-- [Download](https://gnuwin32.sourceforge.net/packages/make.htm) and install Make.
-
-**NOTE**: Please ensure you have correctly set the **PATH** variable in the Windows environment for GCC and Make. After installation, you may need to restart your computer to ensure the new environment variable settings take effect.
-
-![PathforGCC](../../documentation/pictures/path_for_gcc.png) 
-
-
-
-#### 2.1.2 Open the Project
-
-Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
-
-In "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**" or you can press "**F5**" to launch a debug session.
-
-![BuildAndRun](../../documentation/pictures/build_and_run.png) 
-
-
+For Windows users, due to a known **Windows-Only** GCC compilation issue, we highly recommend installing WSL and following the Linux guidance in **Chapter 2.2**. 
 
 ### 2.2 For Linux
 
@@ -61,7 +40,7 @@ sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-m
 
 Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
-In "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**" or you can press "**F5**" to launch a debug session.
+In the "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**", or you can press "**F5**" to launch a debug session.
 
 ![BuildAndRun](../../documentation/pictures/build_and_run.png) 
 
@@ -81,9 +60,9 @@ After a successful installation, you should find an important message on the ter
 
 ![HomeBrewEnv](../../documentation/pictures/homebrewenv.png)
 
-Please copy the part in the red box and paste to the shell to "**add Howbrew to your PATH**". 
+Please copy the contents of the red box and paste them into the shell to "**add Howbrew to your PATH**". 
 
-**NOTE**: Your command line will be different from mine as it contains the user name of the machine. 
+**NOTE**: Your command line will differ from mine because it includes the machine's username. 
 
 
 
@@ -99,7 +78,7 @@ brew install sdl2
 
 Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
-In "**Run and Debug**" panel, you can run the project via "**build and run on macos (lldb)**" or you can press "**F5**" to launch a debug session.
+In the "**Run and Debug**" panel, you can run the project via "**build and run on macos (lldb)**" or you can press "**F5**" to launch a debug session.
 
 ![BuildAndRunForMacOS](../../documentation/pictures/build_and_run_for_macos.png) 
 
@@ -117,19 +96,19 @@ Enjoy.
 
 You can change the screen size by updating the macro `__DISP0_CFG_SCEEN_WIDTH__` and `__DISP0_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_disp_adapter_0.h`.
 
-If you want to run benchmark, please also update the macro `__GLCD_CFG_SCEEN_WIDTH__` and `__GLCD_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_cfg.h`.
+If you want to run a benchmark, please also update the macro `__GLCD_CFG_SCEEN_WIDTH__` and `__GLCD_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_cfg.h`.
 
 
 
 ### 3.2 How to change the colour depth (bits per pixel)
 
-The supported colour depths (i.e. the bits per pixels) are **8bit (GRAY8)**, **16bit (RGB565)** and **32bit (CCCN888)**. You can change the colour depth by updating the macro `__DISP0_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_disp_adapter_0.h` and the macro `__GLCD_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_cfg.h`. The available values are `8`, `16` and `32`.
+The supported colour depths (i.e. bits per pixel) are **8-bit (GRAY8)**, **16-bit (RGB565)** and **32-bit (CCCN888)**. You can change the colour depth by updating the macro `__DISP0_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_disp_adapter_0.h` and the macro `__GLCD_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_cfg.h`. The available values are `8`, `16` and `32`.
 
 
 
-### 3.3 How to update the project with new source files, search path etc.
+### 3.3 How to update the project with new source files, search path, etc.
 
-Any source files and header files placed at the root of the project will be included into compilation automatically. 
+Any source or header files placed at the root of the project will be automatically included in the compilation. 
 
 If you want to introduce new folders, please update the Makefile accordingly:
 
@@ -158,7 +137,7 @@ CC_DEF  += __va_list=va_list
 
 
 
-To enable the **intelliSense** working properly, please also update the `.vscode\c_cpp_properties.json` accordingly:
+To enable IntelliSense to work properly, please also update the `.vscode\c_cpp_properties.json` accordingly:
 
 ```json
 {
@@ -224,7 +203,7 @@ If you want to run the **WatchPanel** benchmark, please uncomment the macro `RTE
 
 1. You should NOT define macros `RTE_Acceleration_Arm_2D_Extra_Benchmark_Generic` and `RTE_Acceleration_Arm_2D_Extra_Benchmark_Watch_Panel` at the same time.
 
-2. You can find the configurations of benchmarks in `platform/arm_2d_cfg.h`.
+2. You can find the benchmark configurations in `platform/arm_2d_cfg.h`.
 
 3. The corresonponding code to run the benchmark is the following (in `main.c`):
 
@@ -261,3 +240,31 @@ If you want to run the **WatchPanel** benchmark, please uncomment the macro `RTE
    ```
 
    As you can see, when we define the macro `RTE_Acceleration_Arm_2D_Extra_Benchmark`, the function `arm_2d_run_benchmark` (defined in `arm_2d_benchmark.h`) will be called. 
+
+
+
+## Appendix
+
+### A For Native Windows (Deprecated)
+
+#### A.1 Install GCC (mingw32) and Make
+
+Second, please 
+
+- Download and install GCC. You **MUST** download the [latest mingw32](https://github.com/niXman/mingw-builds-binaries/releases/). For example, [i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z) Unzip the package and copy it to your desired location. 
+- [Download](https://gnuwin32.sourceforge.net/packages/make.htm) and install Make.
+
+**NOTE**: Please ensure you have correctly set the **PATH** variable in the Windows environment for GCC and Make. After installation, you may need to restart your computer to ensure the new environment variable settings take effect.
+
+![PathforGCC](../../documentation/pictures/path_for_gcc.png) 
+
+
+
+#### A.2 Open the Project
+
+Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
+
+In "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**" or you can press "**F5**" to launch a debug session.
+
+![BuildAndRun](../../documentation/pictures/build_and_run.png) 
+
