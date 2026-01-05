@@ -55,7 +55,7 @@ extern "C" {
 // <i> Note that enabling this feature suffers a non-negligible performance drop.
 // <i> This feature is disabled by default.
 #ifndef __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__
-#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      1
+#   define __ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__                      0
 #endif
 
 // <q>Enable support for accessing individual colour channels
@@ -81,7 +81,7 @@ extern "C" {
 // <q>Support Scaling for A1, A2 and A4 fonts
 // <i> Note that enabling this feature will reduces performance when using A1, A2 and A4 fonts when using scaling.
 #ifndef __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__
-#   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        0
+#   define __ARM_2D_CFG_SUPPORT_TRANSFORM_FOR_NON_A8_FONTS__        1
 #endif
 
 // <c1> Return frame is SKIPPED when there is nothing to draw

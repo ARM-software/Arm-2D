@@ -225,7 +225,7 @@ int main(void)
         breath_led();
 
 #if defined(__RTE_ACCELERATION_ARM_2D__) || defined(RTE_Acceleration_Arm_2D)
-    #if ARM_2D_VERSION >= 10105 && !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
+    #if !defined(RTE_Acceleration_Arm_2D_Extra_Benchmark)
         /* lock framerate: 30 FPS */
         disp_adapter0_task(30);
     #else
