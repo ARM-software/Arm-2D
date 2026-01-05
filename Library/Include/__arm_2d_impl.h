@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        16 Dec 2025
- * $Revision:    V.2.2.0
+ * $Date:        05 Jan 2026
+ * $Revision:    V.2.2.1
  *
  * Target Processor:  Cortex-M cores
  *
@@ -260,7 +260,7 @@ extern "C" {
                                                                                 \
         /* pack merged stream */                                                \
         *ARM_2D_SAFE_NAME(pwTargetPixel)                                        \
-            = __arm_2d_ccca888_pack(&ARM_2D_SAFE_NAME(tTargetPix));             \
+            = __arm_2d_ccca8888_pack(&ARM_2D_SAFE_NAME(tTargetPix));            \
     } while(0)
 #endif
 

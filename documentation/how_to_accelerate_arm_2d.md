@@ -197,7 +197,7 @@ Arm-2D uses some Arm-2D specific Intrinsics in the default low-level C implement
                                                                                 \
         /* pack merged stream */                                                \
         *ARM_2D_SAFE_NAME(pwTargetPixel)                                        \
-            = __arm_2d_ccca888_pack(&ARM_2D_SAFE_NAME(tTargetPix));             \
+            = __arm_2d_ccca8888_pack(&ARM_2D_SAFE_NAME(tTargetPix));             \
     } while(0)
 #endif
 

@@ -498,7 +498,7 @@
 
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_loader.c" />
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.c" />
-            <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.0.0"/>
+            <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.1.0"/>
 
             <file category="include"     name="examples/common/loader/freetype_loader/freetype/include" />
             <file category="header"      name="examples/common/loader/freetype_loader/freetype_loader.h" />

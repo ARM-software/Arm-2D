@@ -1,5 +1,5 @@
 /*----------------------------------------------*/
-/* Qoi Decoder System Configurations 0.5.0      */
+/* Qoi Decoder System Configurations 1.0.0      */
 /*----------------------------------------------*/
 
 #ifndef __ARM_2D_QOI_CFG_H__

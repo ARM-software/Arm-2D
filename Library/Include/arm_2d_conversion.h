@@ -22,8 +22,8 @@
  * Description:  Public header file to contain the APIs for colour space
  *               conversions
  *
- * $Date:        29. April 2024
- * $Revision:    V.1.0.6
+ * $Date:        05. Jan 2026
+ * $Revision:    V.1.0.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -273,7 +273,7 @@ __STATIC_INLINE uint16_t __arm_2d_rgb565_pack(__arm_2d_color_fast_rgb_t * ptRGB)
  * \note the alpha channel will be kept in the output value
  */
 ARM_NONNULL(1)
-__STATIC_INLINE uint32_t __arm_2d_ccca888_pack(__arm_2d_color_fast_rgb_t * ptRGB)
+__STATIC_INLINE uint32_t __arm_2d_ccca8888_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 {
     assert(NULL != ptRGB);
     

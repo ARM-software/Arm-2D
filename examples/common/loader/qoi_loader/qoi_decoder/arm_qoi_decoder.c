@@ -944,7 +944,7 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
             tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
 
-            *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
+            *pwTarget++ = __arm_2d_ccca8888_pack(&tColour);
 
         } while(--tLength);
     } else {
@@ -968,7 +968,7 @@ arm_2d_err_t __arm_qoi_decode_stride_cccn888_with_background(
             tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
             tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
 
-            *pwTarget++ = __arm_2d_rgb565_pack(&tColour);
+            *pwTarget++ = __arm_2d_ccca8888_pack(&tColour);
             ptLocation->iX++;
 
         } while(--tLength);

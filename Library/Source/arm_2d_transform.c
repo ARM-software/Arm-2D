@@ -21,8 +21,8 @@
  * Title:        arm-2d_transform.c
  * Description:  APIs for tile transform
  *
- * $Date:        22 Dec 2025
- * $Revision:    V.2.8.1
+ * $Date:        05 Jan 2026
+ * $Revision:    V.2.8.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -104,7 +104,7 @@ extern "C" {
         tPixel.G >>= 8,                                         \
         tPixel.B >>= 8,                                         \
         tPixel.A = *((uint8_t *)pTarget + 3),                   \
-        __arm_2d_ccca888_pack(&tPixel))
+        __arm_2d_ccca8888_pack(&tPixel))
 
 #define __API_CCCA8888_PIXEL_AVERAGE_RESULT_GRAY8()             \
         ((((int32_t)tPixel.R + (int32_t)tPixel.G + (int32_t)tPixel.B) / 3) >> 8)
