@@ -548,7 +548,9 @@ ARM_NONNULL(1)
 bool __arm_2d_list_core_need_redraw(__arm_2d_list_core_t *ptThis, bool bAutoreset);
 
 /*!
- * \brief check whether the list is moving its items
+ * \brief Check whether the list is moving its items
+ * \note It is not safe to call this function in draw routines as its 
+ *       value might changes.
  * 
  * \param[in] ptThis the target list core object
  * \return true the list is moving
@@ -560,6 +562,8 @@ bool __arm_2d_list_core_is_list_moving(__arm_2d_list_core_t *ptThis);
 
 /*!
  * \brief check whether the list is scrolling or not
+ * \note It is not safe to call this function in draw routines as its 
+ *       value might changes.
  * 
  * \param[in] ptThis the target list core object
  * \return true the list is scrolling
