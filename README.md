@@ -291,7 +291,12 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
   - See **section 3.2** for details.
 - The library supports **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
   - See **section 5** for details.
-  - Arm Compiler 5 is deprecated.
+
+> [!NOTE]
+>
+> The supports of Arm Compiler 5 is deprecated.
+
+
 
 ## 3 Examples, Benchmark and Templates
 
