@@ -117,7 +117,7 @@ Release v1.2.5 (06 January 2026)</h1>
 Core and Library</h2>
 <ul>
 <li>Enhances pixel-pipeline<ul>
-<li>Fixes the target mask region calculation</li>
+<li>Fixes the target mask region calculation.</li>
 <li>Introduces a new channel for an extra source tile and a corresponding mask tile in the Source-and-Origin processing.</li>
 <li>Introduces a macro option to disable Source-and-Origin processing, reducing ROM footprint when transform operations are not used.</li>
 </ul>
@@ -130,13 +130,13 @@ Core and Library</h2>
 <li>Introduces macro APIs that dispatch user operations to dedicated feature-specific APIs based on the mirroring mode.</li>
 <li>Introduces new operations (with Helium acceleration):<ul>
 <li><b>Colour-filling-with-transformed-mask-and-target-mask</b>, with/without an optional opacity</li>
-<li><b>Tile-copy-with-transformed-mask</b> and optional source mask, target mask and opacity.</li>
+<li><b>Tile-copy-with-transformed-mask</b> and optional source mask, target mask and opacity</li>
 <li><b>Colour-filling-with-source-mask-and-mirroring</b>, with/without an optional opacity</li>
 </ul>
 </li>
-<li>Distinguishes <code>ARM_2D_COLOUR_MASK_A8</code> from <code>ARM_2D_COLOUR_GRAY8</code></li>
+<li>Distinguishes <code>ARM_2D_COLOUR_MASK_A8</code> from <code>ARM_2D_COLOUR_GRAY8</code>.</li>
 <li>Renames <b>fill-colour-with-mask-opacity-and-transform</b> to <b>fill-colour-with-transformed-mask-and-opacity</b>.</li>
-<li>Renames <b>fill-colour-with-mask</b> to <b>fill-colour-with-mask-only</b></li>
+<li>Renames <b>fill-colour-with-mask</b> to <b>fill-colour-with-mask-only</b>.</li>
 <li>Improves the performance of transform operations.</li>
 <li>Adds a new API: <code><a class="el" href="group__gTransform.html#gae22836047459ba5253f8d48dc1ba672b" title="Calculate a reference region on target side with given reference points on source side.">arm_2d_calculate_reference_target_region_after_transform()</a></code> to calculate the circumscribed rectangle with given reference points.</li>
 <li>Fixes the virtual resource child-tile support in transform operations.</li>
@@ -152,7 +152,7 @@ Helper Services</h2>
 <li>Introduces new interfaces to improve Virtual Resource Life-cycle Management.</li>
 </ul>
 </li>
-<li>Introduces new APIs to <code><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a></code><ul>
+<li>Introduces new APIs to <code><a class="el" href="group__gHelper.html#structarm__2d__byte__fifo__t">arm_2d_byte_fifo_t</a></code>:<ul>
 <li><code><a class="el" href="group__gHelper.html#ga98b7ad7474964b6f7ef6238133f0ad2f" title="peek a number of bytes from a given fifo">arm_2d_byte_fifo_peek_bytes()</a></code></li>
 <li><code><a class="el" href="group__gHelper.html#ga39659f1502b567be1120836a358e84cb" title="enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO">arm_2d_byte_fifo_squeeze()</a></code></li>
 <li><code><a class="el" href="group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9" title="get the number of bytes available in the FIFO.">arm_2d_byte_fifo_get_item_count()</a></code></li>
@@ -165,7 +165,7 @@ Examples and Templates</h2>
 <ul>
 <li>Update Loaders<ul>
 <li>Adds a loader to load <b>True Type Fonts</b> via the <b>Freetype</b> library.</li>
-<li>Adds a loader to load losslessly compressed images (Quite OK Images, <b>QOI</b>)</li>
+<li>Adds a loader to load losslessly compressed images (Quite OK Images, <b>QOI</b>).</li>
 <li>Adds a generic loader for loading user-defined content.<ul>
 <li>Adds a template for deriving classes from the generic loader.</li>
 </ul>
@@ -188,31 +188,31 @@ Examples and Templates</h2>
 </ul>
 </li>
 <li>Adds a new style to <code>progress_bar_round_t</code>.</li>
-<li>Introduces a new example control: <code>ring_indication_t</code></li>
-<li>Introduces a new example control: <code>waveform_view_t</code></li>
+<li>Introduces a new example control: <code>ring_indication_t</code>.</li>
+<li>Introduces a new example control: <code>waveform_view_t.</code></li>
 <li>Slightly reduce the memory footprint of the battery gasguage controls.</li>
 </ul>
 </li>
 <li>Enhances Demos<ul>
 <li>Introduces <code>crt_screen_t</code> to the demo Rickrolling.</li>
-<li>Introduces a new demo: Radars</li>
-<li>Introduces a new demo: Blink</li>
+<li>Introduces a new demo: Radars.</li>
+<li>Introduces a new demo: Blink.</li>
 <li>Introduces a new demo: Flight attitude instrument.</li>
-<li>Introduces a new demo: Shaped panel</li>
-<li>Introduces a new demo: QOI</li>
-<li>Introduces a new demo: Ring indicator</li>
-<li>Introduces a new demo: Mask generation</li>
-<li>Introduces a new demo: Waveform</li>
+<li>Introduces a new demo: Shaped panel.</li>
+<li>Introduces a new demo: QOI.</li>
+<li>Introduces a new demo: Ring indicator.</li>
+<li>Introduces a new demo: Mask generation.</li>
+<li>Introduces a new demo: Waveform.</li>
 <li>Adds QOI decoding to existing demos / scene templates, i.e. meter, histogram, knob, rickrolling, progress-status, radars and blink.</li>
 <li>Updates the demo progress-status for showing the newly added progress-bar-round style.</li>
 </ul>
 </li>
 <li>Updates the Scene template, the Display Adapter template and the User Control template.</li>
-<li>Introduces <code>__rev()</code> and <code>__ror()</code> to <code>arm_2d_user_arch_port.h</code></li>
+<li>Introduces <code>__rev()</code> and <code>__ror()</code> to <code>arm_2d_user_arch_port.h</code>.</li>
 <li>Minor updates in benchmarks.</li>
 <li>Decouples the <b>Extra-Control</b> component from the <b>Transform</b> component in the cmsis-pack.</li>
-<li>Improves the performances of the <code>arm_2d_user_opcode_draw_circles</code></li>
-<li>Reduces the RAM footprint of the <code>arm_2d_user_opcode_draw_line</code></li>
+<li>Improves the performances of the <code>arm_2d_user_opcode_draw_circles</code>.</li>
+<li>Reduces the RAM footprint of the <code>arm_2d_user_opcode_draw_line</code>.</li>
 <li>Improves scripts<ul>
 <li>Fixes bearing and advance issues in <code>ttf2c.py</code>.</li>
 <li>Introduces an option to add a 1-pixel border when assets are used in transform operations.</li>
@@ -221,7 +221,7 @@ Examples and Templates</h2>
 <li>Provides a workaround for the Windows-GCC compilation issue.</li>
 <li>Improves the support for IAR.</li>
 <li>Update example projects.</li>
-<li>Other minor fixes</li>
+<li>Other minor fixes.</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md28"></a>
 Release v1.2.4 (12 September 2025)</h1>
