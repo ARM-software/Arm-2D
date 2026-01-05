@@ -91,7 +91,7 @@
 extern const arm_2d_tile_t c_tileRadialGradientMask;
 extern const arm_2d_tile_t c_tileGlassBallMask;
 extern const arm_2d_tile_t c_tileHallowOutCircleMask;
-extern const arm_2d_tile_t c_tileSinWaveMask;
+extern const arm_2d_tile_t c_tileSinWaveA4Mask;
 
 /*============================ PROTOTYPES ====================================*/
 extern
@@ -175,7 +175,7 @@ static void __on_scene_bubble_charging_frame_start(arm_2d_scene_t *ptScene)
 
     if (arm_2d_helper_is_time_out(10, &this.lTimestamp[2])) {
 
-        if (this.iWaveOffset++ >= c_tileSinWaveMask.tRegion.tSize.iWidth) {
+        if (this.iWaveOffset++ >= c_tileSinWaveA4Mask.tRegion.tSize.iWidth) {
             this.iWaveOffset = 0;
         }
     }
@@ -223,7 +223,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_bubble_charging_handler)
                                 this.iWaveOffset,
                                 (arm_2d_margin_t){0},
                                 GLCD_COLOR_GREEN,
-                                &c_tileSinWaveMask);
+                                &c_tileSinWaveA4Mask);
 
             arm_2d_fill_colour_with_mask(
                                     ptTile, 
