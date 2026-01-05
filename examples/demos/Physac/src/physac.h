@@ -2019,12 +2019,11 @@ static Vector2 TriangleBarycenter(Vector2 v1, Vector2 v2, Vector2 v3)
     return result;
 }
 
-
 // Initializes hi-resolution MONOTONIC timer
 static void InitTimer(void)
 {
     srand(PHYSAC_GET_CURRENT_TIME());              // Initialize random seed
-
+#if 0
     #if defined(_WIN32)
         QueryPerformanceFrequency((unsigned long long int *) &frequency);
     #endif
@@ -2047,8 +2046,13 @@ static void InitTimer(void)
 
     baseTime = GetTimeCount();      // Get MONOTONIC clock time offset
     startTime = PHYSAC_GET_CURRENT_TIME();   // Get current time
+#else
+    baseTime = PHYSAC_GET_CURRENT_TIME();    
+    startTime = PHYSAC_GET_CURRENT_TIME();   // Get current time
+#endif
 }
 
+#if 0
 // Get hi-res MONOTONIC time measure in seconds
 static uint64_t GetTimeCount(void)
 {
@@ -2081,6 +2085,7 @@ static double GetCurrTime(void)
 {
     return (double)(GetTimeCount() - baseTime)/frequency*1000;
 }
+#endif
 
 // Returns the cross product of a vector and a value
 static inline Vector2 MathCross(float value, Vector2 vector)
