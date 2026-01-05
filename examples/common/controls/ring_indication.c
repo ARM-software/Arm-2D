@@ -26,6 +26,8 @@
 #include <assert.h>
 #include <string.h>
 
+#if defined(RTE_Acceleration_Arm_2D_Transform)
+
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
@@ -814,3 +816,5 @@ float ring_indication_set_current_value_f32(ring_indication_t *ptThis, float fVa
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif
+
+#endif 

@@ -39,8 +39,6 @@ hdr="""
 /* Re-sized : {2} */
 /* Rotated : {3} deg */
 
-
-
 #include "arm_2d.h"
 
 #if defined(__clang__)
@@ -151,7 +149,6 @@ const arm_2d_tile_t c_tile{0}CCCA8888 = {{
 
 tailAlpha="""
 
-
 extern const arm_2d_tile_t c_tile{0}Mask;
 
 ARM_SECTION(\"arm2d.tile.c_tile{0}Mask\")
@@ -166,7 +163,7 @@ const arm_2d_tile_t c_tile{0}Mask = {{
         .bIsRoot = true,
         .bHasEnforcedColour = true,
         .tColourInfo = {{
-            .chScheme = ARM_2D_COLOUR_8BIT,
+            .chScheme = ARM_2D_COLOUR_MASK_A8,
         }},
     }},
     .pchBuffer = (uint8_t *)c_bmp{0}Alpha,
@@ -174,7 +171,6 @@ const arm_2d_tile_t c_tile{0}Mask = {{
 """
 
 tail1BitAlpha="""
-
 
 extern const arm_2d_tile_t c_tile{0}A1Mask;
 
@@ -200,7 +196,6 @@ const arm_2d_tile_t c_tile{0}A1Mask = {{
 
 tail2BitAlpha="""
 
-
 extern const arm_2d_tile_t c_tile{0}A2Mask;
 
 ARM_SECTION(\"arm2d.tile.c_tile{0}A2Mask\")
@@ -223,7 +218,6 @@ const arm_2d_tile_t c_tile{0}A2Mask = {{
 """
 
 tail4BitAlpha="""
-
 
 extern const arm_2d_tile_t c_tile{0}A4Mask;
 
@@ -248,7 +242,6 @@ const arm_2d_tile_t c_tile{0}A4Mask = {{
 
 
 tailAlpha2="""
-
 
 extern const arm_2d_tile_t c_tile{0}Mask2;
 
@@ -284,7 +277,7 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.2.5)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.3.0)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
@@ -296,6 +289,7 @@ def main(argv):
     parser.add_argument('--a1', action='store_true', help="Generate 1bit alpha-mask")
     parser.add_argument('--a2', action='store_true', help="Generate 2bit alpha-mask")
     parser.add_argument('--a4', action='store_true', help="Generate 4bit alpha-mask")
+    parser.add_argument('--border', action='store_true', help="Add a 1pix border")
 
     args = parser.parse_args()
 
@@ -342,7 +336,18 @@ def main(argv):
 
 
     mode = image.mode
-
+    
+    # add 1 pixel border
+    if args.border:
+        data = np.asarray(image)
+        pad_val = 0
+        if data.ndim == 2:
+            padded = np.pad(data, 1, mode='constant', constant_values=pad_val)
+        else:
+            padded = np.pad(data, ((1, 1), (1, 1), (0, 0)),
+                            mode='constant', constant_values=pad_val)
+        image = Image.fromarray(padded, mode=mode)
+        
     # Modes supported by Pillow
 
     # 1 (1-bit pixels, black and white, stored with one pixel per byte), the value is in 0-1.

@@ -21,7 +21,7 @@
 #define __USER_SCENE_WAVEFORM_IMPLEMENT__
 #include "arm_2d_scene_waveform.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Helper_PFB)
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 
 #include <stdlib.h>
 #include <string.h>

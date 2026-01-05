@@ -141,7 +141,7 @@ ARM_PRIVATE(
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
-
+#if defined(RTE_Acceleration_Arm_2D_Transform)
 extern
 ARM_NONNULL(1, 2)
 void ring_indication_init( ring_indication_t *ptThis,
@@ -194,6 +194,23 @@ float ring_indication_get_current_value_f32(ring_indication_t *ptThis);
 extern
 ARM_NONNULL(1)
 float ring_indication_set_current_value_f32(ring_indication_t *ptThis, float fValue);
+
+#else
+
+#define ring_indication_init(...)
+#define ring_indication_depose(...)
+#define ring_indication_on_load(...)
+#define ring_indication_on_frame_start(...)         true
+#define ring_indication_on_frame_start_f32(...)     true
+#define ring_indication_on_frame_complete(...)
+#define ring_indication_show(...)
+#define ring_indication_get_size(...)               ((arm_2d_size_t){0})
+#define ring_indication_get_current_value(...)      (0)
+#define ring_indication_set_current_value(...)      (0)
+#define ring_indication_get_current_value_f32(...)  (0)
+#define ring_indication_set_current_value_f32(...)  (0)
+
+#endif
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

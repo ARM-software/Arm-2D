@@ -369,7 +369,8 @@ void spin_zoom_widget_set_source_f32(   spin_zoom_widget_t *ptThis,
 #   define spin_zoom_widget_on_frame_start_xy(...)
 #   define spin_zoom_widget_on_frame_start_f32(...)
 #   define spin_zoom_widget_on_frame_start_xy_f32(...)
-#   define spin_zoom_widget_get_current_angle(...)          (0.0f)
+#   define spin_zoom_widget_get_current_angle(...)          (0)
+#   define spin_zoom_widget_get_actual_angle(...)           (0)
 #   define spin_zoom_widget_on_frame_complete(...)
 #   define spin_zoom_widget_update_transform_mode(...)
 #   define spin_zoom_widget_show_with_normal_pivot(...)
@@ -377,7 +378,7 @@ void spin_zoom_widget_set_source_f32(   spin_zoom_widget_t *ptThis,
 #   define spin_zoom_widget_set_colour(...)
 #   define spin_zoom_widget_set_source(...)
 #   define spin_zoom_widget_set_source_f32(...)
-
+#   define spin_zoom_valid_value(...)                       (0)
 #endif
 
 #if defined(__clang__)
