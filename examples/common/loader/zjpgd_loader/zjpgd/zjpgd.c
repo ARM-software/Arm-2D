@@ -13,6 +13,10 @@
 #   pragma clang diagnostic ignored "-Wunused-parameter"
 #   pragma clang diagnostic ignored "-Wsign-compare"
 #   pragma clang diagnostic ignored "-Wunused-function"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic ignored "-Wunused-variable"
+#   pragma GCC diagnostic ignored "-Wunused-function"
+#   pragma GCC diagnostic ignored "-Wmaybe-uninitialized"
 #endif
 
 /*-------------------------------------------------------------------------*/

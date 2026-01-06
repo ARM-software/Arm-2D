@@ -13090,7 +13090,7 @@ const uint32_t c_bmpRingIndicatorCCCA8888[220*189] = {
 
 extern const uint8_t c_qoiRingIndicator[32948];
 
-ARM_SECTION("arm2d.asset.c_qoiRingIndicator");
+ARM_SECTION("arm2d.asset.c_qoiRingIndicator")
 
 const uint8_t c_qoiRingIndicator[32948] = {
   0x71, 0x6f, 0x69, 0x66, 0x00, 0x00, 0x00, 0xdc, 0x00, 0x00, 0x00, 0xbd, 0x04, 0x00, 0x00, 0xfd, 

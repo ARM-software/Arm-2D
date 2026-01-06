@@ -45,6 +45,9 @@
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
 #   pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #   pragma clang diagnostic ignored "-Wsign-compare"
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic ignored "-Wunused-variable"
+#   pragma GCC diagnostic ignored "-Wunused-label"
 #endif
 
 /*============================ MACROS ========================================*/
