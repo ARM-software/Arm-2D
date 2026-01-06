@@ -140,7 +140,8 @@ Core and Library</h2>
 <li>Improves the performance of transform operations.</li>
 <li>Adds a new API: <code><a class="el" href="group__gTransform.html#gae22836047459ba5253f8d48dc1ba672b" title="Calculate a reference region on target side with given reference points on source side.">arm_2d_calculate_reference_target_region_after_transform()</a></code> to calculate the circumscribed rectangle with given reference points.</li>
 <li>Fixes the virtual resource child-tile support in transform operations.</li>
-<li>Fixes Out-of-boundary memory access in colour-filling-with-alpha-gradient-and-mask operations.</li>
+<li>Fixes Out-of-Boundary memory access in the colour-filling-with-alpha-gradient-and-mask operations.</li>
+<li>Fixes Alpha-Overflow issues in the colour-filling-with-alpha-gradient-and-mask helium backend.</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md26"></a>
 Helper Services</h2>
@@ -219,6 +220,8 @@ Examples and Templates</h2>
 </ul>
 </li>
 <li>Provides a workaround for the Windows-GCC compilation issue.</li>
+<li>Fixes the missing intrinsics issues for Arm-GCC.</li>
+<li>Fixes the support for <code>-fms-extensions</code></li>
 <li>Improves the support for IAR.</li>
 <li>Update example projects.</li>
 <li>Other minor fixes.</li>
