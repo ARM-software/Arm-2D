@@ -4,7 +4,7 @@
 #ifndef __ARM_2D_TJPGDEC_CFG_H__
 #define __ARM_2D_TJPGDEC_CFG_H__
 
-#include "arm_2d_cfg.h"
+#include "arm_2d.h"
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 //
