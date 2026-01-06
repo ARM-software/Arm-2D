@@ -62,7 +62,7 @@ extern "C" {
 // <i> Note that enabling this feature will add the support for a special colour type: ARM_2D_CHANNEL_8in32
 // <i> This feature is disabled by default to save code size
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             0
+#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             1
 #endif
 
 // <q>Enable ccca8888(ARGB8888) implicit conversion 
@@ -86,7 +86,7 @@ extern "C" {
 
 // <c1> Return frame is SKIPPED when there is nothing to draw
 // <i> When a frame is skipped, return ARM_2D_RT_FRAME_SKIPPED to indicate this.
-//#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
+#define __ARM_2D_CFG_PFB_RETURN_SKIPPED__  
 // </c>
 
 // </h>
@@ -177,7 +177,7 @@ extern "C" {
 // <i> This option is used to improve the performance and reduce the application complexity in API selection. Disable this feature allows linker to remove unused APIs further.
 // <i> This option is disabled by default
 #ifndef __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
-#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__      0
+#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__      1
 #endif
 
 // <q> Optimize the transform operations for pointer-like resources

@@ -304,6 +304,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_hollow_out_list_handler)
                                                 255, 128,
                                                 128, 255,
                                             });
+                                            
+//            arm_2d_fill_colour_with_mask(   ptTile, 
+//                                            &__centre_region, 
+//                                            &c_tileBackgroundMaskGRAY8,
+//                                            (__arm_2d_color_t){GLCD_COLOR_NIXIE_TUBE}
+//                                            );
 
         }
 

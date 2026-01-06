@@ -192,19 +192,18 @@ void scene_atom_loader(void)
     arm_2d_scene_atom_init(&DISP0_ADAPTER);
 }
 
-void scene_matrix_loader(void) 
+void scene_pave_loader(void) 
 {
-    arm_2d_scene_matrix_init(&DISP0_ADAPTER);
+    arm_2d_scene_pave_init(&DISP0_ADAPTER);
+}
+
+void scene_balls_loader(void) 
+{
+    arm_2d_scene_balls_init(&DISP0_ADAPTER);
 }
 
 void scene_basics_loader(void) 
 {
-#if 0
-    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
-                                            ARM_2D_SCENE_SWITCH_MODE_FADE_WHITE);
-    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 3000);
-#endif 
-
     arm_2d_scene_basics_init(&DISP0_ADAPTER);
 }
 
@@ -227,18 +226,6 @@ void scene_gas_gauge_loader(void)
     arm_2d_scene_gas_gauge_init(&DISP0_ADAPTER);
 }
 
-#if __GLCD_CFG_COLOUR_DEPTH__ == 16
-void scene_space_badge_loader(void) 
-{
-    arm_2d_scene_space_badge_init(&DISP0_ADAPTER);
-}
-#endif
-
-void scene_music_player_loader(void) 
-{
-    arm_2d_scene_music_player_init(&DISP0_ADAPTER);
-}
-
 void scene_listview_loader(void) 
 {
     arm_2d_scene_listview_init(&DISP0_ADAPTER);
@@ -251,12 +238,21 @@ void scene_menu_loader(void)
 
 void scene_fan_loader(void) 
 {
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_SLIDE_RIGHT);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 500);
+
     arm_2d_scene_fan_init(&DISP0_ADAPTER);
 }
 
 void scene_console_window_loader(void)
 {
     arm_2d_scene_console_window_init(&DISP0_ADAPTER);
+}
+
+void scene_text_reader_loader(void)
+{
+    arm_2d_scene_text_reader_init(&DISP0_ADAPTER);
 }
 
 void scene_bubble_charging_loader(void) 
@@ -269,16 +265,6 @@ void scene_ruler_loader(void)
     arm_2d_scene_ruler_init(&DISP0_ADAPTER);
 }
 
-void scene_shaped_panel_loader(void) 
-{
-    arm_2d_scene_shaped_panel_init(&DISP0_ADAPTER);
-}
-
-void scene_blink_loader(void) 
-{
-    arm_2d_scene_blink_init(&DISP0_ADAPTER);
-}
-
 void scene_hollow_out_list_loader(void) 
 {
     arm_2d_scene_hollow_out_list_init(&DISP0_ADAPTER);
@@ -287,6 +273,51 @@ void scene_hollow_out_list_loader(void)
 void scene_transform_loader(void) 
 {
     arm_2d_scene_transform_init(&DISP0_ADAPTER);
+}
+
+void scene_radars_loader(void) 
+{
+    arm_2d_scene_radars_init(&DISP0_ADAPTER);
+}
+
+void scene_blink_loader(void) 
+{
+    arm_2d_scene_blink_init(&DISP0_ADAPTER);
+}
+
+void scene_flight_attitude_instrument_loader(void) 
+{
+    arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
+}
+
+void scene_shaped_panel_loader(void) 
+{
+    arm_2d_scene_shaped_panel_init(&DISP0_ADAPTER);
+}
+
+void scene_ring_indicator_loader(void) 
+{
+    arm_2d_scene_ring_indicator_init(&DISP0_ADAPTER);
+}
+
+void scene_mask_generation_loader(void) 
+{
+    arm_2d_scene_mask_generation_init(&DISP0_ADAPTER);
+}
+
+void scene_waveform_loader(void) 
+{
+    arm_2d_scene_waveform_init(&DISP0_ADAPTER);
+}
+
+void scene_font_loader(void) 
+{
+    arm_2d_scene_font_init(&DISP0_ADAPTER);
+}
+
+void scene_qrcode_loader(void) 
+{
+    arm_2d_scene_qrcode_init(&DISP0_ADAPTER);
 }
 
 void scene_filters_loader(void) 
@@ -304,15 +335,34 @@ void scene_knob_loader(void)
     arm_2d_scene_knob_init(&DISP0_ADAPTER);
 }
 
-void scene_flight_attitude_instrument_loader(void) 
+void scene_matrix_loader(void) 
 {
-    arm_2d_scene_flight_attitude_instrument_init(&DISP0_ADAPTER);
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
+                                            ARM_2D_SCENE_SWITCH_MODE_FADE_BLACK);
+    arm_2d_scene_player_set_switching_period(&DISP0_ADAPTER, 2000);
+
+    arm_2d_scene_matrix_init(&DISP0_ADAPTER);
+}
+
+void scene_iir_blur_loader(void) 
+{
+    arm_2d_scene_iir_blur_init(&DISP0_ADAPTER);
+}
+
+void scene_music_player_loader(void) 
+{
+    arm_2d_scene_music_player_init(&DISP0_ADAPTER);
 }
 
 #if __GLCD_CFG_COLOUR_DEPTH__ == 16
 void scene_user_defined_opcode_loader(void) 
 {
     arm_2d_scene_user_defined_opcode_init(&DISP0_ADAPTER);
+}
+
+void scene_space_badge_loader(void) 
+{
+    arm_2d_scene_space_badge_init(&DISP0_ADAPTER);
 }
 #endif
 
@@ -382,12 +432,18 @@ void scene_rickrolling_loader(void)
 }
 #endif
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+void scene_qoi_loader(void) 
+{
+    arm_2d_scene_qoi_init(&DISP0_ADAPTER);
+}
+#endif
+
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 void scene_animate_background_loader(void) 
 {
     arm_2d_scene_animate_background_init(&DISP0_ADAPTER);
 }
-
 
 void scene_virtual_resource_loader(void) 
 {
@@ -402,7 +458,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 1
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -442,16 +498,6 @@ static demo_scene_t const c_SceneLoaders[] = {
         20000,
         scene_matrix_loader,
     },
-#if __GLCD_CFG_COLOUR_DEPTH__ == 16
-    {
-        20000,
-        scene_space_badge_loader,
-    },
-#endif
-    {
-        30000,
-        scene_music_player_loader,
-    },
     {
         13000,
         scene_fan_loader,
@@ -461,8 +507,19 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_console_window_loader,
     },
     {
+        20000,
+        scene_text_reader_loader,
+    },
+    {
+        30000,
+        scene_music_player_loader,
+    },
+    {
         15000,
         scene_meter_loader,
+    },
+    {   15000,
+        scene_ring_indicator_loader,
     },
     {
         30000,
@@ -472,13 +529,25 @@ static demo_scene_t const c_SceneLoaders[] = {
         30000,
         scene_watch_loader,
     },
-//    {
-//        20000,
-//        scene_compass_loader,
-//    },
+    {
+        20000,
+        scene_compass_loader,
+    },
+    {
+        10000,
+        scene_balls_loader,
+    },
     {
         10000,
         scene_knob_loader,
+    },
+    {
+        5000,
+        scene_qrcode_loader,
+    },
+    {
+        5000,
+        scene_pave_loader,
     },
 #if defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
     {
@@ -488,6 +557,12 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         8000,
         scene_rickrolling_loader,
+    },
+#endif
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+    {
+        5000,
+        scene_qoi_loader,
     },
 #endif
     {
@@ -501,6 +576,14 @@ static demo_scene_t const c_SceneLoaders[] = {
     {
         10000,
         scene_histogram_loader,
+    },
+    {
+        120000,
+        scene_waveform_loader,
+    },
+    {
+        20000,
+        scene_iir_blur_loader,
     },
     {
         30000,
@@ -518,14 +601,14 @@ static demo_scene_t const c_SceneLoaders[] = {
         12000,
         scene_menu_loader,
     },
-//    {
-//        10000,
-//        scene_ruler_loader,
-//    },
-//    {
-//        10000,
-//        scene_hollow_out_list_loader,
-//    },
+    {
+        10000,
+        scene_ruler_loader,
+    },
+    {
+        10000,
+        scene_hollow_out_list_loader,
+    },
     {
         20000,
         scene_panel_loader,
@@ -535,17 +618,43 @@ static demo_scene_t const c_SceneLoaders[] = {
         scene_fitness_loader,
     },
     {
+        40000,
+        scene_shaped_panel_loader,
+    },
+    {
         15000,
         scene_transform_loader,
     },
     {
-        50000,
+        15000,
         scene_filters_loader,
     },
-//    {
-//        10000,
-//        scene_audiomark_loader,
-//    },
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
+    {
+        28000,
+        scene_user_defined_opcode_loader,
+    },
+    {
+        20000,
+        scene_space_badge_loader,
+    },
+#endif
+    {
+        43000,
+        scene_radars_loader,
+    },
+    {
+        20000,
+        scene_blink_loader,
+    },
+    {
+        10000,
+        scene_audiomark_loader,
+    },
+    {
+        10000,
+        scene_flight_attitude_instrument_loader,
+    },
     
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
     {
@@ -563,10 +672,38 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_blink_loader,
+        scene_hollow_out_list_loader
+        //scene_waveform_loader,
+        //scene_mask_generation_loader,
+        //scene_virtual_resource_loader,
+        //scene_ring_indicator_loader,
+        //scene_radars_loader,
+        //scene_fitness_loader,
+        //scene_gas_gauge_loader
         //scene_shaped_panel_loader,
+        //scene_radars_loader,
         //scene_flight_attitude_instrument_loader,
+        //scene_blink_loader,
+        //scene_rickrolling_loader,
+        //scene_histogram_loader,
+        //scene_space_badge_loader,
+        //scene_pave_loader,
+        //scene_qrcode_loader,
+        //scene_font_loader,
+        //scene_music_player_loader,
+        //scene_console_window_loader
+        //scene_balls_loader,
+        //scene_iir_blur_loader,
+        //scene_progress_status_loader,
+        //scene_matrix_loader,
+        //scene_tjpgd_loader,
+        //scene_rickrolling_loader,
+        //scene_fan_loader,
         //scene_transform_loader,
+        //scene_tjpgd_loader,
+        //scene_text_reader_loader,
+        //scene_ruler_loader,
+        //scene_filters_loader,
         //scene_listview_loader,
         //scene_mono_tracking_list_loader
         //scene_mono_list_loader,
@@ -580,7 +717,6 @@ static demo_scene_t const c_SceneLoaders[] = {
         //scene_panel_loader,
     },
 #endif
-
 
 };
 

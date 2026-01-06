@@ -38,11 +38,11 @@
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wconstant-conversion"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wmissing-declarations"
-#   pragma clang diagnostic ignored "-Wconstant-conversion"
 #   pragma clang diagnostic ignored "-Wimplicit-int-conversion" 
 #elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 64,177
@@ -187,12 +187,6 @@ static void __on_scene_space_badge_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     /*--------------------- insert your depose code begin --------------------*/
-    /* draw line */
-    do {
-        arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
-            ARM_2D_OP_DEPOSE(*ptLineOP);
-        }
-    } while(0);
 
     qrcode_box_depose(&this.QRCode.tBox);
 
@@ -367,14 +361,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_space_badge_handler)
                 };
 
                 arm_2dp_rgb565_user_draw_line(
-                                &this.tDrawLineOP[n],
+                                NULL,
                                 ptTile,
                                 &__top_canvas,
                                 &tParam,
                                 (arm_2d_color_rgb565_t){GLCD_COLOR_GREEN},
                                 255);
             } while(0);
-            ARM_2D_OP_WAIT_ASYNC(&this.tDrawLineOP[n]);
 
 
             tStartPoint.iX += 200;
@@ -650,12 +643,6 @@ user_scene_space_badge_t *__arm_2d_scene_space_badge_init(   arm_2d_scene_player
     };
 
     /* ------------   initialize members of user_scene_space_badge_t begin ---------------*/
-    /* draw line */
-    do {
-        arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
-            ARM_2D_OP_INIT(*ptLineOP);
-        }
-    } while(0);
 
     /* CRT Screen */
     do {
