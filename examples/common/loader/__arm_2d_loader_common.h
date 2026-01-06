@@ -99,25 +99,21 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW;
  * Invoke Interface                                                           *
  *----------------------------------------------------------------------------*/
 extern
-ARM_NONNULL(1,3)
 bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
                         uintptr_t pTarget, 
                         void *ptLoader);
 
 extern
-ARM_NONNULL(1,3)
 void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader);
 
 extern
-ARM_NONNULL(1,3)
 void arm_loader_io_on_frame_start(  const arm_loader_io_t *ptIO,
                                     uintptr_t pTarget, 
                                     void *ptLoader);
 
 extern
-ARM_NONNULL(1,3)
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
                         void *ptLoader, 
@@ -125,7 +121,6 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         int32_t whence);
 
 extern
-ARM_NONNULL(1,3)
 size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader, 

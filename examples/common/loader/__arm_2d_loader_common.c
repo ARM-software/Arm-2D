@@ -147,13 +147,15 @@ const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
  * Invoke Interface                                                           *
  *----------------------------------------------------------------------------*/
 
-ARM_NONNULL(1, 3)
+
 bool arm_loader_io_open(const arm_loader_io_t *ptIO, 
                         uintptr_t pTarget, 
                         void *ptLoader)
 {
+    printf("Working Memory Size %p %p %p\r\n", ptIO, pTarget, ptLoader);
     ARM_2D_UNUSED(ptLoader);
     if (NULL == ptIO) {
+        printf("Out!\r\n");
         return true;
     }
 
@@ -164,7 +166,7 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
     return ptIO->fnOpen(pTarget,ptLoader);
 }
 
-ARM_NONNULL(1, 3)
+
 void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader)
@@ -179,7 +181,7 @@ void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                     ptLoader));
 }
 
-ARM_NONNULL(1, 3)
+
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
                         void *ptLoader, 
@@ -198,7 +200,7 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
     return ptIO->fnSeek(pTarget, ptLoader, offset, whence);
 }
 
-ARM_NONNULL(1, 3)
+
 size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             uintptr_t pTarget, 
                             void *ptLoader, 
@@ -217,7 +219,7 @@ size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
                             tSize));
 }
 
-ARM_NONNULL(1, 3)
+
 void arm_loader_io_on_frame_start(  const arm_loader_io_t *ptIO,
                                     uintptr_t pTarget, 
                                     void *ptLoader)
