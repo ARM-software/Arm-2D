@@ -246,9 +246,12 @@ static void __on_scene_meter_frame_start(arm_2d_scene_t *ptScene)
 
     do {
     #if ARM_2D_SCENE_METER_SHOW_FPS
-        int16_t iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
-                              / ptScene->ptPlayer->Benchmark.wAverage), 
-                              999);
+        int16_t iNumber = 0;
+        if (ptScene->ptPlayer->Benchmark.wAverage) {
+            iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
+                                / ptScene->ptPlayer->Benchmark.wAverage), 
+                                999);
+        }
     #else
         int16_t iNumber = meter_pointer_get_current_value(&this.tMeterPointer);
     #endif

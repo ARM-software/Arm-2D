@@ -147,10 +147,11 @@ static void __on_scene_qoi_frame_start(arm_2d_scene_t *ptScene)
     user_scene_qoi_t *ptThis = (user_scene_qoi_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    this.iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
-                            / ptScene->ptPlayer->Benchmark.wAverage), 
-                            999);
-
+    if (0 != ptScene->ptPlayer->Benchmark.wAverage) {
+        this.iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
+                           / ptScene->ptPlayer->Benchmark.wAverage), 
+                          999);
+    }
 
     arm_qoi_loader_on_frame_start(&this.tQOIBackground);
 
