@@ -239,10 +239,10 @@
             <bigend>0</bigend>
             <Strict>0</Strict>
             <Optim>1</Optim>
-            <wLevel>1</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>1</uThumb>
             <VariousControls>
-              <MiscControls>-Ofast -fdata-sections -ffunction-sections -mcpu=cortex-m7 -mfloat-abi=soft -mfpu=fpv5-sp-d16 -std=gnu11 -include "app_cfg.h"</MiscControls>
+              <MiscControls>-Ofast -fdata-sections -ffunction-sections -fms-extensions -mcpu=cortex-m7 -mfloat-abi=soft -mfpu=fpv5-sp-d16 -std=gnu11 -include "app_cfg.h"</MiscControls>
               <Define>ARM_2D_SCENE_METER_USE_JPG,ARM_2D_SCENE_HISTOGRAM_USE_JPG</Define>
               <Undefine></Undefine>
               <IncludePath>..\..\;..\..\..\common\platform;..\..\..\common\platform\stm32f746g-discovery;..\..\..\common\scenes\meter;..\..\..\common\scenes\fitness;..\..\..\common\scenes\watch;..\..\..\demos;..\..\..\common\scenes\alarm_clock;..\..\..\common\scenes\histogram;..\..\..\common\scenes\fan;..\..\..\common\scenes\bubble_charging;..\..\..\common\scenes\animate_background;..\..\..\common\scenes\knob;..\..\..\common\scenes\animate_background;..\..\..\common\opcodes</IncludePath>
