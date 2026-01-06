@@ -23,8 +23,8 @@
  * Description:  APIs for tile-copy-with-transformed-mask-source-mask-and
  *               -target-mask
  *
- * $Date:        16 Dec 2025
- * $Revision:    v1.0.1
+ * $Date:        06 Jan 2026
+ * $Revision:    v1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
@@ -67,8 +67,10 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wswitch"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-variable"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 174,177,188,68,513,144
+#elif __IS_COMPILER_GCC__
+#   pragma GCC diagnostic ignored "-Wunused-variable"
 #endif
 
 /*============================ MACROS ========================================*/
