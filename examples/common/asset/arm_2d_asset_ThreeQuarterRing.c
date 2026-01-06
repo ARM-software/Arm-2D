@@ -13090,7 +13090,7 @@ const uint32_t c_bmpThreeQuarterRingCCCA8888[220*189] = {
 
 extern const uint8_t c_qoiThreeQuarterRing[8252];
 
-ARM_SECTION("arm2d.asset.c_qoiThreeQuarterRing");
+ARM_SECTION("arm2d.asset.c_qoiThreeQuarterRing")
 
 // array size is 8252
 const uint8_t c_qoiThreeQuarterRing[8252] = {
