@@ -22,7 +22,8 @@
 * Improves the performance of transform operations. 
 * Adds a new API: `arm_2d_calculate_reference_target_region_after_transform()` to calculate the circumscribed rectangle with given reference points. 
 * Fixes the virtual resource child-tile support in transform operations. 
-* Fixes Out-of-boundary memory access in colour-filling-with-alpha-gradient-and-mask operations.
+* Fixes Out-of-Boundary memory access in the colour-filling-with-alpha-gradient-and-mask operations.
+* Fixes Alpha-Overflow issues in the colour-filling-with-alpha-gradient-and-mask helium backend.
 
 ### Helper Services
 
@@ -83,6 +84,8 @@
   * Fixes bearing and advance issues in `ttf2c.py`.
   * Introduces an option to add a 1-pixel border when assets are used in transform operations. 
 * Provides a workaround for the Windows-GCC compilation issue.
+* Fixes the missing intrinsics issues for Arm-GCC.
+* Fixes the support for `-fms-extensions`
 * Improves the support for IAR.
 * Update example projects.
 * Other minor fixes.
