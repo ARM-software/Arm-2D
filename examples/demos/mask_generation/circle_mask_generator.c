@@ -191,7 +191,7 @@ arm_2d_err_t __circle_mask_generator_decoder_init(arm_generic_loader_t *ptObj)
     assert(NULL != ptObj);
 
     circle_mask_generator_t *ptThis = (circle_mask_generator_t *)ptObj;
-
+    ARM_2D_UNUSED(ptThis);
 
     return ARM_2D_ERR_NONE;
 }

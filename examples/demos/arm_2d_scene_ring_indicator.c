@@ -281,6 +281,7 @@ RING_INDICATION_USER_DRAW(__user_draw_pointer)
     ARM_2D_PARAM(ptPivot);
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(bIsNewFrame);
+    ARM_2D_PARAM(ptRingIndicator);
 
     spin_zoom_widget_t *ptHelper = (spin_zoom_widget_t *)pTarget;
 

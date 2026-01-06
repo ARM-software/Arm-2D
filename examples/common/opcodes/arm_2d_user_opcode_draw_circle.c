@@ -235,7 +235,6 @@ void __arm_2d_impl_rgb565_user_draw_circle(
 
     uint32_t wRadius2 = (uint32_t)this.tParams.iRadius * (uint32_t)this.tParams.iRadius;
     uint32_t wRadiusBorder2 = (uint32_t)(this.tParams.iRadius + 1) * (uint32_t)(this.tParams.iRadius + 1);
-    q16_t q16Radius = reinterpret_q16_s16(this.tParams.iRadius);
 
     q16_t q161MagicRatio 
         = reinterpret_q16_s16( 
@@ -247,7 +246,6 @@ void __arm_2d_impl_rgb565_user_draw_circle(
         int16_t iYOffset = iY - this.tPivot.iY;
 
         bool bFindFirstInnerPoint = false;
-        bool bDrawInner = false;
         uint16_t hwInnerPoints = 0;
 
         int_fast16_t iX = ptValidRegionOnVirtualScreen->tLocation.iX;
@@ -279,7 +277,6 @@ void __arm_2d_impl_rgb565_user_draw_circle(
 
             if (bFindFirstInnerPoint) {
                 /* draw inner points */
-                bDrawInner = true;
                 if (--hwInnerPoints) {
                     __ARM_2D_PIXEL_BLENDING_OPA_RGB565(&hwColour, phwTargetLine++, chOpacity);
                     continue;

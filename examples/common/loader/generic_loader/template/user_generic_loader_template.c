@@ -178,7 +178,7 @@ arm_2d_err_t __<name>_decoder_init(arm_generic_loader_t *ptObj)
     assert(NULL != ptObj);
 
     <name>_t *ptThis = (<name>_t *)ptObj;
-
+    ARM_2D_UNUSED(ptThis);
 
     return ARM_2D_ERR_NONE;
 }

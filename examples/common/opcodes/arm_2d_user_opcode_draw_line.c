@@ -108,8 +108,7 @@ arm_2d_err_t arm_2dp_rgb565_user_draw_line_prepare(
     q16_t q16DeltaY = reinterpret_q16_s16( this.tParams.tEnd.iY - this.tParams.tStart.iY);
 
 
-    float fK;
-    arm_2d_size_t tEndPointFix = {0};
+    float fK = 0.0f;
     bool bHorizontalLine = false;
     bool bVerticalLine = false;
 
@@ -365,6 +364,7 @@ void __arm_2d_impl_rgb565_user_draw_line(
         arm_2d_get_absolute_location(   this.use_as__arm_2d_op_t.Target.ptTile,
                                         this.tParams.tEnd,
                                         true);
+    ARM_2D_UNUSED(tEnd);
 
     /* iXStart is used to calculate the pixel index in stride, no need to update */
     int16_t iXStart = ptValidRegionOnVirtualScreen->tLocation.iX;
