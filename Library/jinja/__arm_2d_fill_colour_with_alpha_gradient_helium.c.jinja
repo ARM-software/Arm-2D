@@ -262,7 +262,6 @@ __MVE_WRAPPER(
                             vAlpha, 
                             vcmpgeq_n_s16(vAlpha, 255));
 
-            mve_pred16_t    tailPred = vctp16q(blkCnt);
             uint16x8_t vMask    = vldrbq_z_u16(pchMaskLine, tailPred);
             uint16x8_t vhwAlpha = ((vMask * vAlpha) >> 8);
 
