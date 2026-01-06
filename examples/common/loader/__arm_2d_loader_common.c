@@ -152,7 +152,6 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
                         void *ptLoader)
 {
-    printf("Working Memory Size %p %p %p\r\n", ptIO, pTarget, ptLoader);
     ARM_2D_UNUSED(ptLoader);
     if (NULL == ptIO) {
         printf("Out!\r\n");
