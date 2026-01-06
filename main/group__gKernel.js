@@ -93,6 +93,7 @@ var group__gKernel =
     ] ],
     [ "arm_2d_op_src_orig_t", "group__gKernel.html#structarm__2d__op__src__orig__t", null ],
     [ "arm_2d_op_src_orig_msk_t", "group__gKernel.html#structarm__2d__op__src__orig__msk__t", null ],
+    [ "arm_2d_op_src_orig_msk_extra_t", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t", null ],
     [ "arm_2d_rot_linear_regr_t", "group__gKernel.html#structarm__2d__rot__linear__regr__t", null ],
     [ "arm_2d_runtime_feature_t", "group__gKernel.html#structarm__2d__runtime__feature__t", [
       [ "TREAT_OUT_OF_RANGE_AS_COMPLETE", "group__gKernel.html#ae03a394dafc3dbbc3bca364bc21c902c", null ],
@@ -153,54 +154,43 @@ var group__gKernel =
       [ "Param", "group__gKernel.html#ab7dccc7d9373cd4717256318909fcebe", null ],
       [ "chInClassOffset", "group__gKernel.html#a79025dbcffa09b4f3065686fcb833286", null ],
       [ "chOpIndex", "group__gKernel.html#a2897b5e79cee971127d34974d386f076", null ],
-      [ "LowLevelInterfaceIndex", "group__gKernel.html#a5bf47f729ead27ee613d6e992b07be77", null ],
       [ "LowLevelIO", "group__gKernel.html#a1e67076b33694af7e7042da7f95bdbf0", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.Param", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8Param", [
       [ "chValue", "group__gKernel.html#a14feacf4173e75400b4bf5d23be613f4", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.Param.__unnamed60__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed60____", [
+    [ "__arm_2d_op_info_t.Info.Param.__unnamed59__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8Param_8____unnamed59____", [
       [ "bHasSource", "group__gKernel.html#a20300cbf0fd7048d6c53680add0bae93", null ],
       [ "bHasTarget", "group__gKernel.html#a953434e6f818bd41905c39ea14698e00", null ],
-      [ "bHasSrcMask", "group__gKernel.html#a7c66e904cad6508e4945d09f2145413f", null ],
-      [ "bHasDesMask", "group__gKernel.html#ae5ea3d7c386233b3a258d84457514d19", null ],
+      [ "bHasSourceMask", "group__gKernel.html#ab8d0f35edeb0ee5cd1fe4be1220cded4", null ],
+      [ "bHasTargetMask", "group__gKernel.html#aee3dcb7df66324ce1afa4297d03d1def", null ],
       [ "bHasOrigin", "group__gKernel.html#a4f20cdea9614835d9f96e6c9526b6824", null ],
+      [ "bHasExtraSource", "group__gKernel.html#a5f5ab83acc199f127c11f3e9ed3479cf", null ],
+      [ "bHasExtraSourceMask", "group__gKernel.html#abba3560f5513eb6bae5ed6c3de9ee53a", null ],
       [ "bAllowEnforcedColour", "group__gKernel.html#afcec6e72ec1717659666cbeb104b1ab9", null ]
-    ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex", null ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed62__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed62____", [
-      [ "CopyLike", "group__gKernel.html#a70eb9faba18ebf32e1398d257acefc32", null ],
-      [ "FillLike", "group__gKernel.html#a58e2f0256c99554dc01d5d236d9a2613", null ]
-    ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed64__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed64____", [
-      [ "CopyOrigLike", "group__gKernel.html#a7f612e916edb730626c520af4d82fe98", null ],
-      [ "FillOrigLike", "group__gKernel.html#a0cc8932eca451a82e4e5247aa234fb9d", null ]
-    ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelInterfaceIndex.__unnamed66__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelInterfaceIndex_8____unnamed66____", [
-      [ "TileProcessLike", "group__gKernel.html#a7978d3a17b01a1ab3f31acf1bd676a11", null ]
     ] ],
     [ "__arm_2d_op_info_t.Info.LowLevelIO", "group__gKernel.html#union____arm__2d__op__info__t_8Info_8LowLevelIO", [
       [ "IO", "group__gKernel.html#a831516650d9e1ad301d96668244c7093", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed68__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed68____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed61__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed61____", [
       [ "ptCopyLike", "group__gKernel.html#a78caf4b9fec0a9a010be0a037d635f1f", null ],
       [ "ptFillLike", "group__gKernel.html#acedb0e487366d8e124e77657cddf021d", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed70__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed70____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed63__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed63____", [
       [ "ptCopyOrigLike", "group__gKernel.html#a399c799507a0d599f40310af517ee752", null ],
       [ "ptFillOrigLike", "group__gKernel.html#af3203a6f198876164fe21b05540b51d0", null ]
     ] ],
-    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed72__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed72____", [
+    [ "__arm_2d_op_info_t.Info.LowLevelIO.__unnamed65__", "group__gKernel.html#struct____arm__2d__op__info__t_8Info_8LowLevelIO_8____unnamed65____", [
       [ "ptTileProcessLike", "group__gKernel.html#aa643d17e74108930c55010a2b86e8e1b", null ]
     ] ],
-    [ "arm_2d_op_status_t.__unnamed74__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed74____", [
+    [ "arm_2d_op_status_t.__unnamed67__", "group__gKernel.html#structarm__2d__op__status__t_8____unnamed67____", [
       [ "u4SubTaskCount", "group__gKernel.html#a8baeec3b7715b9505d90e374936e1901", null ],
       [ "bIsBusy", "group__gKernel.html#affd00185d2d6d71145d204cf976fd14f", null ],
       [ "bIOError", "group__gKernel.html#ad7551e58ef98ea1d20198afc88febadb", null ],
       [ "bOpCpl", "group__gKernel.html#a52ac3218410df3b2407283060212090f", null ]
     ] ],
-    [ "arm_2d_op_core_t.__unnamed76__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed76____", null ],
-    [ "arm_2d_op_core_t.__unnamed76__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed76_____8Preference", null ],
+    [ "arm_2d_op_core_t.__unnamed69__", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed69____", null ],
+    [ "arm_2d_op_core_t.__unnamed69__.Preference", "group__gKernel.html#structarm__2d__op__core__t_8____unnamed69_____8Preference", null ],
     [ "arm_2d_op_t.Target", "group__gKernel.html#structarm__2d__op__t_8Target", [
       [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
       [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
@@ -273,6 +263,25 @@ var group__gKernel =
     [ "arm_2d_op_src_orig_msk_t.Mask", "group__gKernel.html#structarm__2d__op__src__orig__msk__t_8Mask", [
       [ "ptOriginSide", "group__gKernel.html#a9f82291558b0618554a69191e259b352", null ],
       [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_msk_extra_t.Target", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t_8Target", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptRegion", "group__gKernel.html#a0cb326a2a86a2a0e46a3b1226fb97c65", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_msk_extra_t.Source", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t_8Source", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_msk_extra_t.Origin", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t_8Origin", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "tDummySource", "group__gKernel.html#a39295faf4a194862db89fae27f4b4860", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_msk_extra_t.Mask", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t_8Mask", [
+      [ "ptOriginSide", "group__gKernel.html#a9f82291558b0618554a69191e259b352", null ],
+      [ "ptTargetSide", "group__gKernel.html#a8bad2a9f967b1ca4f848ef67c7f41add", null ]
+    ] ],
+    [ "arm_2d_op_src_orig_msk_extra_t.ExtraSource", "group__gKernel.html#structarm__2d__op__src__orig__msk__extra__t_8ExtraSource", [
+      [ "ptTile", "group__gKernel.html#a64a5acb6f6d68bcc4b933310d44c480b", null ],
+      [ "ptMask", "group__gKernel.html#a1c519591b006f4356ef9b2854d41c0a4", null ]
     ] ],
     [ "__implement_ex", "group__gKernel.html#ga77671429a789a7f89280c090dcf70bf9", null ],
     [ "__inherit_ex", "group__gKernel.html#gaf54863e6804f35f453be141558109325", null ],
@@ -435,6 +444,8 @@ var group__gKernel =
     [ "ARM_2D_OP_INFO_PARAM_HAS_SOURCE_MASK", "group__gKernel.html#gaf7baaf71850f83faeaf242da6da0b301", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_TARGET_MASK", "group__gKernel.html#ga7c26c656a4dd352e1a9607c9319f1007", null ],
     [ "ARM_2D_OP_INFO_PARAM_HAS_ORIGIN", "group__gKernel.html#ga0593a5fcaddee75b1a3ce23c4c94f5df", null ],
+    [ "ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE", "group__gKernel.html#ga5db58184ddfc8913567fee095cd9dd46", null ],
+    [ "ARM_2D_OP_INFO_PARAM_HAS_EXTRA_SOURCE_MASK", "group__gKernel.html#ga123b77736d81ecf9056a9d01674306dd", null ],
     [ "ARM_2D_OP_INFO_PARAM_TILES_MASK", "group__gKernel.html#ga5f7f6f18fe4ab77f89c674b0a8be9f3a", null ],
     [ "__ARM_2D_OP_STATUS_BUSY_msk", "group__gKernel.html#gaab013a91e0bb930476d0e4ace60db7e8", null ],
     [ "__ARM_2D_OP_STATUS_IO_ERROR_msk", "group__gKernel.html#ga8a63d991855534acc4752ad0c8635201", null ],
@@ -453,6 +464,7 @@ var group__gKernel =
     [ "__ARM_2D_HAS_ANTI_ALIAS_TRANSFORM__", "group__gKernel.html#ga24fb614359d977d784afbc821992f1c8", null ],
     [ "__ARM_2D_CFG_FORCED_FIXED_POINT_TRANSFORM__", "group__gKernel.html#gaa832111ac7c0cde008384bf6ff5f1fd8", null ],
     [ "__ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__", "group__gKernel.html#gaf7ee22ee8caba96056e63a8cd544031d", null ],
+    [ "__ARM_2D_CFG_CORE_DISABLE_ORIGIN_SUPPORT__", "group__gKernel.html#gafb5c6204bbc679082d75b07143101c1a", null ],
     [ "ARM_2D_VERSION_MAJOR", "group__gKernel.html#gaa1a520634c974866fb98044c63143532", null ],
     [ "ARM_2D_VERSION_MINOR", "group__gKernel.html#ga17fea46439a9f655a68d9b186838163e", null ],
     [ "ARM_2D_VERSION_PATCH", "group__gKernel.html#ga84adc455ac15b1574d66130d661dbd7e", null ],

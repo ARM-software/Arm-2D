@@ -131,12 +131,12 @@ $(document).ready(function(){initNavTree('arm__2d__conversion_8h_source.html',''
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="comment">/* ----------------------------------------------------------------------</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="comment"> * Project:      Arm-2D Library</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        #include &quot;arm_2d.h&quot;</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="comment"> * Title:        arm_2d_conversion.h</span></div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="comment"> * Description:  Public header file to contain the APIs for colour space</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="comment"> *               conversions</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment"> *</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Date:        29. April 2024</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * $Revision:    V.1.0.6</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment"> * $Date:        05. Jan 2026</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment"> * $Revision:    V.1.0.7</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment"> *</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment"> * Target Processor:  Cortex-M cores</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment"> * -------------------------------------------------------------------- */</span></div>
@@ -386,7 +386,7 @@ $(document).ready(function(){initNavTree('arm__2d__conversion_8h_source.html',''
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span><span class="comment"> * \note the alpha channel will be kept in the output value</span></div>
 <div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span><span class="comment"> */</span></div>
 <div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>ARM_NONNULL(1)</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07">  276</a></span>__STATIC_INLINE uint32_t <a class="code hl_function" href="group__gConversion.html#gaca14cb871b004f4a0240370af0207e07" title="generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_ccca888_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno"><a class="line" href="group__gConversion.html#gab96de2bfd395cd9aeed1d2efe68ad029">  276</a></span>__STATIC_INLINE uint32_t <a class="code hl_function" href="group__gConversion.html#gab96de2bfd395cd9aeed1d2efe68ad029" title="generate a cccn888 colour from a __arm_2d_color_fast_rgb_t object">__arm_2d_ccca8888_pack</a>(<a class="code hl_union" href="group__gConversion.html#union____arm__2d__color__fast__rgb__t" title="3x16-bit packed RGB color autovectorizer friendly format">__arm_2d_color_fast_rgb_t</a> * ptRGB)</div>
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>{</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    assert(NULL != ptRGB);</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    </div>
