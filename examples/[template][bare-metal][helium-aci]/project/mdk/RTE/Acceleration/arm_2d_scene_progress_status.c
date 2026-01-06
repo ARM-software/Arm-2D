@@ -81,6 +81,12 @@
 #   error Unsupported colour depth!
 #endif
 
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+#   define WIFI_SIGNAL          this.tQOIWifiSignal.vres.tTile
+#else
+#   define WIFI_SIGNAL          c_tileWIFISignal
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 #undef this
 #define this (*ptThis)
@@ -101,14 +107,18 @@ extern const arm_2d_tile_t c_tileCMSISLogoMask;
 
 #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
 extern const arm_2d_tile_t c_tileWIFISignal;
+
+#if !ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
 extern const arm_2d_tile_t c_tileWIFISignalMask;
+#endif
 
-static arm_2d_helper_film_t s_tileWIFISignalFilm = 
-    impl_film(c_tileWIFISignal, 32, 32, 6, 36, 33);
+ARM_NOINIT
+static arm_2d_helper_film_t s_tileWIFISignalFilm;
 
-
+#if !ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
 static arm_2d_helper_film_t s_tileWIFISignalFilmMask = 
     impl_film(c_tileWIFISignalMask, 32, 32, 6, 36, 33);
+#endif
 #endif
 
 
@@ -126,6 +136,11 @@ static void __on_scene_progress_status_load(arm_2d_scene_t *ptScene)
     
     progress_bar_round_on_load(&this.tProgressBarRound);
     progress_bar_round_on_load(&this.tProgressBarRound2);
+    progress_bar_round_on_load(&this.tProgressBarRound3);
+
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_qoi_loader_on_load(&this.tQOIWifiSignal);
+#endif
 }
 
 
@@ -140,7 +155,11 @@ static void __on_scene_progress_status_depose(arm_2d_scene_t *ptScene)
 
     progress_bar_round_depose(&this.tProgressBarRound);
     progress_bar_round_depose(&this.tProgressBarRound2);
+    progress_bar_round_depose(&this.tProgressBarRound3);
 
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_qoi_loader_depose(&this.tQOIWifiSignal);
+#endif
 
     /* reset timestamp */
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -179,27 +198,31 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(  s_tileWIFISignalFilm.hwPeriodPerFrame, 
                                     &this.lTimestamp[1])) {
 
+    #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+        arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
+    #else
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
+    #endif
     }
 #endif
 
     int32_t iResult;
     if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[0])) {
         this.iProgress[0] = -1;
+        this.iProgress[1] = 0;
     } else {
         this.iProgress[0] = (uint16_t)iResult;
-    }
-
-    if (arm_2d_helper_time_half_cos_slider(0, 1000, 6000, &iResult, &this.lTimestamp[2])) {
-        this.iProgress[1] = 0;
-        this.lTimestamp[2] = 0;
-    } else {
         this.iProgress[1] = (uint16_t)iResult;
     }
 
     progress_bar_round_on_frame_start(&this.tProgressBarRound);
     progress_bar_round_on_frame_start(&this.tProgressBarRound2);
+    progress_bar_round_on_frame_start(&this.tProgressBarRound3);
+
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_qoi_loader_on_frame_start(&this.tQOIWifiSignal);
+#endif
 }
 
 static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
@@ -209,6 +232,11 @@ static void __on_scene_progress_status_frame_complete(arm_2d_scene_t *ptScene)
 
     progress_bar_round_on_frame_complete(&this.tProgressBarRound);
     progress_bar_round_on_frame_complete(&this.tProgressBarRound2);
+    progress_bar_round_on_frame_complete(&this.tProgressBarRound3);
+
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_qoi_loader_on_frame_complete(&this.tQOIWifiSignal);
+#endif
 }
 
 static
@@ -241,24 +269,29 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
     arm_2d_canvas(ptTile, __canvas) {
 
     #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
-        arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm .use_as__arm_2d_tile_t.tRegion.tSize;
-
+        arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm.use_as__arm_2d_tile_t.tRegion.tSize;
 
         arm_2d_dock_vertical(__canvas, 
-                            150 + tWiFiLogoSize.iHeight) {
+                            180 + tWiFiLogoSize.iHeight) {
     #else
-        arm_2d_dock_vertical(__canvas, 150) {
+        arm_2d_dock_vertical(__canvas, 180) {
     #endif
             arm_2d_layout(__vertical_region) {
             #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
                 __item_line_vertical(__vertical_region.tSize.iWidth, tWiFiLogoSize.iHeight) {
                     arm_2d_align_centre(__item_region, tWiFiLogoSize) {
                         
+                    #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+                        arm_2d_tile_copy_only(  (arm_2d_tile_t *)&s_tileWIFISignalFilm,
+                                                ptTile,
+                                                &__centre_region);
+                    #else
                         arm_2d_tile_copy_with_src_mask_only(
                                 (arm_2d_tile_t *)&s_tileWIFISignalFilm,
                                 (arm_2d_tile_t *)&s_tileWIFISignalFilmMask,
                                 ptTile,
                                 &__centre_region);
+                    #endif
                 
                         arm_2d_helper_dirty_region_update_item( 
                                                     &this.tDirtyRegionItems[DIRTY_REGION_WIFI],
@@ -325,6 +358,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
                     }
                 }
 
+                __item_line_dock_vertical(30) {
+                    arm_2d_container(ptTile, __progress_bar, &__item_region) {
+                        progress_bar_round_show3(&this.tProgressBarRound3, 
+                                                &__progress_bar,
+                                                NULL,
+                                                GLCD_COLOR_GRAY(32), 
+                                                __RGB(0x94, 0xd2, 0x52), 
+                                                this.iProgress[1], 
+                                                255);
+                    }
+                }
+
             }
         }
 
@@ -368,12 +413,6 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
     arm_2d_region_t tScreen
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-
-#if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
-    /* set to the last frame */
-    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
-    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
-#endif
 
     *ptThis = (user_scene_progress_status_t){
         .use_as__arm_2d_scene_t = {
@@ -423,6 +462,74 @@ user_scene_progress_status_t *__arm_2d_scene_progress_status_init(   arm_2d_scen
 
         progress_bar_round_init(&this.tProgressBarRound2, &tCFG);
     } while(0);
+
+    do {
+        progress_bar_round_cfg_t tCFG = {
+            .ptScene = &ptThis->use_as__arm_2d_scene_t,
+            .ValueRange = {
+                .iMin = 0,
+                .iMax = 1000,
+            },
+        };
+
+        progress_bar_round_init(&this.tProgressBarRound3, &tCFG);
+    } while(0);
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    /* initialize QOI loader */
+    do {
+    #if ARM_2D_DEMO_QOI_USE_FILE
+        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/wifi_signal.qoi");
+    #else
+        extern const uint8_t c_qoiWifiSignal[68493];
+
+        arm_qoi_io_binary_loader_init(  &this.LoaderIO.tBinary, 
+                                        c_qoiWifiSignal, 
+                                        sizeof(c_qoiWifiSignal));
+    #endif
+        arm_qoi_loader_cfg_t tCFG = {
+            //.bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            //.tBackgroundColour.wColour = GLCD_COLOR_WHITE,
+        #if ARM_2D_DEMO_QOI_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+        };
+
+        arm_qoi_loader_init(&this.tQOIWifiSignal, &tCFG);
+    } while(0);
+#endif
+
+
+#if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
+
+    s_tileWIFISignalFilm = (arm_2d_helper_film_t)
+        impl_film(WIFI_SIGNAL, 32, 32, 6, 36, 33);
+
+#if !ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilmMask, -1);
+#endif
+
+    /* set to the last frame */
+    arm_2d_helper_film_set_frame(&s_tileWIFISignalFilm, -1);
+    
+#endif
+
 
     /* ------------   initialize members of user_scene_rickrolling_t end   ---------------*/
 

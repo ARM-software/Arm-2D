@@ -171,9 +171,7 @@ int stderr_putchar(char txchar)
 {
     return stdout_putchar(txchar);
 }
-#else
-extern int stdout_putchar(int);
-#endif
+
 
 void ttywrch (int ch)
 {
@@ -193,6 +191,7 @@ int _write (int fd, char *ptr, int len)
   
     return -1;
 }
+#endif
 
 #if 0
 

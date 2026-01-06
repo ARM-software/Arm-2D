@@ -511,16 +511,16 @@ static demo_scene_t const c_SceneLoaders[] = {
 //        scene_audiomark_loader,
 //    },
     
-#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-    {
-        3000,
-        scene_virtual_resource_loader,
-    },
-    {
-        5000,
-        scene_animate_background_loader,
-    },
-#endif
+//#if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
+//    {
+//        3000,
+//        scene_virtual_resource_loader,
+//    },
+//    {
+//        5000,
+//        scene_animate_background_loader,
+//    },
+//#endif
 
 #endif
 

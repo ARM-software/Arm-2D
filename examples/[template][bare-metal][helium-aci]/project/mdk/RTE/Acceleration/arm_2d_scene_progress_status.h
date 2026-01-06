@@ -28,6 +28,10 @@
 #include "arm_2d_helper_scene.h"
 #include "arm_2d_example_controls.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader) 
+#   include "arm_2d_example_loaders.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -62,6 +66,15 @@ extern "C" {
 #   define PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION     1
 #endif
 
+#ifndef ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+#   define ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI          1
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader) || !PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
+#   undef  ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+#   define ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI          0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -87,15 +100,24 @@ struct user_scene_progress_status_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[3];
+    int64_t lTimestamp[2];
     
     arm_2d_helper_dirty_region_item_t tDirtyRegionItems[4];
 
     progress_bar_round_t tProgressBarRound;
     progress_bar_round_t tProgressBarRound2;
+    progress_bar_round_t tProgressBarRound3;
 
     bool bUserAllocated;
     int16_t iProgress[2];
+
+#if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+    arm_qoi_loader_t tQOIWifiSignal;
+    union {
+        arm_qoi_io_file_loader_t tFile;
+        arm_qoi_io_binary_loader_t tBinary;
+    } LoaderIO;
+#endif
 )
     /* place your public member here */
     

@@ -37,7 +37,7 @@ import tempfile
 
 c_head_string="""
 
-/* generated with ttf2c.py (v2.4.0) */
+/* generated with ttf2c.py (v2.4.1) */
 
 #include "arm_2d_helper.h"
 
@@ -327,9 +327,10 @@ def generate_glyphs_data(input_file, text, pixel_size, font_bit_size, font_index
         if list(utf8_encoding) == [0xef, 0xbb, 0xbf]:
             continue
 
-        advance_width = math.ceil(face.glyph.advance.x / 64.0)
-        bearing_x = face.glyph.bitmap_left
-        bearing_y = face.glyph.bitmap_top
+        # update advance, bearing x and bearing y as we added the 1px boarder around each glyph. 
+        advance_width = math.ceil(face.glyph.advance.x / 64.0) + 1
+        bearing_x = face.glyph.bitmap_left + 1
+        bearing_y = face.glyph.bitmap_top + 1
         width = bitmap.width
         height = bitmap.rows
         pitch = bitmap.pitch
@@ -510,7 +511,7 @@ def write_c_code(glyphs_data, output_file, name, char_max_width, char_max_height
 
 
 def main():
-    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.4.0)')
+    parser = argparse.ArgumentParser(description='TrueTypeFont to C array converter (v2.4.1)')
     parser.add_argument("-i", "--input",    type=str,   help="Path to the TTF file",            required=True)
     parser.add_argument("--index",          type=int,   help="The Font Index in a TTC file",    required=False,     default=0)
     parser.add_argument("-t", "--text",     type=str,   help="Path to the text file",           required=False)

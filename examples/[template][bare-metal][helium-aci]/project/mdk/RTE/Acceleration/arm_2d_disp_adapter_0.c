@@ -38,6 +38,7 @@
 #   pragma clang diagnostic ignored "-Wgnu-zero-variadic-macro-arguments"
 #   pragma clang diagnostic ignored "-Wmissing-prototypes"
 #   pragma clang diagnostic ignored "-Wunused-variable"
+#   pragma clang diagnostic ignored "-Wunused-function"
 #   pragma clang diagnostic ignored "-Wgnu-statement-expression"
 #   pragma clang diagnostic ignored "-Wdouble-promotion"
 #   pragma clang diagnostic ignored "-Wembedded-directive"
@@ -149,7 +150,7 @@ static void __on_frame_complete(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptScene);
 }
 
-#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
+
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 {
@@ -174,7 +175,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_handler)
 
     return arm_fsm_rt_cpl;
 }
-#endif
 
 #if __DISP0_CFG_NAVIGATION_LAYER_MODE__
 
@@ -682,6 +682,9 @@ static void __user_scene_player_init(void)
 #if __DISP0_CFG_DEBUG_DIRTY_REGIONS__
         .FrameBuffer.bDebugDirtyRegions = true,
 #endif
+#if __DISP0_CFG_DISABLE_DYNAMIC_PFB__
+        .FrameBuffer.bDisableDynamicFPBSize = true,
+#endif
         .FrameBuffer.u3PixelWidthAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_WIDTH__,
         .FrameBuffer.u3PixelHeightAlign = __DISP0_CFG_PFB_PIXEL_ALIGN_HEIGHT__,
 #if     __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                          \
@@ -712,8 +715,6 @@ static void __user_scene_player_init(void)
     extern arm_2d_helper_2d_copy_handler_t __disp_adapter0_request_2d_copy;
     extern arm_2d_helper_dma_copy_handler_t __disp_adapter0_request_dma_copy;
     
-    
-        arm_2d_helper_3fb_cfg_t tCFG = {
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
 #if     __DISP0_CFG_ROTATE_SCREEN__ == 1\
@@ -912,6 +913,26 @@ bool disp_adapter0_putchar(uint8_t chChar)
 /*----------------------------------------------------------------------------*
  * Display Adapter Entry                                                      *
  *----------------------------------------------------------------------------*/
+static arm_2d_scene_t s_tDefaultScene = {
+#if __DISP0_CFG_COLOR_SOLUTION__ == 1
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_BLACK},
+#else
+    /* the canvas colour */
+    .tCanvas = {GLCD_COLOR_WHITE}, 
+#endif
+
+    .fnScene        = &__pfb_draw_handler,
+    //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+    .fnOnFrameStart = &__on_frame_start,
+    .fnOnFrameCPL   = &__on_frame_complete,
+    .fnDepose       = NULL,
+};
+
+arm_2d_scene_t *disp_adapter0_get_default_scene(void)
+{
+    return &s_tDefaultScene;
+}
 
 void disp_adapter0_init(void)
 {
@@ -932,28 +953,10 @@ void disp_adapter0_init(void)
 
 #if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
     do {
-        static arm_2d_scene_t s_tScenes[] = {
-            [0] = {
-            
-            #if __DISP0_CFG_COLOR_SOLUTION__ == 1
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_BLACK},
-            #else
-                /* the canvas colour */
-                .tCanvas = {GLCD_COLOR_WHITE}, 
-            #endif
-
-                .fnScene        = &__pfb_draw_handler,
-                //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
-                .fnOnFrameStart = &__on_frame_start,
-                .fnOnFrameCPL   = &__on_frame_complete,
-                .fnDepose       = NULL,
-            },
-        };
         arm_2d_scene_player_append_scenes( 
                                         &DISP0_ADAPTER,
-                                        (arm_2d_scene_t *)s_tScenes,
-                                        dimof(s_tScenes));
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
     } while(0);
 #endif
 }
@@ -961,6 +964,40 @@ void disp_adapter0_init(void)
 arm_fsm_rt_t __disp_adapter0_task(void)
 {
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
+}
+
+arm_2d_scene_t *disp_adapter0_nano_prepare(void)
+{
+    arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
+    s_tDefaultScene.fnBackground = NULL;
+    s_tDefaultScene.fnScene = NULL;
+    arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, 
+                                            ARM_2D_SCENE_SWITCH_MODE_NONE);
+
+    arm_2d_scene_player_append_scenes(  &DISP0_ADAPTER,
+                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        1);
+    return &s_tDefaultScene;
+}
+
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void)
+{
+    static __disp_adapter0_draw_t s_tDraw = {0};
+
+    do {
+        arm_fsm_rt_t tResult = __disp_adapter0_task();
+        
+        if (tResult == arm_fsm_rt_cpl || tResult == (arm_fsm_rt_t)ARM_2D_RT_FRAME_SKIPPED) {
+            return NULL;
+        } else if ((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW == tResult) {
+            s_tDraw.bIsNewFrame = arm_2d_helper_pfb_get_current_framebuffer(
+                        &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                        (const arm_2d_tile_t **)&s_tDraw.ptTile
+                    );
+
+            return &s_tDraw;
+        }
+    } while(1);   
 }
 
 
@@ -1022,10 +1059,54 @@ void __disp_adapter0_vres_asset_2dcopy( uintptr_t pObj,
     }
 }
 
+__WEAK
+bool __disp_adapter0_vres_asset_hint_on_load(uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES, 
+                                            arm_2d_region_t *ptRegion)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(ptRegion);
+
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. Once you have
+     *       return true, you take the responsiblity to manage the buffer,
+     *       and please make sure you return true in 
+     *       __disp_adapter0_vres_asset_hint_depose also.
+     *       
+     */
+    return false;
+}
+
+__WEAK
+bool __disp_adapter0_vres_asset_hint_depose(uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES,
+                                            intptr_t pBuffer)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(pBuffer);
+
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. 
+     * 
+     * NOTE: It is YOUR responsibility to manage the buffer (e.g. release) 
+     *       and the display adapter service will NOT release the buffer
+     *       for you. 
+     */
+    return false;
+}
+
+
 intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj, 
                                             arm_2d_vres_t *ptVRES, 
                                             arm_2d_region_t *ptRegion)
 {
+    bool bUserAllocated = 
+    __disp_adapter0_vres_asset_hint_on_load(pObj, ptVRES, ptRegion);
+
     COLOUR_INT *pBuffer = NULL;
     size_t nPixelSize = sizeof(COLOUR_INT);
     size_t tBufferSize;
@@ -1049,7 +1130,8 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
 
     /* background load mode */
     do {
-        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES) {
+        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES     /* NOT copy only */
+        &&  !bUserAllocated) {                                                  /* NO user provided buffer*/
             break;
         }
 
@@ -1075,7 +1157,6 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
     /* default condition */
     tBufferSize = ptRegion->tSize.iHeight * nBytesPerLine;
     
-    
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     pBuffer = __disp_adapter0_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
@@ -1094,6 +1175,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
     }
     pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
 #endif
+
     /* load content into the buffer */
     if (nBitsPerPixel < 8) {
         /* A1, A2 and A4 support */
@@ -1141,6 +1223,10 @@ void __disp_adapter0_vres_buffer_deposer (
                                             arm_2d_vres_t *ptVRES, 
                                             intptr_t pBuffer )
 {
+    if (__disp_adapter0_vres_asset_hint_depose(pTarget, ptVRES, pBuffer)) {
+        return ;
+    }
+
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);

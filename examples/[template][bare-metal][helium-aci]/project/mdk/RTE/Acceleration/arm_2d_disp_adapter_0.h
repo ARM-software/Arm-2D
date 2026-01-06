@@ -139,6 +139,12 @@ extern "C" {
 #   define __DISP0_CFG_PFB_HEAP_SIZE__                             1
 #endif
 
+// <q>Disable Dynamic PFB optimization
+// <i> Selecting this option will disable the dynamic PFB optimisation. Please do NOT select this unless you are sure about the consequences. 
+#ifndef __DISP0_CFG_DISABLE_DYNAMIC_PFB__
+#   define __DISP0_CFG_DISABLE_DYNAMIC_PFB__                       0
+#endif
+
 // </h>
 
 // <h>Navigation Layer
@@ -244,7 +250,7 @@ extern "C" {
 // <i> This feature is disabled by default.
 // <i> NOTE: When selecting the background loading mode, you can ONLY use virtual resource as the source tile in the tile-copy-only APIs. 
 #ifndef __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
-#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   0
+#   define __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__                   2
 #endif
 
 // <q>Use heap to allocate buffer in the virtual resource helper service
@@ -334,7 +340,26 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#define DISP_ADAPTER0_NANO_DRAW()                                               \
+                                                                                \
+    arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
+        arm_using(bool bIsNewFrame = true)                                      \
+            for (__disp_adapter0_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
+                (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
+                        = __disp_adapter0_nano_draw();                          \
+                    if (NULL != ARM_2D_SAFE_NAME(ptUserDraw)) {                 \
+                        ptTile = ARM_2D_SAFE_NAME(ptUserDraw)->ptTile;          \
+                        bIsNewFrame = ARM_2D_SAFE_NAME(ptUserDraw)->bIsNewFrame;\
+                    };                                                          \
+                    (NULL != ARM_2D_SAFE_NAME(ptUserDraw));                     \
+                    }));)
 /*============================ TYPES =========================================*/
+
+typedef struct {
+    arm_2d_tile_t *ptTile;
+    bool bIsNewFrame;
+} __disp_adapter0_draw_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
@@ -348,6 +373,14 @@ void disp_adapter0_init(void);
 extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
+extern
+arm_2d_scene_t *disp_adapter0_nano_prepare(void);
+
+extern
+__disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);
+
+extern
+arm_2d_scene_t *disp_adapter0_get_default_scene(void);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!
