@@ -87,7 +87,7 @@ In general, anyone from opensource community can find something interesting from
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.5)](#in-this-version-v125-dev)
+  - [In this version (v1.2.5)](#in-this-version-v125)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
