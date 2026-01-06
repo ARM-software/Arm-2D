@@ -715,8 +715,6 @@ static void __user_scene_player_init(void)
     extern arm_2d_helper_2d_copy_handler_t __disp_adapter0_request_2d_copy;
     extern arm_2d_helper_dma_copy_handler_t __disp_adapter0_request_dma_copy;
     
-    
-        arm_2d_helper_3fb_cfg_t tCFG = {
         arm_2d_helper_3fb_cfg_t tCFG = {
             .tScreenSize = {
 #if     __DISP0_CFG_ROTATE_SCREEN__ == 1\
@@ -1061,10 +1059,54 @@ void __disp_adapter0_vres_asset_2dcopy( uintptr_t pObj,
     }
 }
 
+__WEAK
+bool __disp_adapter0_vres_asset_hint_on_load(uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES, 
+                                            arm_2d_region_t *ptRegion)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(ptRegion);
+
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. Once you have
+     *       return true, you take the responsiblity to manage the buffer,
+     *       and please make sure you return true in 
+     *       __disp_adapter0_vres_asset_hint_depose also.
+     *       
+     */
+    return false;
+}
+
+__WEAK
+bool __disp_adapter0_vres_asset_hint_depose(uintptr_t pObj, 
+                                            arm_2d_vres_t *ptVRES,
+                                            intptr_t pBuffer)
+{
+    ARM_2D_UNUSED(pObj);
+    ARM_2D_UNUSED(ptVRES);
+    ARM_2D_UNUSED(pBuffer);
+
+    /*
+     * NOTE: When return true, it means user provides buffer and stores
+     *       the buffer address in ptVRES->tTile.nAddress. 
+     * 
+     * NOTE: It is YOUR responsibility to manage the buffer (e.g. release) 
+     *       and the display adapter service will NOT release the buffer
+     *       for you. 
+     */
+    return false;
+}
+
+
 intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj, 
                                             arm_2d_vres_t *ptVRES, 
                                             arm_2d_region_t *ptRegion)
 {
+    bool bUserAllocated = 
+    __disp_adapter0_vres_asset_hint_on_load(pObj, ptVRES, ptRegion);
+
     COLOUR_INT *pBuffer = NULL;
     size_t nPixelSize = sizeof(COLOUR_INT);
     size_t tBufferSize;
@@ -1088,7 +1130,8 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
 
     /* background load mode */
     do {
-        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES) {
+        if (ptVRES->tTile.tInfo.u3ExtensionID != ARM_2D_TILE_EXTENSION_VRES     /* NOT copy only */
+        &&  !bUserAllocated) {                                                  /* NO user provided buffer*/
             break;
         }
 
@@ -1114,7 +1157,6 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
     /* default condition */
     tBufferSize = ptRegion->tSize.iHeight * nBytesPerLine;
     
-    
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     pBuffer = __disp_adapter0_aligned_malloc(tBufferSize, nPixelSize);
     assert(NULL != pBuffer);
@@ -1133,6 +1175,7 @@ intptr_t __disp_adapter0_vres_asset_loader (uintptr_t pObj,
     }
     pBuffer = (COLOUR_INT *)((uintptr_t)ptPFB + sizeof(arm_2d_pfb_t));
 #endif
+
     /* load content into the buffer */
     if (nBitsPerPixel < 8) {
         /* A1, A2 and A4 support */
@@ -1180,6 +1223,10 @@ void __disp_adapter0_vres_buffer_deposer (
                                             arm_2d_vres_t *ptVRES, 
                                             intptr_t pBuffer )
 {
+    if (__disp_adapter0_vres_asset_hint_depose(pTarget, ptVRES, pBuffer)) {
+        return ;
+    }
+
 #if __DISP0_CFG_USE_HEAP_FOR_VIRTUAL_RESOURCE_HELPER__
     ARM_2D_UNUSED(pTarget);
     ARM_2D_UNUSED(ptVRES);

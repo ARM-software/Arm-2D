@@ -103,8 +103,6 @@ ARM_PRIVATE(
     int16_t iExplosionRadius;
     COLOUR_TYPE_T tExplosion;
 
-    arm_2d_user_draw_line_descriptor_t tDrawLineOP[16];
-
     __explosion_halo_t tHalos[16];
 )
     /* place your public member here */
