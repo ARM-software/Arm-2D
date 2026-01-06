@@ -506,11 +506,6 @@
               <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\arm_2d_asset_MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\arm_2d_asset_knob_circle_quater.c</FilePath>
@@ -724,7 +719,7 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6240000::V6.24::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1028,7 +1023,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>8</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1047,7 +1042,7 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
+            <v6Lto>1</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
@@ -1217,11 +1212,6 @@
               <FileName>arm_2d_asset_radial_line_cover.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\arm_2d_asset_MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
@@ -1933,11 +1923,6 @@
               <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\arm_2d_asset_MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\arm_2d_asset_knob_circle_quater.c</FilePath>
@@ -2576,11 +2561,6 @@
               <FileName>arm_2d_asset_radial_line_cover.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
-            </File>
-            <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\arm_2d_asset_MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
@@ -3292,11 +3272,6 @@
               <FilePath>..\..\..\common\asset\arm_2d_asset_radial_line_cover.c</FilePath>
             </File>
             <File>
-              <FileName>arm_2d_asset_MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\..\common\asset\arm_2d_asset_MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_asset_knob_circle_quater.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\common\asset\arm_2d_asset_knob_circle_quater.c</FilePath>
@@ -3532,7 +3507,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.5" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.5" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:AudioMark">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3562,7 +3537,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Compass">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Compass">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3582,7 +3557,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Decoding JPG with TJpgDec">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Decoding JPG with TJpgDec">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3612,7 +3587,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Hollow Out List">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3632,7 +3607,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Matrix" Cvendor="ARM" Cversion="2.0.1" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Matrix" Cvendor="ARM" Cversion="2.0.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Matrix">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3652,7 +3627,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Monochrome">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Monochrome">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3662,7 +3637,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Panel">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3672,7 +3647,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Progress and Status">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3682,7 +3657,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Ruler">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3692,7 +3667,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demo-TJpgDec-Loader">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Showing Animation with TJpgDec">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3712,7 +3687,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Transform">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3722,7 +3697,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:User Defined OPCODE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:User Defined OPCODE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3742,7 +3717,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Watch Face 01">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3752,7 +3727,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.10.3" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.15.0" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3762,7 +3737,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.1" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.2" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3772,7 +3747,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="3.1.0" condition="Arm-2D-Loaders" ymlID="Acceleration:Arm-2D Extras:Loaders">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.4.0" condition="Arm-2D-Loaders" ymlID="Acceleration:Arm-2D Extras:Loaders">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3782,7 +3757,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8" ymlID="Acceleration:Arm-2D Helper:Display Adapter">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3792,7 +3767,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3802,7 +3777,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Alpha-Blending">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Alpha-Blending">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3812,7 +3787,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP" ymlID="Acceleration:Arm-2D:Core">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3822,7 +3797,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Filter">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Filter">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3832,7 +3807,7 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.4" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Transform">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Transform">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3887,7 +3862,7 @@
           </targetInfo>
         </targetInfos>
       </component>
-      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.5.3-dev" condition="CMSIS-CORE" ymlID="Utilities:perf_counter:Core&amp;Source">
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.5.4" condition="CMSIS-CORE" ymlID="Utilities:perf_counter:Core&amp;Source">
         <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -3981,7 +3956,7 @@
     <files>
       <file attr="config" category="sourceC" name="examples\demos\Battleship.c" version="2.2.0">
         <instance index="0">RTE\Acceleration\Battleship.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4016,20 +3991,14 @@
         <targetInfos/>
       </file>
       <file attr="config" category="other" name="examples\demos\Rickrolling75.jpg" version="1.0.2">
-        <instance index="0">RTE\Acceleration\Rickrolling75.jpg</instance>
+        <instance index="0" removed="1">RTE\Acceleration\Rickrolling75.jpg</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
-        <targetInfos>
-          <targetInfo name="FastModel"/>
-          <targetInfo name="V2M-MPS2-CM0+"/>
-          <targetInfo name="V2M-MPS2-CM33"/>
-          <targetInfo name="V2M-MPS2-CM4"/>
-          <targetInfo name="V2M-MPS2-CM7"/>
-        </targetInfos>
+        <targetInfos/>
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\SquareDigits.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\SquareDigits.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4053,7 +4022,7 @@
       </file>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.5.0">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4063,9 +4032,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.5.12">
+      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.6.0">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4267,9 +4236,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_compass.c" version="1.2.2">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_compass.c" version="1.3.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_compass.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4279,9 +4248,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_compass.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_compass.h" version="1.3.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_compass.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4461,7 +4430,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_clock.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4473,7 +4442,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_clock.h" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4485,7 +4454,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.c" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4497,7 +4466,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.h" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4507,9 +4476,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.2.2">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4519,9 +4488,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4533,7 +4502,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_list.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4545,7 +4514,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_list.h" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4557,7 +4526,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_loading.c" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4569,7 +4538,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_loading.h" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4581,7 +4550,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.c" version="1.1.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4593,7 +4562,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.h" version="1.1.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4651,9 +4620,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_rickrolling.c" version="2.1.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_rickrolling.c" version="2.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_rickrolling.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4663,9 +4632,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_rickrolling.h" version="2.1.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_rickrolling.h" version="2.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_rickrolling.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4723,9 +4692,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_tjpgd.c" version="1.0.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_tjpgd.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_tjpgd.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4735,9 +4704,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_tjpgd.h" version="1.0.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_tjpgd.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_tjpgd.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4771,9 +4740,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="2.2.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="3.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4783,9 +4752,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="2.2.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="3.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4843,9 +4812,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.1" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4855,9 +4824,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.1" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4867,9 +4836,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.2.1">
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.1" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4879,9 +4848,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.2.1">
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.1.1" condition="Arm-2D-CORE"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4893,7 +4862,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\freetype_loader\arm_freetype_cfg.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_freetype_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.4.0" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4903,9 +4872,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\loader\qoi_loader\arm_qoi_cfg.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\common\loader\qoi_loader\arm_qoi_cfg.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_qoi_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.4.0" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4917,7 +4886,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\tjpgd_loader\arm_tjpgd_cfg.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_tjpgd_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.4.0" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4929,7 +4898,7 @@
       </file>
       <file attr="config" category="header" name="examples\common\loader\zjpgd_loader\arm_zjpgd_cfg.h" version="1.0.0">
         <instance index="0">RTE\Acceleration\arm_zjpgd_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.0.2" condition="Arm-2D-Loaders"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.4.0" condition="Arm-2D-Loaders"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4951,9 +4920,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.5">
+      <file attr="config" category="utility" name="tools\img2c.py" version="1.3.0">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
@@ -4963,9 +4932,9 @@
           <targetInfo name="V2M-MPS2-CM7"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\ttf2c.py" version="2.3.1">
+      <file attr="config" category="utility" name="tools\ttf2c.py" version="2.4.1">
         <instance index="0">RTE\Acceleration\ttf2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
