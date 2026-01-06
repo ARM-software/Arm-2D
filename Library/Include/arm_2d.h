@@ -22,7 +22,7 @@
  * Description:  Public header file to contain the all avaialble Arm-2D 
  *               interface header files 
  *
- * $Date:        5 Jan 2026
+ * $Date:        6 Jan 2026
  * $Revision:    V.1.2.5
  *
  * Target Processor:  Cortex-M cores

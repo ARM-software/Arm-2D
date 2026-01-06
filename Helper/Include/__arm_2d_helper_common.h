@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        16. Dec 2025
- * $Revision:    V.1.9.0
+ * $Date:        06. Jan 2026
+ * $Revision:    V.2.0.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -1176,6 +1176,29 @@ extern "C" {
                                 (__region_ptr),##__VA_ARGS__)                   \
                 arm_2d_canvas_open( &__container_name, __container_name##_canvas)
 
+#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
+#else
+#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                   \
+        __ARM_USING2(__arm_2d_layout_debug_t __arm_2d_reserve_canvas__ = {      \
+                        .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
+                    },                                                          \
+                    { /* on leave */                                            \
+                        COLOUR_INT tColor = arm_2d_pixel_from_brga8888(         \
+                                        __arm_2d_helper_colour_slider(          \
+                                            __RGB32(0, 0xFF, 0),                \
+                                            __RGB32(0, 0, 0xFF),                \
+                                            8,                                  \
+                                            __arm_2d_reserve_canvas__.wLevel)); \
+                        arm_2d_helper_draw_box(                                 \
+                            (__arm_2d_reserve_canvas__.ptTile),                 \
+                            NULL,                                               \
+                            1,                                                  \
+                            tColor,                                             \
+                            128);                                               \
+                    })
+#endif
+
 /*!
  * \brief Please do NOT use this macro directly directly
  * 
@@ -1184,6 +1207,7 @@ extern "C" {
                                 __new_canvas_name,                              \
                                 __region_ptr,                                   \
                                 ...)                                            \
+            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __new_canvas_name)              \
             for (arm_2d_margin_t ARM_2D_SAFE_NAME(tMargin),                     \
                 *ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr) = NULL;              \
                  ARM_CONNECT3(__ARM_USING_, __LINE__,_ptr)++ == NULL ?          \
@@ -1264,29 +1288,6 @@ extern "C" {
                                 __new_canvas_name,                              \
                                 (__reference_region_ptr),##__VA_ARGS__)
 
-#if !__ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
-#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)
-#else
-#   define __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                   \
-        __ARM_USING2(__arm_2d_layout_debug_t __arm_2d_reserve_canvas__ = {      \
-                        .ptTile = (arm_2d_tile_t *)(__tile_ptr)                 \
-                    },                                                          \
-                    { /* on leave */                                            \
-                        COLOUR_INT tColor = arm_2d_pixel_from_brga8888(         \
-                                        __arm_2d_helper_colour_slider(          \
-                                            __RGB32(0, 0xFF, 0),                \
-                                            __RGB32(0, 0, 0xFF),                \
-                                            8,                                  \
-                                            __arm_2d_reserve_canvas__.wLevel)); \
-                        arm_2d_helper_draw_box(                                 \
-                            (__arm_2d_reserve_canvas__.ptTile),                 \
-                            NULL,                                               \
-                            1,                                                  \
-                            tColor,                                             \
-                            128);                                               \
-                })
-#endif
-
 #if defined(__ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__)                \
  && __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
 
@@ -1323,6 +1324,7 @@ extern "C" {
 #endif
 
 #define __arm_2d_canvas(__tile_ptr, __region_name, ...)                         \
+            __ARM_2D_CANVAS_DEBUG__(__tile_ptr, __region_name)                  \
             arm_using(arm_2d_region_t __region_name = {0},                      \
                     {                                                           \
                         ARM_2D_UNUSED(__region_name);                           \
