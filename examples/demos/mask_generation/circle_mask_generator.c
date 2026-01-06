@@ -204,6 +204,8 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
                                  uint32_t iTargetStrideInByte,
                                  uint_fast8_t chBitsPerPixel)
 {
+    ARM_2D_UNUSED(chBitsPerPixel);
+
     assert(NULL != ptObj);
     circle_mask_generator_t *ptThis = (circle_mask_generator_t *)ptObj;
 
@@ -214,7 +216,6 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
 
     uint32_t wRadius2 = (uint32_t)iRadius * (uint32_t)iRadius;
     uint32_t wRadiusBorder2 = (uint32_t)(iRadius + 1) * (uint32_t)(iRadius + 1);
-    q16_t q16Radius = reinterpret_q16_s16(iRadius);
 
     q16_t q161MagicRatio 
         = reinterpret_q16_s16( 
@@ -226,7 +227,6 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
         int16_t iYOffset = iY - this.tPivot.iY;
 
         bool bFindFirstInnerPoint = false;
-        bool bDrawInner = false;
         uint16_t hwInnerPoints = 0;
 
         int_fast16_t iX = ptROI->tLocation.iX;
@@ -259,7 +259,6 @@ arm_2d_err_t __circle_mask_generator_decode(arm_generic_loader_t *ptObj,
 
             if (bFindFirstInnerPoint) {
                 /* draw inner points */
-                bDrawInner = true;
                 if (--hwInnerPoints) {
                     *pchTargetLine++ = 0xFF;
                     continue;
