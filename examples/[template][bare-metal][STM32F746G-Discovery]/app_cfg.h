@@ -22,6 +22,20 @@
 /*============================ INCLUDES ======================================*/
 
 /*============================ MACROS ========================================*/
+
+#define __GLCD_CFG_SCEEN_WIDTH__            480
+#define __GLCD_CFG_SCEEN_HEIGHT__           272
+
+#define __DISP0_CFG_SCEEN_WIDTH__           __GLCD_CFG_SCEEN_WIDTH__
+#define __DISP0_CFG_SCEEN_HEIGHT__          __GLCD_CFG_SCEEN_HEIGHT__
+
+#define __DISP0_CFG_PFB_BLOCK_WIDTH__       __DISP0_CFG_SCEEN_WIDTH__
+#define __DISP0_CFG_PFB_BLOCK_HEIGHT__      (__DISP0_CFG_SCEEN_HEIGHT__/10)
+
+
+#define ARM_2D_SCENE_METER_USE_JPG          1
+#define ARM_2D_SCENE_HISTOGRAM_USE_JPG      1
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

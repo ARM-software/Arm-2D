@@ -132,13 +132,6 @@ static void __on_scene_user_defined_opcode_depose(arm_2d_scene_t *ptScene)
     user_scene_user_defined_opcode_t *ptThis = (user_scene_user_defined_opcode_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    /* draw line */
-    do {
-        arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
-            ARM_2D_OP_DEPOSE(*ptLineOP);
-        }
-    } while(0);
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
@@ -333,15 +326,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_user_defined_opcode_handler)
                 };
 
                 arm_2dp_rgb565_user_draw_line(
-                                &this.tDrawLineOP[n],
+                                NULL, 
                                 ptTile,
                                 &__top_canvas,
                                 &tParam,
                                 (arm_2d_color_rgb565_t){GLCD_COLOR_GREEN},
                                 255);
             } while(0);
-            ARM_2D_OP_WAIT_ASYNC(&this.tDrawLineOP[n]);
-
 
             tStartPoint.iX += 200;
         }
@@ -584,12 +575,8 @@ user_scene_user_defined_opcode_t *__arm_2d_scene_user_defined_opcode_init(   arm
     };
 
     /* ------------   initialize members of user_scene_user_defined_opcode_t begin ---------------*/
-    /* draw line */
-    do {
-        arm_foreach(arm_2d_user_draw_line_descriptor_t, this.tDrawLineOP, ptLineOP) {
-            ARM_2D_OP_INIT(*ptLineOP);
-        }
-    } while(0);
+
+
 
     /* ------------   initialize members of user_scene_user_defined_opcode_t end   ---------------*/
 

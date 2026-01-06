@@ -131,6 +131,11 @@
 #   define     PHYSAC_FREE(ptr)                free(ptr)
 #endif
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wsign-compare"
+#endif
+
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
 // NOTE: Below types are required for PHYSAC_STANDALONE usage
@@ -2185,5 +2190,9 @@ static inline Vector2 Mat2MultiplyVector2(Mat2 matrix, Vector2 vector)
 {
     return (Vector2){ matrix.m00*vector.x + matrix.m01*vector.y, matrix.m10*vector.x + matrix.m11*vector.y };
 }
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
 
 #endif  // PHYSAC_IMPLEMENTATION
