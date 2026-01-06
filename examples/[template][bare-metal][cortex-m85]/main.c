@@ -539,6 +539,10 @@ static demo_scene_t const c_SceneLoaders[] = {
     },
     {
         10000,
+        scene_mask_generation_loader,
+    },
+    {
+        10000,
         scene_knob_loader,
     },
     {
@@ -672,7 +676,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_hollow_out_list_loader
+        scene_mask_generation_loader
         //scene_waveform_loader,
         //scene_mask_generation_loader,
         //scene_virtual_resource_loader,
