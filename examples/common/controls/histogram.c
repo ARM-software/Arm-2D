@@ -256,7 +256,7 @@ void histogram_show(histogram_t *ptThis,
                     uint8_t chOpacity)
 {
     assert(NULL!= ptThis);
-    bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
+    //bool bIsNewFrame = (ARM_2D_RT_FALSE != arm_2d_target_tile_is_new_frame(ptTile));
 
     arm_2d_container(ptTile, __histogram, ptRegion) {
 
@@ -285,6 +285,7 @@ void histogram_show(histogram_t *ptThis,
                                                         &tPFBScanRegion.tLocation,
                                                         NULL,
                                                         false);
+                ARM_2D_UNUSED(ptVirtualScreen);
             /* NOTE: Please do NOT quit early to ensure the built in dynamic dirty region scheme
              *       working properly.
              */

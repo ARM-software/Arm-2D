@@ -222,7 +222,7 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
 
     } while(0);
 
-    for (int32_t n = 0; n < dimof(this.tMarkings); n++) {
+    for (uint32_t n = 0; n < dimof(this.tMarkings); n++) {
 
         /* update helper with new values*/
         arm_2d_helper_dirty_region_transform_update_value(  
@@ -537,7 +537,7 @@ user_scene_ruler_t *__arm_2d_scene_ruler_init(   arm_2d_scene_player_t *ptDispAd
                     .iWidth = 76,
                     .iHeight = 54,
                 },
-
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
                 .fnOnDrawListItem = &__ruler_number_list_draw_list_item,
 
                 .bUseDirtyRegion = false,

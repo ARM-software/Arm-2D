@@ -643,7 +643,7 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
         arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadialLineCover, sizeof(c_qoiRadialLineCover));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
+            //.bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
 

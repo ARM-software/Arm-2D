@@ -337,7 +337,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax</MiscControls>
+              <MiscControls>-Omax -include "app_cfg.h"</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;.;..\common\platform\lib;..\common\platform\mps2;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -394,11 +394,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -499,6 +494,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -972,7 +982,7 @@
       <TargetName>FastModel</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -1276,7 +1286,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
+            <Optim>5</Optim>
             <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1295,11 +1305,11 @@
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
-            <v6Lto>0</v6Lto>
+            <v6Lto>1</v6Lto>
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls>-include "app_cfg.h"</MiscControls>
               <Define>__USE_FVP__,GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;.;..\common\platform\lib;..\common\platform\mps2;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -1355,11 +1365,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -1460,6 +1465,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2260,7 +2280,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax</MiscControls>
+              <MiscControls>-Omax -include "app_cfg.h"</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0,EXTERANL_DELAY_MS_DECLARE="extern void delay_ms(uint32_t);"</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\mps3;.;..\common\platform\lib;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -2317,11 +2337,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -2422,6 +2437,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2826,7 +2856,7 @@
       <TargetName>V2M-MPS3-CM55</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6230000::V6.23::.\ArmCompilerforEmbedded6.24</pCCUsed>
+      <pCCUsed>6240000::V6.24::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -3153,7 +3183,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax</MiscControls>
+              <MiscControls>-Omax -include "app_cfg.h"</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\mps3\v2m_mps3;..\common\platform\mps3;.;..\common\platform\lib;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -3210,11 +3240,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -3315,6 +3340,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4115,7 +4155,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax</MiscControls>
+              <MiscControls>-Omax -include "app_cfg.h"</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;.;..\common\platform\mps2;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -4172,11 +4212,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -4277,6 +4312,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -5077,7 +5127,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Omax -Wno-nonportable-include-path</MiscControls>
+              <MiscControls>-Omax -Wno-nonportable-include-path  -include "app_cfg.h"</MiscControls>
               <Define>GLCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;.;..\common\platform\mps2;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -5134,11 +5184,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -5239,6 +5284,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -6039,8 +6099,8 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-nonportable-include-path</MiscControls>
-              <Define></Define>
+              <MiscControls>-Wno-nonportable-include-path -include "app_cfg.h"</MiscControls>
+              <Define>__DISP0_CFG_PFB_BLOCK_WIDTH__=480,__DISP0_CFG_PFB_BLOCK_HEIGHT__=120,__GLCD_CFG_SCEEN_WIDTH__=480,__GLCD_CFG_SCEEN_HEIGHT__=272,__DISP0_CFG_SCEEN_WIDTH__=480,__DISP0_CFG_SCEEN_HEIGHT__=272</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\stm32f746g-discovery;.;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
             </VariousControls>
@@ -6096,11 +6156,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -6201,6 +6256,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -7070,7 +7140,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-padded</MiscControls>
+              <MiscControls>-Wno-padded  -include "app_cfg.h"</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\mps3\v2m_mps3;..\common\platform\mps3;.;..\common\platform\lib;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -7127,11 +7197,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -7232,6 +7297,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8160,11 +8240,6 @@
               <FilePath>.\app_cfg.h</FilePath>
             </File>
             <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
-            </File>
-            <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\scenes\fitness\arm_2d_scene_fitness.c</FilePath>
@@ -8263,6 +8338,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -8655,7 +8745,7 @@
               <RVCTZI>0</RVCTZI>
               <RVCTOtherData>0</RVCTOtherData>
               <ModuleSelection>0</ModuleSelection>
-              <IncludeInBuild>0</IncludeInBuild>
+              <IncludeInBuild>1</IncludeInBuild>
               <AlwaysBuild>2</AlwaysBuild>
               <GenerateAssemblyFile>2</GenerateAssemblyFile>
               <AssembleAssemblyFile>2</AssembleAssemblyFile>
@@ -9270,7 +9360,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls></MiscControls>
+              <MiscControls> -include "app_cfg.h"</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\mps3\v2m_mps3;..\common\platform\mps3;.;..\common\platform\lib;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\..\Acceleration\Arm\ACI;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -9327,11 +9417,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -9432,6 +9517,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -10301,7 +10401,7 @@
             <v6WtE>0</v6WtE>
             <v6Rtti>0</v6Rtti>
             <VariousControls>
-              <MiscControls>-Wno-padded -mcpu=cortex-m55+cdecp0</MiscControls>
+              <MiscControls>-Wno-padded -mcpu=cortex-m55+cdecp0  -include "app_cfg.h"</MiscControls>
               <Define>LCD_MIRROR_X=1,GLCD_MIRROR_Y=0,__USE_AN547__</Define>
               <Undefine></Undefine>
               <IncludePath>..\common\platform;..\common\platform\mps3\v2m_mps3;..\common\platform\mps3;.;..\..\Acceleration\Arm\ACI;..\common\scenes\fitness;..\common\scenes\watch;..\common\scenes\meter;..\common\scenes\fan;..\common\scenes\bubble_charging;..\common\scenes\histogram;..\common\scenes\alarm_clock;..\common\opcodes;..\common\scenes\knob;..\common\scenes\animate_background</IncludePath>
@@ -10358,11 +10458,6 @@
               <FileName>app_cfg.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\app_cfg.h</FilePath>
-            </File>
-            <File>
-              <FileName>MeterPanel.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MeterPanel.c</FilePath>
             </File>
             <File>
               <FileName>arm_2d_scene_fitness.c</FileName>
@@ -10463,6 +10558,21 @@
               <FileName>arm_2d_asset_wedge_pattern.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\common\asset\arm_2d_asset_wedge_pattern.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.c</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background.h</FilePath>
+            </File>
+            <File>
+              <FileName>arm_2d_scene_animate_background_vres.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\common\scenes\animate_background\arm_2d_scene_animate_background_vres.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -11034,6 +11144,7 @@
         <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
         <targetInfos>
           <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
           <targetInfo name="V2M-MPS2-CM0+"/>
           <targetInfo name="V2M-MPS2-CM33"/>
           <targetInfo name="V2M-MPS2-CM4"/>
@@ -11068,6 +11179,16 @@
           <targetInfo name="V2M-MPS2-CM7"/>
           <targetInfo name="V2M-MPS3-CM55"/>
           <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </api>
+      <api Capiversion="2.1.3" Cclass="CMSIS" Cgroup="RTOS2" exclusive="1">
+        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery-AC5">
+            <c>
+              <MiscControls>-W</MiscControls>
+            </c>
+          </targetInfo>
         </targetInfos>
       </api>
       <api Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" exclusive="1">
@@ -11138,7 +11259,23 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.4" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:AudioMark">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.5" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:AudioMark">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Balls">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11170,7 +11307,23 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Compass">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Blink">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Compass">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11202,7 +11355,55 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Decoding JPG with TJpgDec">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Filters" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Filters">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Flight Attitude Instrument">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Font Rendering" Cvendor="ARM" Cversion="0.9.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Font Rendering">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11234,7 +11435,23 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Hollow Out List">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Hollow Out List">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:IIR Blur">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11266,6 +11483,54 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Loading Lossless image with QOI" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-QOI-Loader" ymlID="Acceleration:Arm-2D Demos:Loading Lossless image with QOI">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Mask Generator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Mask Generator">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Matrix" Cvendor="ARM" Cversion="2.0.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Matrix">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
       <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Menu" Cvendor="ARM" Cversion="1.1.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Menu">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
@@ -11282,7 +11547,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Monochrome">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Monochrome">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11298,7 +11563,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Panel">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Music Player">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11314,7 +11579,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Progress and Status">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Panel">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11330,7 +11595,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Ruler">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Progress and Status">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11346,7 +11611,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Transform">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="QRCode" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:QRCode">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11362,7 +11627,151 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:User Defined OPCODE">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Radars">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ring Indicator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Ring Indicator">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Ruler">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Shaped Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Shaped Panel">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader" ymlID="Acceleration:Arm-2D Demos:Showing Animation with TJpgDec">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Space Badge">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Text Reader">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Tile Paving" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Tile Paving">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Transform">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:User Defined OPCODE">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11394,7 +11803,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Watch Face 01">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Watch Face 01">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11410,7 +11819,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.10.3" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Waveform" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos" ymlID="Acceleration:Arm-2D Demos:Waveform">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11426,7 +11835,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.1" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cvendor="ARM" Cversion="2.15.0" condition="Arm-2D-Controls" ymlID="Acceleration:Arm-2D Extras:Controls">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11442,7 +11851,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.7.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8" ymlID="Acceleration:Arm-2D Helper:Display Adapter">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="3.0.2" condition="Arm-2D-Printf" ymlID="Acceleration:Arm-2D Extras:LCD ASCII Printf">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11458,7 +11867,39 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="2.8.9" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
+      <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.3.7" condition="Arm-2D-Loaders" ymlID="Acceleration:Arm-2D Extras:Loaders">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8" ymlID="Acceleration:Arm-2D Helper:Display Adapter">
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </component>
+      <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D Helper:PFB">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11490,7 +11931,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.4-dev" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Alpha-Blending">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Alpha-Blending">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11506,7 +11947,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP" ymlID="Acceleration:Arm-2D:Core">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP" ymlID="Acceleration:Arm-2D:Core">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11522,7 +11963,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.4-dev" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Filter">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Filter">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11538,7 +11979,7 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
-      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.4-dev" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Transform">
+      <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cvendor="ARM" Cversion="1.2.5" condition="Arm-2D-CORE" ymlID="Acceleration:Arm-2D:Transform">
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11695,6 +12136,16 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </component>
+      <component Capiversion="2.1.3" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.5.4" condition="RTOS2 RTX5" ymlID="CMSIS:RTOS2:Keil RTX5&amp;Source">
+        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery-AC5">
+            <c>
+              <MiscControls>-W</MiscControls>
+            </c>
+          </targetInfo>
+        </targetInfos>
+      </component>
       <component Capiversion="2.3.0" Cclass="CMSIS" Cgroup="RTOS2" Csub="Keil RTX5" Cvariant="Source" Cvendor="ARM" Cversion="5.9.0" condition="RTX5 NS" ymlID="CMSIS:RTOS2:Keil RTX5&amp;Source">
         <package name="CMSIS-RTX" schemaVersion="1.7.36" url="https://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
@@ -11720,11 +12171,6 @@
             </c>
           </targetInfo>
           <targetInfo name="STM32F746G-Discovery"/>
-          <targetInfo name="STM32F746G-Discovery-AC5">
-            <c>
-              <MiscControls>-W</MiscControls>
-            </c>
-          </targetInfo>
           <targetInfo name="V2M-MPS2-CM0+">
             <c>
               <MiscControls>-w</MiscControls>
@@ -11801,7 +12247,7 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.5.3-dev" condition="CMSIS-CORE" ymlID="Utilities:perf_counter:Core&amp;Source">
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="Core" Cvariant="Source" Cvendor="GorgonMeducer" Cversion="2.5.4" condition="CMSIS-CORE" ymlID="Utilities:perf_counter:Core&amp;Source">
         <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11822,7 +12268,7 @@
           <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
-      <component Cclass="Utilities" Cgroup="perf_counter" Csub="RTX5 Patch" Cvendor="GorgonMeducer" Cversion="2.5.3-dev" condition="RTX5 Patch" ymlID="Utilities:perf_counter:RTX5 Patch">
+      <component Cclass="Utilities" Cgroup="perf_counter" Csub="RTX5 Patch" Cvendor="GorgonMeducer" Cversion="2.5.4" condition="RTX5 Patch" ymlID="Utilities:perf_counter:RTX5 Patch">
         <package name="perf_counter" schemaVersion="1.7.37" url="https://raw.githubusercontent.com/GorgonMeducer/perf_counter/CMSIS-Pack/cmsis-pack/" vendor="GorgonMeducer" version="9.9.9"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -11857,6 +12303,12 @@
           <targetInfo name="V2M-MPS2-CM0+"/>
           <targetInfo name="V2M-MPS2-CM4"/>
           <targetInfo name="V2M-MPS2-CM7"/>
+        </targetInfos>
+      </component>
+      <component Capiversion="2.1.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="Keil" Cversion="1.21.0" condition="STM32F7 CMSIS_Driver USART" ymlID="CMSIS Driver:USART">
+        <package name="STM32F7xx_DFP" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="Keil" version="2.16.0"/>
+        <targetInfos>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
         </targetInfos>
       </component>
       <component Capiversion="1.0.0" Cclass="Device" Cgroup="STM32Cube Framework" Csub="Classic" Cvendor="Keil" Cversion="1.3.0" condition="STM32F7 Framework Classic" ymlID="Device:STM32Cube Framework:Classic">
@@ -11992,7 +12444,7 @@
     <files>
       <file attr="config" category="sourceC" name="examples\demos\Battleship.c" version="2.2.0">
         <instance index="0">RTE\Acceleration\Battleship.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12014,11 +12466,47 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\Eyeball.c" version="2.1.0">
+        <instance index="0">RTE\Acceleration\Eyeball.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="examples\common\controls\GLCD_Fonts.c" version="1.0.0">
         <instance index="0" removed="1">RTE\Acceleration\GLCD_Fonts.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="LCD ASCII Printf" Cvendor="ARM" Cversion="2.3.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\LeftEye.c" version="2.4.0">
+        <instance index="0">RTE\Acceleration\LeftEye.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
       </file>
       <file attr="config" category="other" name="tools\README.md" version="1.2.2">
         <instance index="0" removed="1">RTE\Acceleration\README.md</instance>
@@ -12028,7 +12516,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\SquareDigits.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\SquareDigits.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12056,9 +12544,27 @@
         <package name="Arm-2D" schemaVersion="1.7.28" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos/>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\album_cover.c" version="3.0.0">
+        <instance index="0">RTE\Acceleration\album_cover.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="Library\Source\arm_2d.c" version="1.5.0">
         <instance index="0">RTE\Acceleration\arm_2d.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12074,9 +12580,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.5.9">
+      <file attr="config" category="preIncludeGlobal" name="Library\Include\template\arm_2d_cfg.h" version="1.6.0">
         <instance index="0">RTE\Acceleration\arm_2d_cfg.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12092,9 +12598,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="3.7.0">
+      <file attr="config" category="sourceC" name="Helper\template\arm_2d_disp_adapter.c" version="4.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.7.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12110,9 +12616,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="3.7.0">
+      <file attr="config" category="header" name="Helper\template\arm_2d_disp_adapter.h" version="4.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_disp_adapter_0.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="3.7.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cvendor="ARM" Cversion="4.1.0" condition="Arm-2D-Displayer-Adapter" maxInstances="8"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12284,9 +12790,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_audiomark.c" version="1.0.4">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_audiomark.c" version="1.0.5">
         <instance index="0">RTE\Acceleration\arm_2d_scene_audiomark.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.4" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.5" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12302,9 +12808,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_audiomark.h" version="1.0.4">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_audiomark.h" version="1.0.5">
         <instance index="0">RTE\Acceleration\arm_2d_scene_audiomark.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.4" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="AudioMark" Cvendor="ARM" Cversion="1.0.5" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_balls.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_balls.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_balls.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_balls.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Balls" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12356,9 +12898,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_compass.c" version="1.2.2">
-        <instance index="0">RTE\Acceleration\arm_2d_scene_compass.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_blink.c" version="2.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_blink.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12374,9 +12916,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_compass.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_blink.h" version="2.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_blink.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_compass.c" version="1.3.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_compass.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_compass.h" version="1.3.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_compass.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Compass" Cvendor="ARM" Cversion="1.3.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12464,6 +13042,78 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_flight_attitude_instrument.c" version="1.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_flight_attitude_instrument.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_flight_attitude_instrument.h" version="1.4.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_flight_attitude_instrument.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_font.c" version="0.9.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_font.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Font Rendering" Cvendor="ARM" Cversion="0.9.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_font.h" version="0.9.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_font.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Font Rendering" Cvendor="ARM" Cversion="0.9.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
       <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_gas_gauge.c" version="1.2.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_gas_gauge.c</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Gas Gauge" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-Demos"/>
@@ -12500,9 +13150,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_hollow_out_list.c" version="1.2.3">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_hollow_out_list.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_hollow_out_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12518,9 +13168,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_hollow_out_list.h" version="1.2.3">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_hollow_out_list.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_hollow_out_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_iir_blur.c" version="1.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_iir_blur.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_iir_blur.h" version="1.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_iir_blur.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="IIR Blur" Cvendor="ARM" Cversion="1.0.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12557,6 +13243,78 @@
       <file attr="config" category="header" name="examples\demos\arm_2d_scene_listview.h" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_listview.h</instance>
         <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Listview" Cvendor="ARM" Cversion="1.0.3" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\mask_generation\arm_2d_scene_mask_generation.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_mask_generation.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Mask Generator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\mask_generation\arm_2d_scene_mask_generation.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_mask_generation.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Mask Generator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_matrix.c" version="2.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_matrix.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Matrix" Cvendor="ARM" Cversion="2.0.1" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_matrix.h" version="2.0.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_matrix.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Matrix" Cvendor="ARM" Cversion="2.0.1" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12610,7 +13368,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_clock.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12628,7 +13386,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_clock.h" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_clock.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12646,7 +13404,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.c" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12664,7 +13422,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_histogram.h" version="1.1.1">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_histogram.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12680,9 +13438,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.2.2">
+      <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12698,9 +13456,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_icon_menu.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_icon_menu.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12718,7 +13476,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_list.c" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12736,7 +13494,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_list.h" version="1.0.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12754,7 +13512,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_loading.c" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12772,7 +13530,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_loading.h" version="1.2.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_loading.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12790,7 +13548,7 @@
       </file>
       <file attr="config" category="sourceC" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.c" version="1.1.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12808,7 +13566,7 @@
       </file>
       <file attr="config" category="header" name="examples\demos\monochrome\arm_2d_scene_mono_tracking_list.h" version="1.1.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_mono_tracking_list.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Monochrome" Cvendor="ARM" Cversion="1.6.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12824,9 +13582,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_panel.c" version="1.2.2">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_music_player.c" version="3.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_music_player.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_music_player.h" version="3.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_music_player.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Music Player" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_panel.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_panel.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12842,9 +13636,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_panel.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_panel.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_panel.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Panel" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12860,9 +13654,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.2.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_pave.c" version="2.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_pave.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Tile Paving" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_pave.h" version="2.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_pave.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Tile Paving" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_progress_status.c" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12878,9 +13708,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.2.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_progress_status.h" version="2.4.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_progress_status.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Progress and Status" Cvendor="ARM" Cversion="2.4.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12896,9 +13726,189 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_ruler.c" version="1.2.2">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_qoi.c" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_qoi.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Loading Lossless image with QOI" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-QOI-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_qoi.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_qoi.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Loading Lossless image with QOI" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-QOI-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_qrcode.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_qrcode.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="QRCode" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_qrcode.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_qrcode.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="QRCode" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_radars.c" version="3.6.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_radars.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_radars.h" version="3.6.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_radars.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_rickrolling.c" version="2.2.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_rickrolling.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_rickrolling.h" version="2.2.1">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_rickrolling.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cvendor="ARM" Cversion="2.2.1" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_ring_indicator.c" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_ring_indicator.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ring Indicator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_ring_indicator.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_ring_indicator.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ring Indicator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_ruler.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_ruler.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12914,9 +13924,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_ruler.h" version="1.2.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_ruler.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_ruler.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ruler" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12932,9 +13942,153 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_transform.c" version="2.1.2">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_shaped_panel.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_shaped_panel.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Shaped Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_shaped_panel.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_shaped_panel.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Shaped Panel" Cvendor="ARM" Cversion="1.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_space_badge.c" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_space_badge.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_space_badge.h" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_space_badge.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_text_reader.c" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_text_reader.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_text_reader.h" version="2.0.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_text_reader.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Text Reader" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_tjpgd.c" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_tjpgd.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_tjpgd.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_tjpgd.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Decoding JPG with TJpgDec" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demo-TJpgDec-Loader"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_transform.c" version="2.1.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_transform.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12950,9 +14104,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_transform.h" version="2.1.2">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_transform.h" version="2.1.3">
         <instance index="0">RTE\Acceleration\arm_2d_scene_transform.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.2" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Transform" Cvendor="ARM" Cversion="2.1.3" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12968,9 +14122,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="2.2.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_user_defined_opcode.c" version="3.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -12986,9 +14140,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="2.2.0">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_user_defined_opcode.h" version="3.0.0">
         <instance index="0">RTE\Acceleration\arm_2d_scene_user_defined_opcode.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="2.2.0" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="User Defined OPCODE" Cvendor="ARM" Cversion="3.0.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13040,9 +14194,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_watch_face_01.c" version="1.2.1">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_watch_face_01.c" version="1.2.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_watch_face_01.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13058,9 +14212,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\demos\arm_2d_scene_watch_face_01.h" version="1.2.1">
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_watch_face_01.h" version="1.2.2">
         <instance index="0">RTE\Acceleration\arm_2d_scene_watch_face_01.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.1" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Watch Face 01" Cvendor="ARM" Cversion="1.2.2" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13076,9 +14230,45 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.0.0">
+      <file attr="config" category="sourceC" name="examples\demos\arm_2d_scene_waveform.c" version="2.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_waveform.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Waveform" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\arm_2d_scene_waveform.h" version="2.1.0">
+        <instance index="0">RTE\Acceleration\arm_2d_scene_waveform.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Waveform" Cvendor="ARM" Cversion="2.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.c" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13094,9 +14284,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.0.0">
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_circle.h" version="1.1.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_circle.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13112,9 +14302,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.2.1">
+      <file attr="config" category="sourceC" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13130,9 +14320,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.2.1">
+      <file attr="config" category="header" name="examples\common\opcodes\arm_2d_user_opcode_draw_line.h" version="1.3.0">
         <instance index="0">RTE\Acceleration\arm_2d_user_opcode_draw_line.h</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cvendor="ARM" Cversion="3.2.0" condition="Arm-2D-CORE"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13148,9 +14338,171 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="sourceC" name="examples\demos\hollow_out_mask.c" version="1.2.3">
+      <file attr="config" category="header" name="examples\common\loader\freetype_loader\arm_freetype_cfg.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_freetype_cfg.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.3.7" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\common\loader\qoi_loader\arm_qoi_cfg.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_qoi_cfg.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.3.7" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\common\loader\tjpgd_loader\arm_tjpgd_cfg.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\arm_tjpgd_cfg.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.3.7" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\common\loader\zjpgd_loader\arm_zjpgd_cfg.h" version="1.0.0">
+        <instance index="0">RTE\Acceleration\arm_zjpgd_cfg.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cvendor="ARM" Cversion="5.3.7" condition="Arm-2D-Loaders"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\mask_generation\circle_mask_generator.c" version="1.1.0">
+        <instance index="0">RTE\Acceleration\circle_mask_generator.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Mask Generator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="header" name="examples\demos\mask_generation\circle_mask_generator.h" version="1.1.0">
+        <instance index="0">RTE\Acceleration\circle_mask_generator.h</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Mask Generator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\doge_dance.c" version="3.0.0">
+        <instance index="0">RTE\Acceleration\doge_dance.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\film_mask.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\film_mask.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\girl_dance.c" version="3.0.0">
+        <instance index="0">RTE\Acceleration\girl_dance.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Radars" Cvendor="ARM" Cversion="3.6.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\hollow_out_mask.c" version="1.3.0">
         <instance index="0">RTE\Acceleration\hollow_out_mask.c</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.2.3" condition="Arm-2D-Demos"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Hollow Out List" Cvendor="ARM" Cversion="1.3.0" condition="Arm-2D-Demos"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13166,9 +14518,9 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\img2c.py" version="1.2.5">
+      <file attr="config" category="utility" name="tools\img2c.py" version="1.3.0">
         <instance index="0">RTE\Acceleration\img2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>
@@ -13184,9 +14536,117 @@
           <targetInfo name="V2M-MPS3-CM85"/>
         </targetInfos>
       </file>
-      <file attr="config" category="utility" name="tools\ttf2c.py" version="2.3.1">
+      <file attr="config" category="sourceC" name="examples\demos\pitch_scale_marker.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\pitch_scale_marker.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\ring_indicator.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\ring_indicator.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Ring Indicator" Cvendor="ARM" Cversion="1.1.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\roll_scale_marker.c" version="1.1.0">
+        <instance index="0">RTE\Acceleration\roll_scale_marker.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\solid_line.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\solid_line.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\solid_square.c" version="2.0.0">
+        <instance index="0">RTE\Acceleration\solid_square.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Flight Attitude Instrument" Cvendor="ARM" Cversion="1.4.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="sourceC" name="examples\demos\space_fleet.c" version="1.0.0">
+        <instance index="0">RTE\Acceleration\space_fleet.c</instance>
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Space Badge" Cvendor="ARM" Cversion="2.0.0" condition="Arm-2D-Demos"/>
+        <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
+        <targetInfos>
+          <targetInfo name="AN547-AN556"/>
+          <targetInfo name="AN552-Cortex-M55"/>
+          <targetInfo name="FastModel"/>
+          <targetInfo name="STM32F746G-Discovery"/>
+          <targetInfo name="STM32F746G-Discovery-AC5"/>
+          <targetInfo name="V2M-MPS2-CM0+"/>
+          <targetInfo name="V2M-MPS2-CM33"/>
+          <targetInfo name="V2M-MPS2-CM4"/>
+          <targetInfo name="V2M-MPS2-CM7"/>
+          <targetInfo name="V2M-MPS3-CM55"/>
+          <targetInfo name="V2M-MPS3-CM85"/>
+        </targetInfos>
+      </file>
+      <file attr="config" category="utility" name="tools\ttf2c.py" version="2.4.1">
         <instance index="0">RTE\Acceleration\ttf2c.py</instance>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.4-dev" condition="CMSIS-DSP"/>
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cvendor="ARM" Cversion="1.2.5" condition="CMSIS-DSP"/>
         <package name="Arm-2D" schemaVersion="1.7.37" url="https://www.keil.com/pack/" vendor="ARM" version="9.9.99"/>
         <targetInfos>
           <targetInfo name="AN547-AN556"/>

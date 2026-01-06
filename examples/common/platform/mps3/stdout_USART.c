@@ -146,6 +146,8 @@ void uart_config(uint32_t wUARTFrequency)
     CMSDK_UART0->CTRL = CMSDK_UART_CTRL_TXEN_Msk|CMSDK_UART_CTRL_RXEN_Msk;  
 }
 
+#if !(defined(RTE_Compiler_IO_STDOUT_EVR) || defined(RTE_CMSIS_Compiler_STDOUT_Event_Recorder))
+
 char stdin_getchar(void)
 {
     while(!(CMSDK_UART0->STATE & CMSDK_UART_STATE_RXBF_Msk));
@@ -163,6 +165,21 @@ int stdout_putchar(char txchar)
 }
 
 
+
+
+int stderr_putchar(char txchar)
+{
+    return stdout_putchar(txchar);
+}
+#else
+extern int stdout_putchar(int);
+#endif
+
+void ttywrch (int ch)
+{
+    stdout_putchar((char)ch);
+}
+
 int _write (int fd, char *ptr, int len)
 {
     if (fd == 1) {
@@ -175,17 +192,6 @@ int _write (int fd, char *ptr, int len)
     } 
   
     return -1;
-}
-
-
-int stderr_putchar(char txchar)
-{
-    return stdout_putchar(txchar);
-}
-
-void ttywrch (int ch)
-{
-    stdout_putchar((char)ch);
 }
 
 #if 0

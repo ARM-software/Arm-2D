@@ -1,0 +1,133 @@
+/*
+ * Copyright (c) 2009-2025 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+#ifndef __CIRCLE_MASK_GENERATOR_H__
+#define __CIRCLE_MASK_GENERATOR_H__
+
+/*============================ INCLUDES ======================================*/
+
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
+
+#include "arm_2d_helper.h"
+#include "arm_2d_example_loaders.h"
+
+#ifdef   __cplusplus
+extern "C" {
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#   pragma clang diagnostic ignored "-Wmicrosoft-anon-tag"
+#   pragma clang diagnostic ignored "-Wpadded"
+#endif
+
+/*============================ MACROS ========================================*/
+
+/* OOC header, please DO NOT modify  */
+#ifdef __CIRCLE_MASK_GENERATOR_IMPLEMENT__
+#   undef   __CIRCLE_MASK_GENERATOR_IMPLEMENT__
+#   define  __ARM_2D_IMPL__
+#elif defined(__CIRCLE_MASK_GENERATOR_INHERIT__)
+#   undef   __CIRCLE_MASK_GENERATOR_INHERIT__
+#   define __ARM_2D_INHERIT__
+#endif
+#include "arm_2d_utils.h"
+/*============================ MACROS ========================================*/
+/*============================ MACROFIED FUNCTIONS ===========================*/
+/*============================ TYPES =========================================*/
+
+
+typedef struct circle_mask_generator_cfg_t {
+
+    arm_2d_size_t tBoxSize;    
+    arm_2d_location_t *ptPivot;
+    int16_t iRadius;
+    uint16_t bUseHeapForVRES        : 1;
+    uint16_t bAntiAlias             : 1;
+
+    arm_2d_scene_t *ptScene;
+
+} circle_mask_generator_cfg_t;
+
+/*!
+ * \brief a user class for user defined control
+ */
+typedef struct circle_mask_generator_t circle_mask_generator_t;
+
+struct circle_mask_generator_t {
+    union {
+        arm_2d_tile_t tTile;
+        implement(arm_generic_loader_t);
+    };
+
+ARM_PRIVATE(
+    circle_mask_generator_cfg_t tCFG;
+    arm_2d_location_t tPivot;
+)
+    
+};
+
+/*============================ GLOBAL VARIABLES ==============================*/
+/*============================ PROTOTYPES ====================================*/
+
+extern
+ARM_NONNULL(1, 2)
+arm_2d_err_t circle_mask_generator_init(circle_mask_generator_t *ptThis,
+                                        circle_mask_generator_cfg_t *ptCFG);
+
+extern
+ARM_NONNULL(1)
+void circle_mask_generator_depose( circle_mask_generator_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void circle_mask_generator_on_load( circle_mask_generator_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void circle_mask_generator_on_frame_start( circle_mask_generator_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+void circle_mask_generator_on_frame_complete( circle_mask_generator_t *ptThis);
+
+extern
+ARM_NONNULL(1)
+arm_2d_err_t circle_mask_generator_set_radius(  circle_mask_generator_t *ptThis, 
+                                                int16_t iRadius);
+
+extern
+ARM_NONNULL(1)
+int16_t circle_mask_generator_get_radius(  circle_mask_generator_t *ptThis);
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
+#endif
+
+#ifdef   __cplusplus
+}
+#endif
+
+#endif
+
+#endif

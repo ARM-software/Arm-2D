@@ -516,6 +516,7 @@ arm_2d_err_t arm_loader_io_window_init( arm_loader_io_window_t *ptThis,
 static
 void __arm_loader_io_window_on_frame_start(uintptr_t pTarget, void *ptLoader)
 {
+    ARM_2D_UNUSED(ptLoader);
     arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
 
     assert(NULL != ptThis);

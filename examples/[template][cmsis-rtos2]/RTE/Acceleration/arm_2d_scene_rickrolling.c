@@ -22,7 +22,7 @@
 #include "arm_2d_scene_rickrolling.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
- && defined(RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader)
+&&  defined(RTE_Acceleration_Arm_2D_Extra_JPEG_Loader)
 
 #include <stdlib.h>
 #include <string.h>
@@ -94,7 +94,15 @@ static void __on_scene_rickrolling_load(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_load(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_load(&this.tAnimation);
+#endif
+
+#if ARM_2D_DEMO_USE_CRT_SCREEN
+    crt_screen_on_load(&this.tCRTScreen);
+#endif
 }
 
 static void __after_scene_rickrolling_switching(arm_2d_scene_t *ptScene)
@@ -109,14 +117,19 @@ static void __on_scene_rickrolling_depose(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_depose(&this.tAnimation);
+#else
     arm_tjpgd_loader_depose(&this.tAnimation);
+#endif
 
-    ptScene->ptPlayer = NULL;
-    
+#if ARM_2D_DEMO_USE_CRT_SCREEN
+    crt_screen_depose(&this.tCRTScreen);
+#endif
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
@@ -150,8 +163,15 @@ static void __on_scene_rickrolling_frame_start(arm_2d_scene_t *ptScene)
 
         arm_2d_helper_film_next_frame(&this.tFilm);
     }
-
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_start(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_frame_start(&this.tAnimation);
+#endif
+
+#if ARM_2D_DEMO_USE_CRT_SCREEN
+    crt_screen_on_frame_start(&this.tCRTScreen);
+#endif
 }
 
 static void __on_scene_rickrolling_frame_complete(arm_2d_scene_t *ptScene)
@@ -159,7 +179,15 @@ static void __on_scene_rickrolling_frame_complete(arm_2d_scene_t *ptScene)
     user_scene_rickrolling_t *ptThis = (user_scene_rickrolling_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_USE_ZJPGD
+    arm_zjpgd_loader_on_frame_complete(&this.tAnimation);
+#else
     arm_tjpgd_loader_on_frame_complete(&this.tAnimation);
+#endif
+
+#if ARM_2D_DEMO_USE_CRT_SCREEN
+    crt_screen_on_frame_complete(&this.tCRTScreen);
+#endif
 }
 
 static void __before_scene_rickrolling_switching_out(arm_2d_scene_t *ptScene)
@@ -184,7 +212,12 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_rickrolling_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
         
-        arm_2d_align_centre(__top_canvas, 120, 120 ) {
+        
+    #if ARM_2D_DEMO_SHOW_BOARDER
+        arm_2d_size_t tBoarderSize = this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize;
+        tBoarderSize.iHeight += 16;
+        tBoarderSize.iWidth += 16;
+        arm_2d_align_centre(__top_canvas, tBoarderSize ) {
             
             draw_round_corner_border(   ptTile, 
                                         &__centre_region, 
@@ -195,13 +228,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_rickrolling_handler)
                                             {0, 128, 128, 128});
                                     
         }
+    #endif
 
         arm_2d_align_centre(__top_canvas, 
                             this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize ) {
             
+        #if ARM_2D_DEMO_USE_CRT_SCREEN
+            crt_screen_show(&this.tCRTScreen, ptTile, &__centre_region, 255, bIsNewFrame);
+        #else
             arm_2d_tile_copy_only(  (const arm_2d_tile_t *)&this.tFilm,
                                     ptTile,
                                     &__centre_region);
+        #endif
             
             arm_2d_helper_dirty_region_update_item( 
                     &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
@@ -210,6 +248,18 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_rickrolling_handler)
                     &__centre_region);
                                     
         }
+
+        /* draw text at the top-left corner */
+        arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
+        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+        arm_lcd_text_set_draw_region(NULL);
+        arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
+        arm_lcd_text_location(0,0);
+    #if ARM_2D_DEMO_USE_ZJPGD
+        arm_lcd_puts("Scene Rickrolling with ZJpgD");
+    #else
+        arm_lcd_puts("Scene Rickrolling with TJpgDec");
+    #endif
     /*-----------------------draw the foreground end  -----------------------*/
     }
     ARM_2D_OP_WAIT_ASYNC();
@@ -271,10 +321,45 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
     };
 
     /* ------------   initialize members of user_scene_rickrolling_t begin ---------------*/
+#if ARM_2D_DEMO_USE_ZJPGD
+    /* initialize Zjpgdec loader */
+    do {
+    #if ARM_2D_DEMO_JPGD_USE_FILE
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/Rickrolling75.jpg");
+    #else
+        extern const uint8_t c_chRickRolling75[104704];
+
+        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_chRickRolling75, sizeof(c_chRickRolling75));
+    #endif
+
+        arm_zjpgd_loader_cfg_t tCFG = {
+            .bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+            .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8,
+            //.bInverseColour = true,
+        
+        #if ARM_2D_DEMO_JPGD_USE_FILE
+            .ImageIO = {
+                .ptIO = &ARM_LOADER_IO_FILE,
+                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
+            },
+        #else
+            .ImageIO = {
+                .ptIO = &ARM_LOADER_IO_BINARY,
+                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            },
+        #endif
+
+        };
+
+        arm_zjpgd_loader_init(&this.tAnimation, &tCFG);
+    } while(0);
+#else
     /* initialize TJpgDec loader */
     do {
-    #if ARM_2D_DEMO_TJPGD_USE_FILE
-        arm_loader_io_file_init(&this.LoaderIO.tFile, "Rickrolling75.jpg");
+    #if ARM_2D_DEMO_JPGD_USE_FILE
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/Rickrolling75.jpg");
     #else
         extern const uint8_t c_chRickRolling75[104704];
 
@@ -286,7 +371,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
         
-        #if ARM_2D_DEMO_TJPGD_USE_FILE
+        #if ARM_2D_DEMO_JPGD_USE_FILE
             .ImageIO = {
                 .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
@@ -302,9 +387,32 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
 
         arm_tjpgd_loader_init(&this.tAnimation, &tCFG);
     } while(0);
+#endif
 
+    //this.tFilm = (arm_2d_helper_film_t)impl_film(this.tAnimation, 120, 120, 12,12*259, 33);
     this.tFilm = (arm_2d_helper_film_t)impl_film(this.tAnimation, 100, 108, 1, 62, 16);
 
+#if ARM_2D_DEMO_USE_CRT_SCREEN
+    /* CRT Screen */
+    do {
+        crt_screen_cfg_t tCRTScreenCFG = {
+            .ptScene = &this.use_as__arm_2d_scene_t,
+
+            .ptImageBoxCFG = (image_box_cfg_t []) {{
+                .ptilePhoto = (arm_2d_tile_t *)&this.tFilm,
+                .tScreenColour.tColour = GLCD_COLOR_NIXIE_TUBE,
+            }},
+
+            .tScanBarColour.tColour = GLCD_COLOR_WHITE,
+            .chWhiteNoiseRatio = 32,
+            .chNoiseLasts = 32,
+            .bStrongNoise = true,
+            .bShowScanningEffect = true,
+        };
+
+        crt_screen_init(&this.tCRTScreen, &tCRTScreenCFG);
+    } while(0);
+#endif
     /* ------------   initialize members of user_scene_rickrolling_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 

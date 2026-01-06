@@ -31,7 +31,7 @@
 #   undef RTE_Compiler_IO_STDOUT_EVR
 #endif
 
-#ifdef RTE_Compiler_IO_STDOUT_EVR
+#if defined(RTE_Compiler_IO_STDOUT_EVR) || defined(RTE_CMSIS_Compiler_STDOUT_Event_Recorder)
 #include "EventRecorder.h"
 #endif
 
@@ -190,7 +190,7 @@ __attribute__((used, constructor(101)))
 #endif
 void app_platform_init(void)
 {
-#ifdef RTE_Compiler_IO_STDOUT_EVR
+#if defined(RTE_Compiler_IO_STDOUT_EVR) || defined(RTE_CMSIS_Compiler_STDOUT_Event_Recorder)
     EventRecorderInitialize(0, 1);
 #endif
 

@@ -20,8 +20,6 @@
 #define __TOP_APP_CFG_H__
 
 /*============================ INCLUDES ======================================*/
-#include <assert.h>
-#include <stdio.h>
 
 #if !defined(__GNUC__)
 #   error This demo requires GNU extensions
@@ -30,36 +28,9 @@
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define ASSERT(...)         assert(__VA_ARGS__)
-
-/*! \note FPB Size
- *!         8 * 8     128B
- *!        16 * 16    512B
- *!        48 * 8     768B
- *!        20 * 20    800B
- *!        24 * 24   1152B
- *!        32 * 32      2K
- *!       480 * 1     960B  
- *!       480 * 2    1920B
- *!       480 * 4    3840B
- *!       480 * 8    7680B
- */
-#define PFB_BLOCK_WIDTH         GLCD_WIDTH
-#define PFB_BLOCK_HEIGHT        24
-
-#define BUSY_WHEEL_SPIN_SPEED   100
-
-#define APP_TARGET_FPS          30
-
-#ifndef APP_SCREEN_WIDTH 
-#   define APP_SCREEN_WIDTH         GLCD_WIDTH
-#endif
-
-#ifndef APP_SCREEN_HEIGHT 
-#   define APP_SCREEN_HEIGHT        GLCD_HEIGHT
-#endif
-
-#define __VIRTUAL_RESOURCE_DEMO_USE_HEAP__      0
+#define ARM_2D_SCENE_HISTOGRAM_USE_JPG      1
+#define ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD    1
+#define ARM_2D_SCENE_METER_USE_QOI          1
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/

@@ -62,7 +62,7 @@ extern "C" {
 // <i> Note that enabling this feature will add the support for a special colour type: ARM_2D_CHANNEL_8in32
 // <i> This feature is disabled by default to save code size
 #ifndef __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__
-#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             1
+#   define __ARM_2D_CFG_SUPPORT_COLOUR_CHANNEL_ACCESS__             0
 #endif
 
 // <q>Enable ccca8888(ARGB8888) implicit conversion 
@@ -175,21 +175,20 @@ extern "C" {
 
 // <q> When opacity is 255, call the non-opacity version of API implicitily
 // <i> This option is used to improve the performance and reduce the application complexity in API selection. Disable this feature allows linker to remove unused APIs further.
-// <i> This option is enabled by default
+// <i> This option is disabled by default
 #ifndef __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
-#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         1
+#   define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__      1
 #endif
 
-// <q> Optimize the scaler version of transform operations for pointer-like resources
+// <q> Optimize the transform operations for pointer-like resources
 // <i> This feature is enabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. In most of the case, enabling it helps.
-// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
+// <i> This feature has no meaning when the anti-alias transform is disabled.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_POINTER_LIKE_SHAPES_IN_TRANSFORM__     1
 #endif
 
-// <q> Optimize the scaler version of transform operations for hollow out masks
+// <q> Optimize the transform operations for hollow out masks
 // <i> This feature is disabled by default. There is no guarantee that the performance will increase or decrease. It is all depends your applications. If your application uses a lot of hollow out masks, it might help.
-// <i> This feature has no meaning when the anti-alias transform is disabled or the helium acceleration is available.
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__         0
 #endif
@@ -199,6 +198,12 @@ extern "C" {
 // <i> If you see some visual elements are imcomplete, you can choose those layout assistants with "_open" as posfix in corresonding area. For example, arm_2d_align_centre() can be changed to arm_2d_align_centre_open().
 #ifndef __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__
 #   define __ARM_2D_CFG_OPTIMIZE_FOR_PFB_IN_LAYOUT_ASSISTANT__              1
+#endif
+
+// <q> Force to disable Anti-Alias in Fill-colour-with-transformed-mask-and-opacity.
+// <i> This feature is disabled by default. You can disable it to improve performance as long as the rendering is good enough.
+#ifndef __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__
+#   define __ARM_2D_CFG_DISABLE_ANTI_ALIAS_IN_FILL_COLOUR_WITH_TRANSFORMED_MASK_AND_TARGET_MASK__   0
 #endif
 
 // </h>
@@ -228,14 +233,14 @@ extern "C" {
 // <i> The width of your screen for running benchmark
 // <i> Default: 320
 #ifndef __GLCD_CFG_SCEEN_WIDTH__
-#   define __GLCD_CFG_SCEEN_WIDTH__                                     480
+#   define __GLCD_CFG_SCEEN_WIDTH__                                     320
 #endif
 
 // <o>Height of the screen <8-32767>
 // <i> The height of your screen for running benchmark
 // <i> Default: 240
 #ifndef __GLCD_CFG_SCEEN_HEIGHT__
-#   define __GLCD_CFG_SCEEN_HEIGHT__                                    272
+#   define __GLCD_CFG_SCEEN_HEIGHT__                                    240
 #endif
 
 // <o>Number of iterations <1-2000>

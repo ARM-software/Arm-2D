@@ -91,9 +91,10 @@ struct {
     implement(arm_2d_user_font_t);
     arm_2d_char_idx_t tUTF8Table;
 } ARM_2D_FONT_LiberationSansRegular14_A1,
-  ARM_2D_FONT_Arial14_A2,
   ARM_2D_FONT_LiberationSansRegular14_A4,
-  ARM_2D_FONT_LiberationSansRegular14_A8;
+  ARM_2D_FONT_LiberationSansRegular14_A8,
+  ARM_2D_FONT_LiberationSansRegular32_A4,
+  ARM_2D_FONT_LiberationSansRegular32_A8;
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 
@@ -150,19 +151,17 @@ static void __on_scene_text_reader_depose(arm_2d_scene_t *ptScene)
     
     text_box_depose(&this.tTextPanel);
 
-    ptScene->ptPlayer = NULL;
-    
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
     }
-
+    ptScene->ptPlayer = NULL;
     if (!this.bUserAllocated) {
         __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_UNSPECIFIED, ptScene);
     }
 }
 
 /*----------------------------------------------------------------------------*
- * Scene text_reader                                                                    *
+ * Scene text_reader                                                          *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_text_reader_background_start(arm_2d_scene_t *ptScene)
@@ -185,6 +184,7 @@ static void __on_scene_text_reader_frame_start(arm_2d_scene_t *ptScene)
     user_scene_text_reader_t *ptThis = (user_scene_text_reader_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if 0
     if (arm_2d_helper_is_time_out(100, &this.lTimestamp[0])) {
 
         if (++this.iLineNumber >= 200) {
@@ -192,6 +192,25 @@ static void __on_scene_text_reader_frame_start(arm_2d_scene_t *ptScene)
         }
         text_box_set_start_line(&this.tTextPanel, this.iLineNumber);
     }
+#else
+
+    int32_t iCurrentLine = text_box_get_start_line(&this.tTextPanel);
+    if (this.bDownScrolling) {
+        if (iCurrentLine == 0) {
+            this.bDownScrolling = false;
+        } else {
+            text_box_set_scrolling_position_offset(&this.tTextPanel, -2);
+        }
+    } else {
+        if (    text_box_has_end_of_stream_been_reached(&this.tTextPanel) 
+            &&  iCurrentLine == text_box_get_current_line_count(&this.tTextPanel)) {
+            this.bDownScrolling = true;
+        } else {
+            text_box_set_scrolling_position_offset(&this.tTextPanel, 2);
+        }
+    }
+
+#endif
 
     text_box_on_frame_start(&this.tTextPanel);
 }
@@ -249,8 +268,6 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_text_reader_handler)
                                 (__arm_2d_color_t) {GLCD_COLOR_BLACK},
                                 255,
                                 bIsNewFrame);
-                
-                //arm_2d_helper_draw_box(ptTile, &__dock_region, 1, GLCD_COLOR_BLUE, 32);
 
             }
 
@@ -269,6 +286,11 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
+
+    /* get the screen region */
+    arm_2d_region_t __top_canvas
+        = arm_2d_helper_pfb_get_display_area(
+            &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
 
     if (NULL == ptThis) {
         ptThis = (user_scene_text_reader_t *)
@@ -322,14 +344,14 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
                                     sizeof(c_chStory));
 
         text_box_cfg_t tCFG = {
-            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A8,
+            .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_LiberationSansRegular14_A4,
             .tStreamIO = {
                 .ptIO       = &TEXT_BOX_IO_C_STRING_READER,
                 .pTarget    = (uintptr_t)&this.tStringReader,
             },
             .u2LineAlign = TEXT_BOX_LINE_ALIGN_JUSTIFIED,
-            //.fScale = 1.0f,
-            .chSpaceBetweenParagraph = 20,
+            //.fScale = 0.7f,
+            //.chSpaceBetweenParagraph = 20,
 
             .ptScene = (arm_2d_scene_t *)ptThis,
             .bUseDirtyRegions = true,
@@ -337,6 +359,8 @@ user_scene_text_reader_t *__arm_2d_scene_text_reader_init(   arm_2d_scene_player
 
         text_box_init(&this.tTextPanel, &tCFG);
 
+        /* set initial location */
+        text_box_set_scrolling_position(&this.tTextPanel, -__top_canvas.tSize.iHeight);
         
     } while(0);
 
