@@ -23,8 +23,8 @@
  * Description:  The header file of APIs for tile-copy-with-transformed-mask-
  *               -source-mask-and-target-mask
  * 
- * $Date:        16 Dec 2025
- * $Revision:    v1.0.1
+ * $Date:        06 Jan 2026
+ * $Revision:    v1.0.2
  *
  * Target Processor:  Cortex-M cores
  *
