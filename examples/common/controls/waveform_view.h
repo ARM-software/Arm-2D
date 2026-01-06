@@ -120,7 +120,7 @@ struct waveform_view_t {
 
     union {
         arm_2d_tile_t tTile;
-        implement(arm_generic_loader_t);
+        inherit(arm_generic_loader_t);
     };
 
 ARM_PRIVATE(
