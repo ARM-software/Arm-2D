@@ -414,6 +414,8 @@ void waveform_view_show(waveform_view_t *ptThis,
                         const arm_2d_region_t *ptRegion,
                         bool bIsNewFrame)
 {
+    ARM_2D_UNUSED(bIsNewFrame);
+
     assert(NULL!= ptThis);
 
     if (!this.tCFG.__bValid) {
@@ -525,6 +527,7 @@ arm_2d_err_t __waveform_view_decoder_init(arm_generic_loader_t *ptObj)
     assert(NULL != ptObj);
 
     waveform_view_t *ptThis = (waveform_view_t *)ptObj;
+    ARM_2D_UNUSED(ptThis);
 
 
     return ARM_2D_ERR_NONE;
@@ -622,7 +625,7 @@ arm_2d_err_t __waveform_view_draw(  arm_generic_loader_t *ptObj,
 
     uint_fast8_t chSampleDataSize = 1 << this.tCFG.u2SampleSize;
 
-    int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
+    //int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
     int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
     int_fast16_t iYStart = ptROI->tLocation.iY;
 

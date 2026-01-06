@@ -107,7 +107,7 @@ IMPL_ARM_2D_REGION_LIST(s_tDirtyRegions, static)
     ADD_REGION_TO_LIST(s_tDirtyRegions,
         .tSize = {
             .iWidth = 26,
-            .iHeight = 36,
+            .iHeight = 41,
         },
     ),
 
@@ -517,7 +517,7 @@ user_scene_hollow_out_list_t *__arm_2d_scene_hollow_out_list_init(   arm_2d_scen
                     .iWidth = 45,
                     .iHeight = 45,
                 },
-
+                .ptFont = (arm_2d_font_t *)&ARM_2D_FONT_A4_DIGITS_ONLY,
                 .fnOnDrawListItem = &__ruler_number_list_draw_central_list_item,
 
                 .bUseDirtyRegion = false,

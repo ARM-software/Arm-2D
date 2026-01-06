@@ -1209,7 +1209,6 @@ size_t arm_2d_byte_fifo_peek_bytes( arm_2d_byte_fifo_t *ptThis,
 {
     assert(NULL != ptThis);
     size_t tActualRead = 0;
-    uint8_t chChar;
 
     if (NULL == this.pchBuffer || 0 == tLength) {
         return 0;
