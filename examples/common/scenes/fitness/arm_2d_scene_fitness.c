@@ -392,7 +392,7 @@ user_scene_fitness_t *__arm_2d_scene_fitness_init(   arm_2d_scene_player_t *ptDi
         progress_wheel_cfg_t tCFG = {
             .ptileArcMask   = &c_tileQuaterArcMiddleMask, /* mask for arc */
             .ptileDotMask   = &c_tileWhiteDotMiddleMask,  /* mask for dot */
-            .tDotColour     = GLCD_COLOR_GREEN,           /* dot colour */
+            .tDotColour     = GLCD_COLOR_WHITE,           /* dot colour */
             .tWheelColour   = GLCD_COLOR_GREEN,           /* arc colour */
             .iWheelDiameter = 0,                          /* diameter, 0 means use the mask's original size */
         #if !__FITNESS_CFG_NEBULA_ENABLE__

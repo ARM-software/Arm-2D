@@ -87,7 +87,7 @@ enum {
 
 
 extern const arm_2d_tile_t c_tileQuaterArcMask;
-extern const arm_2d_tile_t c_tileWhiteDotMask;
+extern const arm_2d_tile_t c_tileWhiteDotSmallMask;
 /*============================ PROTOTYPES ====================================*/
 
 /*============================ LOCAL VARIABLES ===============================*/
@@ -125,7 +125,7 @@ void progress_wheel_init( progress_wheel_t *ptThis,
         this.tileInvisibleDot = (arm_2d_tile_t)
             impl_child_tile(
                 *ptArcMask,
-                ptArcMask->tRegion.tSize.iWidth - 1,    /* x offset */
+                ptArcMask->tRegion.tSize.iWidth - 2,    /* x offset */
                 0,                                      /* y offset */
                 1,
                 this.tCFG.iRingWidth,                   /* there is no typo here!!! */
@@ -135,7 +135,7 @@ void progress_wheel_init( progress_wheel_t *ptThis,
             this.tCFG.tDotColour = this.tCFG.tWheelColour;
     } else {
         if (NULL == this.tCFG.ptileDotMask) {
-            this.tCFG.ptileDotMask = &c_tileWhiteDotMask;
+            this.tCFG.ptileDotMask = &c_tileWhiteDotSmallMask;
             this.tCFG.tDotColour = GLCD_COLOR_WHITE;
         } 
 
@@ -173,10 +173,10 @@ void progress_wheel_set_diameter(progress_wheel_t *ptThis,
 
     if (0 == iDiameter) {
         this.fScale = 1.0;
-        this.tCFG.iWheelDiameter = this.tCFG.ptileArcMask->tRegion.tSize.iWidth * 2;
+        this.tCFG.iWheelDiameter = (this.tCFG.ptileArcMask->tRegion.tSize.iWidth - 2) * 2;
     } else {
         this.fScale = (float)(  (float)iDiameter 
-                            /  ((float)this.tCFG.ptileArcMask->tRegion.tSize.iWidth *2.0f));
+                            /  ((float)(this.tCFG.ptileArcMask->tRegion.tSize.iWidth - 2) *2.0f));
         this.tCFG.iWheelDiameter = iDiameter;
     }
 }
@@ -245,7 +245,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             bool bIsNewFrame)
 {
 
-    bool bNoScale = ABS(this.fScale - 1.0f) < 0.01f;
+    bool bNoScale = false;//ABS(this.fScale - 1.0f) < 0.01f;
     bool bIgnoreCurve = false;
 
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
@@ -275,6 +275,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
 
             arm_2d_size_t tWheelSize = ptileArcMask->tRegion.tSize;
+            tWheelSize.iWidth -= 2;
+            tWheelSize.iHeight -= 2;
+
             tWheelSize.iWidth *= 2;
             tWheelSize.iHeight *= 2;
 
@@ -287,9 +290,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
-        arm_2d_location_t tTargetCentre = {
-            .iX = __wheel_canvas.tLocation.iX + (__wheel_canvas.tSize.iWidth >> 1),
-            .iY = __wheel_canvas.tLocation.iY + (__wheel_canvas.tSize.iHeight >> 1),
+        arm_2d_point_float_t tTargetCentre = {
+            .fX = __wheel_canvas.tLocation.iX + ((float)(__wheel_canvas.tSize.iWidth - 1) / 2.0f),
+            .fY = __wheel_canvas.tLocation.iY + ((float)(__wheel_canvas.tSize.iHeight - 1) / 2.0f),
         };
 
         if (    (chState == START) 
@@ -470,10 +473,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 0:
                                     if (chCurrentQuadrant > 0) {
                                         arm_2d_region_t tRightMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q0X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q0Y,
                                             .tSize = {1,1},
@@ -486,10 +489,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 1:
                                     if (chCurrentQuadrant > 1) {
                                         arm_2d_region_t tBottomMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q1X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q1Y,
                                             .tSize = {1,1},
@@ -509,10 +512,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 2:
                                     if (chCurrentQuadrant > 2) {
                                         arm_2d_region_t tLeftMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q2X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_INCREASE][chStartPosition].s1Q2Y,
                                             .tSize = {1,1},
@@ -548,10 +551,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 3:
                                     if (chCurrentQuadrant < 3) {
                                         arm_2d_region_t tLeftMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q3X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q3Y,
                                             .tSize = {1,1},
@@ -564,10 +567,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 2:
                                     if (chCurrentQuadrant < 2) {
                                         arm_2d_region_t tBottomMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q2X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q2Y,
                                             .tSize = {1,1},
@@ -587,10 +590,10 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                 case 1:
                                     if (chCurrentQuadrant < 2) {
                                         arm_2d_region_t tRightMostPoint = {
-                                            .tLocation.iX = tTargetCentre.iX 
+                                            .tLocation.iX = tTargetCentre.fX 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q1X,
-                                            .tLocation.iY = tTargetCentre.iY 
+                                            .tLocation.iY = tTargetCentre.fY 
                                                           + iRadius 
                                                           * c_tQuadrantTable[PROGRESS_DECREASE][chStartPosition].s1Q1Y,
                                             .tSize = {1,1},
@@ -674,9 +677,9 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
         tRotationRegion.tSize.iHeight = ((__wheel_canvas.tSize.iHeight + 1) >> 1);
 
-        arm_2d_location_t tCentre = {
-            .iX = ptileArcMask->tRegion.tSize.iWidth - 1 - !bNoScale,
-            .iY = ptileArcMask->tRegion.tSize.iHeight - 1 - !bNoScale,
+        arm_2d_point_float_t tCentre = {
+            .fX = ptileArcMask->tRegion.tSize.iWidth - 2,
+            .fY = ptileArcMask->tRegion.tSize.iHeight - 2,
         };
 
         if (this.iProgress >= 900) {
@@ -701,7 +704,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 case PROGRESS_WHEEL_START_POSITION_LEFT:
                     break;
             }
-            
             
             if (bNoScale) {
                 switch (this.tCFG.u2StartPosition) {
@@ -741,13 +743,14 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 }
                 
             } else {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[3],
                                                 ptileArcMask,
                                                 &__wheel,
                                                 &tQuater,
                                                 tCentre,
                                                 ARM_2D_ANGLE((1 + (int)this.tCFG.u2StartPosition) * 90.0f),
+                                                this.fScale,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
@@ -820,13 +823,14 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         break;
                 }
             } else {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[1],
                                                 ptileArcMask,
                                                 &__wheel,
                                                 &tQuater,
                                                 tCentre,
                                                 ARM_2D_ANGLE((2 + (int)this.tCFG.u2StartPosition) * 90.0f),
+                                                this.fScale,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
@@ -898,13 +902,14 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 }
 
             } else {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[2],
                                                 ptileArcMask,
                                                 &__wheel,
                                                 &tQuater,
                                                 tCentre,
                                                 ARM_2D_ANGLE((3 + (int)this.tCFG.u2StartPosition) * 90.0f),
+                                                this.fScale,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
@@ -977,13 +982,14 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 }
 
             } else {
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[2],
                                                 ptileArcMask,
                                                 &__wheel,
                                                 &tQuater,
                                                 tCentre,
                                                 ARM_2D_ANGLE((4 + (int)this.tCFG.u2StartPosition) * 90.0f),
+                                                this.fScale,
                                                 this.fScale,
                                                 tWheelColour,
                                                 chOpacity,
@@ -1011,13 +1017,14 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
             } 
 
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+            arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                             &this.tOP[0],
                                             ptileArcMask,
                                             &__wheel,
                                             &tQuater,
                                             tCentre,
                                             this.fAngle,
+                                            this.fScale + 0.003f * bNoScale,
                                             this.fScale + 0.003f * bNoScale,
                                             tWheelColour,
                                             chOpacity,
@@ -1027,14 +1034,13 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
         } while(0);
 
-
         const arm_2d_tile_t *ptileDotMask = this.tCFG.ptileDotMask;
         if (NULL != ptileDotMask) {
             arm_2d_region_t tQuater = tRotationRegion;
 
-            arm_2d_location_t tDotCentre = {
-                .iX = (ptileDotMask->tRegion.tSize.iWidth + 1) >> 1,
-                .iY = ptileArcMask->tRegion.tSize.iHeight - 1,
+            arm_2d_point_float_t tDotCentre = {
+                .fX = (ptileDotMask->tRegion.tSize.iWidth - 1) / 2.0f,
+                .fY = ptileArcMask->tRegion.tSize.iHeight - 2,
             };
             if (!this.tCFG.bIgnoreDot) {
                 /* draw the starting point */
@@ -1061,17 +1067,18 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                     ARM_2D_OP_WAIT_ASYNC();
 
                 } else {
-                    arm_2d_location_t tPivot = tTargetCentre;
-                    tPivot.iY += 1;
+                    arm_2d_point_float_t tPivot = tTargetCentre;
+                    //tPivot.fY += 1;
 
-                    arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                    arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                     &this.tOP[4],
                                                     ptileDotMask,
                                                     &__wheel,
                                                     &tQuater,
                                                     tDotCentre,
                                                     0.0f,
-                                                    this.fScale - 0.002f,
+                                                    this.fScale,// - 0.002f,
+                                                    this.fScale,// - 0.002f,
                                                     tWheelColour,
                                                     chOpacity,
                                                     &tPivot);
@@ -1088,7 +1095,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
             }
 
             /* draw the end point */
-            arm_2dp_fill_colour_with_mask_opacity_and_transform(
+            arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                             &this.tOP[5],
                                             ptileDotMask,
                                             &__wheel,
@@ -1096,14 +1103,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             tDotCentre,
                                             this.fAngle,
                                             this.fScale,
+                                            this.fScale,
                                             tWheelColour,
                                             chDotOpacity,
                                             &tTargetCentre);
 
             if (this.tCFG.bUseDirtyRegions) {
                 /* apply transform region patch */
-                this.tTransHelper.tItem.tRegionPatch.tLocation.iX = -1;
-                this.tTransHelper.tItem.tRegionPatch.tSize.iWidth = 1;
+                //this.tTransHelper.tItem.tRegionPatch.tLocation.iX = -1;
+                //this.tTransHelper.tItem.tRegionPatch.tSize.iWidth = 1;
 
                 if (bIsNewFrame) {
                     arm_2d_helper_dirty_region_transform_force_to_use_minimal_enclosure(
@@ -1127,17 +1135,18 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             if (this.tCFG.tDotColour != this.tCFG.tWheelColour) {
 
-                tDotCentre.iY = (int16_t)((float)tDotCentre.iY * 1.235f);
+                tDotCentre.fY *= 1.225f;
 
                 /* draw the white dot */
-                arm_2dp_fill_colour_with_mask_opacity_and_transform(
+                arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[6],
                                                 ptileDotMask,
                                                 &__wheel,
                                                 &__wheel_canvas,
                                                 tDotCentre,
                                                 this.fAngle,
-                                                this.fScale * 0.788f,
+                                                this.fScale * 0.8f,
+                                                this.fScale * 0.8f,
                                                 this.tCFG.tDotColour,
                                                 255,
                                                 &tTargetCentre);
