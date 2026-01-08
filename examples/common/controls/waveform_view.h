@@ -75,19 +75,25 @@ typedef struct waveform_view_cfg_t {
 
     arm_2d_size_t tSize;
 
-    uint16_t bUseHeapForVRES        : 1;
-    uint16_t bShowShadow            : 1;
-    uint16_t bUseDirtyRegion        : 1;
-    uint16_t bUnsigned              : 1;
-    uint16_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
-    uint16_t                        : 2;
-    uint16_t u5DotHeight            : 5;
-    uint16_t __bFullUpdateReq       : 1;    /* please ignore this */
-    uint16_t __bShowGradient        : 1;    /* please ignore this */
-    uint16_t __bValid               : 1;    /* please ignore this */
-    
-    uint8_t                         : 8;
-    uint8_t chDirtyRegionItemCount;
+    union {
+        struct {
+            uint32_t bUseHeapForVRES        : 1;
+            uint32_t bShowShadow            : 1;
+            uint32_t bUseDirtyRegion        : 1;
+            uint32_t bUnsigned              : 1;
+            uint32_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
+            uint32_t                        : 2;
+            uint32_t u5DotHeight            : 5;
+            uint32_t __bFullUpdateReq       : 1;    /* please ignore this */
+            uint32_t __bShowGradient        : 1;    /* please ignore this */
+            uint32_t __bValid               : 1;    /* please ignore this */
+            
+            uint32_t                        : 8;
+            uint32_t chDirtyRegionItemCount : 8;
+        };
+        uint32_t wSettings;
+    };
+
     waveform_view_dirty_bin_t *ptDirtyBins; 
 
     COLOUR_TYPE_T tBrushColour;
@@ -124,7 +130,41 @@ struct waveform_view_t {
     };
 
 ARM_PRIVATE(
-    waveform_view_cfg_t tCFG;
+    arm_2d_size_t tSize;
+    union {
+        struct {
+            uint32_t bUseHeapForVRES        : 1;
+            uint32_t bShowShadow            : 1;
+            uint32_t bUseDirtyRegion        : 1;
+            uint32_t bUnsigned              : 1;
+            uint32_t u2SampleSize           : 2;    /* WAVEFORM_SAMPLE_SIZE_xxxx */
+            uint32_t                        : 2;
+            uint32_t u5DotHeight            : 5;
+            uint32_t __bFullUpdateReq       : 1;    /* please ignore this */
+            uint32_t __bShowGradient        : 1;    /* please ignore this */
+            uint32_t __bValid               : 1;    /* please ignore this */
+            
+            uint32_t                        : 8;
+            uint32_t chDirtyRegionItemCount : 8;
+        };
+        uint32_t wSettings;
+    };
+
+    waveform_view_dirty_bin_t *ptDirtyBins; 
+
+    COLOUR_TYPE_T tBrushColour;
+    struct {
+        int32_t nUpperLimit;
+        int32_t nLowerLimit;
+    } ChartScale;
+
+    struct {
+        COLOUR_TYPE_T tColour;
+        arm_2d_alpha_samples_4pts_t tGradient;
+        q16_t q16UpperGradientRatio;
+        q16_t q16LowerGradientRatio;
+    } Shadow;
+
     q16_t q16Scale;
     int16_t iDiagramHeight;
     int16_t iStartYOffset;
@@ -134,11 +174,6 @@ ARM_PRIVATE(
         uint8_t chCurrentBin; 
         q16_t   q16BinWidth;
     } DirtyRegion;
-
-    struct {
-        q16_t q16UpperGradientRatio;
-        q16_t q16LowerGradientRatio;
-    } Shadow;
 
 )
     /* place your public member here */
