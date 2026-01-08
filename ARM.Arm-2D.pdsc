@@ -401,7 +401,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_wedge_pattern.c"             attr="template"  select="Scene Template: Knob"   version="2.2.0" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_pattern.c"       attr="template"  select="Scene Template: Knob"   version="2.2.0" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_radial_line_cover.c"         attr="template"  select="Scene Template: Knob"   version="2.2.0" />
-            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c"        attr="template"  select="Scene Template: Knob"   version="2.2.0" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_knob_circle_quater.c"        attr="template"  select="Scene Template: Knob"   version="3.0.0" />
 
           </files>
           <RTE_Components_h>
