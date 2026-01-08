@@ -81,8 +81,9 @@ struct circle_mask_generator_t {
     };
 
 ARM_PRIVATE(
-    circle_mask_generator_cfg_t tCFG;
     arm_2d_location_t tPivot;
+    int16_t iRadius;
+    uint16_t bAntiAlias             : 1;
 )
     
 };
