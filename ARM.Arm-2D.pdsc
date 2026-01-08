@@ -338,7 +338,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.2.0" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.2.1" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -361,7 +361,7 @@
             <file category="header"      name="examples/common/opcodes/arm_2d_user_opcode_draw_circle.h" attr="config" version="1.1.0" />
 
             <!-- asset -->
-            <file category="sourceC"     name="Helper/Source/arm_2d_asset_white_dot_small.c" />
+            <file category="sourceC"     name="Helper/Source/arm_2d_asset_white_dot.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_asset_cmsis_logo.c" />
             <file category="sourceC"     name="Helper/Source/arm_2d_asset_circle_small.c" />
 
@@ -531,7 +531,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.15.1" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.15.2" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -565,12 +565,14 @@
             <file category="sourceC"     name="examples/common/controls/waveform_view.c" />
 
             <!-- assets -->
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotSmall.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotMiddle.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_WhiteDotBig.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_SpinWheel.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_blue_slashes.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_wave.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_GreenCircle.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuaterArc.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuaterArcSmall.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuaterArcMiddle.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_QuaterArcBig.c" />

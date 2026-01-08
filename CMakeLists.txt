@@ -177,12 +177,14 @@ if (ARM2D_CONTROLS)
             examples/common/controls/ring_indication.c
             examples/common/controls/waveform_view.c
 
+            examples/common/asset/arm_2d_asset_WhiteDotSmall.c
             examples/common/asset/arm_2d_asset_WhiteDotMiddle.c
             examples/common/asset/arm_2d_asset_WhiteDotBig.c
             examples/common/asset/arm_2d_asset_SpinWheel.c
             examples/common/asset/arm_2d_asset_blue_slashes.c
             examples/common/asset/arm_2d_asset_wave.c
             examples/common/asset/arm_2d_asset_GreenCircle.c
+            examples/common/asset/arm_2d_asset_QuaterArc.c
             examples/common/asset/arm_2d_asset_QuaterArcSmall.c
             examples/common/asset/arm_2d_asset_QuaterArcMiddle.c
             examples/common/asset/arm_2d_asset_QuaterArcBig.c
