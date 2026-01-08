@@ -291,8 +291,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
         arm_2d_point_float_t tTargetCentre = {
-            .fX = __wheel_canvas.tLocation.iX + ((float)(__wheel_canvas.tSize.iWidth - 1) / 2.0f),
-            .fY = __wheel_canvas.tLocation.iY + ((float)(__wheel_canvas.tSize.iHeight - 1) / 2.0f),
+            .fX = (int16_t)(__wheel_canvas.tLocation.iX + ((float)(__wheel_canvas.tSize.iWidth - 1) / 2.0f)),
+            .fY = (int16_t)(__wheel_canvas.tLocation.iY + ((float)(__wheel_canvas.tSize.iHeight - 1) / 2.0f)),
         };
 
         if (    (chState == START) 
@@ -983,7 +983,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             } else {
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
-                                                &this.tOP[2],
+                                                &this.tOP[0],
                                                 ptileArcMask,
                                                 &__wheel,
                                                 &tQuater,
@@ -995,7 +995,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                                 chOpacity,
                                                 &tTargetCentre);
                     
-                ARM_2D_OP_WAIT_ASYNC(&this.tOP[2]);
+                ARM_2D_OP_WAIT_ASYNC(&this.tOP[0]);
             }
         }
 
@@ -1005,6 +1005,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 break;
             }
             arm_2d_region_t tQuater = tRotationRegion;
+
 
             if (this.fAngle < ARM_2D_ANGLE(90.0f)) {
                 tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
@@ -1024,8 +1025,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                                             &tQuater,
                                             tCentre,
                                             this.fAngle,
-                                            this.fScale + 0.003f * bNoScale,
-                                            this.fScale + 0.003f * bNoScale,
+                                            this.fScale,// + 0.003f * bNoScale,
+                                            this.fScale,// + 0.003f * bNoScale,
                                             tWheelColour,
                                             chOpacity,
                                             &tTargetCentre);
