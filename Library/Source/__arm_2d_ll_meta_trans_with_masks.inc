@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_trans_with_masks.inc
  * Description:  c code template for tile transform with masks operations
  *
- * $Date:        18. Nov 2025
- * $Revision:    V.1.1.3
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -231,6 +231,7 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
                     + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
     wTotalAlpha += hwTempAlpha;
 
+    wTotalAlpha >>= 8;
     if (0 == wTotalAlpha) {
         return ;
     }
@@ -256,14 +257,18 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
 
 #if __API_MTWM_CFG_SUPPORT_SOURCE_MASK
     #if __API_MTWM_CFG_SUPPORT_OPACITY
-        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                              + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+        uint16_t hwPixelAlpha = (wTotalAlpha >= 0xFF) * hwOpacity
+                              + (!(wTotalAlpha >= 0xFF) * (wTotalAlpha * hwOpacity >> 8));
 
         __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
     #else
-        uint16_t hwPixelAlpha = wTotalAlpha >> 8;
+        uint16_t hwPixelAlpha = wTotalAlpha;
 
-        __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        if (hwPixelAlpha >= 255) {
+            *pTarget = uPixelResult;
+        } else {
+            __API_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        }
     #endif
 #else
     if (uPixelResult != MaskColour) {
@@ -307,7 +312,11 @@ void __MTWM_FUNC(get_pixel_colour_mask)(arm_2d_point_fx_t  *ptFxPoint,
         hwPixelAlpha += (hwPixelAlpha == 255);
         #endif
 
-        __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        if (hwPixelAlpha >= 255) {
+            pTarget = uPixelResult;
+        } else if (hwPixelAlpha > 0) {
+            __API_MTWM_PIXEL_BLENDING( &uPixelResult, pTarget, hwPixelAlpha);
+        }
     #else
 
         if (uPixelResult != MaskColour) {
