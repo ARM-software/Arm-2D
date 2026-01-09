@@ -994,7 +994,11 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                             + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pTarget = MaskColour;
+        } else {
+            __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1004,21 +1008,20 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint32_t wPixelAlpha = 0;
-    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        wPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
+    uint32_t wPixelAlpha = pchOrigin[   tPoint.iY * iOrigStride
                                      +   tPoint.iX];
-#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     if (0 == wPixelAlpha) {
         return ;
     }
-#endif
 
-        wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
-                     + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+    wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
+                    + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
+    if (wPixelAlpha >= 255) {
+        *pTarget = MaskColour;
+    } else {
         __API_PIXEL_BLENDING( &MaskColour, pTarget, wPixelAlpha);
-    //}
+    }
 
 #endif
 
@@ -1211,7 +1214,11 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                             + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
-        __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pTarget = MaskColour;
+        } else {
+            __API_PIXEL_BLENDING( &MaskColour, pTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1221,21 +1228,20 @@ void __ARM_2D_FUNC(get_chn_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
         .iY = reinterpret_s16_q16(ptFxPoint->q16Y),
     };
 
-    uint32_t wPixelAlpha;
-    //if (arm_2d_is_point_inside_region(ptOrigValidRegion, &tPoint)) {
-        wPixelAlpha = *(uint8_t *)&pwOrigin[ tPoint.iY * iOrigStride + tPoint.iX];
+    uint32_t wPixelAlpha = *(uint8_t *)&pwOrigin[ tPoint.iY * iOrigStride + tPoint.iX];
 
-#if __ARM_2D_CFG_OPTIMIZE_FOR_HOLLOW_OUT_MASK_IN_TRANSFORM__
     if (0 == wPixelAlpha) {
         return ;
     }
-#endif
 
-        wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
-                     + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
+    wPixelAlpha =  (wPixelAlpha == 255) * hwOpacity
+                    + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
+    if (wPixelAlpha >= 255) {
+        *pTarget = MaskColour;
+    } else {
         __API_PIXEL_BLENDING( &MaskColour, pTarget, wPixelAlpha);
-    //}
+    }
 
 #endif
 
