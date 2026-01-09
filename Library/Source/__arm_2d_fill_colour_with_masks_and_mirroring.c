@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
- * $Date:        11. Dec 2025
- * $Revision:    V.1.1.2
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -187,13 +187,18 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pchTargetLine++ = chColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -343,13 +348,15 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_and_opacity_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -512,13 +519,18 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_and_x_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pchTargetLine++ = chColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -668,13 +680,15 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_x_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -837,13 +851,18 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_and_y_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pchTargetLine++ = chColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -993,13 +1012,15 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_y_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -1162,13 +1183,18 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_and_xy_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pchTargetLine++ = chColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -1318,13 +1344,15 @@ void __arm_2d_impl_gray8_colour_filling_with_masks_xy_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pchTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_GRAY8(&chColour, pchTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -1487,13 +1515,18 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *phwTargetLine++ = hwColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -1643,13 +1676,15 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_and_opacity_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -1812,13 +1847,18 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_and_x_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *phwTargetLine++ = hwColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -1968,13 +2008,15 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_x_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -2137,13 +2179,18 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_and_y_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *phwTargetLine++ = hwColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -2293,13 +2340,15 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_y_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -2462,13 +2511,18 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_and_xy_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *phwTargetLine++ = hwColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -2618,13 +2672,15 @@ void __arm_2d_impl_rgb565_colour_filling_with_masks_xy_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                phwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_RGB565(&hwColour, phwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -2787,13 +2843,18 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pwTargetLine++ = wColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -2943,13 +3004,15 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_opacity_only(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -3112,13 +3175,18 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_x_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pwTargetLine++ = wColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -3268,13 +3336,15 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_x_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask += iSourceMaskStride;
@@ -3437,13 +3507,18 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_y_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pwTargetLine++ = wColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -3593,13 +3668,15 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_y_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine++) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -3762,13 +3839,18 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_and_xy_mirror(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - hwPixelAlpha;
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha >= 255) {
+                *pwTargetLine++ = wColour;
+            } else
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;
@@ -3918,13 +4000,15 @@ void __arm_2d_impl_cccn888_colour_filling_with_masks_xy_mirror_and_opacity(
 
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*pchSourceMaskLine--) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                pwTargetLine++;
+            } else {
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_CCCN888(&wColour, pwTargetLine++, hwTrans);
+            }
         }
 
         pchSourceMask -= iSourceMaskStride;

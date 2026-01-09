@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_masks_and_mirroring.c
  * Description:  APIs for colour-filling-with-masks-and-mirroring
  *
- * $Date:        11. Dec 2025
- * $Revision:    V.1.1.2
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -325,17 +325,24 @@ void __arm_2d_impl_{{colour_name | lower}}_colour_filling_with_masks_and_{{mirro
             uint16_t hwPixelAlpha = (*pchTargetMaskLine++) * (*{{mask_next_alpha}}) >> 8;
             hwPixelAlpha += (hwPixelAlpha == 254);
 
-        {%- if has_opacity == '_and_opacity' %}
-            uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
-        {%- else %}
-            uint16_t hwTrans = 256 - hwPixelAlpha;
+        {%- if has_opacity != '_and_opacity' %}
+            if (hwPixelAlpha >= 255) {
+                *p{{colour_int_prefix}}TargetLine++ = {{colour_int_prefix}}Colour;
+            } else 
         {%- endif %}
-
-#if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwTrans -= (hwTrans == 1);
-#endif
-
-            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwTrans);
+            if (hwPixelAlpha == 0) {
+                p{{colour_int_prefix}}TargetLine++;
+            } else {
+            {%- if has_opacity == '_and_opacity' %}
+                uint16_t hwTrans = 256 - (hwPixelAlpha * hwOpacity >> 8);
+            {%- else %}
+                uint16_t hwTrans = 256 - hwPixelAlpha;
+            {%- endif %}
+    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwTrans -= (hwTrans == 1);
+    #endif
+                __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(&{{colour_int_prefix}}Colour, p{{colour_int_prefix}}TargetLine++, hwTrans);
+            }
         }
 
         {{mask_move_to_next_line}}
