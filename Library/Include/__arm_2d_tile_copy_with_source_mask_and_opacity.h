@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_mask_and_opacity.h
  * Description:  APIs for Tile-Copy-with-Source-Mask-and-Opacity operations
  *
- * $Date:        23. Dec 2025
- * $Revision:    V.1.1.2
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *

@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_copy_with_source_mask_and_opacity.c
  * Description:  APIs for tile copy with source mask and opacity only
  *
- * $Date:        23. Dec 2025
- * $Revision:    V.1.1.2
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.2.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -97,14 +97,14 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_opacity(
                                     {{colour_int}} *__RESTRICT p{{colour_int_prefix}}TargetBase,
                                     int16_t iTargetStride,
                                     arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
+                                    uint_fast16_t hwOpacity)
 {
     int_fast16_t iHeight = ptCopySize->iHeight;
     int_fast16_t iWidth  = ptCopySize->iWidth;
 
-    hwRatio += (hwRatio == 255);
+    hwOpacity += (hwOpacity == 255);
 
-    uint16_t hwRatioCompl = 256 - hwRatio;
+    uint16_t hwTransparency = 256 - hwOpacity;
 
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
@@ -115,7 +115,7 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_opacity(
 
             __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
                                                         p{{colour_int_prefix}}TargetLine++,
-                                                        hwRatioCompl);
+                                                        hwTransparency);
 
         }
 
@@ -162,11 +162,18 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_mask_a
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (hwOpacity * (*pchSourceMaskLine++) >> 8);
+            uint16_t hwTransparency = (*pchSourceMaskLine++);
+            
+            if (hwTransparency == 0) {
+                p{{colour_int_prefix}}TargetLine++;
+                pwSourceLine++;
+            } else {
+                hwTransparency = 256 - (hwOpacity * hwTransparency >> 8);
 
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
-                                                        p{{colour_int_prefix}}TargetLine++,
-                                                        hwTransparency);
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                            p{{colour_int_prefix}}TargetLine++,
+                                                            hwTransparency);
+            }
         }
 
         pwSourceBase += iSourceStride;
@@ -219,11 +226,19 @@ void __arm_2d_impl_{{colour_name | lower}}_tile_copy_with_src_mask_and_opacity(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (hwOpacity * (*pchSourceMaskLine++) >> 8);
+            uint16_t hwTransparency = (*pchSourceMaskLine++);
 
-            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(  p{{colour_int_prefix}}SourceLine++, 
-                                            p{{colour_int_prefix}}TargetLine++,
-                                            hwTransparency);
+            if (hwTransparency == 0) {
+                p{{colour_int_prefix}}TargetLine++;
+                p{{colour_int_prefix}}SourceLine++;
+            } else {
+            
+                hwTransparency = 256 - (hwOpacity * hwTransparency >> 8);
+
+                __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(  p{{colour_int_prefix}}SourceLine++, 
+                                                p{{colour_int_prefix}}TargetLine++,
+                                                hwTransparency);
+            }
         }
 
         p{{colour_int_prefix}}SourceBase += iSourceStride;
@@ -275,11 +290,17 @@ void __arm_2d_impl_{{colour_name | lower}}_tile_copy_with_src_chn_mask_and_opaci
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (hwOpacity * (*(uint8_t *)(pwSourceMaskLine++)) >> 8);
+            uint16_t hwTransparency = (*(uint8_t *)(pwSourceMaskLine++));
+            if (hwTransparency == 0) {
+                p{{colour_int_prefix}}TargetLine++;
+                p{{colour_int_prefix}}SourceLine++;
+            } else {
+                hwTransparency = 256 - ((hwOpacity * hwTransparency) >> 8);
 
-            __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(  p{{colour_int_prefix}}SourceLine++, 
-                                                        p{{colour_int_prefix}}TargetLine++,
-                                                        hwTransparency);
+                __ARM_2D_PIXEL_BLENDING_{{colour_name | upper}}(  p{{colour_int_prefix}}SourceLine++, 
+                                                            p{{colour_int_prefix}}TargetLine++,
+                                                            hwTransparency);
+            }
         }
 
         p{{colour_int_prefix}}SourceBase += iSourceStride;
@@ -331,11 +352,18 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_chn_ma
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (hwOpacity * (*(uint8_t *)(pwSourceMaskLine++)) >> 8);
+            uint16_t hwTransparency = (*(uint8_t *)(pwSourceMaskLine++));
+            
+            if (0 == hwTransparency) {
+                p{{colour_int_prefix}}TargetLine++;
+                pwSourceLine++;
+            } else {
+                hwTransparency = 256 - ((hwOpacity * hwTransparency) >> 8);
 
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
-                                                        p{{colour_int_prefix}}TargetLine++,
-                                                        hwTransparency);
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                            p{{colour_int_prefix}}TargetLine++,
+                                                            hwTransparency);
+            }
         }
 
         pwSourceBase += iSourceStride;
@@ -383,11 +411,18 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_mask(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (*pchSourceMaskLine++);
+            uint16_t hwTransparency = (*pchSourceMaskLine++);
+            
+            if (0 == hwTransparency) {
+                p{{colour_int_prefix}}TargetLine++;
+                pwSourceLine++;
+            } else {
+                hwTransparency = 256 - hwTransparency;
 
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
-                                                        p{{colour_int_prefix}}TargetLine++,
-                                                        hwTransparency);
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                            p{{colour_int_prefix}}TargetLine++,
+                                                            hwTransparency);
+            }
         }
 
         pwSourceBase += iSourceStride;
@@ -436,11 +471,18 @@ void __arm_2d_impl_ccca8888_tile_copy_to_{{colour_name | lower}}_with_src_chn_ma
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
 
-            uint16_t hwTransparency = 256 - (*(uint8_t *)(pwSourceMaskLine++));
+            uint16_t hwTransparency = (*(uint8_t *)(pwSourceMaskLine++));
 
-            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
-                                                        p{{colour_int_prefix}}TargetLine++,
-                                                        hwTransparency);
+            if (0 == hwTransparency) {
+                pwSourceLine++;
+                p{{colour_int_prefix}}TargetLine++;
+            } else {
+                hwTransparency = 256 - hwTransparency;
+
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}}(  pwSourceLine++, 
+                                                            p{{colour_int_prefix}}TargetLine++,
+                                                            hwTransparency);
+            }
         }
 
         pwSourceBase += iSourceStride;
@@ -616,7 +658,7 @@ arm_fsm_rt_t __arm_2d_{{colour_name | lower}}_sw_tile_copy_with_source_mask_and_
         return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
     #endif
     } else {
-        aassert(     ARM_2D_COLOUR_SZ_8BIT 
+        assert(     ARM_2D_COLOUR_SZ_8BIT 
               ==    ptTask->Param.tCopyMask.tSrcMask.tColour.u3ColourSZ);
 
         __arm_2d_impl_{{colour_name | lower}}_tile_copy_with_src_mask_and_opacity(
