@@ -990,9 +990,10 @@ void __ARM_2D_FUNC(get_alpha_with_opacity)( arm_2d_point_fx_t  *ptFxPoint,
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
+    wTotalAlpha >>= 8;
     if (wTotalAlpha) {
-        uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
-                            + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
+        uint16_t hwAlpha = (wTotalAlpha >= 0xFF) * hwOpacity
+                            + (!(wTotalAlpha >= 0xFF) * (wTotalAlpha * hwOpacity >> 8));
 
         if (hwAlpha >= 255) {
             *pTarget = MaskColour;
