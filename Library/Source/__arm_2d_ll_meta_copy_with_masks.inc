@@ -21,8 +21,8 @@
  * Title:        __arm_2d_meta_copy_with_masks.inc
  * Description:  c code template for copy and fill like operations
  *
- * $Date:        06. Oct 2021
- * $Revision:    V.1.0.0
+ * $Date:        09. Jan 2026
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -177,27 +177,33 @@ void __MCWM_FUNC(masks_fill)(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                     uint16_t hwOpacity =
-                        256 - (
+                        (
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                             *(uint8_t *)(ptSrcMsk++)
                         #else
                             (*ptSrcMsk++)
                         #endif
-
                             *
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                             *(uint8_t *)(ptTargetMask++)
                         #else
                             (*ptTargetMask++)
                         #endif
-
                             >> 8);
 
-                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 2) * 2;
-                #endif
+                    if (hwOpacity >= 254) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++;
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 2) * 2;
+                    #endif
 
-                    __API_MCWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                        __API_MCWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -310,27 +316,33 @@ void __MCWM_FUNC(masks_fill_x_mirror)(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                     uint16_t hwOpacity =
-                        256 - (
+                        (
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                             *(uint8_t *)(ptSrcMsk--)
                         #else
                             (*ptSrcMsk--)
                         #endif
-
                             *
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                             *(uint8_t *)(ptTargetMask++)
                         #else
                             (*ptTargetMask++)
                         #endif
-
                             >> 8);
+                    
+                    if (hwOpacity >= 254) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--;
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 2) * 2;
+                    #endif
 
-                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 2) * 2;
-                #endif
-
-                    __API_MCWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                        __API_MCWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -445,26 +457,32 @@ void __MCWM_FUNC(masks_fill_y_mirror)(
             #endif
                 for (int_fast16_t x = 0; x < wLength; x++) {
                     uint16_t hwOpacity =
-                        256 - (
+                        (
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                             *(uint8_t *)(ptSrcMsk++)
                         #else
                             (*ptSrcMsk++)
                         #endif
-
                             *
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                             *(uint8_t *)(ptTargetMask++)
                         #else
                             (*ptTargetMask++)
                         #endif
-
                             >> 8);
 
-                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 2) * 2;
-                #endif
-                    __API_MCWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 254) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 2) * 2;
+                    #endif
+                        __API_MCWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -583,26 +601,33 @@ void __MCWM_FUNC(masks_fill_xy_mirror)(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                     uint16_t hwOpacity =
-                        256 - (
+                        (
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                             *(uint8_t *)(ptSrcMsk--)
                         #else
                             (*ptSrcMsk--)
                         #endif
-
                             *
                         #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_TARGET_SIDE
                             *(uint8_t *)(ptTargetMask++)
                         #else
                             (*ptTargetMask++)
                         #endif
-
                             >> 8);
 
-                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 2) * 2;
-                #endif
-                    __API_MCWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 254) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--;
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+
+                    #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 2) * 2;
+                    #endif
+                        __API_MCWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -753,7 +778,7 @@ void __MCWM_FUNC(masks_copy)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwOpacity =
-                256 - (
+                (
                 #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     *(uint8_t *)(ptSourceMask++)
                 #else
@@ -765,14 +790,22 @@ void __MCWM_FUNC(masks_copy)(
                 #else
                     (*ptTargetMask++)
                 #endif
-
                     >> 8);
+
+            if (hwOpacity >= 254) {
+                *pTargetBase++ = *pSourceBase++;
+            } else if (hwOpacity == 0) {
+                pSourceBase++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+
             #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
                 hwOpacity -= (hwOpacity == 2) * 2;
             #endif
 
-            __API_MCWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
-
+                __API_MCWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase += (iSourceStride - iWidth);
         pTargetBase += (iTargetStride - iWidth);
@@ -861,7 +894,7 @@ void __MCWM_FUNC(masks_copy_x_mirror)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwOpacity =
-                256 - (
+                (
                 #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     *(uint8_t *)(pchSourceMaskCur--)
                 #else
@@ -873,15 +906,21 @@ void __MCWM_FUNC(masks_copy_x_mirror)(
                 #else
                     (*ptTargetMask++)
                 #endif
-
                     >> 8);
 
+            if (hwOpacity >= 254) {
+                *ptTargetCur++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                ptTargetCur++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
             #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
                 hwOpacity -= (hwOpacity == 2) * 2;
             #endif
 
-            __API_MCWM_PIXEL_BLENDING( ptSourceCur--, ptTargetCur++, hwOpacity);
-
+                __API_MCWM_PIXEL_BLENDING( ptSourceCur--, ptTargetCur++, hwOpacity);
+            }
         }
         pSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
@@ -973,7 +1012,7 @@ void __MCWM_FUNC(masks_copy_y_mirror)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwOpacity =
-                256 - (
+                (
                 #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     *(uint8_t *)(pchSourceMaskCur++)
                 #else
@@ -985,15 +1024,22 @@ void __MCWM_FUNC(masks_copy_y_mirror)(
                 #else
                     (*ptTargetMask++)
                 #endif
-
                     >> 8);
+            
+            if (hwOpacity >= 254) {
+                *pTargetBase++ = *ptSourceCur++;
+            } else if (hwOpacity == 0) {
+                ptSourceCur++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                hwOpacity -= (hwOpacity == 2) * 2;
-            #endif
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                    hwOpacity -= (hwOpacity == 2) * 2;
+                #endif
 
-            __API_MCWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
-
+                __API_MCWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase -= iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
@@ -1092,7 +1138,7 @@ void __MCWM_FUNC(masks_copy_xy_mirror)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwOpacity =
-                256 - (
+                (
                 #if __API_MCWM_CFG_CHANNEL_8in32_SUPPORT_ON_SOURCE_SIDE
                     *(uint8_t *)(pchSourceMaskCur--)
                 #else
@@ -1104,15 +1150,22 @@ void __MCWM_FUNC(masks_copy_xy_mirror)(
                 #else
                     (*ptTargetMask++)
                 #endif
-
                     >> 8);
 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                hwOpacity -= (hwOpacity == 2) * 2;
-            #endif
+            if (hwOpacity >= 254) {
+                *pTargetBase++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
 
-            __API_MCWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                    hwOpacity -= (hwOpacity == 2) * 2;
+                #endif
 
+                __API_MCWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase -= iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
