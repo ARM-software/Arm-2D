@@ -23,8 +23,8 @@
  * Description:  APIs for tile-copy-with-transformed-mask-source-mask-and
  *               -target-mask
  *
- * $Date:        06 Jan 2026
- * $Revision:    v1.0.2
+ * $Date:        09 Jan 2026
+ * $Revision:    v1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -251,12 +251,16 @@ void __gray8_tile_copy_with_transformed_mask_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pchTarget = *pchExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -276,12 +280,16 @@ void __gray8_tile_copy_with_transformed_mask_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pchTarget = *pchExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -499,13 +507,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_process_point(
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -526,13 +536,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_process_point(
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -930,12 +942,13 @@ void __gray8_tile_copy_with_transformed_mask_and_opacity_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -957,12 +970,13 @@ void __gray8_tile_copy_with_transformed_mask_and_opacity_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -1185,13 +1199,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_opacity_process_poi
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -1214,13 +1230,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_opacity_process_poi
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -1645,12 +1663,16 @@ void __gray8_tile_copy_with_transformed_mask_and_target_mask_process_point(
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pchTarget = *pchExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -1674,12 +1696,16 @@ void __gray8_tile_copy_with_transformed_mask_and_target_mask_process_point(
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pchTarget = *pchExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -1914,13 +1940,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_target_mask_process
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -1945,13 +1973,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_target_mask_process
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -2386,12 +2416,13 @@ void __gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_process_poi
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -2417,12 +2448,13 @@ void __gray8_tile_copy_with_transformed_mask_target_mask_and_opacity_process_poi
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -2662,13 +2694,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_target_mask_and_opacity
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -2695,13 +2729,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_target_mask_and_opacity
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -3160,12 +3196,16 @@ void __gray8_tile_copy_with_transformed_mask_and_source_mask_process_point(
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pchTarget = *pchExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -3189,12 +3229,16 @@ void __gray8_tile_copy_with_transformed_mask_and_source_mask_process_point(
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pchTarget = *pchExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -3424,13 +3468,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_source_mask_process
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -3455,13 +3501,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_and_source_mask_process
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -3906,12 +3954,13 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_process_poi
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -3937,12 +3986,13 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_opacity_process_poi
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -4177,13 +4227,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_opacity
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -4210,13 +4262,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_opacity
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -4688,12 +4742,16 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_process
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pchTarget = *pchExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -4721,12 +4779,16 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_and_target_mask_process
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pchTarget = *pchExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -4973,13 +5035,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_target_
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -5008,13 +5072,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_and_target_
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -5496,12 +5562,13 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-            pchExtraSource, 
-            pchTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+                pchExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -5531,12 +5598,13 @@ void __gray8_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacity
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
-        pchExtraSource, 
-        pchTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( 
+            pchExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -5788,13 +5856,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_target_mask
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-            pwExtraSource, 
-            pchTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+                pwExtraSource, 
+                pchTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -5825,13 +5895,15 @@ void __ccca8888_tile_copy_to_gray8_with_transformed_mask_source_mask_target_mask
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
-        pwExtraSource, 
-        pchTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8 (
+            pwExtraSource, 
+            pchTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -6280,12 +6352,16 @@ void __rgb565_tile_copy_with_transformed_mask_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *phwTarget = *phwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -6305,12 +6381,16 @@ void __rgb565_tile_copy_with_transformed_mask_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *phwTarget = *phwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -6528,13 +6608,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_process_point(
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -6555,13 +6637,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_process_point(
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -6959,12 +7043,13 @@ void __rgb565_tile_copy_with_transformed_mask_and_opacity_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -6986,12 +7071,13 @@ void __rgb565_tile_copy_with_transformed_mask_and_opacity_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -7214,13 +7300,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_opacity_process_po
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -7243,13 +7331,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_opacity_process_po
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -7674,12 +7764,16 @@ void __rgb565_tile_copy_with_transformed_mask_and_target_mask_process_point(
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *phwTarget = *phwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -7703,12 +7797,16 @@ void __rgb565_tile_copy_with_transformed_mask_and_target_mask_process_point(
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *phwTarget = *phwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -7943,13 +8041,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_target_mask_proces
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -7974,13 +8074,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_target_mask_proces
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -8415,12 +8517,13 @@ void __rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_process_po
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -8446,12 +8549,13 @@ void __rgb565_tile_copy_with_transformed_mask_target_mask_and_opacity_process_po
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -8691,13 +8795,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_target_mask_and_opacit
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -8724,13 +8830,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_target_mask_and_opacit
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -9189,12 +9297,16 @@ void __rgb565_tile_copy_with_transformed_mask_and_source_mask_process_point(
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *phwTarget = *phwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -9218,12 +9330,16 @@ void __rgb565_tile_copy_with_transformed_mask_and_source_mask_process_point(
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *phwTarget = *phwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -9453,13 +9569,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_source_mask_proces
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -9484,13 +9602,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_and_source_mask_proces
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -9935,12 +10055,13 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_process_po
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -9966,12 +10087,13 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_opacity_process_po
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -10206,13 +10328,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_opacit
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -10239,13 +10363,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_opacit
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -10717,12 +10843,16 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_proces
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *phwTarget = *phwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -10750,12 +10880,16 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_and_target_mask_proces
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *phwTarget = *phwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -11002,13 +11136,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_target
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -11037,13 +11173,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_and_target
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -11525,12 +11663,13 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacit
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-            phwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+                phwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -11560,12 +11699,13 @@ void __rgb565_tile_copy_with_transformed_mask_source_mask_target_mask_and_opacit
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
-        phwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( 
+            phwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -11817,13 +11957,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mas
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-            pwExtraSource, 
-            phwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+                pwExtraSource, 
+                phwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -11854,13 +11996,15 @@ void __ccca8888_tile_copy_to_rgb565_with_transformed_mask_source_mask_target_mas
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
-        pwExtraSource, 
-        phwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565 (
+            pwExtraSource, 
+            phwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -12309,12 +12453,16 @@ void __cccn888_tile_copy_with_transformed_mask_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pwTarget = *pwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -12334,12 +12482,16 @@ void __cccn888_tile_copy_with_transformed_mask_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pwTarget = *pwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -12557,13 +12709,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_process_point(
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -12584,13 +12738,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_process_point(
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -12988,12 +13144,13 @@ void __cccn888_tile_copy_with_transformed_mask_and_opacity_process_point(
 
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -13015,12 +13172,13 @@ void __cccn888_tile_copy_with_transformed_mask_and_opacity_process_point(
 
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -13243,13 +13401,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_opacity_process_p
         uint8_t chTargetAlpha;
         ARM_2D_UNUSED(chTargetAlpha);
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -13272,13 +13432,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_opacity_process_p
     uint8_t chTargetAlpha;
     ARM_2D_UNUSED(chTargetAlpha);
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -13703,12 +13865,16 @@ void __cccn888_tile_copy_with_transformed_mask_and_target_mask_process_point(
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pwTarget = *pwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -13732,12 +13898,16 @@ void __cccn888_tile_copy_with_transformed_mask_and_target_mask_process_point(
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pwTarget = *pwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -13972,13 +14142,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_target_mask_proce
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -14003,13 +14175,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_target_mask_proce
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -14444,12 +14618,13 @@ void __cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_process_p
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -14475,12 +14650,13 @@ void __cccn888_tile_copy_with_transformed_mask_target_mask_and_opacity_process_p
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -14720,13 +14896,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_target_mask_and_opaci
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -14753,13 +14931,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_target_mask_and_opaci
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -15218,12 +15398,16 @@ void __cccn888_tile_copy_with_transformed_mask_and_source_mask_process_point(
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pwTarget = *pwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -15247,12 +15431,16 @@ void __cccn888_tile_copy_with_transformed_mask_and_source_mask_process_point(
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pwTarget = *pwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -15482,13 +15670,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_source_mask_proce
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -15513,13 +15703,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_and_source_mask_proce
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -15964,12 +16156,13 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_process_p
         chTargetAlpha = *pchExtraSourceMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -15995,12 +16188,13 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_opacity_process_p
     chTargetAlpha = *pchExtraSourceMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -16235,13 +16429,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_opaci
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -16268,13 +16464,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_opaci
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -16746,12 +16944,16 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_proce
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha >= 255) {
+            *pwTarget = *pwExtraSource;
+        } else
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -16779,12 +16981,16 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_and_target_mask_proce
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha >= 255) {
+        *pwTarget = *pwExtraSource;
+    } else
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -17031,13 +17237,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_targe
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -17066,13 +17274,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_and_targe
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -17554,12 +17764,13 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opaci
         chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -17589,12 +17800,13 @@ void __cccn888_tile_copy_with_transformed_mask_source_mask_target_mask_and_opaci
     chTargetAlpha = *pchTargetMask;
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( 
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -17846,13 +18058,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_ma
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-            pwExtraSource, 
-            pwTarget, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+                pwExtraSource, 
+                pwTarget, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -17883,13 +18097,15 @@ void __ccca8888_tile_copy_to_cccn888_with_transformed_mask_source_mask_target_ma
     hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
-        pwExtraSource, 
-        pwTarget, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888 (
+            pwExtraSource, 
+            pwTarget, 
+            hwAlpha);
+    }
 #endif
 }
 

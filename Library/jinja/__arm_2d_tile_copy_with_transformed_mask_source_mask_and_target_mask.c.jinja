@@ -23,8 +23,8 @@
  * Description:  APIs for tile-copy-with-transformed-mask-source-mask-and
  *               -target-mask
  *
- * $Date:        06 Jan 2026
- * $Revision:    v1.0.2
+ * $Date:        09 Jan 2026
+ * $Revision:    v1.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -67,7 +67,7 @@ extern "C" {
 #   pragma clang diagnostic ignored "-Wswitch"
 #   pragma clang diagnostic ignored "-Wdeclaration-after-statement"
 #   pragma clang diagnostic ignored "-Wunused-variable"
-#elif defined(__IS_COMPILER_ARM_COMPILER_5__)
+#elif __IS_COMPILER_ARM_COMPILER_5__
 #   pragma diag_suppress 174,177,188,68,513,144
 #elif __IS_COMPILER_GCC__
 #   pragma GCC diagnostic ignored "-Wunused-variable"
@@ -411,12 +411,19 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
     {%- endif %}
-
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
-            p{{colour_int_prefix}}ExtraSource, 
-            p{{colour_int_prefix}}Target, 
-            hwAlpha);
+    
+    {%- if has_opacity == false %}
+        if (hwAlpha >= 255) {
+            *p{{colour_int_prefix}}Target = *p{{colour_int_prefix}}ExtraSource;
+        } else 
+    {%- endif %}
+        if (hwAlpha != 0) {
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
+                p{{colour_int_prefix}}ExtraSource, 
+                p{{colour_int_prefix}}Target, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -454,11 +461,18 @@ void __{{colour_name}}_tile_copy_with_transformed_mask{{variants_name}}_process_
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 {%- endif %}
 
-    /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
-        p{{colour_int_prefix}}ExtraSource, 
-        p{{colour_int_prefix}}Target, 
-        hwAlpha);
+{%- if has_opacity == false %}
+    if (hwAlpha >= 255) {
+        *p{{colour_int_prefix}}Target = *p{{colour_int_prefix}}ExtraSource;
+    } else 
+{%- endif %}
+    if (hwAlpha > 0) {
+        /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( 
+            p{{colour_int_prefix}}ExtraSource, 
+            p{{colour_int_prefix}}Target, 
+            hwAlpha);
+    }
 #endif
 }
 
@@ -766,13 +780,15 @@ void __ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_nam
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
     {%- endif %}
 
-        hwAlpha = 256 - hwAlpha;
+        if (hwAlpha > 0) {
+            hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
-            pwExtraSource, 
-            p{{colour_int_prefix}}Target, 
-            hwAlpha);
+            /* blend the pixel */
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
+                pwExtraSource, 
+                p{{colour_int_prefix}}Target, 
+                hwAlpha);
+        }
     }
 
 #else
@@ -810,13 +826,15 @@ void __ccca8888_tile_copy_to_{{colour_name}}_with_transformed_mask{{variants_nam
             + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
 {%- endif %}
 
-    hwAlpha = 256 - hwAlpha;
+    if (hwAlpha > 0) {
+        hwAlpha = 256 - hwAlpha;
 
-        /* blend the pixel */
-    __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
-        pwExtraSource, 
-        p{{colour_int_prefix}}Target, 
-        hwAlpha);
+            /* blend the pixel */
+        __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_{{colour_name | upper}} (
+            pwExtraSource, 
+            p{{colour_int_prefix}}Target, 
+            hwAlpha);
+    }
 #endif
 }
 
