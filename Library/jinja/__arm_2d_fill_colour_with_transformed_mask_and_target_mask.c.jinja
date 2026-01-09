@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_transformed_mask_and_target_mask.c
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
- * $Date:        16 Dec 2025
- * $Revision:    v1.3.0
+ * $Date:        09 Jan 2026
+ * $Revision:    v1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -263,7 +263,8 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_proce
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
     {%- if variants_name == 'target_mask_and_opacity' %}
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
@@ -272,11 +273,17 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_proce
     {%- endif %}
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
         
-        __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, hwAlpha);
+    {%- if variants_name != 'target_mask_and_opacity' %}
+        if (hwAlpha >= 255) {
+            *p{{colour_int_prefix}}Target = {{colour_int_prefix}}MaskColour;
+        } else 
+    {%- endif %}
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, hwAlpha);
+        }
     }
 
 #else
@@ -300,10 +307,20 @@ void __{{colour_name}}_fill_colour_with_transformed_mask_{{variants_name}}_proce
 {%- endif %}
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+
+    {%- if variants_name != 'target_mask_and_opacity' %}
+        if (wPixelAlpha >= 255) {
+            *p{{colour_int_prefix}}Target = {{colour_int_prefix}}MaskColour;
+        } else 
+    {%- endif %}
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_{{colour_name | upper}}( &{{colour_int_prefix}}MaskColour, p{{colour_int_prefix}}Target, wPixelAlpha);
+        }
+    }
 
 #endif
 }

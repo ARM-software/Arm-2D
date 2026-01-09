@@ -22,8 +22,8 @@
  * Description:  The header file of APIs for colour-filling-with-transformed-
  *               -mask-target-mask-and-opacity
  * 
- * $Date:        16 Dec 2025
- * $Revision:    v1.3.0
+ * $Date:        09 Jan 2026
+ * $Revision:    v1.4.0
  *
  * Target Processor:  Cortex-M cores
  *

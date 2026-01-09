@@ -114,11 +114,17 @@ void __ARM_2D_FUNC(colour_filling_a2_mask)(
 
             uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 85;
 
-            uint16_t hwAlpha = 256 - hwTempAlpha;
+            if (hwTempAlpha >= 255) {
+                *pTarget++ = Colour;
+            } else if (0 == hwTempAlpha) {
+                pTarget++;
+            } else {
+                uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
+                hwAlpha -= (hwAlpha == 1);
 #endif
-           __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            }
 
             chBitMask <<= 2;
             nOffset += 2;
@@ -177,12 +183,17 @@ void __ARM_2D_FUNC(colour_filling_a4_mask)(
 
             uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 17;
 
-            uint16_t hwAlpha = 256 - hwTempAlpha;
+            if (hwTempAlpha >= 255) {
+                *pTarget++ = Colour;
+            } else if (hwTempAlpha == 0) {
+                pTarget++;
+            } else {
+                uint16_t hwAlpha = 256 - hwTempAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
+                hwAlpha -= (hwAlpha == 1);
 #endif
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
-
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            }
 
             chBitMask <<= 4;
             nOffset += 4;
@@ -227,11 +238,19 @@ void __ARM_2D_FUNC(colour_filling_mask)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*pchAlpha++);
+            uint16_t hwAlpha = (*pchAlpha++);
+            
+            if (hwAlpha >= 255) {
+                *pTarget++ = Colour;
+            } else if (hwAlpha == 0) {
+                pTarget++;
+            } else {
+                hwAlpha = 256 - hwAlpha;
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
+                hwAlpha -= (hwAlpha == 1);
 #endif
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            }
         }
 
         pchAlpha += (iAlphaStride - iWidth);
@@ -279,13 +298,17 @@ void __ARM_2D_FUNC(colour_filling_a1_mask_opacity)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset);
-            uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity);
+
+            if (hwTempAlpha > 0) {
+                uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 2) * 2;
+                hwAlpha -= (hwAlpha == 2) * 2;
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            } else {
+                pTarget++;
+            }
 
             chBitMask <<= 1;
             nOffset += 1;
@@ -344,13 +367,17 @@ void __ARM_2D_FUNC(colour_filling_a2_mask_opacity)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 85;
-            uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
+
+            if (hwTempAlpha > 0) {
+                uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 2) * 2;
+                hwAlpha -= (hwAlpha == 2) * 2;
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            } else {
+                pTarget++;
+            }
 
             chBitMask <<= 2;
             nOffset += 2;
@@ -411,13 +438,17 @@ void __ARM_2D_FUNC(colour_filling_a4_mask_opacity)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
             uint16_t hwTempAlpha = ((*pchMask & chBitMask) >> nOffset) * 17;
-            uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
+
+            if (hwTempAlpha > 0) {
+                uint16_t hwAlpha = 256 - (hwTempAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 2) * 2;
+                hwAlpha -= (hwAlpha == 2) * 2;
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            } else {
+                pTarget++;
+            }
 
             chBitMask <<= 4;
             nOffset += 4;
@@ -464,13 +495,18 @@ void __ARM_2D_FUNC(colour_filling_mask_opacity)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - ((*pchAlpha++) * hwOpacity >> 8);
+            
+            uint16_t hwAlpha = (*pchAlpha++);
+            if (hwAlpha > 0) {
+                hwAlpha = 256 - (hwAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 2) * 2;
+                hwAlpha -= (hwAlpha == 2) * 2;
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            } else {
+                pTarget++;
+            }
         }
 
         pchAlpha += (iAlphaStride - iWidth);
@@ -507,13 +543,20 @@ void __ARM_2D_FUNC(colour_filling_channel_mask)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - *(uint8_t *)(pwAlpha++);
+            uint16_t hwAlpha = *(uint8_t *)(pwAlpha++);
+            
+            if (hwAlpha >= 255) {
+                *pTarget++ = Colour;
+            } else if (hwAlpha == 0) {
+                pTarget++;
+            } else {
+                hwAlpha = 256 - hwAlpha;
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 1);
+                hwAlpha -= (hwAlpha == 1);
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            }
         }
 
         pwAlpha += (iAlphaStride - iWidth);
@@ -549,13 +592,18 @@ void __ARM_2D_FUNC(colour_filling_channel_mask_opacity)(
     for (int_fast16_t y = 0; y < iHeight; y++) {
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
-            uint16_t hwAlpha = 256 - (*(uint8_t *)(pwAlpha++) * hwOpacity >> 8);
+            uint16_t hwAlpha = *(uint8_t *)(pwAlpha++);
+            
+            if (hwAlpha > 0) {
+                hwAlpha = 256 - (hwAlpha * hwOpacity >> 8);
 
 #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwAlpha -= (hwAlpha == 2) * 2;
+                hwAlpha -= (hwAlpha == 2) * 2;
 #endif
-
-            __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+                __API_PIXEL_BLENDING(&Colour, pTarget++, hwAlpha);
+            } else {
+                pTarget++;
+            }
         }
 
         pwAlpha += (iAlphaStride - iWidth);

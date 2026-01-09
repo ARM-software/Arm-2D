@@ -21,8 +21,8 @@
  * Title:        __arm_2d_fill_colour_with_transformed_mask_and_target_mask.c
  * Description:  APIs for colour-filling-with-transformed_mask_and_target_mask
  *
- * $Date:        16 Dec 2025
- * $Revision:    v1.3.0
+ * $Date:        09 Jan 2026
+ * $Revision:    v1.4.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -232,15 +232,19 @@ void __gray8_fill_colour_with_transformed_mask_and_target_mask_process_point(
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pchTarget = chMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, hwAlpha);
+        }
     }
 
 #else
@@ -261,10 +265,17 @@ void __gray8_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        if (wPixelAlpha >= 255) {
+            *pchTarget = chMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
@@ -658,16 +669,17 @@ void __gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_p
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, hwAlpha);
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, hwAlpha);
+        }
     }
 
 #else
@@ -690,10 +702,14 @@ void __gray8_fill_colour_with_transformed_mask_target_mask_and_opacity_process_p
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8( &chMaskColour, pchTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
@@ -1094,15 +1110,19 @@ void __rgb565_fill_colour_with_transformed_mask_and_target_mask_process_point(
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *phwTarget = hwMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1123,10 +1143,17 @@ void __rgb565_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        if (wPixelAlpha >= 255) {
+            *phwTarget = hwMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
@@ -1520,16 +1547,17 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, hwAlpha);
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1552,10 +1580,14 @@ void __rgb565_fill_colour_with_transformed_mask_target_mask_and_opacity_process_
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_RGB565( &hwMaskColour, phwTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
@@ -1956,15 +1988,19 @@ void __cccn888_fill_colour_with_transformed_mask_and_target_mask_process_point(
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = wTotalAlpha >> 8;
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, hwAlpha);
+        if (hwAlpha >= 255) {
+            *pwTarget = wMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, hwAlpha);
+        }
     }
 
 #else
@@ -1985,10 +2021,17 @@ void __cccn888_fill_colour_with_transformed_mask_and_target_mask_process_point(
 
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        if (wPixelAlpha >= 255) {
+            *pwTarget = wMaskColour;
+        } else
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
@@ -2382,16 +2425,17 @@ void __cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process
     wTotalAlpha += (chPixelAlpha3 == 255) * (hwAlpha3 << 8) 
                 + (!(chPixelAlpha3 == 255) * chPixelAlpha3 * hwAlpha3);
 
-    if (wTotalAlpha) {
+    uint8_t chTargetAlpha = *pchTargetMask;
+    if (wTotalAlpha > 0 && chTargetAlpha > 0) {
         uint16_t hwAlpha = (wTotalAlpha >= 0xFF00) * hwOpacity
                          + (!(wTotalAlpha >= 0xFF00) * (wTotalAlpha * hwOpacity >> 16));
 
         /* handle target mask */
-        uint8_t chTargetAlpha = *pchTargetMask;
         hwAlpha = (chTargetAlpha == 0xFF) * hwAlpha
                 + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * hwAlpha >> 8));
-        
-        __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, hwAlpha);
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, hwAlpha);
+        }
     }
 
 #else
@@ -2414,10 +2458,14 @@ void __cccn888_fill_colour_with_transformed_mask_target_mask_and_opacity_process
                 + !(wPixelAlpha == 255) * (wPixelAlpha * hwOpacity >> 8);
 
     uint8_t chTargetAlpha = *pchTargetMask;
-    wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
-                + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
 
-    __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, wPixelAlpha);
+    if (wPixelAlpha > 0 && chTargetAlpha > 0) {
+        wPixelAlpha = (chTargetAlpha == 0xFF) * wPixelAlpha
+                    + (!(chTargetAlpha == 0xFF) * (chTargetAlpha * wPixelAlpha >> 8));
+        {
+            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888( &wMaskColour, pwTarget, wPixelAlpha);
+        }
+    }
 
 #endif
 }
