@@ -380,16 +380,25 @@ void __CAFWM_FUNC(des_msk_fill)(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptTargetMask++);
+                    uint16_t hwOpacity = (*ptTargetMask++);
                 #endif
 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -465,16 +474,25 @@ void __CAFWM_FUNC(des_msk_fill_x_mirror)(
                 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptTargetMask++);
+                    uint16_t hwOpacity = (*ptTargetMask++);
+                #endif
+
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                    
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
                 #endif
                 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-            
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -551,16 +569,24 @@ void __CAFWM_FUNC(des_msk_fill_y_mirror)(
                 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptTargetMask++);
+                    uint16_t hwOpacity = (*ptTargetMask++);
                 #endif
 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -637,16 +663,25 @@ void __CAFWM_FUNC(des_msk_fill_xy_mirror)(
                 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptTargetMask++);
+                    uint16_t hwOpacity = (*ptTargetMask++);
                 #endif
-                
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -775,16 +810,25 @@ void __CAFWM_FUNC(src_msk_fill)(
             #endif
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptSrcMsk++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptSrcMsk++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptSrcMsk++);
+                    uint16_t hwOpacity = (*ptSrcMsk++);
                 #endif
-                
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                    
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -872,16 +916,24 @@ void __CAFWM_FUNC(src_msk_fill_x_mirror)(
                 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptSrcMsk--);
+                    uint16_t hwOpacity = *(uint8_t *)(ptSrcMsk--);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptSrcMsk--);
+                    uint16_t hwOpacity = (*ptSrcMsk--);
                 #endif
 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -912,8 +964,6 @@ void __CAFWM_FUNC(src_msk_fill_x_mirror)(
             }
         }
     }
-
-
 }
 
 __WEAK
@@ -971,16 +1021,24 @@ void __CAFWM_FUNC(src_msk_fill_y_mirror)(
             #endif
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptSrcMsk++);
+                    uint16_t hwOpacity = *(uint8_t *)(ptSrcMsk++);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptSrcMsk++);
+                    uint16_t hwOpacity = (*ptSrcMsk++);
                 #endif
                 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc++;
+                    } else if (hwOpacity == 0) {
+                        ptSrc++; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc++, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -1074,16 +1132,24 @@ void __CAFWM_FUNC(src_msk_fill_xy_mirror)(
                 
                 for (int_fast16_t x = 0; x < wLength; x++) {
                 #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-                    uint16_t hwOpacity = 256 - *(uint8_t *)(ptSrcMsk--);
+                    uint16_t hwOpacity = *(uint8_t *)(ptSrcMsk--);
                 #else
-                    uint16_t hwOpacity = 256 - (*ptSrcMsk--);
+                    uint16_t hwOpacity = (*ptSrcMsk--);
                 #endif
                 
-            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-                    hwOpacity -= (hwOpacity == 1);
-            #endif
-                
-                    __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    if (hwOpacity >= 255) {
+                        *ptTarget++ = *ptSrc--;
+                    } else if (hwOpacity == 0) {
+                        ptSrc--; 
+                        ptTarget++;
+                    } else {
+                        hwOpacity = 256 - hwOpacity;
+                #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                        hwOpacity -= (hwOpacity == 1);
+                #endif
+                    
+                        __API_CAFWM_PIXEL_BLENDING(ptSrc--, ptTarget++, hwOpacity);
+                    }
                 }
 
                 /*---------------- Width Loop End----------------*/
@@ -1201,17 +1267,24 @@ void __CAFWM_FUNC(des_msk_copy)(
     
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+            uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
         #else
-            uint16_t hwOpacity = 256 - (*ptTargetMask++);
+            uint16_t hwOpacity = (*ptTargetMask++);
         #endif
         
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *pSourceBase++;
+            } else if (hwOpacity == 0) {
+                pSourceBase++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
             
+                __API_CAFWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase += (iSourceStride - iWidth);
         pTargetBase += (iTargetStride - iWidth);
@@ -1263,17 +1336,25 @@ void __CAFWM_FUNC(des_msk_copy_x_mirror)(
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+            uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
         #else
-            uint16_t hwOpacity = 256 - (*ptTargetMask++);
+            uint16_t hwOpacity = (*ptTargetMask++);
         #endif
-        
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
             
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
+            
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase += iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
@@ -1321,17 +1402,25 @@ void __CAFWM_FUNC(des_msk_copy_y_mirror)(
 
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+            uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
         #else
-            uint16_t hwOpacity = 256 - (*ptTargetMask++);
+            uint16_t hwOpacity = (*ptTargetMask++);
         #endif
 
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *ptSourceCur++;
+            } else if (hwOpacity == 0) {
+                ptSourceCur++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
             
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase -= iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
@@ -1382,17 +1471,25 @@ void __CAFWM_FUNC(des_msk_copy_xy_mirror)(
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(ptTargetMask++);
+            uint16_t hwOpacity = *(uint8_t *)(ptTargetMask++);
         #else
-            uint16_t hwOpacity = 256 - (*ptTargetMask++);
+            uint16_t hwOpacity = (*ptTargetMask++);
         #endif
 
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
 
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
-            
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
+
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase -= iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
@@ -1493,17 +1590,25 @@ void __CAFWM_FUNC(src_msk_copy)(
     
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(ptSourceMask++);
+            uint16_t hwOpacity = *(uint8_t *)(ptSourceMask++);
         #else
-            uint16_t hwOpacity = 256 - (*ptSourceMask++);
+            uint16_t hwOpacity = (*ptSourceMask++);
         #endif
-        
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
+
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *pSourceBase++;
+            } else if (hwOpacity == 0) {
+                pSourceBase++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
             
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
+            
+                __API_CAFWM_PIXEL_BLENDING( pSourceBase++, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase += (iSourceStride - iWidth);
         pTargetBase += (iTargetStride - iWidth);
@@ -1572,17 +1677,24 @@ void __CAFWM_FUNC(src_msk_copy_x_mirror)(
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(pchSourceMaskCur--);
+            uint16_t hwOpacity = *(uint8_t *)(pchSourceMaskCur--);
         #else
-            uint16_t hwOpacity = 256 - (*pchSourceMaskCur--);
+            uint16_t hwOpacity = (*pchSourceMaskCur--);
         #endif
         
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, ptTargetCur++, hwOpacity);
+            if (hwOpacity >= 255) {
+                *ptTargetCur++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                ptTargetCur++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
             
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, ptTargetCur++, hwOpacity);
+            }
         }
         pSourceBase += iSourceStride;
         pTargetBase += iTargetStride;
@@ -1652,16 +1764,24 @@ void __CAFWM_FUNC(src_msk_copy_y_mirror)(
     
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(pchSourceMaskCur++);
+            uint16_t hwOpacity = *(uint8_t *)(pchSourceMaskCur++);
         #else
-            uint16_t hwOpacity = 256 - (*pchSourceMaskCur++);
+            uint16_t hwOpacity = (*pchSourceMaskCur++);
         #endif
         
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
-        
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *ptSourceCur++;
+            } else if (hwOpacity == 0) {
+                ptSourceCur++; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
+            
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur++, pTargetBase++, hwOpacity);
+            }
         }
         
         pSourceBase -= iSourceStride;
@@ -1736,17 +1856,24 @@ void __CAFWM_FUNC(src_msk_copy_xy_mirror)(
         
         for (int_fast16_t x = 0; x < iWidth; x++) {
         #if __API_CAFWM_CFG_CHANNEL_8in32_SUPPORT
-            uint16_t hwOpacity = 256 - *(uint8_t *)(pchSourceMaskCur--);
+            uint16_t hwOpacity = *(uint8_t *)(pchSourceMaskCur--);
         #else
-            uint16_t hwOpacity = 256 - (*pchSourceMaskCur--);
+            uint16_t hwOpacity = (*pchSourceMaskCur--);
         #endif
 
-        #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
-            hwOpacity -= (hwOpacity == 1);
-        #endif
+            if (hwOpacity >= 255) {
+                *pTargetBase++ = *ptSourceCur--;
+            } else if (hwOpacity == 0) {
+                ptSourceCur--; 
+                pTargetBase++;
+            } else {
+                hwOpacity = 256 - hwOpacity;
+            #if !defined(__ARM_2D_CFG_UNSAFE_IGNORE_ALPHA_255_COMPENSATION__)
+                hwOpacity -= (hwOpacity == 1);
+            #endif
 
-            __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
-            
+                __API_CAFWM_PIXEL_BLENDING( ptSourceCur--, pTargetBase++, hwOpacity);
+            }
         }
         pSourceBase -= iSourceStride;
         pTargetBase += (iTargetStride - iWidth);
