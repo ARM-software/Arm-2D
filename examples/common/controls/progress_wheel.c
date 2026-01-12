@@ -245,7 +245,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                             bool bIsNewFrame)
 {
 
-    bool bNoScale = false;//ABS(this.fScale - 1.0f) < 0.01f;
+    bool bNoScale = ABS(this.fScale - 1.0f) < 0.01f;
     bool bIgnoreCurve = false;
 
     const arm_2d_tile_t *ptileArcMask = this.tCFG.ptileArcMask;
@@ -291,8 +291,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
     arm_2d_container(ptTarget, __wheel, ptRegion) {
 
         arm_2d_point_float_t tTargetCentre = {
-            .fX = (int16_t)(__wheel_canvas.tLocation.iX + ((float)(__wheel_canvas.tSize.iWidth - 1) / 2.0f)),
-            .fY = (int16_t)(__wheel_canvas.tLocation.iY + ((float)(__wheel_canvas.tSize.iHeight - 1) / 2.0f)),
+            .fX = (int16_t)(__wheel_canvas.tLocation.iX + ((float)(__wheel_canvas.tSize.iWidth) / 2.0f)),
+            .fY = (int16_t)(__wheel_canvas.tLocation.iY + ((float)(__wheel_canvas.tSize.iHeight) / 2.0f)),
         };
 
         if (    (chState == START) 
@@ -672,6 +672,15 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
      * Quadrant related variables won't cross this line                       *
      *------------------------------------------------------------------------*/
 
+        arm_2d_tile_t tQuarterMask = 
+            impl_child_tile(
+                (*ptileArcMask),
+                1, 
+                1, 
+                ptileArcMask->tRegion.tSize.iWidth - 2, 
+                ptileArcMask->tRegion.tSize.iHeight - 2
+            );
+
         arm_2d_region_t tRotationRegion = __wheel_canvas;
 
         tRotationRegion.tSize.iWidth = ((__wheel_canvas.tSize.iWidth + 1) >> 1);
@@ -689,30 +698,33 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             arm_2d_region_t tQuater = tRotationRegion;
 
-            switch (this.tCFG.u2StartPosition) {
-                default:
-                case PROGRESS_WHEEL_START_POSITION_TOP:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_RIGHT:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_BOTTOM:
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_LEFT:
-                    break;
-            }
-            
             if (bNoScale) {
+                tQuater.tLocation.iX = tTargetCentre.fX;
+                tQuater.tLocation.iY = tTargetCentre.fY;
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                }
+
                 switch (this.tCFG.u2StartPosition) {
                     default:
                     case PROGRESS_WHEEL_START_POSITION_TOP:
                         arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -720,7 +732,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -728,7 +740,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_y_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -736,13 +748,32 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
                 }
+
+                ARM_2D_OP_WAIT_ASYNC();
                 
             } else {
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        break;
+                }
+
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[3],
                                                 ptileArcMask,
@@ -769,23 +800,25 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             arm_2d_region_t tQuater = tRotationRegion;
 
-            switch (this.tCFG.u2StartPosition) {
-                default:
-                case PROGRESS_WHEEL_START_POSITION_TOP:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_RIGHT:
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_BOTTOM:
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_LEFT:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    break;
-            }
-
             if (bNoScale) {
+                tQuater.tLocation.iX = tTargetCentre.fX;
+                tQuater.tLocation.iY = tTargetCentre.fY;
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                }
 
                 switch (this.tCFG.u2StartPosition) {
                     default:
@@ -793,7 +826,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -801,7 +834,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_y_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -809,7 +842,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -817,12 +850,31 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
                 }
+
+                ARM_2D_OP_WAIT_ASYNC();
             } else {
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        break;
+                }
+
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[1],
                                                 ptileArcMask,
@@ -847,23 +899,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             arm_2d_region_t tQuater = tRotationRegion;
 
-            switch (this.tCFG.u2StartPosition) {
-                default:
-                case PROGRESS_WHEEL_START_POSITION_TOP:
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_RIGHT:
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_BOTTOM:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_LEFT:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-            }
-
             if (bNoScale) {
+
+                tQuater.tLocation.iX = tTargetCentre.fX;
+                tQuater.tLocation.iY = tTargetCentre.fY;
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        break;
+                }
             
                 switch (this.tCFG.u2StartPosition) {
                     default:
@@ -871,7 +926,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_y_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -879,7 +934,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -887,7 +942,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -895,13 +950,32 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
                 }
 
+                ARM_2D_OP_WAIT_ASYNC();
+
             } else {
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                }
+
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[2],
                                                 ptileArcMask,
@@ -927,23 +1001,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
             arm_2d_region_t tQuater = tRotationRegion;
 
-            switch (this.tCFG.u2StartPosition) {
-                default:
-                case PROGRESS_WHEEL_START_POSITION_TOP:
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_RIGHT:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_BOTTOM:
-                    tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-                case PROGRESS_WHEEL_START_POSITION_LEFT:
-                    tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
-                    break;
-            }
-
             if (bNoScale) {
+
+                tQuater.tLocation.iX = tTargetCentre.fX;
+                tQuater.tLocation.iY = tTargetCentre.fY;
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iY -= tQuarterMask.tRegion.tSize.iHeight - 1;
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iX -= tQuarterMask.tRegion.tSize.iWidth - 1;
+                        break;
+                }
             
                 switch (this.tCFG.u2StartPosition) {
                     default:
@@ -951,7 +1028,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -959,7 +1036,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_x_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -967,7 +1044,7 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         arm_2d_fill_colour_with_mask_xy_mirror_and_opacity(
                             &__wheel,
                             &tQuater,
-                            ptileArcMask,
+                            &tQuarterMask,
                             (__arm_2d_color_t){tWheelColour},
                             chOpacity);
                         break;
@@ -981,7 +1058,26 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                         break;
                 }
 
+                ARM_2D_OP_WAIT_ASYNC();
+
             } else {
+
+                switch (this.tCFG.u2StartPosition) {
+                    default:
+                    case PROGRESS_WHEEL_START_POSITION_TOP:
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_RIGHT:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_BOTTOM:
+                        tQuater.tLocation.iX += ((__wheel_canvas.tSize.iWidth + 1) >> 1);
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                    case PROGRESS_WHEEL_START_POSITION_LEFT:
+                        tQuater.tLocation.iY += ((__wheel_canvas.tSize.iHeight + 1) >> 1);
+                        break;
+                }
+
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                 &this.tOP[0],
                                                 ptileArcMask,
@@ -1047,9 +1143,8 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
                 /* draw the starting point */
                 if (bNoScale) {
                     tQuater.tLocation.iX = tQuater.tLocation.iX 
-                                        + tQuater.tSize.iWidth 
-                                        - ptileDotMask->tRegion.tSize.iWidth / 2;
-                    tQuater.tLocation.iY += 1;
+                                         + tQuater.tSize.iWidth 
+                                         - ptileDotMask->tRegion.tSize.iWidth / 2;
 
                     arm_2d_tile_t tDotMaskHalf = 
                         impl_child_tile(*ptileDotMask, 
@@ -1069,7 +1164,6 @@ void progress_wheel_show(   progress_wheel_t *ptThis,
 
                 } else {
                     arm_2d_point_float_t tPivot = tTargetCentre;
-                    //tPivot.fY += 1;
 
                     arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(
                                                     &this.tOP[4],
