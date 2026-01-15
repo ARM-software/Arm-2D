@@ -154,7 +154,6 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
 {
     ARM_2D_UNUSED(ptLoader);
     if (NULL == ptIO) {
-        printf("Out!\r\n");
         return true;
     }
 
