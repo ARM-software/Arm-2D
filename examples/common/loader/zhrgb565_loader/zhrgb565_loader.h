@@ -28,6 +28,7 @@
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_loaders.h"
+#include "arm_zhrgb565_cfg.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -60,10 +61,14 @@ typedef struct arm_zhrgb565_loader_cfg_t {
 
     uint16_t bUseHeapForVRES        : 1;
 
+#if __ARM_2D_ZHRGB565_USE_LOADER_IO__
     struct {
         const arm_loader_io_t *ptIO;
         uintptr_t pTarget;
     } ImageIO;
+#else
+    const uint16_t *phwLocalSource;
+#endif
 
     arm_2d_scene_t *ptScene;
 } arm_zhrgb565_loader_cfg_t;
@@ -78,6 +83,11 @@ struct arm_zhrgb565_loader_t {
         arm_2d_tile_t tTile;
         inherit(arm_generic_loader_t);
     };
+#if !__ARM_2D_ZHRGB565_USE_LOADER_IO__
+ARM_PRIVATE(
+    const uint16_t *phwLocalSource;
+)
+#endif
 };
 
 /*============================ GLOBAL VARIABLES ==============================*/

@@ -251,6 +251,11 @@ void scene_waveform_loader(void)
     arm_2d_scene_waveform_init(&DISP0_ADAPTER);
 }
 
+void scene_zhrgb565_loader(void) 
+{
+    arm_2d_scene_zhrgb565_init(&DISP0_ADAPTER);
+}
+
 void scene_font_loader(void) 
 {
     arm_2d_scene_font_init(&DISP0_ADAPTER);
@@ -609,7 +614,12 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_waveform_loader,
+        scene_zhrgb565_loader,
+        //scene_radars_loader,
+        //scene_audiomark_loader
+        //scene_watch_face_01_loader
+        //scene_fitness_loader,
+        //scene_waveform_loader,
         //scene_mask_generation_loader,
         //scene_virtual_resource_loader,
         //scene_ring_indicator_loader,

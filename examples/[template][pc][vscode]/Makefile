@@ -23,6 +23,8 @@ CC_SRC  += $(wildcard ../../examples/common/scenes/animate_background/*.c)
 CC_SRC  += $(wildcard ../../examples/common/scenes/knob/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/generic_loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/zhrgb565_loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/zhrgb565_loader/zhrgb565/zhRGB565_Decoder/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/tjpgd_loader/tjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
@@ -61,6 +63,7 @@ CC_INC  += ../../examples/common/controls/qrcode_box
 CC_INC  += ../../examples/common/opcodes
 CC_INC  += ../../examples/common/loader
 CC_INC  += ../../examples/common/loader/generic_loader
+CC_INC  += ../../examples/common/loader/zhrgb565_loader
 CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/loader/zjpgd_loader
 CC_INC  += ../../examples/common/loader/freetype_loader
@@ -141,7 +144,7 @@ CCFLAG  +=  -Wno-macro-redefined
 LDFLAG  +=  -lpthread
 
 # debug
-# CC_DEF  += __ARM_2D_DEBUG__
+CC_DEF  += __ARM_2D_DEBUG__
 
 ifeq ($(OS),Windows_NT)
 	# Windows GCC has known compilation issue for -O0

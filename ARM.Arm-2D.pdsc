@@ -171,6 +171,11 @@
             <description>The dependency of the demo QOI Loader</description>
             <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" />
         </condition>
+
+        <condition id="Arm-2D-Demo-zhRGB565-Loader">
+            <description>The dependency of the demo zhRGB565 Loader</description>
+            <require Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" />
+        </condition>
         
         <condition id="Arm-2D-Benchmark-Generic">
             <description>The Dependency Requirement for running arm-2d generic bemchmark</description>
@@ -500,6 +505,10 @@
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.c" />
             <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.1.0"/>
 
+            <file category="sourceC"     name="examples/common/loader/zhrgb565_loader/zhrgb565_loader.c" />
+            <file category="sourceC"     name="examples/common/loader/zhrgb565_loader/zhrgb565/zhRGB565_Decoder/zhRGB565_Decoder.c" />
+            <file category="header"      name="examples/common/loader/zhrgb565_loader/arm_zhrgb565_cfg.h" attr="config" version="1.0.0"/>
+
             <file category="include"     name="examples/common/loader/freetype_loader/freetype/include" />
             <file category="header"      name="examples/common/loader/freetype_loader/freetype_loader.h" />
             <file category="sourceC"     name="examples/common/loader/freetype_loader/freetype_loader.c" />
@@ -531,7 +540,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.15.4" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.15.5" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -619,6 +628,7 @@
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_Earth.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_GlassBall40.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge.c" />
+            <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge_dance.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_doge_small.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_white_noise.c" />
             <file category="sourceC"     name="examples/common/asset/arm_2d_asset_TinyCross.c" />
@@ -930,7 +940,6 @@
 
             <file category="sourceC"     name="examples/demos/girl_dance.c" attr="config" version="3.0.0" />
             <file category="sourceC"     name="examples/demos/film_mask.c"  attr="config" version="1.0.0" />
-            <file category="sourceC"     name="examples/demos/doge_dance.c" attr="config" version="3.0.0" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_Radars
@@ -1134,6 +1143,17 @@
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_RickRolling
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with zhRGB565" Cversion="1.0.0" condition="Arm-2D-Demo-zhRGB565-Loader">
+          <description>A demo for showing gif-like animation with zhRGB565 Loader.</description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_zhrgb565.c" attr="config" version="2.2.2" />
+            <file category="header"      name="examples/demos/arm_2d_scene_zhrgb565.h" attr="config" version="2.2.2" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_zhRGB565
           </RTE_Components_h>
         </component>
 

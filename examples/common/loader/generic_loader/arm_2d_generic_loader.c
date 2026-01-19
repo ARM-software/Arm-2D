@@ -157,6 +157,8 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
 
     } while(0);
 
+    this.bInitialized = true;
+
     /* try to decode */
     do {
         this.bErrorDetected = false;
@@ -175,8 +177,6 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
         }
     } while(0);
 
-    this.bInitialized = true;
-
     return ARM_2D_ERR_NONE;
 }
 
@@ -187,7 +187,7 @@ bool arm_generic_loader_io_seek(arm_generic_loader_t *ptThis,
 {
 
     return arm_loader_io_seek(  this.tCFG.ImageIO.ptIO, 
-                                (uintptr_t)ptThis, 
+                                this.tCFG.ImageIO.pTarget, 
                                 ptThis,
                                 offset,
                                 whence);
@@ -198,7 +198,7 @@ size_t arm_generic_loader_io_read ( arm_generic_loader_t *ptThis,
                                     size_t tLength)
 {
     return arm_loader_io_read(  this.tCFG.ImageIO.ptIO, 
-                                (uintptr_t)ptThis, 
+                                this.tCFG.ImageIO.pTarget, 
                                 ptThis,
                                 pchBuffer, 
                                 tLength);
@@ -208,7 +208,7 @@ intptr_t arm_generic_loader_io_get_position(arm_generic_loader_t *ptThis)
 {
 
     return arm_loader_io_get_position(  this.tCFG.ImageIO.ptIO, 
-                                        (uintptr_t)ptThis, 
+                                        this.tCFG.ImageIO.pTarget,
                                         ptThis);
 }
 

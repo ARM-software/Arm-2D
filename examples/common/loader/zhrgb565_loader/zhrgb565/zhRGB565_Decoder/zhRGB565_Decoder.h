@@ -5,6 +5,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#if defined(_RTE_)
+#   include "RTE_Components.h"
+#endif
+#if defined(RTE_Acceleration_Arm_2D)
+#   include "arm_2d_helper.h"
+#   undef this
+#   define this (*ptThis)
+#endif
+
 
 // RGB565颜色分量提取
 #define GET_R(color) 		(((color) >> 11) & 0x1F)
@@ -35,7 +44,10 @@
 
 
 void zhRGB565_decompress_baseversion(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height,const uint16_t *src, uint16_t *buf);
-void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, uint16_t *buf, int16_t iTargetStride);
+
+#if defined(RTE_Acceleration_Arm_2D)
+void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, COLOUR_INT *buf, int16_t iTargetStride);
+#endif
 
 #endif
 

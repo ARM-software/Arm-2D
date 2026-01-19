@@ -97,20 +97,30 @@ arm_2d_err_t arm_zhrgb565_loader_init(arm_zhrgb565_loader_t *ptThis,
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
 
     do {
+    #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
         if (NULL == ptCFG->ImageIO.ptIO) {
             this.use_as__arm_generic_loader_t.bErrorDetected = true;
             tResult = ARM_2D_ERR_IO_ERROR;
             break;
         }
+    #else
+        this.phwLocalSource = ptCFG->phwLocalSource;
+        if (NULL == this.phwLocalSource) {
+            tResult = ARM_2D_ERR_INVALID_PARAM;
+            break;
+        }
+    #endif
 
         arm_generic_loader_cfg_t tCFG = {
             .bUseHeapForVRES = ptCFG->bUseHeapForVRES,
             .tColourInfo.chScheme = ARM_2D_COLOUR,
             .bBlendWithBG = false,
+        #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
             .ImageIO = {
                 .ptIO = ptCFG->ImageIO.ptIO,
                 .pTarget = ptCFG->ImageIO.pTarget,
             },
+        #endif
 
             .UserDecoder = {
                 .fnDecoderInit = &__arm_zhrgb565_loader_decoder_init,
@@ -181,9 +191,7 @@ arm_2d_err_t __arm_zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj)
     arm_zhrgb565_loader_t *ptThis = (arm_zhrgb565_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
-    if (!this.use_as__arm_generic_loader_t.bInitialized) {
-        this.tTile.tRegion.tSize = zhRGB565_get_image_size(ptObj);
-    }
+    this.tTile.tRegion.tSize = zhRGB565_get_image_size(ptObj);
 
     return ARM_2D_ERR_NONE;
 }
@@ -208,7 +216,6 @@ arm_2d_err_t __arm_zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
     assert(chBytesPerPixel != 3);
 
     int16_t iTargetStride = iTargetStrideInByte / chBytesPerPixel;
-    
 
     zhRGB565_decompress_for_arm2d(  ptROI->tLocation.iX,
                                     ptROI->tLocation.iY,
@@ -217,9 +224,9 @@ arm_2d_err_t __arm_zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
                                 #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
                                     (const uint16_t *)ptObj,
                                 #else
-                                    (const uint16_t *)arm_generic_loader_io_get_position(ptObj),
+                                    this.phwLocalSource,
                                 #endif
-                                    (uint16_t *)pchBuffer,
+                                    (COLOUR_INT *)pchBuffer,
                                     iTargetStride);
 
     return ARM_2D_ERR_NONE;

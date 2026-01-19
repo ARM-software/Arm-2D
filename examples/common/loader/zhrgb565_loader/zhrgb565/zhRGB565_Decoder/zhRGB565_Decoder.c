@@ -1,13 +1,7 @@
 #include "zhRGB565_Decoder.h"
 
-#if defined(_RTE_)
-#   include "RTE_Components.h"
-#endif
-#if defined(RTE_Acceleration_Arm_2D)
-#   include "arm_2d_helper.h"
-#endif
-
 #if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
+#   define __ZHRGB565_LOADER_IMPLEMENT__
 #   include "arm_2d_example_loaders.h"
 #	include "arm_zhrgb565_cfg.h"
 #endif
@@ -36,29 +30,11 @@ void zhRGB565_save_pixel(COLOUR_INT *pPixel, uint16_t hwRGB565Pixel)
  * pixel：解码后的像素保存的地址
  */
 __STATIC_INLINE
-void zhRGB565_RLE_decoder(uint16_t ref_color, uint16_t encoder_num, uint16_t *pixel)
+void zhRGB565_RLE_decoder(uint16_t ref_color, uint16_t encoder_num, COLOUR_INT *pixel)
 {
     for(uint32_t i=0;i<encoder_num; i++){
         zhRGB565_save_pixel(pixel++, ref_color);
     }
-}
-
-
-/**
- * ref_color：基准色
- * encoderDATA：编码数据
- * pixel1,pixel2：解码后的像素
- */
-__STATIC_FORCEINLINE
-void zhRGB565_DIFF_decoder(uint16_t ref_color, uint16_t encoderDATA, uint16_t *pixel1, uint16_t *pixel2)
-{
-    uint8_t tmpdataH = encoderDATA>>8, tmpdataL = encoderDATA;
-    uint16_t HI = GET_RGB332_TO_RGB565(tmpdataH);
-    uint16_t LO = GET_RGB332_TO_RGB565(tmpdataL);
-    
-    uint16_t tmpPixel = ref_color ^ HI;
-    zhRGB565_save_pixel(pixel1, tmpPixel);
-    zhRGB565_save_pixel(pixel2, tmpPixel ^ LO);
 }
 
 #else
@@ -77,6 +53,9 @@ static inline void zhRGB565_RLE_decoder(uint16_t ref_color, uint16_t encoder_num
 }
 
 
+
+#endif
+
 /**
  * ref_color：基准色
  * encoderDATA：编码数据
@@ -91,8 +70,8 @@ static inline void zhRGB565_DIFF_decoder(uint16_t ref_color, uint16_t encoderDAT
     *pixel1 = ref_color ^ HI;
     *pixel2 = *pixel1 ^ LO;
 }
-#endif
 
+#if !defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 // x0,y0:(x0,y0)图片上选择区域的左上角坐标
 // width，height：取图片的宽高区域
 // src：压缩数据
@@ -275,6 +254,7 @@ void zhRGB565_decompress_baseversion(uint16_t x0, uint16_t y0, uint16_t width, u
         }
     }
 }
+#endif
 
 #if defined(RTE_Acceleration_Arm_2D)
 
@@ -294,17 +274,26 @@ __STATIC_FORCEINLINE
 uint16_t zhRGB565_read_u16_from_loader(uintptr_t ptLoader)
 {
     uint16_t hwData;
-    arm_generic_loader_io_read(ptLoader, (uint8_t *)&hwData, 2);
+    arm_generic_loader_io_read( (arm_generic_loader_t *)ptLoader, 
+                                (uint8_t *)&hwData, 2);
     return hwData;
 }
 
 __STATIC_FORCEINLINE
 uint16_t zhRGB565_read_u16_from_loader_with_offset(uintptr_t ptLoader, uintptr_t nOffset)
 {
-    arm_generic_loader_io_seek(	ptLoader, 
+    arm_generic_loader_io_seek( (arm_generic_loader_t *)ptLoader, 
                                 nOffset * sizeof(uint16_t), 
                                 SEEK_SET);
     return zhRGB565_read_u16_from_loader(ptLoader);
+}
+
+__STATIC_FORCEINLINE
+void zhRGB565_set_loader_offset(uintptr_t ptLoader, uintptr_t nOffset)
+{
+    arm_generic_loader_io_seek( (arm_generic_loader_t *)ptLoader, 
+                                nOffset * sizeof(uint16_t), 
+                                SEEK_SET);
 }
 
 /* 获取图片 - 宽度 */
@@ -360,20 +349,40 @@ uint16_t zhRGB565_read_u16_from_loader_with_offset(uintptr_t ptLoader, uintptr_t
 
 //#define     GET_RGB565_ENCODER_LINE_DATA2(BUF,N,M)        ((BUF)[(N) + (M)])
 #define GET_RGB565_ENCODER_LINE_DATA2(__addr, N, M)                             \
-        zhRGB565_read_u16_from_loader_with_offset(                              \
-            (uintptr_t)(__addr),                                                \
-			(N) + (M))
+        zhRGB565_read_u16_from_loader((uintptr_t)(__addr))
+
+#define SET_RGB565_ENCODER_READ_HINT(__addr, __index)                           \
+        zhRGB565_set_loader_offset((uintptr_t)(__addr), __index)
+#else
+
+#   define SET_RGB565_ENCODER_READ_HINT(...)
 
 #endif
 
 ARM_NONNULL(1)
 arm_2d_size_t zhRGB565_get_image_size(arm_generic_loader_t *ptLoader)
 {
+
     assert(NULL != ptLoader);
+#if __ARM_2D_ZHRGB565_USE_LOADER_IO__
     arm_2d_size_t tSize = {
         .iWidth = GET_RGB565_ENCODER_WIDTH((const uint16_t *)ptLoader),
         .iHeight = GET_RGB565_ENCODER_HEIGHT((const uint16_t *)ptLoader),
     };
+#else
+    arm_generic_loader_io_seek(	ptLoader, 
+                                0, 
+                                SEEK_SET);
+
+    arm_zhrgb565_loader_t *ptThis = (arm_zhrgb565_loader_t *)ptLoader;
+    const uint16_t *phwSrc = this.phwLocalSource;
+
+    arm_2d_size_t tSize = {
+        .iWidth = GET_RGB565_ENCODER_WIDTH(phwSrc),
+        .iHeight = GET_RGB565_ENCODER_HEIGHT(phwSrc),
+    };
+
+#endif
     return tSize;
 }
 
@@ -381,7 +390,7 @@ arm_2d_size_t zhRGB565_get_image_size(arm_generic_loader_t *ptLoader)
 // width，height：取图片的宽高区域
 // src：压缩数据
 // buf：解压缓存
-void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, uint16_t *buf, int16_t iTargetStride)
+void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, COLOUR_INT *buf, int16_t iTargetStride)
 {
     uint16_t pic_width = GET_RGB565_ENCODER_WIDTH(src);
     uint16_t pic_height = GET_RGB565_ENCODER_HEIGHT(src);
@@ -433,6 +442,7 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
         real_width = width;        // 实际图片宽度
         for(pic_col = 0; pic_col<pic_width; pic_col++)
         {
+            SET_RGB565_ENCODER_READ_HINT(src, line_addr + pic_col);
             uint16_t EncodeData = GET_RGB565_ENCODER_LINE_DATA2(src, line_addr, pic_col);
             uint16_t tmpdata = EncodeData & 0xff80;
             
