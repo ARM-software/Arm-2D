@@ -333,7 +333,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
     #endif
 
         arm_zjpgd_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
+            .bUseHeapForVRES = false,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_ZJPGD_MODE_PARTIAL_DECODED,
             //.tColourInfo.chScheme = ARM_2D_COLOUR_GRAY8,
@@ -367,7 +367,7 @@ user_scene_rickrolling_t *__arm_2d_scene_rickrolling_init(   arm_2d_scene_player
     #endif
 
         arm_tjpgd_loader_cfg_t tCFG = {
-            .bUseHeapForVRES = true,
+            .bUseHeapForVRES = false,
             .ptScene = (arm_2d_scene_t *)ptThis,
             .u2WorkMode = ARM_TJPGD_MODE_PARTIAL_DECODED,
         
