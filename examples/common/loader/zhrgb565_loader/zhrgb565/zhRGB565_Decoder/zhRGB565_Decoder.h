@@ -35,7 +35,7 @@
 
 
 void zhRGB565_decompress_baseversion(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height,const uint16_t *src, uint16_t *buf);
-void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, uint16_t *buf, int16_t iTargetStride, int16_t iSourceStride);
+void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uint16_t height, const uint16_t *src, uint16_t *buf, int16_t iTargetStride);
 
 #endif
 

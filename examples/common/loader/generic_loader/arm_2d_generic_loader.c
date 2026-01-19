@@ -157,8 +157,6 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
 
     } while(0);
 
-    this.bInitialized = true;
-
     /* try to decode */
     do {
         this.bErrorDetected = false;
@@ -176,6 +174,8 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
             return ARM_2D_ERR_IO_ERROR;
         }
     } while(0);
+
+    this.bInitialized = true;
 
     return ARM_2D_ERR_NONE;
 }
