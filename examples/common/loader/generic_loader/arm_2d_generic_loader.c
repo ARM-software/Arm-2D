@@ -181,30 +181,35 @@ arm_2d_err_t arm_generic_loader_init( arm_generic_loader_t *ptThis,
 }
 
 
-bool arm_generic_loader_io_seek(uintptr_t pTarget, 
+bool arm_generic_loader_io_seek(arm_generic_loader_t *ptThis, 
                                 int32_t offset, 
                                 int32_t whence)
 {
-    arm_generic_loader_t *ptThis = (arm_generic_loader_t *)pTarget;
 
     return arm_loader_io_seek(  this.tCFG.ImageIO.ptIO, 
-                                pTarget, 
+                                (uintptr_t)ptThis, 
                                 ptThis,
                                 offset,
                                 whence);
 }
 
-size_t arm_generic_loader_io_read ( uintptr_t pTarget,       
+size_t arm_generic_loader_io_read ( arm_generic_loader_t *ptThis,       
                                     uint8_t *pchBuffer,
                                     size_t tLength)
 {
-    arm_generic_loader_t *ptThis = (arm_generic_loader_t *)pTarget;
-
     return arm_loader_io_read(  this.tCFG.ImageIO.ptIO, 
-                                pTarget, 
+                                (uintptr_t)ptThis, 
                                 ptThis,
                                 pchBuffer, 
                                 tLength);
+}
+
+intptr_t arm_generic_loader_io_get_position(arm_generic_loader_t *ptThis)
+{
+
+    return arm_loader_io_get_position(  this.tCFG.ImageIO.ptIO, 
+                                        (uintptr_t)ptThis, 
+                                        ptThis);
 }
 
 static

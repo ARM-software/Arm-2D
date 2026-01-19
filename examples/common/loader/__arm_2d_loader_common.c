@@ -56,6 +56,8 @@ bool __arm_loader_io_fseek( uintptr_t pTarget,
                             void *ptLoader, 
                             int32_t offset, 
                             int32_t whence);
+static
+intptr_t __arm_loader_io_file_get_position(uintptr_t pTarget, void *ptLoader);
 
 static
 size_t __arm_loader_io_fread(   uintptr_t pTarget, 
@@ -68,6 +70,9 @@ bool __arm_loader_io_binary_open(uintptr_t pTarget, void *ptLoader);
 
 static
 void __arm_loader_io_binary_close(uintptr_t pTarget, void *ptLoader);
+
+static
+intptr_t __arm_loader_io_binary_get_position(uintptr_t pTarget, void *ptLoader);
 
 static
 bool __arm_loader_io_binary_seek(   uintptr_t pTarget, 
@@ -100,6 +105,9 @@ bool __arm_loader_io_window_seek(   uintptr_t pTarget,
                                     int32_t whence);
 
 static
+intptr_t __arm_loader_io_window_get_position(uintptr_t pTarget, void *ptLoader);
+
+static
 size_t __arm_loader_io_window_read( uintptr_t pTarget, 
                                     void *ptLoader, 
                                     uint8_t *pchBuffer, 
@@ -112,30 +120,34 @@ void __arm_loader_io_window_on_frame_start( uintptr_t pTarget,
 /*============================ GLOBAL VARIABLES ==============================*/
 
 const arm_loader_io_t ARM_LOADER_IO_FILE = {
-    .fnOpen =   &__arm_loader_io_fopen,
-    .fnClose =  &__arm_loader_io_fclose,
-    .fnSeek =   &__arm_loader_io_fseek,
-    .fnRead =   &__arm_loader_io_fread,
+    .fnOpen =           &__arm_loader_io_fopen,
+    .fnClose =          &__arm_loader_io_fclose,
+    .fnSeek =           &__arm_loader_io_fseek,
+    .fnGetPosition =    &__arm_loader_io_file_get_position,
+    .fnRead =           &__arm_loader_io_fread,
 };
 
 const arm_loader_io_t ARM_LOADER_IO_BINARY= {
-    .fnOpen =   &__arm_loader_io_binary_open,
-    .fnClose =  &__arm_loader_io_binary_close,
-    .fnSeek =   &__arm_loader_io_binary_seek,
-    .fnRead =   &__arm_loader_io_binary_read,
+    .fnOpen =           &__arm_loader_io_binary_open,
+    .fnClose =          &__arm_loader_io_binary_close,
+    .fnSeek =           &__arm_loader_io_binary_seek,
+    .fnGetPosition =    &__arm_loader_io_binary_get_position,
+    .fnRead =           &__arm_loader_io_binary_read,
 };
 
 const arm_loader_io_t ARM_LOADER_IO_ROM = {
-    .fnOpen =   &__arm_loader_io_binary_open,
-    .fnClose =  &__arm_loader_io_binary_close,
-    .fnSeek =   &__arm_loader_io_binary_seek,
-    .fnRead =   &__arm_loader_io_rom_read,
+    .fnOpen =           &__arm_loader_io_binary_open,
+    .fnClose =          &__arm_loader_io_binary_close,
+    .fnSeek =           &__arm_loader_io_binary_seek,
+    .fnGetPosition =    &__arm_loader_io_binary_get_position,
+    .fnRead =           &__arm_loader_io_rom_read,
 };
 
 const arm_loader_io_t ARM_LOADER_IO_WINDOW = {
     .fnOpen =           &__arm_loader_io_window_open,
     .fnClose =          &__arm_loader_io_window_close,
     .fnSeek =           &__arm_loader_io_window_seek,
+    .fnGetPosition =    &__arm_loader_io_window_get_position,
     .fnRead =           &__arm_loader_io_window_read,
     .fnOnFrameStart =   &__arm_loader_io_window_on_frame_start,
 };
@@ -179,6 +191,19 @@ void arm_loader_io_close(   const arm_loader_io_t *ptIO,
                     ptLoader));
 }
 
+intptr_t arm_loader_io_get_position(const arm_loader_io_t *ptIO,
+                                    uintptr_t pTarget, 
+                                    void *ptLoader)
+{
+    ARM_2D_UNUSED(ptLoader);
+    if (NULL == ptIO) {
+        return -1;
+    }
+
+    return ARM_2D_INVOKE(ptIO->fnGetPosition, 
+            ARM_2D_PARAM(pTarget,
+                        ptLoader));
+}
 
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         uintptr_t pTarget, 
@@ -294,6 +319,16 @@ void __arm_loader_io_fclose(uintptr_t pTarget, void *ptLoader)
 }
 
 static
+intptr_t __arm_loader_io_file_get_position(uintptr_t pTarget, void *ptLoader)
+{
+    arm_loader_io_file_t *ptThis = (arm_loader_io_file_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    assert(NULL != ptThis);
+
+    return (intptr_t)ftell(this.phFile);
+}
+
+static
 bool __arm_loader_io_fseek( uintptr_t pTarget, 
                             void *ptLoader, 
                             int32_t offset, 
@@ -372,6 +407,15 @@ void __arm_loader_io_binary_close(uintptr_t pTarget, void *ptLoader)
     ARM_2D_UNUSED(ptLoader);
     ARM_2D_UNUSED(ptThis);
 
+}
+
+static
+intptr_t __arm_loader_io_binary_get_position(uintptr_t pTarget, void *ptLoader)
+{
+    arm_loader_io_binary_t *ptThis = (arm_loader_io_binary_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    ARM_2D_UNUSED(ptThis);
+    return (intptr_t)this.tPostion;
 }
 
 static
@@ -625,6 +669,17 @@ void __arm_loader_io_window_close(uintptr_t pTarget, void *ptLoader)
     ARM_2D_UNUSED(ptLoader);
     ARM_2D_UNUSED(ptThis);
 
+}
+
+static
+intptr_t __arm_loader_io_window_get_position(uintptr_t pTarget, void *ptLoader)
+{
+    arm_loader_io_window_t *ptThis = (arm_loader_io_window_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+    ARM_2D_UNUSED(ptThis);
+
+    return this.tWindow.tHead.hwDataAvailable 
+         - this.tWindow.tPeek.hwDataAvailable;
 }
 
 static

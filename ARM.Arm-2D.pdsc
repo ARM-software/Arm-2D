@@ -477,7 +477,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.4.1" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.5.0" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec, loading Lossless Compressed images (*.QOI) and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />

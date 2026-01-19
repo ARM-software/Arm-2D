@@ -44,11 +44,12 @@ extern "C" {
 
 typedef struct arm_loader_io_t {
 
-    bool   (*fnOpen)        (uintptr_t pTarget, void *ptLoader);
-    void   (*fnClose)       (uintptr_t pTarget, void *ptLoader);
-    bool   (*fnSeek)        (uintptr_t pTarget, void *ptLoader, int32_t offset, int32_t whence);
-    size_t (*fnRead)        (uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize);
-    void   (*fnOnFrameStart)(uintptr_t pTarget, void *ptLoader);
+    bool        (*fnOpen)        (uintptr_t pTarget, void *ptLoader);
+    void        (*fnClose)       (uintptr_t pTarget, void *ptLoader);
+    bool        (*fnSeek)        (uintptr_t pTarget, void *ptLoader, int32_t offset, int32_t whence);
+    intptr_t    (*fnGetPosition) (uintptr_t pTarget, void *ptLoader);
+    size_t      (*fnRead)        (uintptr_t pTarget, void *ptLoader, uint8_t *pchBuffer, size_t tSize);
+    void        (*fnOnFrameStart)(uintptr_t pTarget, void *ptLoader);
 
 } arm_loader_io_t;
 
@@ -119,6 +120,11 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
                         void *ptLoader, 
                         int32_t offset, 
                         int32_t whence);
+
+extern
+intptr_t arm_loader_io_get_position(const arm_loader_io_t *ptIO,
+                                    uintptr_t pTarget, 
+                                    void *ptLoader);
 
 extern
 size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,

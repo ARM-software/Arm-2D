@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "./zhrgb565/zhRGB565_Decoder/zhRGB565_Decoder.h"
+#include "arm_zhrgb565_cfg.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
@@ -208,11 +209,16 @@ arm_2d_err_t __zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
 
     int16_t iTargetStride = iTargetStrideInByte / chBytesPerPixel;
     
+
     zhRGB565_decompress_for_arm2d(  ptROI->tLocation.iX,
                                     ptROI->tLocation.iY,
                                     ptROI->tSize.iWidth,
                                     ptROI->tSize.iHeight,
+                                #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
                                     (const uint16_t *)ptObj,
+                                #else
+                                    (const uint16_t *)arm_generic_loader_io_get_position(ptObj),
+                                #endif
                                     (uint16_t *)pchBuffer,
                                     iTargetStride);
 

@@ -1,14 +1,15 @@
 #include "zhRGB565_Decoder.h"
 
 #if defined(_RTE_)
-#    include "RTE_Components.h"
+#   include "RTE_Components.h"
 #endif
 #if defined(RTE_Acceleration_Arm_2D)
-#    include "arm_2d_helper.h"
+#   include "arm_2d_helper.h"
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
-#    include "arm_2d_example_loaders.h"
+#   include "arm_2d_example_loaders.h"
+#	include "arm_zhrgb565_cfg.h"
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D)
@@ -277,7 +278,7 @@ void zhRGB565_decompress_baseversion(uint16_t x0, uint16_t y0, uint16_t width, u
 
 #if defined(RTE_Acceleration_Arm_2D)
 
-#if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Extra_Loader) && __ARM_2D_ZHRGB565_USE_LOADER_IO__
 #undef GET_RGB565_ENCODER_WIDTH
 #undef GET_RGB565_ENCODER_HEIGHT
 #undef GET_RGB565_ENCODER_FLAG
@@ -363,6 +364,8 @@ uint16_t zhRGB565_read_u16_from_loader_with_offset(uintptr_t ptLoader, uintptr_t
             (uintptr_t)(__addr),                                                \
 			(N) + (M))
 
+#endif
+
 ARM_NONNULL(1)
 arm_2d_size_t zhRGB565_get_image_size(arm_generic_loader_t *ptLoader)
 {
@@ -373,7 +376,6 @@ arm_2d_size_t zhRGB565_get_image_size(arm_generic_loader_t *ptLoader)
     };
     return tSize;
 }
-#endif
 
 // x0,y0:(x0,y0)图片上选择区域的左上角坐标
 // width，height：取图片的宽高区域
@@ -384,9 +386,9 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
     uint16_t pic_width = GET_RGB565_ENCODER_WIDTH(src);
     uint16_t pic_height = GET_RGB565_ENCODER_HEIGHT(src);
     uint16_t ecoder_rle_Flag = GET_RGB565_ENCODER_FLAG(src);
-    uint16_t ecoder_diff_Flag = GET_RGB565_ENCODER_FLAG(src)|0x0080;    // 差值编码和RLE编码标志高字节是一样的，但是差值编码数据较少，所以差值编码没有长编码
-    uint32_t sjb_length = GET_RGB565_ENCODER_SJB_LENGHT(src);            // 记录升阶表长度
-    uint32_t encoder_addr = GET_RGB565_ENCODER_DATA_ADDR(src);            // 编码数据起点坐标
+    uint16_t ecoder_diff_Flag = ecoder_rle_Flag |0x0080;    		    // 差值编码和RLE编码标志高字节是一样的，但是差值编码数据较少，所以差值编码没有长编码
+    uint32_t sjb_length = GET_RGB565_ENCODER_SJB_LENGHT(src);           // 记录升阶表长度
+    uint32_t encoder_addr = GET_RGB565_ENCODER_DATA_ADDR(src);    	    // 编码数据起点坐标
     
     uint16_t pic_line, pic_col;
     uint32_t line_pos_base = 0, real_width;

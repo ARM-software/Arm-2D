@@ -141,12 +141,15 @@ ARM_NONNULL(1)
 void arm_generic_loader_on_frame_complete( arm_generic_loader_t *ptThis);
 
 extern
-bool arm_generic_loader_io_seek(uintptr_t pTarget, 
+bool arm_generic_loader_io_seek(arm_generic_loader_t *ptThis, 
                                 int32_t offset, 
                                 int32_t whence);
 
 extern
-size_t arm_generic_loader_io_read ( uintptr_t pTarget,       
+intptr_t arm_generic_loader_io_get_position(arm_generic_loader_t *ptThis);
+
+extern
+size_t arm_generic_loader_io_read ( arm_generic_loader_t *ptThis,      
                                     uint8_t *pchBuffer,
                                     size_t tLength);
 
