@@ -1,5 +1,63 @@
 #include "zhRGB565_Decoder.h"
 
+#if defined(_RTE_)
+#	include "RTE_Components.h"
+#endif
+#if defined(RTE_Acceleration_Arm_2D)
+#	include "arm_2d_helper.h"
+#endif
+
+#if defined(RTE_Acceleration_Arm_2D)
+__STATIC_FORCEINLINE
+void zhRGB565_save_pixel(COLOUR_INT *pPixel, uint16_t hwRGB565Pixel)
+{
+#if __GLCD_CFG_COLOUR_DEPTH__ == 16
+	*pPixel = hwRGB565Pixel;
+#else
+	__arm_2d_color_fast_rgb_t tPixel;
+	__arm_2d_rgb565_unpack(hwRGB565Pixel, &tPixel);
+
+#	if __GLCD_CFG_COLOUR_DEPTH__ == 8
+	*pPixel = __arm_2d_gray8_pack(&tPixel);
+#	elif __GLCD_CFG_COLOUR_DEPTH__ == 32
+	*pPixel = __arm_2d_ccca8888_pack(&tPixel);
+#endif
+#endif
+}
+
+/**
+ * ref_color：基准色
+ * encoded_num：重复数据
+ * pixel：解码后的像素保存的地址
+ */
+__STATIC_INLINE
+void zhRGB565_RLE_decoder(uint16_t ref_color, uint16_t encoder_num, uint16_t *pixel)
+{
+	for(uint32_t i=0;i<encoder_num; i++){
+		zhRGB565_save_pixel(pixel++, ref_color);
+	}
+}
+
+
+/**
+ * ref_color：基准色
+ * encoderDATA：编码数据
+ * pixel1,pixel2：解码后的像素
+ */
+__STATIC_FORCEINLINE
+void zhRGB565_DIFF_decoder(uint16_t ref_color, uint16_t encoderDATA, uint16_t *pixel1, uint16_t *pixel2)
+{
+	uint8_t tmpdataH = encoderDATA>>8, tmpdataL = encoderDATA;
+	uint16_t HI = GET_RGB332_TO_RGB565(tmpdataH);
+	uint16_t LO = GET_RGB332_TO_RGB565(tmpdataL);
+	
+	uint16_t tmpPixel = ref_color ^ HI;
+	zhRGB565_save_pixel(pixel1, tmpPixel);
+	zhRGB565_save_pixel(pixel2, tmpPixel ^ LO);
+}
+
+#else
+
 /**
  * ref_color：基准色
  * encoded_num：重复数据
@@ -12,6 +70,7 @@ static inline void zhRGB565_RLE_decoder(uint16_t ref_color, uint16_t encoder_num
 		pixel++;
 	}
 }
+
 
 /**
  * ref_color：基准色
@@ -27,6 +86,7 @@ static inline void zhRGB565_DIFF_decoder(uint16_t ref_color, uint16_t encoderDAT
 	*pixel1 = ref_color ^ HI;
 	*pixel2 = *pixel1 ^ LO;
 }
+#endif
 
 // x0,y0:(x0,y0)图片上选择区域的左上角坐标
 // width，height：取图片的宽高区域
@@ -211,6 +271,8 @@ void zhRGB565_decompress_baseversion(uint16_t x0, uint16_t y0, uint16_t width, u
 	}
 }
 
+#if defined(RTE_Acceleration_Arm_2D)
+
 // x0,y0:(x0,y0)图片上选择区域的左上角坐标
 // width，height：取图片的宽高区域
 // src：压缩数据
@@ -228,8 +290,8 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 	uint32_t line_pos_base = 0, real_width;
 	uint32_t x00, line_addr;
 	
-	uint16_t *buf_base;
-	buf_base = buf;
+	COLOUR_INT *buf_base;
+	buf_base = (COLOUR_INT *)buf;
 	
 	uint16_t g_sjb_cur = 0;
 	uint16_t ref_color, len, pixl_len;
@@ -347,7 +409,8 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 				ref_color = GET_RGB565_ENCODER_LINE_DATA2(src, line_addr, pic_col);
 				
 				if(skip_cnt == 0){			// 无需跳过，直接解码
-					*buf++ = ref_color;		// 参考色是原值存储，原值取出
+					//*buf++ = ref_color;		// 参考色是原值存储，原值取出
+					zhRGB565_save_pixel(buf++, ref_color);
 					real_width--;
 					// 缓冲区换行
 					if(real_width == 0){ 	// 本行解码完毕,切换到新的一行解码
@@ -366,7 +429,8 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 					zhRGB565_DIFF_decoder(ref_color, encdata, &pix1, &pix2);	// 解码一个数据，可以解出2个像素
 					
 					if(skip_cnt == 0){		// 无需跳过，直接解码
-						*buf++ = pix1;		// 第一个像素
+						//*buf++ = pix1;		// 第一个像素
+						zhRGB565_save_pixel(buf++, pix1);
 						real_width--;
 						// 缓冲区换行
 						if(real_width == 0){ break; }		// 本行解码完毕,切换到新的一行解码
@@ -375,7 +439,8 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 						skip_cnt--;
 					
 					if(skip_cnt == 0){		// 无需跳过，直接解码
-						*buf++ = pix2;		// 第二个像素
+						//*buf++ = pix2;		// 第二个像素
+						zhRGB565_save_pixel(buf++, pix2);
 						real_width--;
 						// 缓冲区换行
 						if(real_width == 0){ break; }		// 本行解码完毕,切换到新的一行解码
@@ -396,7 +461,8 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 					x00++;
 					continue;
 				}
-				*buf++ = EncodeData;
+				//*buf++ = EncodeData;
+				zhRGB565_save_pixel(buf++, EncodeData);
 				real_width--;
 				
 				// 缓冲区换行
@@ -405,5 +471,7 @@ void zhRGB565_decompress_for_arm2d(uint16_t x0, uint16_t y0, uint16_t width, uin
 		}
 	}
 }
+
+#endif
 
 
