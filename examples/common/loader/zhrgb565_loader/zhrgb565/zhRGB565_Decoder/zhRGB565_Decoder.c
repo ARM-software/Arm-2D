@@ -3,7 +3,6 @@
 #if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 #   define __ZHRGB565_LOADER_IMPLEMENT__
 #   include "arm_2d_example_loaders.h"
-#	include "arm_zhrgb565_cfg.h"
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D)

@@ -27,8 +27,8 @@
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB) && defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 
 #include "arm_2d_helper.h"
-#include "arm_2d_example_loaders.h"
-#include "arm_zhrgb565_cfg.h"
+#include "../generic_loader/arm_2d_generic_loader.h"
+#include "./zhrgb565/zhRGB565_Decoder/zhRGB565_Decoder.h"
 
 #ifdef   __cplusplus
 extern "C" {

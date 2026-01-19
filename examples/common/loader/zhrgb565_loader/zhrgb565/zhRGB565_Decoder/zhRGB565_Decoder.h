@@ -13,6 +13,9 @@
 #   undef this
 #   define this (*ptThis)
 #endif
+#if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
+#	include "arm_zhrgb565_cfg.h"
+#endif
 
 
 // RGB565颜色分量提取

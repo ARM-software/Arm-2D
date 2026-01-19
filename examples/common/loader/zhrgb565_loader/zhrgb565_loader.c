@@ -26,9 +26,6 @@
 #include <assert.h>
 #include <string.h>
 
-#include "./zhrgb565/zhRGB565_Decoder/zhRGB565_Decoder.h"
-#include "arm_zhrgb565_cfg.h"
-
 #if defined(__clang__)
 #   pragma clang diagnostic push
 #   pragma clang diagnostic ignored "-Wunknown-warning-option"
