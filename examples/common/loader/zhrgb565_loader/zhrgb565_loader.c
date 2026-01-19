@@ -69,11 +69,11 @@
 /*============================ PROTOTYPES ====================================*/
 ARM_NONNULL(1)
 static
-arm_2d_err_t __zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj);
+arm_2d_err_t __arm_zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj);
 
 ARM_NONNULL(1, 2, 3)
 static
-arm_2d_err_t __zhrgb565_loader_draw(  arm_generic_loader_t *ptObj,
+arm_2d_err_t __arm_zhrgb565_loader_draw(  arm_generic_loader_t *ptObj,
                                     arm_2d_region_t *ptROI,
                                     uint8_t *pchBuffer,
                                     uint32_t iTargetStrideInByte,
@@ -87,12 +87,12 @@ arm_2d_size_t zhRGB565_get_image_size(arm_generic_loader_t *ptLoader);
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
-arm_2d_err_t zhrgb565_loader_init(zhrgb565_loader_t *ptThis,
-                                zhrgb565_loader_cfg_t *ptCFG)
+arm_2d_err_t arm_zhrgb565_loader_init(arm_zhrgb565_loader_t *ptThis,
+                                arm_zhrgb565_loader_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    memset(ptThis, 0, sizeof(zhrgb565_loader_t));
+    memset(ptThis, 0, sizeof(arm_zhrgb565_loader_t));
 
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
 
@@ -113,8 +113,8 @@ arm_2d_err_t zhrgb565_loader_init(zhrgb565_loader_t *ptThis,
             },
 
             .UserDecoder = {
-                .fnDecoderInit = &__zhrgb565_loader_decoder_init,
-                .fnDecode = &__zhrgb565_loader_draw,
+                .fnDecoderInit = &__arm_zhrgb565_loader_decoder_init,
+                .fnDecode = &__arm_zhrgb565_loader_draw,
             },
 
             .ptScene = ptCFG->ptScene,
@@ -141,7 +141,7 @@ arm_2d_err_t zhrgb565_loader_init(zhrgb565_loader_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void zhrgb565_loader_depose( zhrgb565_loader_t *ptThis)
+void arm_zhrgb565_loader_depose( arm_zhrgb565_loader_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -149,7 +149,7 @@ void zhrgb565_loader_depose( zhrgb565_loader_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void zhrgb565_loader_on_load( zhrgb565_loader_t *ptThis)
+void arm_zhrgb565_loader_on_load( arm_zhrgb565_loader_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -157,7 +157,7 @@ void zhrgb565_loader_on_load( zhrgb565_loader_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void zhrgb565_loader_on_frame_start( zhrgb565_loader_t *ptThis)
+void arm_zhrgb565_loader_on_frame_start( arm_zhrgb565_loader_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -165,7 +165,7 @@ void zhrgb565_loader_on_frame_start( zhrgb565_loader_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void zhrgb565_loader_on_frame_complete( zhrgb565_loader_t *ptThis)
+void arm_zhrgb565_loader_on_frame_complete( arm_zhrgb565_loader_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -174,11 +174,11 @@ void zhrgb565_loader_on_frame_complete( zhrgb565_loader_t *ptThis)
 
 ARM_NONNULL(1)
 static
-arm_2d_err_t __zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj)
+arm_2d_err_t __arm_zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj)
 {
     assert(NULL != ptObj);
 
-    zhrgb565_loader_t *ptThis = (zhrgb565_loader_t *)ptObj;
+    arm_zhrgb565_loader_t *ptThis = (arm_zhrgb565_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
     if (!this.use_as__arm_generic_loader_t.bInitialized) {
@@ -190,14 +190,14 @@ arm_2d_err_t __zhrgb565_loader_decoder_init(arm_generic_loader_t *ptObj)
 
 ARM_NONNULL(1, 2, 3)
 static
-arm_2d_err_t __zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
+arm_2d_err_t __arm_zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
                                     arm_2d_region_t *ptROI,
                                     uint8_t *pchBuffer,
                                     uint32_t iTargetStrideInByte,
                                     uint_fast8_t chBitsPerPixel)
 {
     assert(NULL != ptObj);
-    zhrgb565_loader_t *ptThis = (zhrgb565_loader_t *)ptObj;
+    arm_zhrgb565_loader_t *ptThis = (arm_zhrgb565_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 

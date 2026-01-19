@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ZHRGB565_LOADER_H__
-#define __ZHRGB565_LOADER_H__
+#ifndef __ARM_ZHRGB565_LOADER_H__
+#define __ARM_ZHRGB565_LOADER_H__
 
 /*============================ INCLUDES ======================================*/
 #if defined(_RTE_)
@@ -56,7 +56,7 @@ extern "C" {
 /*============================ TYPES =========================================*/
 
 
-typedef struct zhrgb565_loader_cfg_t {
+typedef struct arm_zhrgb565_loader_cfg_t {
 
     uint16_t bUseHeapForVRES        : 1;
 
@@ -66,14 +66,14 @@ typedef struct zhrgb565_loader_cfg_t {
     } ImageIO;
 
     arm_2d_scene_t *ptScene;
-} zhrgb565_loader_cfg_t;
+} arm_zhrgb565_loader_cfg_t;
 
 /*!
  * \brief a user class for user defined control
  */
-typedef struct zhrgb565_loader_t zhrgb565_loader_t;
+typedef struct arm_zhrgb565_loader_t arm_zhrgb565_loader_t;
 
-struct zhrgb565_loader_t {
+struct arm_zhrgb565_loader_t {
     union {
         arm_2d_tile_t tTile;
         inherit(arm_generic_loader_t);
@@ -85,23 +85,23 @@ struct zhrgb565_loader_t {
 
 extern
 ARM_NONNULL(1, 2)
-arm_2d_err_t zhrgb565_loader_init(zhrgb565_loader_t *ptThis,
-                                zhrgb565_loader_cfg_t *ptCFG);
+arm_2d_err_t arm_zhrgb565_loader_init(arm_zhrgb565_loader_t *ptThis,
+                                arm_zhrgb565_loader_cfg_t *ptCFG);
 extern
 ARM_NONNULL(1)
-void zhrgb565_loader_depose( zhrgb565_loader_t *ptThis);
+void arm_zhrgb565_loader_depose( arm_zhrgb565_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void zhrgb565_loader_on_load( zhrgb565_loader_t *ptThis);
+void arm_zhrgb565_loader_on_load( arm_zhrgb565_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void zhrgb565_loader_on_frame_start( zhrgb565_loader_t *ptThis);
+void arm_zhrgb565_loader_on_frame_start( arm_zhrgb565_loader_t *ptThis);
 
 extern
 ARM_NONNULL(1)
-void zhrgb565_loader_on_frame_complete( zhrgb565_loader_t *ptThis);
+void arm_zhrgb565_loader_on_frame_complete( arm_zhrgb565_loader_t *ptThis);
 
 
 
@@ -115,11 +115,11 @@ void zhrgb565_loader_on_frame_complete( zhrgb565_loader_t *ptThis);
 
 #else
 
-#define zhrgb565_loader_init(...)                 ARM_2D_ERR_NOT_AVAILABLE
-#define zhrgb565_loader_depose(...)
-#define zhrgb565_loader_on_load(...)
-#define zhrgb565_loader_on_frame_start(...)
-#define zhrgb565_loader_on_frame_complete(...)
+#define arm_zhrgb565_loader_init(...)                 ARM_2D_ERR_NOT_AVAILABLE
+#define arm_zhrgb565_loader_depose(...)
+#define arm_zhrgb565_loader_on_load(...)
+#define arm_zhrgb565_loader_on_frame_start(...)
+#define arm_zhrgb565_loader_on_frame_complete(...)
 
 #endif 
 

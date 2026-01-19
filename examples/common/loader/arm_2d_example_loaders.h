@@ -26,6 +26,7 @@
 #include "./zjpgd_loader/zjpgd_loader.h"
 #include "./freetype_loader/freetype_loader.h"
 #include "./qoi_loader/qoi_loader.h"
+#include "./zhrgb565_loader/zhrgb565_loader.h"
 
 #ifdef   __cplusplus
 extern "C" {
