@@ -18,30 +18,30 @@
 #endif
 
 
-// RGB565颜色分量提取
+// Extract RGB565 color components
 #define GET_R(color) 		(((color) >> 11) & 0x1F)
 #define GET_G(color) 		(((color) >> 5) & 0x3F)
 #define GET_B(color) 		((color) & 0x1F)
 #define RGB565(r, g, b) 	((((r) & 0x1F) << 11) | (((g) & 0x3F) << 5) | ((b) & 0x1F))
 #define	GET_RGB332_TO_RGB565(diffval)		(((uint16_t)(diffval) & 0xE0) << 6) | (((uint16_t)(diffval) & 0x1C) << 3) | ((uint16_t)(diffval) & 0x03)
 
-/* 获取图片 - 宽度 */
+/* Get image width */
 #define     GET_RGB565_ENCODER_WIDTH(BUF)				((BUF)[0])
-/* 获取图片 - 高度 */
+/* Get image height */
 #define     GET_RGB565_ENCODER_HEIGHT(BUF)				((BUF)[1])
-/* 获取图片 - 编码标志 */
+/* Get image encoding flag */
 #define     GET_RGB565_ENCODER_FLAG(BUF)				((BUF)[2])
-/* 获取图片 - 升阶表长度 */
+/* Get image upgrade table length */
 #define     GET_RGB565_ENCODER_SJB_LENGHT(BUF)          ((BUF)[3])
-/* 获取图片 - 行偏移表起点地址 */
+/* Get image row-offset table start address */
 #define     GET_RGB565_ENCODER_LINE_POS(BUF)			((BUF)[4])
-/* 获取图片 - 编码数据起点地址 */
+/* Get image encoded data start address */
 #define     GET_RGB565_ENCODER_DATA_ADDR(BUF)			((BUF)[5])
-/* 获取图片 - 获取升阶表第N个数据的行号,N=0,1,2...*/
+/* Get image row index of the N-th entry in upgrade table, N = 0,1,2... */
 #define     GET_RGB565_ENCODER_SJB_DATA(BUF, N)			((BUF)[6+N])
-/* 获取图片 - 第N行编码数据在行偏移表的地址 ,N=0,1,2...*/
+/* Get image address of N-th row's encoded data in row-offset table, N = 0,1,2... */
 #define     GET_RGB565_ENCODER_LINE_DATA_ADDR(BUF,N)	((BUF)[GET_RGB565_ENCODER_LINE_POS(BUF) + (N)])
-/* 获取图片 - 图片第N行编码数据的第M个数据 ,N=0,1,2...*/
+/* Get image M-th data of N-th row's encoded data, N = 0,1,2... */
 #define     GET_RGB565_ENCODER_LINE_DATA(BUF,N,M)		((BUF)[GET_RGB565_ENCODER_DATA_ADDR(BUF) + GET_RGB565_ENCODER_LINE_DATA_ADDR(BUF,N) + (M)])
 #define     GET_RGB565_ENCODER_LINE_DATA2(BUF,N,M)		((BUF)[(N) + (M)])
 
