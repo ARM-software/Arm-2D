@@ -347,10 +347,32 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#if __DISP%Instance%_CFG_NANO_ONLY__
+#   define __DISP_ADAPTER%Instance%_NANO_DRAW_RESUME_FULL_FLUSH_FLAG__()                 \
+        arm_2d_helper_pfb_full_frame_refresh_mode(                              \
+                                    &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t, \
+                                    DISP%Instance%_ADAPTER.__bTempflag)
+#else
+#   define __DISP_ADAPTER%Instance%_NANO_DRAW_RESUME_FULL_FLUSH_FLAG__()
+#endif
+
 #define DISP_ADAPTER%Instance%_NANO_DRAW()                                               \
-                                                                                \
+    arm_using(arm_2d_scene_t *ptScene = disp_adapter%Instance%_get_default_scene())      \
     arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
-        arm_using(bool bIsNewFrame = true)                                      \
+        arm_using(bool bIsNewFrame = true,                                      \
+            {                                                                   \
+                if (ptScene->bUseDirtyRegionHelper) {                           \
+                    arm_2d_helper_dirty_region_on_frame_start(                  \
+                                                &ptScene->tDirtyRegionHelper);  \
+                }                                                               \
+                ARM_2D_INVOKE_RT_VOID(  ptScene->fnOnFrameStart,                \
+                                        ARM_2D_PARAM(ptScene));                 \
+            },                                                                  \
+            {                                                                   \
+                ARM_2D_INVOKE_RT_VOID(  ptScene->fnOnFrameCPL,                  \
+                                        ARM_2D_PARAM(ptScene));                 \
+                __DISP_ADAPTER%Instance%_NANO_DRAW_RESUME_FULL_FLUSH_FLAG__();           \
+            })                                                                  \
             for (__disp_adapter%Instance%_draw_t *ARM_2D_SAFE_NAME(ptUserDraw) = NULL;   \
                 (({ ARM_2D_SAFE_NAME(ptUserDraw)                                \
                         = __disp_adapter%Instance%_nano_draw();                          \
@@ -385,6 +407,7 @@ struct disp_adapter%Instance%_t {
     } Benchmark;
 
     uint8_t chPT;
+    bool __bTempflag;
 };
 #endif
 

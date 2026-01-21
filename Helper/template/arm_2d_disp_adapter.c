@@ -1030,12 +1030,19 @@ arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
 
     s_tDefaultScene.fnBackground = NULL;
     s_tDefaultScene.fnScene = NULL;
+    arm_2d_helper_dirty_region_depose(&s_tDefaultScene.tDirtyRegionHelper);
+
 #if __DISP%Instance%_CFG_NANO_ONLY__
     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
                 __pfb_draw_scene_handler,
                 &DISP%Instance%_ADAPTER);
 
+    DISP%Instance%_ADAPTER.__bTempflag = arm_2d_helper_pfb_full_frame_refresh_mode(
+                                    &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                                    true
+                                );
+            
     if (s_tDefaultScene.bUseDirtyRegionHelper) {
         arm_2d_helper_dirty_region_init(&s_tDefaultScene.tDirtyRegionHelper,
                                         &s_tDefaultScene.ptDirtyRegion);

@@ -977,6 +977,7 @@ void disp_adapter0_init(void)
 #endif
 }
 
+#if __DISP0_CFG_NANO_ONLY__
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_handler)
 {
@@ -1006,6 +1007,7 @@ ARM_PT_END()
 
     return tResult;
 }
+#endif
 
 arm_fsm_rt_t __disp_adapter0_task(void)
 {
@@ -1026,11 +1028,23 @@ arm_2d_scene_t *disp_adapter0_nano_prepare(void)
 {
     s_tDefaultScene.fnBackground = NULL;
     s_tDefaultScene.fnScene = NULL;
+    arm_2d_helper_dirty_region_depose(&s_tDefaultScene.tDirtyRegionHelper);
+
 #if __DISP0_CFG_NANO_ONLY__
     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
                 __pfb_draw_scene_handler,
                 &DISP0_ADAPTER);
+
+    DISP0_ADAPTER.__bTempflag = arm_2d_helper_pfb_full_frame_refresh_mode(
+                                    &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                                    true
+                                );
+            
+    if (s_tDefaultScene.bUseDirtyRegionHelper) {
+        arm_2d_helper_dirty_region_init(&s_tDefaultScene.tDirtyRegionHelper,
+                                        &s_tDefaultScene.ptDirtyRegion);
+    }
 #else
     arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, ARM_2D_SCENE_SWITCH_MODE_NONE);
