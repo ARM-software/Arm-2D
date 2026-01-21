@@ -146,6 +146,14 @@ int app_2d_main_thread (void *argument)
             /* change canvas colour */
             ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
 
+            /* NOTE: 
+             * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
+             *    Usually you just need to call it once.
+             * 2. You can call disp_adapter0_nano_prepare() at anytime to get 
+             *    the ONLY and Default scene instance. 
+             */
+
+            /* draw one frame */
             disp_adapter_nano_draw_example_blocking_version();
 
             /* delay 1s to make the frame visible, 
@@ -157,6 +165,13 @@ int app_2d_main_thread (void *argument)
         /* example code for nano-drawing in non-blocking mode  */
         do {
             arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
+
+            /* NOTE: 
+             * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
+             *    Usually you just need to call it once.
+             * 2. You can call disp_adapter0_nano_prepare() at anytime to get 
+             *    the ONLY and Default scene instance. 
+             */
 
             /* change canvas colour */
             ptScene->tCanvas.wColour = GLCD_COLOR_BLUE;
