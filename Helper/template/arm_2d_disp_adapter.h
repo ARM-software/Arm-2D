@@ -44,6 +44,13 @@ extern "C" {
 // <h>Screen and Framebuffer
 // =======================
 
+// <q> Only Use Nano mode
+// <i> Removes the scene player from this display adapter and only uses the nano mode.
+// <i> This feature is disabled by default.
+#ifndef __DISP%Instance%_CFG_NANO_ONLY__
+#   define __DISP%Instance%_CFG_NANO_ONLY__                                1
+#endif
+
 // <o> Select the screen colour solution
 //     <0=>     None
 //     <1=>     Monochrome
@@ -360,10 +367,35 @@ typedef struct {
     bool bIsNewFrame;
 } __disp_adapter%Instance%_draw_t;
 
+#if __DISP%Instance%_CFG_NANO_ONLY__
+struct disp_adapter%Instance%_t {
+    inherit(arm_2d_helper_pfb_t);                                               //!< inherit from arm_2d_helper_pfb_t
+
+    struct {
+        uint32_t wMin;
+        uint32_t wMax;
+        uint64_t dwTotal;
+        uint64_t dwRenderTotal;
+        uint32_t wAverage;
+        float fCPUUsage;
+        uint16_t hwIterations;
+        uint16_t hwFrameCounter;
+        uint32_t wLCDLatency;
+        int64_t lTimestamp;
+    } Benchmark;
+
+    uint8_t chPT;
+};
+#endif
+
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
+#if __DISP%Instance%_CFG_NAN%Instance%_ONLY__
+struct disp_adapter%Instance%_t DISP%Instance%_ADAPTER;
+#else
 arm_2d_scene_player_t DISP%Instance%_ADAPTER;
+#endif
 
 /*============================ PROTOTYPES ====================================*/
 
