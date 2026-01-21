@@ -44,6 +44,13 @@ extern "C" {
 // <h>Screen and Framebuffer
 // =======================
 
+// <q> Only Use Nano mode
+// <i> Removes the scene player from this display adapter and only uses the nano mode.
+// <i> This feature is disabled by default.
+#ifndef __DISP0_CFG_NANO_ONLY__
+#   define __DISP0_CFG_NANO_ONLY__                                1
+#endif
+
 // <o> Select the screen colour solution
 //     <0=>     None
 //     <1=>     Monochrome
@@ -157,7 +164,7 @@ extern "C" {
 // <i> Configure the default navigation layer of this display adapter. 
 // <i> NOTE: Disable the navigation layer will also remove the real-time FPS display.
 #ifndef __DISP0_CFG_NAVIGATION_LAYER_MODE__
-#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      0
+#   define __DISP0_CFG_NAVIGATION_LAYER_MODE__                      1
 #endif
 
 // <o>Number of iterations <0-2000>
