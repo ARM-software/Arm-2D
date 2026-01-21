@@ -391,7 +391,7 @@ struct disp_adapter%Instance%_t {
 /*============================ GLOBAL VARIABLES ==============================*/
 ARM_NOINIT
 extern
-#if __DISP%Instance%_CFG_NAN%Instance%_ONLY__
+#if __DISP%Instance%_CFG_NANO_ONLY__
 struct disp_adapter%Instance%_t DISP%Instance%_ADAPTER;
 #else
 arm_2d_scene_player_t DISP%Instance%_ADAPTER;
