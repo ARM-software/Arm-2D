@@ -89,29 +89,84 @@ arm_fsm_rt_t disp_adapter_nano_draw_example_non_blocking_version(void)
 {
     static uint8_t s_chPT = 0;
 
-ARM_PT_BEGIN(s_chPT)
+    struct {
+        uint8_t chPT;
+        uint8_t chHour;
+        uint8_t chMin;
+        uint8_t chSec;
+        uint8_t chTenMs;
+
+    }s_tLocal, *ptThis = &s_tLocal;
+
+ARM_PT_BEGIN(this.chPT)
 
     /* on frame start */
     do {
+        int64_t lTimeStampInMs = arm_2d_helper_convert_ticks_to_ms(
+                                    arm_2d_helper_get_system_timestamp());
 
+        /* calculate the hours */
+        do {
+            uint_fast8_t chHour = lTimeStampInMs / (3600ul * 1000ul);
+            chHour %= 24;
+            this.chHour = chHour;
+
+            lTimeStampInMs %= (3600ul * 1000ul);
+        } while(0);
+
+        /* calculate the Minutes */
+        do {
+            uint_fast8_t chMin = lTimeStampInMs / (60ul * 1000ul);
+
+            this.chMin = chMin;
+
+            lTimeStampInMs %= (60ul * 1000ul);
+        } while(0);
+
+        /* calculate the Seconds */
+        do {
+            uint_fast8_t chSec = lTimeStampInMs / (1000ul);
+
+            this.chSec = chSec;
+
+            lTimeStampInMs %= (1000ul);
+        } while(0);
+
+        /* calculate the Ten-Miliseconds */
+        do {
+            uint_fast8_t chTenMs = lTimeStampInMs / (10ul);
+
+            this.chTenMs = chTenMs;
+        } while(0);
     } while(0);
 
     DISP_ADAPTER0_NANO_DRAW() {
-
+ 
         extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
         arm_2d_canvas(ptTile, __top_canvas) {
 
-            arm_2d_align_centre(__top_canvas, c_tileCMSISLogoA4Mask.tRegion.tSize) {
-                arm_2d_fill_colour_with_a4_mask_and_opacity(   
-                                                    ptTile, 
-                                                    &__centre_region, 
-                                                    &c_tileCMSISLogoA4Mask, 
-                                                    (__arm_2d_color_t){GLCD_COLOR_BLACK},
-                                                    128);
-            }
+            arm_lcd_text_reset_display_region_tracking();
+            
+            arm_lcd_text_set_colour(GLCD_COLOR_BLACK, GLCD_COLOR_WHITE);
+            arm_lcd_printf_label(
+                ARM_2D_ALIGN_CENTRE, 
+                "%02d:%02d:%02d:%02d", 
+                this.chHour,
+                this.chMin,
+                this.chSec,
+                this.chTenMs);
+            
+            arm_2d_region_t *ptTextRegion =  arm_lcd_text_get_last_display_region();
+
+            arm_2d_helper_dirty_region_update_item( 
+                &ptScene->tDirtyRegionHelper.tDefaultItem,
+                ptTile,
+                &__top_canvas,
+                ptTextRegion);
         }
 
+        /* You can ONLY yield here */
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     }
 
@@ -134,54 +189,42 @@ ARM_PT_END()
 int app_2d_main_thread (void *argument)
 {
 
+    /* example code for nano-drawing in blocking mode */
+    do {
+        arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
+
+        /* change canvas colour */
+        ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
+
+        /* NOTE: 
+            * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
+            *    Usually you just need to call it once.
+            * 2. You can call disp_adapter0_nano_prepare() at anytime to get 
+            *    the ONLY and Default scene instance. 
+            */
+
+        /* draw one frame */
+        disp_adapter_nano_draw_example_blocking_version();
+
+        /* delay 1s to make the frame visible, 
+        * NOTE: You don't have to keep this delay in your application
+        */
+        SDL_Delay(1000);
+    } while(0);
+
+    
+    arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+    ptScene->tCanvas.wColour = GLCD_COLOR_WHITE;
+    ptScene->bUseDirtyRegionHelper = true;
+
+    disp_adapter0_nano_prepare();
+
     while(1) {
         if (VT_is_request_quit()) {
             break;
         }
 
-        /* example code for nano-drawing in blocking mode */
-        do {
-            arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
-
-            /* change canvas colour */
-            ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
-
-            /* NOTE: 
-             * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
-             *    Usually you just need to call it once.
-             * 2. You can call disp_adapter0_nano_prepare() at anytime to get 
-             *    the ONLY and Default scene instance. 
-             */
-
-            /* draw one frame */
-            disp_adapter_nano_draw_example_blocking_version();
-
-            /* delay 1s to make the frame visible, 
-            * NOTE: You don't have to keep this delay in your application
-            */
-            SDL_Delay(1000);
-        } while(0);
-
-        /* example code for nano-drawing in non-blocking mode  */
-        do {
-            arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
-
-            /* NOTE: 
-             * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
-             *    Usually you just need to call it once.
-             * 2. You can call disp_adapter0_nano_prepare() at anytime to get 
-             *    the ONLY and Default scene instance. 
-             */
-
-            /* change canvas colour */
-            ptScene->tCanvas.wColour = GLCD_COLOR_BLUE;
-            while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
-
-            /* delay 1s to make the frame visible, 
-            * NOTE: You don't have to keep this delay in your application
-            */
-            SDL_Delay(1000);
-        } while(0);
+        while(arm_fsm_rt_cpl != disp_adapter_nano_draw_example_non_blocking_version());
 
     }
 

@@ -1239,7 +1239,7 @@ void arm_2d_helper_pfb_resume_low_level_flush(arm_2d_helper_pfb_t *ptThis);
 extern
 ARM_NONNULL(1)
 bool arm_2d_helper_pfb_full_frame_refresh_mode( arm_2d_helper_pfb_t *ptThis, 
-                                            bool bEnabled);
+                                                bool bEnabled);
 
 /*!
  * \brief Enable or disable anti-noise-scanning mode
