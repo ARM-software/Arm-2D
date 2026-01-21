@@ -117,8 +117,15 @@ IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList, static)
 END_IMPL_ARM_2D_REGION_LIST(s_tNavDirtyRegionList)
 #endif
 
+#if __DISP0_CFG_NANO_ONLY__
+ARM_NOINIT
+struct disp_adapter0_t DISP0_ADAPTER;
+#else
+
 ARM_NOINIT 
 arm_2d_scene_player_t DISP0_ADAPTER;
+
+#endif
 
 #if __DISP0_CFG_ENABLE_3FB_HELPER_SERVICE__
 ARM_NOINIT
@@ -848,12 +855,24 @@ void disp_adapter0_navigator_init(void)
     DISP0_CONSOLE.Signature = ARM_2D_VERSION;
 #endif
 
+#if __DISP0_CFG_NANO_ONLY__
+    arm_2d_helper_pfb_dependency_t tDependency = {
+        .Navigation.evtOnDrawing.fnHandler = &__disp_adapter0_draw_navigation,
+        .Navigation.evtOnDrawing.pTarget = &DISP0_ADAPTER,
+        .Navigation.ptDirtyRegion = (arm_2d_region_list_item_t *)s_tNavDirtyRegionList,
+    }; 
+
+    arm_2d_helper_pfb_update_dependency(&DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                                        ARM_2D_PFB_DEPEND_ON_NAVIGATION,
+                                        &tDependency);
+#else
     /* register event handler for evtOnDrawNavigation */
     arm_2d_scene_player_register_on_draw_navigation_event_handler(
                     &DISP0_ADAPTER,
                     __disp_adapter0_draw_navigation,
                     NULL,
                     (arm_2d_region_list_item_t *)s_tNavDirtyRegionList);
+#endif
 }
 #else
 __WEAK 
@@ -958,21 +977,68 @@ void disp_adapter0_init(void)
 #endif
 }
 
+static
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_handler)
+{
+    ARM_2D_PARAM(pTarget);
+    ARM_2D_PARAM(ptTile);
+    ARM_2D_PARAM(bIsNewFrame);
+
+    arm_2d_scene_player_t *ptThis = (arm_2d_scene_player_t *)pTarget;
+    arm_fsm_rt_t tResult = arm_fsm_rt_cpl;
+
+ARM_PT_BEGIN(DISP0_ADAPTER.chPT)
+
+    arm_2d_scene_t *ptScene = &s_tDefaultScene;
+    
+    if (NULL != ptScene->fnScene) {
+        tResult = ptScene->fnScene(ptScene, ptTile, bIsNewFrame);
+    } else {
+ARM_PT_YIELD((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW);
+        tResult = arm_fsm_rt_cpl;
+        ptScene = &s_tDefaultScene;
+    }
+
+    arm_2d_helper_dirty_region_update_dirty_regions(&ptScene->tDirtyRegionHelper, 
+                                                    ptTile);
+
+ARM_PT_END()
+
+    return tResult;
+}
+
 arm_fsm_rt_t __disp_adapter0_task(void)
 {
+#if __DISP0_CFG_NANO_ONLY__
+    __arm_2d_helper_pfb_enable_drawing_canvas_colour(
+                                                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                                                s_tDefaultScene.tCanvas);
+
+    return arm_2d_helper_pfb_task(
+                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                s_tDefaultScene.ptDirtyRegion);
+#else
     return arm_2d_scene_player_task(&DISP0_ADAPTER);
+#endif
 }
 
 arm_2d_scene_t *disp_adapter0_nano_prepare(void)
 {
-    arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
     s_tDefaultScene.fnBackground = NULL;
     s_tDefaultScene.fnScene = NULL;
+#if __DISP0_CFG_NANO_ONLY__
+    ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
+                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                __pfb_draw_scene_handler,
+                &DISP0_ADAPTER);
+#else
+    arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, ARM_2D_SCENE_SWITCH_MODE_NONE);
 
     arm_2d_scene_player_append_scenes(  &DISP0_ADAPTER,
                                         (arm_2d_scene_t *)&s_tDefaultScene,
                                         1);
+#endif
     return &s_tDefaultScene;
 }
 

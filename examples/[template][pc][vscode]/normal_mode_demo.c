@@ -68,6 +68,8 @@
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
+#if !__DISP0_CFG_NANO_ONLY__
+
 void scene_meter_loader(void) 
 {
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER,
@@ -714,7 +716,7 @@ void before_scene_switching_handler(void *pTarget,
   Main function
  *----------------------------------------------------------------------------*/
 
-#if !__DISP0_CFG_NANO_ONLY__
+
 int app_2d_main_thread (void *argument)
 {
 

@@ -366,10 +366,36 @@ typedef struct {
     bool bIsNewFrame;
 } __disp_adapter0_draw_t;
 
+#if __DISP0_CFG_NANO_ONLY__
+struct disp_adapter0_t {
+    inherit(arm_2d_helper_pfb_t);                                               //!< inherit from arm_2d_helper_pfb_t
+
+    struct {
+        uint32_t wMin;
+        uint32_t wMax;
+        uint64_t dwTotal;
+        uint64_t dwRenderTotal;
+        uint32_t wAverage;
+        float fCPUUsage;
+        uint16_t hwIterations;
+        uint16_t hwFrameCounter;
+        uint32_t wLCDLatency;
+        int64_t lTimestamp;
+    } Benchmark;
+
+    uint8_t chPT;
+};
+#endif
+
 /*============================ GLOBAL VARIABLES ==============================*/
+
 ARM_NOINIT
 extern
+#if __DISP0_CFG_NANO_ONLY__
+struct disp_adapter0_t DISP0_ADAPTER;
+#else
 arm_2d_scene_player_t DISP0_ADAPTER;
+#endif
 
 /*============================ PROTOTYPES ====================================*/
 

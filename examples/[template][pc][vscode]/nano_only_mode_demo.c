@@ -51,7 +51,7 @@
 /*============================ PROTOTYPES ====================================*/
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
-
+#if __DISP0_CFG_NANO_ONLY__
 
 void disp_adapter_nano_draw_example_blocking_version(void)
 {
@@ -128,7 +128,7 @@ ARM_PT_END()
  *----------------------------------------------------------------------------*/
 
 
-#if __DISP0_CFG_NANO_ONLY__
+
 int app_2d_main_thread (void *argument)
 {
 
