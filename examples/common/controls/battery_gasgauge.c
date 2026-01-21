@@ -408,8 +408,8 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         this.tStatus = tStatus;
 
         if (arm_2d_helper_is_time_out(10, &this.lTimeStamp[1])) {
-
-            if (this.iWaveOffset++ >= c_tileSinWaveA4Mask.tRegion.tSize.iWidth) {
+            this.iWaveOffset += 2;
+            if (this.iWaveOffset >= c_tileSinWaveA4Mask.tRegion.tSize.iWidth) {
                 this.iWaveOffset = 0;
             }
         }
