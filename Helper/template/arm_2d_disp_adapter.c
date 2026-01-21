@@ -1014,11 +1014,11 @@ arm_fsm_rt_t __disp_adapter%Instance%_task(void)
 {
 #if __DISP%Instance%_CFG_NANO_ONLY__
     __arm_2d_helper_pfb_enable_drawing_canvas_colour(
-                                                &DISPInstance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                                                &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
                                                 s_tDefaultScene.tCanvas);
 
     return arm_2d_helper_pfb_task(
-                &DISPInstance%_ADAPTER.use_as__arm_2d_helper_pfb_t, 
+                &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t, 
                 s_tDefaultScene.ptDirtyRegion);
 #else
     return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
