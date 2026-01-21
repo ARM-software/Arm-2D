@@ -48,7 +48,7 @@ extern "C" {
 // <i> Removes the scene player from this display adapter and only uses the nano mode.
 // <i> This feature is disabled by default.
 #ifndef __DISP%Instance%_CFG_NANO_ONLY__
-#   define __DISP%Instance%_CFG_NANO_ONLY__                                1
+#   define __DISP%Instance%_CFG_NANO_ONLY__                                0
 #endif
 
 // <o> Select the screen colour solution
