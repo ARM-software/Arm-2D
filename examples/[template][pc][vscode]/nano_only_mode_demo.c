@@ -20,8 +20,10 @@
 #include <stdio.h>
 #include "Virtual_TFT_Port.h"
 #include "arm_2d_helper.h"
-#include "arm_2d_scenes.h"
 #include "arm_2d_disp_adapters.h"
+
+#include "arm_2d_example_controls.h"
+#include "arm_2d_example_loaders.h"
 
 #if defined(__clang__)
 #   pragma clang diagnostic push
