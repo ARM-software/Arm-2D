@@ -1035,6 +1035,11 @@ arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
                 __pfb_draw_scene_handler,
                 &DISP%Instance%_ADAPTER);
+
+    if (s_tDefaultScene.bUseDirtyRegionHelper) {
+        arm_2d_helper_dirty_region_init(&s_tDefaultScene.tDirtyRegionHelper,
+                                        &s_tDefaultScene.ptDirtyRegion);
+    }
 #else
     arm_2d_scene_player_flush_fifo(&DISP%Instance%_ADAPTER);
     arm_2d_scene_player_set_switching_mode( &DISP%Instance%_ADAPTER, 
