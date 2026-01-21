@@ -1022,7 +1022,7 @@ arm_fsm_rt_t __disp_adapter%Instance%_task(void)
                 s_tDefaultScene.ptDirtyRegion);
 #else
     return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
-#endi
+#endif
 }
 
 arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
@@ -1030,7 +1030,7 @@ arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
 
     s_tDefaultScene.fnBackground = NULL;
     s_tDefaultScene.fnScene = NULL;
-#if __DISP0_CFG_NAN%Instance%_ONLY__
+#if __DISP%Instance%_CFG_NANO_ONLY__
     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
                 __pfb_draw_scene_handler,
