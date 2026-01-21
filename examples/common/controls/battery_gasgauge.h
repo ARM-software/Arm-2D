@@ -83,7 +83,6 @@ ARM_PRIVATE(
     
     uint8_t bBoarderFlashing;
 
-
     battery_status_t tStatus;
 )
 } battery_liquid_t;

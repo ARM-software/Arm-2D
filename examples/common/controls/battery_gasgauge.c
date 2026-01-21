@@ -415,7 +415,6 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         }
     }
 
-    
     /* calculate the colour */
     COLOUR_INT tColour;
 
@@ -484,7 +483,6 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
         arm_2d_size_t tBatterySize = c_tileBatteryBoarderTopMask.tRegion.tSize;
         tBatterySize.iHeight += c_tileBatteryBoarderBottomMask.tRegion.tSize.iHeight;
         tBatterySize.iHeight += 72;
-
 
         /* draw battery boarder */
         arm_2d_align_centre(__battery_canvas, tBatterySize) {
@@ -562,7 +560,8 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                             &c_tileLightingA4Mask,
                             (__arm_2d_color_t){GLCD_COLOR_YELLOW},
                             this.chChargingMarkOpacity);
-                        arm_2d_op_wait_async(NULL);
+
+                        ARM_2D_OP_WAIT_ASYNC();
                     }
                 }
             }
@@ -581,7 +580,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 );
 
-                    arm_2d_op_wait_async(NULL);
+                    ARM_2D_OP_WAIT_ASYNC();
                 }
                 
                 /* draw the glass reflection (wide) on the right side */
@@ -594,7 +593,7 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
                         (__arm_2d_color_t){GLCD_COLOR_WHITE},
                         128 + 32);
 
-                    arm_2d_op_wait_async(NULL);
+                    ARM_2D_OP_WAIT_ASYNC();
                 }
             }
         }
