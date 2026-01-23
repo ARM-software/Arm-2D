@@ -96,7 +96,10 @@ ARM_PRIVATE(
     union {
         arm_loader_io_file_t tFile;
         arm_loader_io_binary_t tBinary;
+        arm_loader_io_cache_t tCache;
     } LoaderIO;
+
+    arm_io_cacheline_t tCachelines[4];
 #endif
 
     arm_2d_helper_film_t tFilm;

@@ -862,17 +862,15 @@ arm_io_cacheline_t *__arm_loader_io_search_cacheline(arm_loader_io_cache_t *ptTh
 }
 
 static
-uintptr_t __arm_loader_io_cache_is_busy(arm_loader_io_cache_t *ptThis)
+bool __arm_loader_io_cache_is_busy(arm_loader_io_cache_t *ptThis)
 {
-    uintptr_t wAddress = 0;
+    bool bBusy = false;
 
     arm_irq_safe {
-        if (NULL != this.ptLoading) {
-            wAddress = this.ptLoading->u27Address << 5 | 0x01;
-        }
+        bBusy = (NULL != this.ptLoading);
     }
 
-    return wAddress;
+    return bBusy;
 }
 
 ARM_NONNULL(1)
@@ -905,23 +903,16 @@ void __arm_loader_io_cache_request_load_memory( arm_loader_io_cache_t *ptThis,
 }
 
 static
-arm_io_cacheline_t * __arm_loader_io_cache_preload(arm_loader_io_cache_t *ptThis, uintptr_t wAddress)
+void __arm_loader_io_cache_preload(arm_loader_io_cache_t *ptThis, uintptr_t wAddress)
 {
     assert(NULL != ptThis);
 
-    arm_io_cacheline_t *ptVictim = NULL;
-    uintptr_t wLoadingAddress = 0;
-    arm_irq_safe {
-        /* check whether there is an existing loading work */
-        wLoadingAddress = __arm_loader_io_cache_is_busy(ptThis);
-        ptVictim = this.ptLoading;
-    }
-    if (wLoadingAddress) {
+    if (__arm_loader_io_cache_is_busy(ptThis)) {
         /* busy */
-        return ptVictim;
-    } else {
-        ptVictim = NULL;
+        return ;
     }
+
+    arm_io_cacheline_t *ptVictim = NULL;
 
     /* find a victim */
     if (NULL != this.ptFree) {
@@ -969,12 +960,14 @@ label_finish_searching:
 
     this.ptLoading = ptVictim;
 
+    wAddress = (wAddress & ~0x1F) + this.use_as__arm_loader_io_rom_t.nAddress;
+
     __arm_loader_io_cache_request_load_memory(  ptThis, 
                                                 wAddress, 
                                                 ptVictim->wWords, 
                                                 dimof(ptVictim->wWords));
 
-    return ptVictim;
+    return ;
 }
 
 
@@ -988,9 +981,7 @@ bool __arm_loader_io_cache_seek(uintptr_t pTarget, void *ptLoader, int32_t offse
     bool bResult = __arm_loader_io_binary_seek(pTarget, ptLoader, offset, whence);
 
     /* we use this address to preload content */
-    uintptr_t wAddress = this.use_as__arm_loader_io_rom_t.tPostion
-                        + this.use_as__arm_loader_io_rom_t.nAddress;
-
+    uintptr_t wAddress = this.use_as__arm_loader_io_rom_t.tPostion;
     
     arm_io_cacheline_t *ptHit = __arm_loader_io_search_cacheline(ptThis, wAddress);
     if (NULL != ptHit) {
@@ -1021,24 +1012,27 @@ size_t __arm_loader_io_cache_read(  uintptr_t pTarget,
     if (this.use_as__arm_loader_io_rom_t.tPostion >= this.use_as__arm_loader_io_rom_t.tSize) {
         return 0;
     }
-    size_t iSizeToRead = this.use_as__arm_loader_io_rom_t.tSize - this.use_as__arm_loader_io_rom_t.tPostion;
+    size_t iSizeToRead = this.use_as__arm_loader_io_rom_t.tSize 
+                       - this.use_as__arm_loader_io_rom_t.tPostion;
     iSizeToRead = MIN(iSizeToRead, tSize);
 
-    uintptr_t wAddress = this.use_as__arm_loader_io_rom_t.nAddress 
-                       + this.use_as__arm_loader_io_rom_t.tPostion;
-
+    uintptr_t wAddress = this.use_as__arm_loader_io_rom_t.tPostion;
 
     /* read cacheline */
     do {
-        arm_io_cacheline_t *ptHit = __arm_loader_io_search_cacheline(ptThis, wAddress);
-        if (NULL == ptHit) {
-            /* cache miss, request a preload */
-            ptHit =  __arm_loader_io_cache_preload(ptThis, wAddress);
+        arm_io_cacheline_t *ptHit = NULL;
 
-            /* wait until the cacheline is ready */
-            while (__arm_loader_io_cache_is_busy(ptThis));
-            assert(NULL != this.ptLoading);
-        }
+        do {
+            ptHit = __arm_loader_io_search_cacheline(ptThis, wAddress);
+            if (NULL == ptHit) {
+                /* cache miss, request a preload */
+                __arm_loader_io_cache_preload(ptThis, wAddress);
+
+                /* wait until the cacheline is ready */
+                while (__arm_loader_io_cache_is_busy(ptThis));
+                assert(NULL == this.ptLoading);
+            }
+        } while(NULL == ptHit);
 
         this.ptRecent = ptHit;
 
@@ -1048,7 +1042,8 @@ size_t __arm_loader_io_cache_read(  uintptr_t pTarget,
         iSizeToRead = MIN(iSizeToRead, wDataAvailable);
 
         memcpy(pchBuffer, (uint8_t *)ptHit->wWords + wOffset, iSizeToRead );
-    } while(0);        
+    } while(0);   
+
 
     this.use_as__arm_loader_io_rom_t.tPostion += iSizeToRead;
 

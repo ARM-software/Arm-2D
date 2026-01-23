@@ -752,6 +752,7 @@ void disp_adapter_nano_draw_example_blocking_version(void)
 int app_2d_main_thread (void *argument)
 {
 
+#if 0
     /* example code for nano-drawing in blocking mode */
     do {
         arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
@@ -774,7 +775,7 @@ int app_2d_main_thread (void *argument)
         */
         SDL_Delay(1000);
     } while(0);
-
+#endif
 
 #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
     arm_2d_run_benchmark();
