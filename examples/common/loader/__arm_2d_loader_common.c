@@ -490,6 +490,7 @@ size_t __arm_loader_io_binary_read(uintptr_t pTarget, void *ptLoader, uint8_t *p
 }
 
 __WEAK 
+__attribute__((noinline))
 size_t __arm_loader_io_rom_memcpy(uintptr_t pObj, uint8_t *pchBuffer, uintptr_t nAddress, size_t tSize)
 {
     ARM_2D_UNUSED(pObj);
