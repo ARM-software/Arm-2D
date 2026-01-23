@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        29. Dec 2025
- * $Revision:    V.2.5.1
+ * $Date:        23. Jan 2026
+ * $Revision:    V.2.5.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -169,7 +169,8 @@ void arm_2d_helper_init(void)
 /* NOTE: for non-arm architecture, you have to implement those functions.
  */
 #if __IS_SUPPORTED_ARM_ARCH__
-__WEAK int64_t arm_2d_helper_get_system_timestamp(void)
+__WEAK 
+int64_t arm_2d_helper_get_system_timestamp(void)
 {
     int64_t iOriginTimestamp = 
 #if defined(__PERF_COUNTER__)
@@ -199,9 +200,9 @@ int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick)
     return lTick / (int64_t)s_tHelper.wMSUnit;
 }
 
-int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS)
+int64_t arm_2d_helper_convert_ms_to_ticks(int64_t lMS)
 {
-    int64_t lResult = (int64_t)s_tHelper.wMSUnit * (int64_t)wMS;
+    int64_t lResult = (int64_t)s_tHelper.wMSUnit * lMS;
     return lResult ? lResult : 1;
 }
 

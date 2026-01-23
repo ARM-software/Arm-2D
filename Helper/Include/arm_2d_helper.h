@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        29. Dec 2025
- * $Revision:    V.2.5.1
+ * $Date:        23. Jan 2026
+ * $Revision:    V.2.5.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -293,11 +293,11 @@ int64_t arm_2d_helper_convert_ticks_to_ms(int64_t lTick);
 /*! 
  * \brief convert millisecond into ticks of the reference timer 
  *
- * \param[in] wMS the target time in millisecond
+ * \param[in] lMS the target time in millisecond
  * \return int64_t the ticks
  */
 extern
-int64_t arm_2d_helper_convert_ms_to_ticks(uint32_t wMS);
+int64_t arm_2d_helper_convert_ms_to_ticks(int64_t lMS);
 
 /*!
  * \brief get the reference clock frequency
