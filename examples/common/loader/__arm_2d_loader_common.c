@@ -742,6 +742,9 @@ void __arm_loader_io_cacheline_free(arm_loader_io_cache_t *ptThis,
                                     arm_io_cacheline_t *ptCacheLine)
 {
     arm_irq_safe {
+        if (this.ptRecent == ptCacheLine) {
+            this.ptRecent = NULL;
+        }
         ARM_LIST_STACK_PUSH(this.ptFree, ptCacheLine);
     }
 }
@@ -760,6 +763,8 @@ arm_2d_err_t arm_loader_io_cache_init(  arm_loader_io_cache_t *ptThis,
     memset(ptThis, 0, sizeof(arm_loader_io_cache_t));
     this.use_as__arm_loader_io_rom_t.nAddress = nAddress;
     this.use_as__arm_loader_io_rom_t.tSize = tSize;
+
+    this.bAllowsPrefetch = (chCachelineCount > 1);
 
     do {
         __arm_loader_io_cacheline_free(ptThis, ptCacheLines++);
@@ -821,6 +826,7 @@ arm_io_cacheline_t *__arm_loader_io_search_cacheline(arm_loader_io_cache_t *ptTh
 
         if (wAddress >= wCacheStart && wAddress < wCacheLimit) {
             /* cache hit */
+            this.ptRecent->u4LiftCount = 0xF;
             return this.ptRecent;
         }
     }
@@ -836,11 +842,11 @@ arm_io_cacheline_t *__arm_loader_io_search_cacheline(arm_loader_io_cache_t *ptTh
 
             if (wAddress >= wCacheStart && wAddress < wCacheLimit) {
                 /* cache hit */
-                (*pptItem)->u5LiftCount = 0x1F; /* reset life count */
+                (*pptItem)->u4LiftCount = 0xF; /* reset life count */
                 return (*pptItem);
             }
-            if ((*pptItem)->u5LiftCount) {
-                (*pptItem)->u5LiftCount--;
+            if ((*pptItem)->u4LiftCount) {
+                (*pptItem)->u4LiftCount--;
 
                 arm_irq_safe {
                     pptItem = &((*pptItem)->ptNext);
@@ -881,7 +887,8 @@ void arm_loader_io_cache_report_load_complete(arm_loader_io_cache_t *ptThis)
 
     arm_io_cacheline_t *ptItem = this.ptLoading;
 
-    ptItem->u5LiftCount = 0x1F;
+    ptItem->u4LiftCount = 0xF;
+    ptItem->bHasPrefetchNext = false;
     arm_irq_safe {
         ARM_LIST_STACK_PUSH(this.Ways->ptHead, ptItem);
         this.ptLoading = NULL;
@@ -914,6 +921,8 @@ void __arm_loader_io_cache_preload(arm_loader_io_cache_t *ptThis, uintptr_t wAdd
 
     arm_io_cacheline_t *ptVictim = NULL;
 
+    wAddress >>= 5;
+
     /* find a victim */
     if (NULL != this.ptFree) {
 
@@ -925,20 +934,19 @@ void __arm_loader_io_cache_preload(arm_loader_io_cache_t *ptThis, uintptr_t wAdd
         /* find a dead cacheline  */
         uint_fast8_t chMinLifeCount = 0xFF;
         arm_io_cacheline_t **pptVictim = NULL;
-
+         
         arm_foreach(this.Ways) {
             arm_io_cacheline_t **pptItem = &_->ptHead;
 
             while(NULL != *pptItem) {
-                if (0 == (*pptItem)->u5LiftCount) {
-                    ptVictim = (*pptItem);
-
-                    /* remove it from the chain */
-                    (*pptItem) = (*pptItem)->ptNext;
-
-                    goto label_finish_searching;
-                } else if ((*pptItem)->u5LiftCount < chMinLifeCount) {
-                    chMinLifeCount = (*pptItem)->u5LiftCount;
+                if ((*pptItem)->u27Address == wAddress) {
+                    return ;
+                }
+                if (0 == (*pptItem)->u4LiftCount) {
+                    chMinLifeCount = 0;
+                    pptVictim = pptItem;
+                } else if ((*pptItem)->u4LiftCount <= chMinLifeCount) {
+                    chMinLifeCount = (*pptItem)->u4LiftCount;
                     pptVictim = pptItem;
                 }
 
@@ -955,12 +963,18 @@ void __arm_loader_io_cache_preload(arm_loader_io_cache_t *ptThis, uintptr_t wAdd
 label_finish_searching:
     assert(NULL != ptVictim);
 
-    ptVictim->u27Address = wAddress >> 5;
+    arm_irq_safe {
+        if (this.ptRecent == ptVictim) {
+            this.ptRecent = NULL;
+        }
+    }
+
+    ptVictim->u27Address = wAddress;
     ptVictim->ptNext = NULL;
 
     this.ptLoading = ptVictim;
 
-    wAddress = (wAddress & ~0x1F) + this.use_as__arm_loader_io_rom_t.nAddress;
+    wAddress = (wAddress << 5) + this.use_as__arm_loader_io_rom_t.nAddress;
 
     __arm_loader_io_cache_request_load_memory(  ptThis, 
                                                 wAddress, 
@@ -1035,6 +1049,14 @@ size_t __arm_loader_io_cache_read(  uintptr_t pTarget,
         } while(NULL == ptHit);
 
         this.ptRecent = ptHit;
+
+        if (!ptHit->bHasPrefetchNext && this.bAllowsPrefetch) {
+            ptHit->bHasPrefetchNext = true;
+            uintptr_t nNextAddress = (ptHit->u27Address + 1) << 5;
+            __arm_loader_io_cache_preload(ptThis, nNextAddress);
+        }
+
+        
 
         uintptr_t wOffset = wAddress - (ptHit->u27Address << 5);
         size_t wDataAvailable = sizeof(ptHit->wWords) - wOffset;
