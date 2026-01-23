@@ -269,8 +269,20 @@ __STATIC_FORCEINLINE
 uint16_t zhRGB565_read_u16_from_loader(uintptr_t ptLoader)
 {
     uint16_t hwData;
-    arm_generic_loader_io_read( (arm_generic_loader_t *)ptLoader, 
-                                (uint8_t *)&hwData, 2);
+    uint8_t *pchBuffer = (uint8_t *)&hwData;
+    size_t tSizeToRead = 2;
+
+    do {
+        size_t tActualRead = 
+        arm_generic_loader_io_read( (arm_generic_loader_t *)ptLoader, 
+                                    pchBuffer, tSizeToRead);
+        if (tActualRead == 2) {
+            break;
+        }
+        assert(tActualRead > 0);
+        tSizeToRead -= tActualRead;
+        pchBuffer += tActualRead;
+    } while(tSizeToRead);
     return hwData;
 }
 

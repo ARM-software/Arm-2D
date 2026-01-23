@@ -24,6 +24,13 @@
 #include "arm_2d_helper.h"
 #include <stdio.h>
 
+#if defined(__clang__)
+#   pragma clang diagnostic push
+#   pragma clang diagnostic ignored "-Wunknown-warning-option"
+#   pragma clang diagnostic ignored "-Wreserved-identifier"
+#   pragma clang diagnostic ignored "-Wmissing-declarations"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -80,6 +87,32 @@ ARM_PRIVATE(
 )
 } arm_loader_io_window_t;
 
+typedef struct arm_io_cacheline_t {
+ARM_PRIVATE(
+    struct arm_io_cacheline_t *ptNext;
+
+    uint32_t u5LiftCount     : 5;
+    uint32_t u27Address      : 27;
+
+    uint32_t wWords[32 / sizeof(uint32_t)];
+)
+}arm_io_cacheline_t;
+
+typedef struct arm_loader_io_cache_t {
+    implement(arm_loader_io_rom_t);
+
+ARM_PRIVATE(
+    arm_io_cacheline_t *ptFree;
+
+    struct {
+        arm_io_cacheline_t *ptHead;
+    } Ways[1];
+
+    arm_io_cacheline_t *ptRecent;
+    arm_io_cacheline_t * volatile ptLoading;
+)
+} arm_loader_io_cache_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 
 extern 
@@ -90,6 +123,9 @@ const arm_loader_io_t ARM_LOADER_IO_BINARY;
 
 extern 
 const arm_loader_io_t ARM_LOADER_IO_ROM;
+
+extern 
+const arm_loader_io_t ARM_LOADER_IO_CACHE;
 
 extern 
 const arm_loader_io_t ARM_LOADER_IO_WINDOW;
@@ -158,10 +194,17 @@ arm_2d_err_t arm_loader_io_binary_init( arm_loader_io_binary_t *ptThis,
  */
 extern
 ARM_NONNULL(1)
-arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_binary_t *ptThis, 
+arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_rom_t *ptThis, 
                                      uintptr_t nAddress,
                                      size_t tSize);
 
+extern
+ARM_NONNULL(1, 4)
+arm_2d_err_t arm_loader_io_cache_init(  arm_loader_io_cache_t *ptThis, 
+                                        uintptr_t nAddress,
+                                        size_t tSize,
+                                        arm_io_cacheline_t *ptCacheLines,
+                                        uint_fast8_t chCachelineCount);
 
 /*!
  * \brief initialize a double-buffered window
@@ -186,6 +229,10 @@ void arm_loader_io_window_enqueue(  arm_loader_io_window_t *ptThis,
                                     size_t tSize);
 #ifdef   __cplusplus
 }
+#endif
+
+#if defined(__clang__)
+#   pragma clang diagnostic pop
 #endif
 
 #endif  /* __ARM_2D_LOADER_COMMON_H__ */
