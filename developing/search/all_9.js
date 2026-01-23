@@ -148,7 +148,7 @@ var searchData=
   ['arm_5f2d_5fhelper_5fcontrol_5fenum_5finit_145',['arm_2d_helper_control_enum_init',['../group__gHelper.html#ga5c85d8060c0b4e2535a7628c9d4f7edf',1,'arm_2d_helper_control.h']]],
   ['arm_5f2d_5fhelper_5fcontrol_5ffind_5fnode_5fwith_5flocation_146',['arm_2d_helper_control_find_node_with_location',['../group__gHelper.html#ga005aacb155d4d4ef61a73410b4a747ac',1,'arm_2d_helper_control.h']]],
   ['arm_5f2d_5fhelper_5fcontrol_5fget_5fabsolute_5fregion_147',['arm_2d_helper_control_get_absolute_region',['../group__gHelper.html#ga29e7743d6fb144033b12d5a1a408c6b8',1,'arm_2d_helper_control.h']]],
-  ['arm_5f2d_5fhelper_5fconvert_5fms_5fto_5fticks_148',['arm_2d_helper_convert_ms_to_ticks',['../group__gHelper.html#ga22a1338673baaec12c475e371d7593be',1,'arm_2d_helper.h']]],
+  ['arm_5f2d_5fhelper_5fconvert_5fms_5fto_5fticks_148',['arm_2d_helper_convert_ms_to_ticks',['../group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab',1,'arm_2d_helper.h']]],
   ['arm_5f2d_5fhelper_5fconvert_5fticks_5fto_5fms_149',['arm_2d_helper_convert_ticks_to_ms',['../group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf',1,'arm_2d_helper.h']]],
   ['arm_5f2d_5fhelper_5fdirty_5fregion_5fadd_5fitems_150',['arm_2d_helper_dirty_region_add_items',['../group__gHelper.html#ga1222876f950398b34853d9b41e9d9c06',1,'arm_2d_helper_pfb.h']]],
   ['arm_5f2d_5fhelper_5fdirty_5fregion_5fdepose_151',['arm_2d_helper_dirty_region_depose',['../group__gHelper.html#ga0a55644fce0c5f86e55bbc39a567b7aa',1,'arm_2d_helper_pfb.h']]],

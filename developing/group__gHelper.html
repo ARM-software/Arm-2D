@@ -1210,9 +1210,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>arm_lcd_text_set_draw
 <tr class="memitem:ga10a29fc878fb8adb0c542589d1b602cf"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">arm_2d_helper_convert_ticks_to_ms</a> (int64_t lTick)</td></tr>
 <tr class="memdesc:ga10a29fc878fb8adb0c542589d1b602cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert ticks of a reference timer to millisecond  <a href="group__gHelper.html#ga10a29fc878fb8adb0c542589d1b602cf">More...</a><br /></td></tr>
 <tr class="separator:ga10a29fc878fb8adb0c542589d1b602cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga22a1338673baaec12c475e371d7593be"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">arm_2d_helper_convert_ms_to_ticks</a> (uint32_t wMS)</td></tr>
-<tr class="memdesc:ga22a1338673baaec12c475e371d7593be"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert millisecond into ticks of the reference timer  <a href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be">More...</a><br /></td></tr>
-<tr class="separator:ga22a1338673baaec12c475e371d7593be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga164d99311f761b5a0c926c1697ae41ab"><td class="memItemLeft" align="right" valign="top">int64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab">arm_2d_helper_convert_ms_to_ticks</a> (int64_t lMS)</td></tr>
+<tr class="memdesc:ga164d99311f761b5a0c926c1697ae41ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">convert millisecond into ticks of the reference timer  <a href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab">More...</a><br /></td></tr>
+<tr class="separator:ga164d99311f761b5a0c926c1697ae41ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gace60efc807106e1526fcc9f673f19b12"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">arm_2d_helper_get_reference_clock_frequency</a> (void)</td></tr>
 <tr class="memdesc:gace60efc807106e1526fcc9f673f19b12"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the reference clock frequency  <a href="group__gHelper.html#gace60efc807106e1526fcc9f673f19b12">More...</a><br /></td></tr>
 <tr class="separator:gace60efc807106e1526fcc9f673f19b12"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -7533,7 +7533,7 @@ tPeek</td>
       </table>
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">    ({  <span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                          \</div>
-<div class="line">        __arm_2d_helper_is_time_out(<a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),    \</div>
+<div class="line">        __arm_2d_helper_is_time_out(<a class="code hl_function" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),    \</div>
 <div class="line">        (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
 </div><!-- fragment -->
 <p>set an alarm with given period and check the status </p>
@@ -7614,7 +7614,7 @@ tPeek</td>
 <b>Value:</b><div class="fragment"><div class="line">           ({<span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                     \</div>
 <div class="line">           __arm_2d_helper_time_liner_slider((__from),                          \</div>
 <div class="line">                                            (__to),                             \</div>
-<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
+<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
 <div class="line">                                            (__stroke_ptr),                     \</div>
 <div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
 </div><!-- fragment -->
@@ -7685,7 +7685,7 @@ tPeek</td>
 <b>Value:</b><div class="fragment"><div class="line">           ({<span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                     \</div>
 <div class="line">           __arm_2d_helper_time_liner_slider_i64(   (__from),                   \</div>
 <div class="line">                                                    (__to),                     \</div>
-<div class="line">                   <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                     \</div>
+<div class="line">                   <a class="code hl_function" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                     \</div>
 <div class="line">                                                    (__stroke_ptr),             \</div>
 <div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
 </div><!-- fragment -->
@@ -7762,7 +7762,7 @@ tPeek</td>
 <b>Value:</b><div class="fragment"><div class="line">           ({<span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                     \</div>
 <div class="line">           __arm_2d_helper_time_cos_slider((__from),                            \</div>
 <div class="line">                                            (__to),                             \</div>
-<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
+<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
 <div class="line">                                            (__phase),                          \</div>
 <div class="line">                                            (__stroke_ptr),                     \</div>
 <div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
@@ -7835,7 +7835,7 @@ tPeek</td>
 <b>Value:</b><div class="fragment"><div class="line">           ({<span class="keyword">static</span> int64_t <a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp);                     \</div>
 <div class="line">           __arm_2d_helper_time_half_cos_slider((__from),                       \</div>
 <div class="line">                                            (__to),                             \</div>
-<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga22a1338673baaec12c475e371d7593be" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
+<div class="line">           <a class="code hl_function" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks</a>(__ms),                             \</div>
 <div class="line">                                            (__stroke_ptr),                     \</div>
 <div class="line">           (&amp;<a class="code hl_define" href="group__gKernel.html#ga70a93027501cdb8935d5cd3220cb4e4f" title="A macro to generate a safe name, usually used in macro template as the name of local variables.">arm_2d_safe_name</a>(s_lTimestamp),##__VA_ARGS__));})</div>
 </div><!-- fragment -->
@@ -13528,8 +13528,8 @@ false line buffer is full </dd></dl>
 
 </div>
 </div>
-<a id="ga22a1338673baaec12c475e371d7593be" name="ga22a1338673baaec12c475e371d7593be"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga22a1338673baaec12c475e371d7593be">&#9670;&#160;</a></span>arm_2d_helper_convert_ms_to_ticks()</h2>
+<a id="ga164d99311f761b5a0c926c1697ae41ab" name="ga164d99311f761b5a0c926c1697ae41ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga164d99311f761b5a0c926c1697ae41ab">&#9670;&#160;</a></span>arm_2d_helper_convert_ms_to_ticks()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -13537,8 +13537,8 @@ false line buffer is full </dd></dl>
         <tr>
           <td class="memname">int64_t arm_2d_helper_convert_ms_to_ticks </td>
           <td>(</td>
-          <td class="paramtype">uint32_t&#160;</td>
-          <td class="paramname"><em>wMS</em></td><td>)</td>
+          <td class="paramtype">int64_t&#160;</td>
+          <td class="paramname"><em>lMS</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -13547,7 +13547,7 @@ false line buffer is full </dd></dl>
 <p>convert millisecond into ticks of the reference timer </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">wMS</td><td>the target time in millisecond </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">lMS</td><td>the target time in millisecond </td></tr>
   </table>
   </dd>
 </dl>
