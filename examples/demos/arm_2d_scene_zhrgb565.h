@@ -99,7 +99,7 @@ ARM_PRIVATE(
         arm_loader_io_cache_t tCache;
     } LoaderIO;
 
-    arm_io_cacheline_t tCachelines[4];
+    arm_io_cacheline_t tCachelines[2];
 #endif
 
     arm_2d_helper_film_t tFilm;

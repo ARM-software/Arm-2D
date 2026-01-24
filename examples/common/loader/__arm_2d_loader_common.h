@@ -105,7 +105,11 @@ typedef struct arm_loader_io_cache_t {
 ARM_PRIVATE(
     arm_io_cacheline_t *ptFree;
     bool bAllowsPrefetch;
+    volatile bool bFinishedLoading;
 
+    //uint32_t wMissed;
+    //uint64_t dwMemoryAccess;
+    
     struct {
         arm_io_cacheline_t *ptHead;
     } Ways[1];
