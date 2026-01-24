@@ -204,6 +204,24 @@ arm_2d_err_t arm_loader_io_rom_init( arm_loader_io_rom_t *ptThis,
                                      uintptr_t nAddress,
                                      size_t tSize);
 
+/*
+ * \note 1. You can implement the following function to load external memory.
+ *       2. You can request DMA access in the funciton and please call the 
+ *          arm_loader_io_cache_report_load_complete() in the DMA transaction-
+ *          complete service routine.
+ * 
+ *  __OVERRIDE_WEAK
+ *  void __arm_loader_io_cache_request_load_memory( arm_loader_io_cache_t *ptThis,
+ *                                                  uintptr_t wAddress,
+ *                                                  uint32_t *pwBuffer,
+ *                                                  size_t tNumberOfWords)
+ *  {
+ *      ...
+ *      return tSize;
+ *  }
+ * 
+ *  
+ */
 extern
 ARM_NONNULL(1, 4)
 arm_2d_err_t arm_loader_io_cache_init(  arm_loader_io_cache_t *ptThis, 
@@ -211,6 +229,10 @@ arm_2d_err_t arm_loader_io_cache_init(  arm_loader_io_cache_t *ptThis,
                                         size_t tSize,
                                         arm_io_cacheline_t *ptCacheLines,
                                         uint_fast8_t chCachelineCount);
+
+extern
+ARM_NONNULL(1)
+void arm_loader_io_cache_report_load_complete(arm_loader_io_cache_t *ptThis);
 
 /*!
  * \brief initialize a double-buffered window
