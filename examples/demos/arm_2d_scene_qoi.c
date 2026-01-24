@@ -320,7 +320,7 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
     /* initialize QOI loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/MeterPanel.qoi");
     #else
         extern const uint8_t c_qoiMeterPanel[20394];
         extern const uint8_t c_qoiRadarBackground[45557];

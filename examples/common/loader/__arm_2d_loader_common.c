@@ -485,7 +485,6 @@ bool __arm_loader_io_binary_seek(uintptr_t pTarget, void *ptLoader, int32_t offs
     }
 
     return true;
-
 }
 
 static
