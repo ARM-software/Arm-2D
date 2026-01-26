@@ -48,7 +48,7 @@ extern "C" {
 // <i> Removes the scene player from this display adapter and only uses the nano mode.
 // <i> This feature is disabled by default.
 #ifndef __DISP0_CFG_NANO_ONLY__
-#   define __DISP0_CFG_NANO_ONLY__                                0
+#   define __DISP0_CFG_NANO_ONLY__                                1
 #endif
 
 // <o> Select the screen colour solution
@@ -347,6 +347,9 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#define disp_adapter0_nano_prepare(...)                                         \
+            __disp_adapter0_nano_prepare((arm_2d_scene_t *)(NULL,##__VA_ARGS__))
+
 #if __DISP0_CFG_NANO_ONLY__
 #   define __DISP_ADAPTER0_NANO_DRAW_RESUME_FULL_FLUSH_FLAG__()                 \
         arm_2d_helper_pfb_full_frame_refresh_mode(                              \
@@ -357,7 +360,7 @@ extern "C" {
 #endif
 
 #define DISP_ADAPTER0_NANO_DRAW()                                               \
-    arm_using(arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene())      \
+    arm_using(arm_2d_scene_t *ptScene = disp_adapter0_get_current_scene())      \
     arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
         arm_using(bool bIsNewFrame = true,                                      \
             {                                                                   \
@@ -429,13 +432,16 @@ extern
 arm_fsm_rt_t __disp_adapter0_task(void);
 
 extern
-arm_2d_scene_t *disp_adapter0_nano_prepare(void);
-
-extern
 __disp_adapter0_draw_t * __disp_adapter0_nano_draw(void);
 
 extern
+arm_2d_scene_t *__disp_adapter0_nano_prepare(arm_2d_scene_t *ptScene);
+
+extern
 arm_2d_scene_t *disp_adapter0_get_default_scene(void);
+
+extern
+arm_2d_scene_t *disp_adapter0_get_current_scene(void);
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!

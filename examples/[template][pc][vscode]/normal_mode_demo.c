@@ -616,7 +616,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else
     {
         .fnLoader = 
-        scene_zhrgb565_loader,
+        scene_histogram_loader,
+        //scene_qoi_loader,
         //scene_radars_loader,
         //scene_audiomark_loader
         //scene_watch_face_01_loader

@@ -148,6 +148,7 @@ ARM_PT_BEGIN(this.chPT)
 
             arm_lcd_text_reset_display_region_tracking();
             
+            arm_lcd_text_set_draw_region(&__top_canvas);
             arm_lcd_text_set_colour(GLCD_COLOR_BLACK, GLCD_COLOR_WHITE);
             arm_lcd_printf_label(
                 ARM_2D_ALIGN_CENTRE, 
