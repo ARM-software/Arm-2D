@@ -1026,9 +1026,7 @@ arm_fsm_rt_t __disp_adapter0_task(void)
 {
 #if __DISP0_CFG_NANO_ONLY__
     arm_2d_scene_t *ptScene = disp_adapter0_get_current_scene();
-    __arm_2d_helper_pfb_enable_drawing_canvas_colour(
-                                                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
-                                                ptScene->tCanvas);
+
 
     return arm_2d_helper_pfb_task(
                 &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t, 
@@ -1065,6 +1063,10 @@ arm_2d_scene_t *__disp_adapter0_nano_prepare(arm_2d_scene_t *ptScene)
         arm_2d_helper_dirty_region_init(&ptScene->tDirtyRegionHelper,
                                         &ptScene->ptDirtyRegion);
     }
+
+    __arm_2d_helper_pfb_enable_drawing_canvas_colour(
+                                                &DISP0_ADAPTER.use_as__arm_2d_helper_pfb_t,
+                                                ptScene->tCanvas);
 #else
     arm_2d_scene_player_flush_fifo(&DISP0_ADAPTER);
     arm_2d_scene_player_set_switching_mode( &DISP0_ADAPTER, ARM_2D_SCENE_SWITCH_MODE_NONE);

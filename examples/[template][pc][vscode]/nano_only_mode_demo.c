@@ -196,10 +196,12 @@ int app_2d_main_thread (void *argument)
 
     /* example code for nano-drawing in blocking mode */
     do {
-        arm_2d_scene_t *ptScene = disp_adapter0_nano_prepare();
+        arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
 
         /* change canvas colour */
         ptScene->tCanvas.wColour = GLCD_COLOR_GREEN;
+
+        disp_adapter0_nano_prepare();
 
         /* NOTE: 
             * 1. Please do NOT call disp_adapter0_nano_prepare() for each frame. 
@@ -218,7 +220,7 @@ int app_2d_main_thread (void *argument)
     } while(0);
 
 #if 0
-    arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
+    
     ptScene->tCanvas.wColour = GLCD_COLOR_WHITE;
     ptScene->bUseDirtyRegionHelper = true;
 
