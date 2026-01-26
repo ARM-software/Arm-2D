@@ -950,10 +950,14 @@ arm_2d_scene_t *disp_adapter0_get_default_scene(void)
     return &s_tDefaultScene;
 }
 
+#if __DISP0_CFG_NANO_ONLY__
+static arm_2d_scene_t *s_ptCurrentScene = &s_tDefaultScene;
+#endif
+
 arm_2d_scene_t *disp_adapter0_get_current_scene(void)
 {
 #if __DISP0_CFG_NANO_ONLY__
-    return disp_adapter0_get_default_scene();
+    return s_ptCurrentScene;
 #else
     return arm_2d_scene_player_get_the_current_scene(&DISP0_ADAPTER);
 #endif
@@ -976,7 +980,7 @@ void disp_adapter0_init(void)
 
     DISP0_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
 
-#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__
+#if !__DISP0_CFG_DISABLE_DEFAULT_SCENE__ && !__DISP0_CFG_NANO_ONLY__
     do {
         arm_2d_scene_player_append_scenes( 
                                         &DISP0_ADAPTER,
@@ -1039,6 +1043,8 @@ arm_2d_scene_t *__disp_adapter0_nano_prepare(arm_2d_scene_t *ptScene)
     if (NULL == ptScene) {
         ptScene = &s_tDefaultScene;
     }
+
+    s_ptCurrentScene = ptScene;
 
     ptScene->fnBackground = NULL;
     ptScene->fnScene = NULL;

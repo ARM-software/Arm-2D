@@ -185,7 +185,11 @@ ARM_PT_END()
   Main function
  *----------------------------------------------------------------------------*/
 
-
+static
+arm_2d_scene_t s_tSceneClock = {
+    .tCanvas.wColour = GLCD_COLOR_WHITE,
+    .bUseDirtyRegionHelper = true,
+};
 
 int app_2d_main_thread (void *argument)
 {
@@ -213,12 +217,15 @@ int app_2d_main_thread (void *argument)
         SDL_Delay(1000);
     } while(0);
 
-    
+#if 0
     arm_2d_scene_t *ptScene = disp_adapter0_get_default_scene();
     ptScene->tCanvas.wColour = GLCD_COLOR_WHITE;
     ptScene->bUseDirtyRegionHelper = true;
 
     disp_adapter0_nano_prepare();
+#else
+    disp_adapter0_nano_prepare(&s_tSceneClock);
+#endif
 
     while(1) {
         if (VT_is_request_quit()) {

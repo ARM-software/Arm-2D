@@ -951,10 +951,14 @@ arm_2d_scene_t *disp_adapter%Instance%_get_default_scene(void)
     return &s_tDefaultScene;
 }
 
+#if __DISP0_CFG_NANO_ONLY__
+static arm_2d_scene_t *s_ptCurrentScene = &s_tDefaultScene;
+#endif
+
 arm_2d_scene_t *disp_adapter%Instance%_get_current_scene(void)
 {
 #if __DISP%Instance%_CFG_NANO_ONLY__
-    return disp_adapter%Instance%_get_default_scene();
+    return s_ptCurrentScene;
 #else
     return arm_2d_scene_player_get_the_current_scene(&DISP%Instance%_ADAPTER);
 #endif
@@ -977,7 +981,7 @@ void disp_adapter%Instance%_init(void)
 
     DISP%Instance%_ADAPTER.Benchmark.lTimestamp = arm_2d_helper_get_system_timestamp();
 
-#if !__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__
+#if !__DISP%Instance%_CFG_DISABLE_DEFAULT_SCENE__ && !__DISP%Instance%_CFG_NANO_ONLY__
     do {
         arm_2d_scene_player_append_scenes( 
                                         &DISP%Instance%_ADAPTER,
@@ -1040,6 +1044,8 @@ arm_2d_scene_t *__disp_adapter%Instance%_nano_prepare(arm_2d_scene_t *ptScene)
     if (NULL == ptScene) {
         ptScene = disp_adapter%Instance%_get_default_scene();
     }
+    s_ptCurrentScene = ptScene;
+
     ptScene->fnBackground = NULL;
     ptScene->fnScene = NULL;
     arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
