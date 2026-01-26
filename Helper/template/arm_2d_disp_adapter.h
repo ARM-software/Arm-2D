@@ -347,6 +347,9 @@ extern "C" {
         };                                                                      \
         ARM_2D_SAFE_NAME(ret);})
 
+#define disp_adapter%Instance%_nano_prepare(...)                                         \
+            __disp_adapter%Instance%_nano_prepare((arm_2d_scene_t *)(NULL,##__VA_ARGS__))
+
 #if __DISP%Instance%_CFG_NANO_ONLY__
 #   define __DISP_ADAPTER%Instance%_NANO_DRAW_RESUME_FULL_FLUSH_FLAG__()                 \
         arm_2d_helper_pfb_full_frame_refresh_mode(                              \
@@ -357,7 +360,7 @@ extern "C" {
 #endif
 
 #define DISP_ADAPTER%Instance%_NANO_DRAW()                                               \
-    arm_using(arm_2d_scene_t *ptScene = disp_adapter%Instance%_get_default_scene())      \
+    arm_using(arm_2d_scene_t *ptScene = disp_adapter%Instance%_get_current_scene())      \
     arm_using(const arm_2d_tile_t *ptTile = NULL)                               \
         arm_using(bool bIsNewFrame = true,                                      \
             {                                                                   \
@@ -429,13 +432,16 @@ extern
 arm_fsm_rt_t __disp_adapter%Instance%_task(void);
 
 extern
-arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void);
+arm_2d_scene_t *__disp_adapter%Instance%_nano_prepare(arm_2d_scene_t *ptScene);
 
 extern
 __disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(void);
 
 extern
 arm_2d_scene_t *disp_adapter%Instance%_get_default_scene(void);
+
+extern
+arm_2d_scene_t *disp_adapter%Instance%_get_current_scene(void);
 
 #if __DISP%Instance%_CFG_VIRTUAL_RESOURCE_HELPER__
 /*!

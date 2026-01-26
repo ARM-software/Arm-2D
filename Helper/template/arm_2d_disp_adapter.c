@@ -951,6 +951,15 @@ arm_2d_scene_t *disp_adapter%Instance%_get_default_scene(void)
     return &s_tDefaultScene;
 }
 
+arm_2d_scene_t *disp_adapter%Instance%_get_current_scene(void)
+{
+#if __DISP%Instance%_CFG_NANO_ONLY__
+    return disp_adapter%Instance%_get_default_scene();
+#else
+    return arm_2d_scene_player_get_the_current_scene(&DISP%Instance%_ADAPTER);
+#endif
+}
+
 void disp_adapter%Instance%_init(void)
 {
     __user_scene_player_init();
@@ -991,14 +1000,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_handler)
 
 ARM_PT_BEGIN(DISP%Instance%_ADAPTER.chPT)
 
-    arm_2d_scene_t *ptScene = &s_tDefaultScene;
+    arm_2d_scene_t *ptScene = disp_adapter%Instance%_get_current_scene();
     
     if (NULL != ptScene->fnScene) {
         tResult = ptScene->fnScene(ptScene, ptTile, bIsNewFrame);
     } else {
 ARM_PT_YIELD((arm_fsm_rt_t)ARM_2D_RT_PFB_USER_DRAW);
         tResult = arm_fsm_rt_cpl;
-        ptScene = &s_tDefaultScene;
+        ptScene = disp_adapter%Instance%_get_current_scene();
     }
 
     arm_2d_helper_dirty_region_update_dirty_regions(&ptScene->tDirtyRegionHelper, 
@@ -1013,24 +1022,27 @@ ARM_PT_END()
 arm_fsm_rt_t __disp_adapter%Instance%_task(void)
 {
 #if __DISP%Instance%_CFG_NANO_ONLY__
+    arm_2d_scene_t *ptScene = disp_adapter%Instance%_get_current_scene();
     __arm_2d_helper_pfb_enable_drawing_canvas_colour(
                                                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
-                                                s_tDefaultScene.tCanvas);
+                                                ptScene->tCanvas);
 
     return arm_2d_helper_pfb_task(
                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t, 
-                s_tDefaultScene.ptDirtyRegion);
+                ptScene->ptDirtyRegion);
 #else
     return arm_2d_scene_player_task(&DISP%Instance%_ADAPTER);
 #endif
 }
 
-arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
+arm_2d_scene_t *__disp_adapter%Instance%_nano_prepare(arm_2d_scene_t *ptScene)
 {
-
-    s_tDefaultScene.fnBackground = NULL;
-    s_tDefaultScene.fnScene = NULL;
-    arm_2d_helper_dirty_region_depose(&s_tDefaultScene.tDirtyRegionHelper);
+    if (NULL == ptScene) {
+        ptScene = disp_adapter%Instance%_get_default_scene();
+    }
+    ptScene->fnBackground = NULL;
+    ptScene->fnScene = NULL;
+    arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
 
 #if __DISP%Instance%_CFG_NANO_ONLY__
     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
@@ -1043,9 +1055,9 @@ arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
                                     true
                                 );
             
-    if (s_tDefaultScene.bUseDirtyRegionHelper) {
-        arm_2d_helper_dirty_region_init(&s_tDefaultScene.tDirtyRegionHelper,
-                                        &s_tDefaultScene.ptDirtyRegion);
+    if (ptScene->bUseDirtyRegionHelper) {
+        arm_2d_helper_dirty_region_init(&ptScene->tDirtyRegionHelper,
+                                        &ptScene->ptDirtyRegion);
     }
 #else
     arm_2d_scene_player_flush_fifo(&DISP%Instance%_ADAPTER);
@@ -1053,10 +1065,10 @@ arm_2d_scene_t *disp_adapter%Instance%_nano_prepare(void)
                                             ARM_2D_SCENE_SWITCH_MODE_NONE);
 
     arm_2d_scene_player_append_scenes(  &DISP%Instance%_ADAPTER,
-                                        (arm_2d_scene_t *)&s_tDefaultScene,
+                                        ptScene,
                                         1);
 #endif
-    return &s_tDefaultScene;
+    return ptScene;
 }
 
 __disp_adapter%Instance%_draw_t * __disp_adapter%Instance%_nano_draw(void)
