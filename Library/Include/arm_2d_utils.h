@@ -21,8 +21,8 @@
  * Title:        arm_2d_utils.h
  * Description:  Public header file for Arm-2D Library
  *
- * $Date:        06. Jan 2026
- * $Revision:    V.1.5.0
+ * $Date:        26. Jan 2026
+ * $Revision:    V.1.5.1
  *
  * -------------------------------------------------------------------- */
 
@@ -64,6 +64,7 @@
 #if __IS_SUPPORTED_ARM_ARCH__
 
 #   include "cmsis_compiler.h"
+#   include "cmsis_version.h"
 
 #else
 #   include "arm_2d_user_arch_port.h"
@@ -209,13 +210,15 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Intrinsics Patch                                                           *
  *----------------------------------------------------------------------------*/
-#if __IS_SUPPORTED_ARM_ARCH__ && __IS_COMPILER_GCC__
+#if __IS_SUPPORTED_ARM_ARCH__ && (__IS_COMPILER_GCC__ || __CM_CMSIS_VERSION_MAIN < 6)
 
 #   define __rev16      __REV16
 #   define __rev        __REV 
 #   define __ror        __ROR
 
 #endif
+
+
 /*----------------------------------------------------------------------------*
  * Misc                                                                       *
  *----------------------------------------------------------------------------*/
