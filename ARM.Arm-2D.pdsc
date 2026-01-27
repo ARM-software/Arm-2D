@@ -1133,11 +1133,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cversion="2.2.2" condition="Arm-2D-Demo-TJpgDec-Loader">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with TJpgDec" Cversion="2.3.0" condition="Arm-2D-Demo-TJpgDec-Loader">
           <description>A demo for showing gif-like animation with TJpgDec Loader and ZJpgDec Loader.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_rickrolling.c" attr="config" version="2.2.2" />
-            <file category="header"      name="examples/demos/arm_2d_scene_rickrolling.h" attr="config" version="2.2.2" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_rickrolling.c" attr="config" version="2.3.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_rickrolling.h" attr="config" version="2.3.0" />
 
             <file category="sourceC"     name="examples/demos/rick_rolling_jpg_75.c" />
           </files>

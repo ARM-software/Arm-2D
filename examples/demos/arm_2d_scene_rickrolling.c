@@ -162,6 +162,14 @@ static void __on_scene_rickrolling_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out( this.tFilm.hwPeriodPerFrame , &this.lTimestamp[0])) {
 
         arm_2d_helper_film_next_frame(&this.tFilm);
+
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+            false);
+    } else {
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+            true);
     }
 #if ARM_2D_DEMO_USE_ZJPGD
     arm_zjpgd_loader_on_frame_start(&this.tAnimation);
