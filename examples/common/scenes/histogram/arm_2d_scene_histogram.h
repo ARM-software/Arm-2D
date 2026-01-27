@@ -128,25 +128,18 @@ ARM_PRIVATE(
     } WindowFIFO; 
 #if ARM_2D_SCENE_HISTOGRAM_USE_QOI
     arm_qoi_loader_t tQOIBackground;
-    union {
-        arm_qoi_io_file_loader_t tFile;
-        arm_qoi_io_binary_loader_t tBinary;
-    } LoaderIO;
 #elif ARM_2D_SCENE_HISTOGRAM_USE_JPG
 #   if ARM_2D_SCENE_HISTOGRAM_USE_ZJPGD
     arm_zjpgd_loader_t tJPGBackground;
-    union {
-        arm_loader_io_file_t tFile;
-        arm_loader_io_binary_t tBinary;
-    } LoaderIO;
 #   else
     arm_tjpgd_loader_t tJPGBackground;
+#   endif
+#endif
     union {
         arm_loader_io_file_t tFile;
         arm_loader_io_binary_t tBinary;
+        arm_loader_io_rom_t tROM;
     } LoaderIO;
-#   endif
-#endif
 
 )
     /* place your public member here */

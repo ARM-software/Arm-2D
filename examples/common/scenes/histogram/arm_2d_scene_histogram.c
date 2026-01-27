@@ -457,7 +457,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         extern const uint8_t c_qoiRadarBackground[45557];
         extern const uint8_t c_qoiBackgroundSmall[114698];
 
-        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiBackgroundSmall, sizeof(c_qoiBackgroundSmall));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_qoiBackgroundSmall, 
+                                sizeof(c_qoiBackgroundSmall));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
@@ -473,13 +475,13 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
@@ -518,7 +520,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         extern const uint8_t c_chHelium30JPG[5411];
         extern const uint8_t c_jpgBackgroundSmall[12489];
 
-        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_jpgBackgroundSmall, 
+                                sizeof(c_jpgBackgroundSmall));
     #endif
         arm_zjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -531,8 +535,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
@@ -572,7 +576,9 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
         extern const uint8_t c_chHelium30JPG[5411];
         extern const uint8_t c_jpgBackgroundSmall[12489];
 
-        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_jpgBackgroundSmall, sizeof(c_jpgBackgroundSmall));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_jpgBackgroundSmall, 
+                                sizeof(c_jpgBackgroundSmall));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -585,8 +591,8 @@ user_scene_histogram_t *__arm_2d_scene_histogram_init(
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
