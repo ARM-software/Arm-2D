@@ -385,6 +385,10 @@ void scene_qoi_loader(void)
 {
     arm_2d_scene_qoi_init(&DISP0_ADAPTER);
 }
+void scene_qoi_animation_loader(void) 
+{
+    arm_2d_scene_qoi_animation_init(&DISP0_ADAPTER);
+}
 #endif
 
 #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__
@@ -616,7 +620,8 @@ static demo_scene_t const c_SceneLoaders[] = {
 #else    /* debug list */
     {
         .fnLoader = 
-        scene_histogram_loader,
+        scene_qoi_animation_loader
+        //scene_histogram_loader,
         //scene_qoi_loader,
         //scene_radars_loader,
         //scene_audiomark_loader
