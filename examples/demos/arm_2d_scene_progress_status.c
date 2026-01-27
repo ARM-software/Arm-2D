@@ -200,9 +200,19 @@ static void __on_scene_progress_status_frame_start(arm_2d_scene_t *ptScene)
 
     #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
+
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.tDirtyRegionItems[DIRTY_REGION_WIFI],
+            false);
     #else
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilm);
         arm_2d_helper_film_next_frame(&s_tileWIFISignalFilmMask);
+    #endif
+    } else {
+    #if ARM_2D_DEMO_PROGRESS_STATUS_USE_QOI
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.tDirtyRegionItems[DIRTY_REGION_WIFI],
+            true);
     #endif
     }
 #endif
