@@ -275,21 +275,31 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
         extern const uint16_t c_zhrgbDogeDance[51166];
 
     #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
-        //arm_loader_io_binary_init(&this.LoaderIO.tBinary, (uint8_t *)c_zhrgbDogeDance, sizeof(c_zhrgbDogeDance));
-
+        
+    #if 1
         arm_loader_io_cache_init(   &this.LoaderIO.tCache, 
                                     (uintptr_t)c_zhrgbDogeDance, 
                                     sizeof(c_zhrgbDogeDance),
                                     this.tCachelines,
                                     dimof(this.tCachelines));
+    #else
+        arm_loader_io_binary_init(  &this.LoaderIO.tBinary, 
+                                    (uint8_t *)c_zhrgbDogeDance, 
+                                    sizeof(c_zhrgbDogeDance));
+    #endif
     #endif
         arm_zhrgb565_loader_cfg_t tCFG = {
             .ptScene = (arm_2d_scene_t *)ptThis,
         
         #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_CACHE,// &ARM_LOADER_IO_BINARY,
+            #if 1
+                .ptIO = &ARM_LOADER_IO_CACHE,
+                .pTarget = (uintptr_t)&this.LoaderIO.tCache,
+            #else
+                .ptIO = &ARM_LOADER_IO_BINARY,
                 .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+            #endif
             },
         #else
             .phwLocalSource = c_zhrgbDogeDance,

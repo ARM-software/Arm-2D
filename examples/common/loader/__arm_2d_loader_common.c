@@ -1042,27 +1042,17 @@ bool __arm_loader_io_cache_seek(uintptr_t pTarget, void *ptLoader, int32_t offse
     return bResult;
 }
 
-static
-size_t __arm_loader_io_cache_read(  uintptr_t pTarget, 
-                                    void *ptLoader, 
-                                    uint8_t *pchBuffer, 
-                                    size_t tSize)
-{
-    arm_loader_io_cache_t *ptThis = (arm_loader_io_cache_t *)pTarget;
-    ARM_2D_UNUSED(ptLoader);
-    assert(NULL != ptThis);
-    assert(this.use_as__arm_loader_io_rom_t.tSize > 0);
-    
-    if (NULL == pchBuffer || 0 == tSize) {
-        return 0;
-    }
 
-    if (this.use_as__arm_loader_io_rom_t.tPostion >= this.use_as__arm_loader_io_rom_t.tSize) {
-        return 0;
-    }
+static
+size_t __arm_loader_io_cache_read_internal( arm_loader_io_cache_t *ptThis, 
+                                            uint8_t *pchBuffer, 
+                                            size_t tSize)
+{
+
     size_t iSizeToRead = this.use_as__arm_loader_io_rom_t.tSize 
                        - this.use_as__arm_loader_io_rom_t.tPostion;
     iSizeToRead = MIN(iSizeToRead, tSize);
+    assert(iSizeToRead != 0);
 
     uintptr_t wAddress = this.use_as__arm_loader_io_rom_t.tPostion;
     //this.dwMemoryAccess++;
@@ -1106,6 +1096,34 @@ size_t __arm_loader_io_cache_read(  uintptr_t pTarget,
 
     return iSizeToRead;
 
+}
+
+static
+size_t __arm_loader_io_cache_read(  uintptr_t pTarget, 
+                                    void *ptLoader, 
+                                    uint8_t *pchBuffer, 
+                                    size_t tSize)
+{
+    arm_loader_io_cache_t *ptThis = (arm_loader_io_cache_t *)pTarget;
+    ARM_2D_UNUSED(ptLoader);
+
+    assert(NULL != ptThis);
+    assert(NULL != pchBuffer);
+    assert(tSize > 0);
+    
+    size_t tDataToRead = tSize;
+    do {
+        size_t tActualRead = __arm_loader_io_cache_read_internal(   ptThis, 
+                                                                    pchBuffer, 
+                                                                    tDataToRead);
+        if (tActualRead == tDataToRead) {
+            break;
+        }
+        pchBuffer += tActualRead;
+        tDataToRead -= tActualRead;
+    } while(tDataToRead > 0);
+
+    return tSize;
 }
 
 
