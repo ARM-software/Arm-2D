@@ -16,8 +16,8 @@
  * limitations under the License.
  */
 
-#ifndef __ARM_2D_SCENE_ZHRGB565_H__
-#define __ARM_2D_SCENE_ZHRGB565_H__
+#ifndef __ARM_2D_SCENE_QOI_ANIMATION_H__
+#define __ARM_2D_SCENE_QOI_ANIMATION_H__
 
 /*============================ INCLUDES ======================================*/
 
@@ -26,7 +26,7 @@
 #endif
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
-&&  defined(RTE_Acceleration_Arm_2D_Extra_zhRGB565_Loader)
+&&  defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -53,10 +53,10 @@ extern "C" {
 /*============================ MACROS ========================================*/
 
 /* OOC header, please DO NOT modify  */
-#ifdef __USER_SCENE_ZHRGB565_IMPLEMENT__
+#ifdef __USER_SCENE_QOI_ANIMATION_IMPLEMENT__
 #   define __ARM_2D_IMPL__
 #endif
-#ifdef __USER_SCENE_ZHRGB565_INHERIT__
+#ifdef __USER_SCENE_QOI_ANIMATION_INHERIT__
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
@@ -65,25 +65,25 @@ extern "C" {
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
- * \brief initalize scene_zhrgb565 and add it to a user specified scene player
+ * \brief initalize scene_qoi_animation and add it to a user specified scene player
  * \param[in] __DISP_ADAPTER_PTR the target display adapter (i.e. scene player)
  * \param[in] ... this is an optional parameter. When it is NULL, a new 
- *            user_scene_zhrgb565_t will be allocated from HEAP and freed on
+ *            user_scene_qoi_animation_t will be allocated from HEAP and freed on
  *            the deposing event. When it is non-NULL, the life-cycle is managed
  *            by user.
- * \return user_scene_zhrgb565_t* the user_scene_zhrgb565_t instance
+ * \return user_scene_qoi_animation_t* the user_scene_qoi_animation_t instance
  */
-#define arm_2d_scene_zhrgb565_init(__DISP_ADAPTER_PTR, ...)                  \
-            __arm_2d_scene_zhrgb565_init((__DISP_ADAPTER_PTR),               \
+#define arm_2d_scene_qoi_animation_init(__DISP_ADAPTER_PTR, ...)                  \
+            __arm_2d_scene_qoi_animation_init((__DISP_ADAPTER_PTR),               \
                                             (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
 /*!
- * \brief a user class for scene zhrgb565
+ * \brief a user class for scene qoi_animation
  */
-typedef struct user_scene_zhrgb565_t user_scene_zhrgb565_t;
+typedef struct user_scene_qoi_animation_t user_scene_qoi_animation_t;
 
-struct user_scene_zhrgb565_t {
+struct user_scene_qoi_animation_t {
     implement(arm_2d_scene_t);                                                  //! derived from class: arm_2d_scene_t
 
 ARM_PRIVATE(
@@ -91,8 +91,8 @@ ARM_PRIVATE(
     int64_t lTimestamp[1];
     bool bUserAllocated;
 
-    arm_zhrgb565_loader_t tAnimation;
-#if __ARM_2D_ZHRGB565_USE_LOADER_IO__
+    arm_qoi_loader_t tAnimation;
+
     union {
         arm_loader_io_file_t tFile;
         arm_loader_io_binary_t tBinary;
@@ -101,7 +101,6 @@ ARM_PRIVATE(
     } LoaderIO;
 
     arm_io_cacheline_t tCachelines[2];
-#endif
 
     arm_2d_helper_film_t tFilm;
 )
@@ -114,9 +113,9 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(
+user_scene_qoi_animation_t *__arm_2d_scene_qoi_animation_init(
                                         arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_zhrgb565_t *ptScene);
+                                        user_scene_qoi_animation_t *ptScene);
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
@@ -124,8 +123,8 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(
 #   pragma GCC diagnostic pop
 #endif
 
-#undef __USER_SCENE_ZHRGB565_IMPLEMENT__
-#undef __USER_SCENE_ZHRGB565_INHERIT__
+#undef __USER_SCENE_QOI_ANIMATION_IMPLEMENT__
+#undef __USER_SCENE_QOI_ANIMATION_INHERIT__
 
 #ifdef   __cplusplus
 }

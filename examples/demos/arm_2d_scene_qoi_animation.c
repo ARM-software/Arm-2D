@@ -18,11 +18,11 @@
 
 /*============================ INCLUDES ======================================*/
 
-#define __USER_SCENE_ZHRGB565_IMPLEMENT__
-#include "arm_2d_scene_zhrgb565.h"
+#define __USER_SCENE_QOI_ANIMATION_IMPLEMENT__
+#include "arm_2d_scene_qoi_animation.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Helper_PFB)                                 \
-&&  defined(RTE_Acceleration_Arm_2D_Extra_zhRGB565_Loader)
+&&  defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
 
 #include <stdlib.h>
 #include <string.h>
@@ -89,27 +89,27 @@ extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
-static void __on_scene_zhrgb565_load(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_load(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_zhrgb565_loader_on_load(&this.tAnimation);
+    arm_qoi_loader_on_load(&this.tAnimation);
 }
 
-static void __after_scene_zhrgb565_switching(arm_2d_scene_t *ptScene)
+static void __after_scene_qoi_animation_switching(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_zhrgb565_depose(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_depose(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    arm_zhrgb565_loader_on_load(&this.tAnimation);
+    arm_qoi_loader_on_load(&this.tAnimation);
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -121,27 +121,27 @@ static void __on_scene_zhrgb565_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene zhrgb565                                                                    *
+ * Scene qoi_animation                                                                    *
  *----------------------------------------------------------------------------*/
 
-static void __on_scene_zhrgb565_background_start(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_background_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
-static void __on_scene_zhrgb565_background_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_background_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 
-static void __on_scene_zhrgb565_frame_start(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_frame_start(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
     if (arm_2d_helper_is_time_out( this.tFilm.hwPeriodPerFrame , &this.lTimestamp[0])) {
@@ -157,33 +157,33 @@ static void __on_scene_zhrgb565_frame_start(arm_2d_scene_t *ptScene)
             true);
     }
 
-    arm_zhrgb565_loader_on_frame_start(&this.tAnimation);
+    arm_qoi_loader_on_frame_start(&this.tAnimation);
 }
 
-static void __on_scene_zhrgb565_frame_complete(arm_2d_scene_t *ptScene)
+static void __on_scene_qoi_animation_frame_complete(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-    arm_zhrgb565_loader_on_frame_complete(&this.tAnimation);
+    arm_qoi_loader_on_frame_complete(&this.tAnimation);
 
 }
 
-static void __before_scene_zhrgb565_switching_out(arm_2d_scene_t *ptScene)
+static void __before_scene_qoi_animation_switching_out(arm_2d_scene_t *ptScene)
 {
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
 }
 
 static
-IMPL_PFB_ON_DRAW(__pfb_draw_scene_zhrgb565_handler)
+IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_animation_handler)
 {
     ARM_2D_PARAM(pTarget);
     ARM_2D_PARAM(ptTile);
     ARM_2D_PARAM(bIsNewFrame);
 
-    user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)pTarget;
+    user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)pTarget;
     arm_2d_size_t tScreenSize = ptTile->tRegion.tSize;
 
     ARM_2D_UNUSED(tScreenSize);
@@ -214,7 +214,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_zhrgb565_handler)
         arm_lcd_text_set_colour(GLCD_COLOR_RED, GLCD_COLOR_WHITE);
         arm_lcd_text_location(0,0);
 
-        arm_lcd_puts("Scene Animation with zhRGB565");
+        arm_lcd_puts("Scene Animation with QOI");
 
     /*-----------------------draw the foreground end  -----------------------*/
     }
@@ -224,8 +224,8 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_zhrgb565_handler)
 }
 
 ARM_NONNULL(1)
-user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *ptDispAdapter, 
-                                        user_scene_zhrgb565_t *ptThis)
+user_scene_qoi_animation_t *__arm_2d_scene_qoi_animation_init(   arm_2d_scene_player_t *ptDispAdapter, 
+                                        user_scene_qoi_animation_t *ptThis)
 {
     bool bUserAllocated = false;
     assert(NULL != ptDispAdapter);
@@ -238,9 +238,9 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
     ARM_2D_UNUSED(__top_canvas);
 
     if (NULL == ptThis) {
-        ptThis = (user_scene_zhrgb565_t *)
-                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_zhrgb565_t),
-                                                        __alignof__(user_scene_zhrgb565_t),
+        ptThis = (user_scene_qoi_animation_t *)
+                    __arm_2d_allocate_scratch_memory(   sizeof(user_scene_qoi_animation_t),
+                                                        __alignof__(user_scene_qoi_animation_t),
                                                         ARM_2D_MEM_TYPE_UNSPECIFIED);
         assert(NULL != ptThis);
         if (NULL == ptThis) {
@@ -250,9 +250,9 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
         bUserAllocated = true;
     }
 
-    memset(ptThis, 0, sizeof(user_scene_zhrgb565_t));
+    memset(ptThis, 0, sizeof(user_scene_qoi_animation_t));
 
-    *ptThis = (user_scene_zhrgb565_t){
+    *ptThis = (user_scene_qoi_animation_t){
         .use_as__arm_2d_scene_t = {
 
             /* the canvas colour */
@@ -260,46 +260,54 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
 
             /* Please uncommon the callbacks if you need them
              */
-            .fnOnLoad       = &__on_scene_zhrgb565_load,
-            .fnScene        = &__pfb_draw_scene_zhrgb565_handler,
-            //.fnAfterSwitch  = &__after_scene_zhrgb565_switching,
+            .fnOnLoad       = &__on_scene_qoi_animation_load,
+            .fnScene        = &__pfb_draw_scene_qoi_animation_handler,
+            //.fnAfterSwitch  = &__after_scene_qoi_animation_switching,
 
-            //.fnOnBGStart    = &__on_scene_zhrgb565_background_start,
-            //.fnOnBGComplete = &__on_scene_zhrgb565_background_complete,
-            .fnOnFrameStart = &__on_scene_zhrgb565_frame_start,
-            //.fnBeforeSwitchOut = &__before_scene_zhrgb565_switching_out,
-            .fnOnFrameCPL   = &__on_scene_zhrgb565_frame_complete,
-            .fnDepose       = &__on_scene_zhrgb565_depose,
+            //.fnOnBGStart    = &__on_scene_qoi_animation_background_start,
+            //.fnOnBGComplete = &__on_scene_qoi_animation_background_complete,
+            .fnOnFrameStart = &__on_scene_qoi_animation_frame_start,
+            //.fnBeforeSwitchOut = &__before_scene_qoi_animation_switching_out,
+            .fnOnFrameCPL   = &__on_scene_qoi_animation_frame_complete,
+            .fnDepose       = &__on_scene_qoi_animation_depose,
 
             .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };
 
-    /* ------------   initialize members of user_scene_zhrgb565_t begin ---------------*/
+    /* ------------   initialize members of user_scene_qoi_animation_t begin ---------------*/
 
     /* initialize Zjpgdec loader */
     do {
-        extern const uint16_t c_zhrgbDogeDance[51166];
+        extern const uint8_t c_qoiDogeDance[126958];
 
-    #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
         
     #if 0
         arm_loader_io_cache_init(   &this.LoaderIO.tCache, 
-                                    (uintptr_t)c_zhrgbDogeDance, 
-                                    sizeof(c_zhrgbDogeDance),
+                                    (uintptr_t)c_qoiDogeDance, 
+                                    sizeof(c_qoiDogeDance),
                                     this.tCachelines,
                                     dimof(this.tCachelines));
     #else
         arm_loader_io_rom_init( &this.LoaderIO.tROM, 
-                                (uintptr_t)c_zhrgbDogeDance, 
-                                sizeof(c_zhrgbDogeDance));
+                                (uintptr_t)c_qoiDogeDance, 
+                                sizeof(c_qoiDogeDance));
     #endif
-    #endif
-        arm_zhrgb565_loader_cfg_t tCFG = {
+
+        arm_qoi_loader_cfg_t tCFG = {
             .ptScene = (arm_2d_scene_t *)ptThis,
-        
-        #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
+
+            //.u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
+
+            /* you can only extract specific colour channel and use it as A8 mask */
+            //.tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
+            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
+
+            //.bInvertColour = true,
+            //.bForceDisablePreBlendwithBG = true,
+            //.tBackgroundColour.wColour = this.use_as__arm_2d_scene_t.tCanvas.wColour,
+
             .ImageIO = {
             #if 0
                 .ptIO = &ARM_LOADER_IO_CACHE,
@@ -309,12 +317,9 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
                 .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             #endif
             },
-        #else
-            .phwLocalSource = c_zhrgbDogeDance,
-        #endif
         };
 
-        arm_zhrgb565_loader_init(&this.tAnimation, &tCFG);
+        arm_qoi_loader_init(&this.tAnimation, &tCFG);
     } while(0);
 
     this.tFilm = (arm_2d_helper_film_t)
@@ -325,7 +330,7 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
                         13, 
                         66);
 
-    /* ------------   initialize members of user_scene_zhrgb565_t end   ---------------*/
+    /* ------------   initialize members of user_scene_qoi_animation_t end   ---------------*/
 
     arm_2d_scene_player_append_scenes(  ptDispAdapter, 
                                         &this.use_as__arm_2d_scene_t, 

@@ -533,6 +533,7 @@
     #define RTE_Acceleration_Arm_2D_Extra_TJpgDec_Loader
     #define RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader
     #define RTE_Acceleration_Arm_2D_Extra_FreeType_Loader
+    #define RTE_Acceleration_Arm_2D_Extra_zhRGB565_Loader
 
           </RTE_Components_h>
           <Pre_Include_Global_h>
@@ -1146,14 +1147,25 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with zhRGB565" Cversion="2.4.0" condition="Arm-2D-Demo-zhRGB565-Loader">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with zhRGB565" Cversion="2.4.1" condition="Arm-2D-Demo-zhRGB565-Loader">
           <description>A demo for showing gif-like animation with zhRGB565 Loader.</description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_zhrgb565.c" attr="config" version="2.4.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_zhrgb565.h" attr="config" version="2.4.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_zhrgb565.c" attr="config" version="2.4.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_zhrgb565.h" attr="config" version="2.4.1" />
           </files>
           <RTE_Components_h>
 #define RTE_Acceleration_Arm_2D_Demos_zhRGB565
+          </RTE_Components_h>
+        </component>
+
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Showing Animation with QOI" Cversion="1.0.0" condition="Arm-2D-Demo-QOI-Loader">
+          <description>A demo for showing gif-like animation with QOI Loader.</description>
+          <files>
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_qoi_animation.c" attr="config" version="1.0.0" />
+            <file category="header"      name="examples/demos/arm_2d_scene_qoi_animation.h" attr="config" version="1.0.0" />
+          </files>
+          <RTE_Components_h>
+#define RTE_Acceleration_Arm_2D_Demos_QOI_Animation
           </RTE_Components_h>
         </component>
 
