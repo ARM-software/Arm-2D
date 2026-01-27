@@ -284,16 +284,16 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
 
     #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
         
-    #if 1
+    #if 0
         arm_loader_io_cache_init(   &this.LoaderIO.tCache, 
                                     (uintptr_t)c_zhrgbDogeDance, 
                                     sizeof(c_zhrgbDogeDance),
                                     this.tCachelines,
                                     dimof(this.tCachelines));
     #else
-        arm_loader_io_binary_init(  &this.LoaderIO.tBinary, 
-                                    (uint8_t *)c_zhrgbDogeDance, 
-                                    sizeof(c_zhrgbDogeDance));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_zhrgbDogeDance, 
+                                sizeof(c_zhrgbDogeDance));
     #endif
     #endif
         arm_zhrgb565_loader_cfg_t tCFG = {
@@ -301,12 +301,12 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
         
         #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
             .ImageIO = {
-            #if 1
+            #if 0
                 .ptIO = &ARM_LOADER_IO_CACHE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tCache,
             #else
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             #endif
             },
         #else
