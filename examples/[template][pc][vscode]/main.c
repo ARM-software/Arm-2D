@@ -92,18 +92,24 @@ IMPL_PFB_ON_DRAW(__disp_adapter0_user_draw_navigation)
 #endif
 
 void run_os_command(const char *pchCommandLine) {
-    static char s_chBuffer[4096];
+
+#define CONSOLE_OUTPUT_SIZE (64 * 1024)
+
+    char *pchBuffer = malloc(CONSOLE_OUTPUT_SIZE);
+    assert(NULL != pchBuffer);
+
     FILE *ptPipe = popen(pchCommandLine, "r");
     if (!ptPipe) {
         printf("Failed to execute command: [%s]\r\n", pchCommandLine);
         return;
     }
 
-    while (fgets(s_chBuffer, sizeof(s_chBuffer), ptPipe) != NULL) {
-        printf("%s", s_chBuffer);
+    while (fgets(pchBuffer, CONSOLE_OUTPUT_SIZE, ptPipe) != NULL) {
+        printf("%s", pchBuffer);
     }
 
     pclose(ptPipe);
+    free(pchBuffer);
 }
 
 /*----------------------------------------------------------------------------
