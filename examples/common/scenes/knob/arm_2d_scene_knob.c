@@ -636,11 +636,13 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
     /* initialize QOI loader */
     do {
     #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radial_line_cover.qoi");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/radial_line_cover.qoi");
     #else
         extern const uint8_t c_qoiRadialLineCover[34151];
 
-        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiRadialLineCover, sizeof(c_qoiRadialLineCover));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_qoiRadialLineCover, 
+                                sizeof(c_qoiRadialLineCover));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
@@ -656,13 +658,13 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
             .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_BINARY,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
