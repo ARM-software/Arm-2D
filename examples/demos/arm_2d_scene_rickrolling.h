@@ -109,17 +109,14 @@ ARM_PRIVATE(
 
 #if ARM_2D_DEMO_USE_ZJPGD
     arm_zjpgd_loader_t tAnimation;
-    union {
-        arm_loader_io_file_t tFile;
-        arm_loader_io_binary_t tBinary;
-    } LoaderIO;
 #else
     arm_tjpgd_loader_t tAnimation;
+#endif
     union {
         arm_loader_io_file_t tFile;
         arm_loader_io_binary_t tBinary;
+        arm_loader_io_rom_t tROM;
     } LoaderIO;
-#endif
     arm_2d_helper_film_t tFilm;
 
 #if ARM_2D_DEMO_USE_CRT_SCREEN

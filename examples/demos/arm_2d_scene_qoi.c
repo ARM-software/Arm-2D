@@ -325,7 +325,9 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
         extern const uint8_t c_qoiMeterPanel[20394];
         extern const uint8_t c_qoiRadarBackground[45557];
 
-        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_qoiMeterPanel, sizeof(c_qoiMeterPanel));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_qoiMeterPanel, 
+                                sizeof(c_qoiMeterPanel));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
@@ -346,8 +348,8 @@ user_scene_qoi_t *__arm_2d_scene_qoi_init(   arm_2d_scene_player_t *ptDispAdapte
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };

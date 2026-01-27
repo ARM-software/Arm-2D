@@ -517,11 +517,13 @@ user_scene_meter_t *__arm_2d_scene_meter_init(   arm_2d_scene_player_t *ptDispAd
 #if ARM_2D_SCENE_METER_USE_QOI
 do {
     #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_qoi_io_file_loader_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
+        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/radar_background.qoi");
     #else
         extern const uint8_t c_qoiMeterPanel[20394];
 
-        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiMeterPanel, sizeof(c_qoiMeterPanel));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_qoiMeterPanel, 
+                                sizeof(c_qoiMeterPanel));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
@@ -537,13 +539,13 @@ do {
             //.tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
@@ -605,7 +607,9 @@ do {
         extern
         const uint8_t c_chBackground2jpg[64228];
 
-        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_chMeterPanel80jpg, 
+                                sizeof(c_chMeterPanel80jpg));
     #endif
         arm_zjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -618,8 +622,8 @@ do {
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
@@ -681,7 +685,9 @@ do {
         extern
         const uint8_t c_chBackground2jpg[64228];
 
-        arm_loader_io_binary_init(&this.LoaderIO.tBinary, c_chMeterPanel80jpg, sizeof(c_chMeterPanel80jpg));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_chMeterPanel80jpg, 
+                                sizeof(c_chMeterPanel80jpg));
     #endif
         arm_tjpgd_loader_cfg_t tCFG = {
             .bUseHeapForVRES = true,
@@ -694,8 +700,8 @@ do {
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };
