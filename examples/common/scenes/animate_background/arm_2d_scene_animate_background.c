@@ -164,9 +164,16 @@ static void __on_scene_animate_background_frame_start(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     if (arm_2d_helper_is_time_out(  this.Resource.tileFireFilm.hwPeriodPerFrame, 
-                                    &this.lTimestamp[1])) {
+                                    &this.lTimestamp[0])) {
 
         arm_2d_helper_film_next_frame(&this.Resource.tileFireFilm);
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+            false);
+    } else {
+        arm_2d_helper_dirty_region_item_suspend_update(
+            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+            true);
     }
 
 }
@@ -176,12 +183,6 @@ static void __on_scene_animate_background_frame_complete(arm_2d_scene_t *ptScene
     user_scene_animate_background_t *ptThis = (user_scene_animate_background_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
-#if 0
-    /* switch to next scene after 3s */
-    if (arm_2d_helper_is_time_out(3000, &this.lTimestamp[0])) {
-        arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
-    }
-#endif
 }
 
 static void __before_scene_animate_background_switching_out(arm_2d_scene_t *ptScene)
@@ -210,8 +211,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_animate_background_handler)
             arm_2d_tile_copy_only(
                 (arm_2d_tile_t *)&this.Resource.tileFireFilm,
                 ptTile,
-                &__centre_region
-            );
+                &__centre_region);
+
+            arm_2d_helper_dirty_region_update_item( 
+                    &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                    (arm_2d_tile_t *)ptTile,
+                    &__top_canvas,
+                    &__centre_region);
             
             ARM_2D_OP_WAIT_ASYNC();                      
         }
@@ -243,17 +249,10 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
     s_tDirtyRegions[dimof(s_tDirtyRegions)-1].ptNext = NULL;
 
     /* get the screen region */
-    arm_2d_region_t tScreen
+    arm_2d_region_t __top_canvas
         = arm_2d_helper_pfb_get_display_area(
             &ptDispAdapter->use_as__arm_2d_helper_pfb_t);
-    
-    /* initialise dirty region 0 at runtime
-     * this demo shows that we create a region in the centre of a screen(320*240)
-     * for a image stored in the tile c_tileCMSISLogoMask
-     */
-    arm_2d_align_centre(tScreen, s_tDirtyRegions[0].tRegion.tSize) {
-        s_tDirtyRegions[0].tRegion = __centre_region;
-    }
+    ARM_2D_UNUSED(__top_canvas);
 
     if (NULL == ptThis) {
         ptThis = (user_scene_animate_background_t *)
@@ -283,7 +282,7 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
             //.fnAfterSwitch  = &__after_scene_animate_background_switching,
 
             .fnScene        = &__pfb_draw_scene_animate_background_handler,
-            .ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
+            //.ptDirtyRegion  = (arm_2d_region_list_item_t *)s_tDirtyRegions,
             
 
             //.fnOnBGStart    = &__on_scene_animate_background_background_start,
@@ -293,7 +292,7 @@ user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
             .fnOnFrameCPL   = &__on_scene_animate_background_frame_complete,
             .fnDepose       = &__on_scene_animate_background_depose,
 
-            .bUseDirtyRegionHelper = false,
+            .bUseDirtyRegionHelper = true,
         },
         .bUserAllocated = bUserAllocated,
     };

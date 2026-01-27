@@ -83,7 +83,7 @@ struct user_scene_animate_background_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[2];
+    int64_t lTimestamp[1];
     bool bUserAllocated;
 
     struct {
@@ -100,7 +100,8 @@ ARM_PRIVATE(
 
 ARM_NONNULL(1)
 extern
-user_scene_animate_background_t *__arm_2d_scene_animate_background_init(   arm_2d_scene_player_t *ptDispAdapter, 
+user_scene_animate_background_t *__arm_2d_scene_animate_background_init(
+                                        arm_2d_scene_player_t *ptDispAdapter, 
                                         user_scene_animate_background_t *ptScene);
 
 #if defined(__clang__)
