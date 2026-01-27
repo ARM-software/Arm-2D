@@ -567,7 +567,9 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
     #else
         extern const uint8_t c_qoiEyeball[16840];
 
-        arm_qoi_io_binary_loader_init(&this.LoaderIO.tBinary, c_qoiEyeball, sizeof(c_qoiEyeball));
+        arm_loader_io_rom_init( &this.LoaderIO.tROM, 
+                                (uintptr_t)c_qoiEyeball, 
+                                sizeof(c_qoiEyeball));
     #endif
         arm_qoi_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
@@ -585,13 +587,13 @@ user_scene_blink_t *__arm_2d_scene_blink_init(   arm_2d_scene_player_t *ptDispAd
             .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
         #if ARM_2D_DEMO_QOI_USE_FILE
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_FILE_LOADER,
+                .ptIO = &ARM_LOADER_IO_FILE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tFile,
             },
         #else
             .ImageIO = {
-                .ptIO = &ARM_QOI_IO_BINARY_LOADER,
-                .pTarget = (uintptr_t)&this.LoaderIO.tBinary,
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #endif
         };

@@ -973,11 +973,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cversion="2.4.0" condition="Arm-2D-Demos">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Demos" Csub="Blink" Cversion="2.4.1" condition="Arm-2D-Demos">
           <description>An blinking eye. </description>
           <files>
-            <file category="sourceC"     name="examples/demos/arm_2d_scene_blink.c" attr="config" version="2.4.0" />
-            <file category="header"      name="examples/demos/arm_2d_scene_blink.h" attr="config" version="2.4.0" />
+            <file category="sourceC"     name="examples/demos/arm_2d_scene_blink.c" attr="config" version="2.4.1" />
+            <file category="header"      name="examples/demos/arm_2d_scene_blink.h" attr="config" version="2.4.1" />
             
             <file category="sourceC"     name="examples/demos/Eyeball.c" attr="config" version="2.1.0" />
             <file category="sourceC"     name="examples/demos/LeftEye.c" attr="config" version="2.4.0" />
