@@ -94,15 +94,33 @@ Enjoy.
 
 ### 3.1 How to change screen size
 
-You can change the screen size by updating the macro `__DISP0_CFG_SCEEN_WIDTH__` and `__DISP0_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_disp_adapter_0.h`.
-
-If you want to run a benchmark, please also update the macro `__GLCD_CFG_SCEEN_WIDTH__` and `__GLCD_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_cfg.h`.
+You can change the screen size by updating the macro `__GLCD_CFG_SCEEN_WIDTH__` and `__GLCD_CFG_SCEEN_HEIGHT__` defined in `platform\arm_2d_cfg.h`.
 
 
 
 ### 3.2 How to change the colour depth (bits per pixel)
 
-The supported colour depths (i.e. bits per pixel) are **8-bit (GRAY8)**, **16-bit (RGB565)** and **32-bit (CCCN888)**. You can change the colour depth by updating the macro `__DISP0_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_disp_adapter_0.h` and the macro `__GLCD_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_cfg.h`. The available values are `8`, `16` and `32`.
+The supported colour depths (i.e. bits per pixel) are **8-bit (GRAY8)**, **16-bit (RGB565)** and **32-bit (CCCN888)**. You can change the colour depth by updating the macro `__GLCD_CFG_COLOUR_DEPTH__` defined in `platform\arm_2d_cfg.h`. The available values are `8`, `16` and `32`.
+
+If you want to simulate the monochrome screen, please 
+
+* Set the `__GLCD_CFG_COLOUR_DEPTH__` to `8` (in `platform\arm_2d_cfg.h`), and 
+* Set the `__DISP0_CFG_COLOR_SOLUTION__` to `1` (in `platform\arm_2d_disp_adapter_0.h`)
+
+It is possible to change the monochrome screen colour-style by selecting the following macro definition in `platform\Virtual_TFT_Port.c`:
+
+```c
+/* nixie tube */
+//#define monochrome_2_RGB888(color)     (color < 128 ? 0x00000000 : __RGB32(0xFF, 0xA5, 0x00))
+/* green screen inverse */
+//#define monochrome_2_RGB888(color)     (color < 128 ? 0x00000000 : __RGB32(0x00, 200, 0x00))   
+/* gray screen */
+#define monochrome_2_RGB888(color)       (color < 128 ? 0x76837a : 0x1e1a17)  
+/* green screen normal */
+//#   define monochrome_2_RGB888(color)  (color < 128 ? 0x7bd01b : 0x003700)  
+/* blue screen */
+//#   define monochrome_2_RGB888(color)  (color < 128 ? 0xb6c7e7 : 0x2043a4)             
+```
 
 
 
@@ -173,7 +191,7 @@ To enable IntelliSense to work properly, please also update the `.vscode\c_cpp_p
 
 ### 3.4 How to run benchmarks
 
-Arm-2D provides two benchmark: **Generic** and **WatchPanel**. For details, please check [here](../common/benchmark/README.md). You can run those benchmarks in this project template. In the header file  `platform/RTE_Components.h`, there are three macros:
+Arm-2D provides two benchmarks: **Generic** and **WatchPanel**. For details, please check [here](../common/benchmark/README.md). You can run those benchmarks in this project template. In the header file `platform/RTE_Components.h`, there are three macros:
 
 
 
@@ -205,7 +223,7 @@ If you want to run the **WatchPanel** benchmark, please uncomment the macro `RTE
 
 2. You can find the benchmark configurations in `platform/arm_2d_cfg.h`.
 
-3. The corresonponding code to run the benchmark is the following (in `main.c`):
+3. The corresponding code to run the benchmark is the following (in `normal_mode_demo.c`):
 
    ```c
    #ifdef RTE_Acceleration_Arm_2D_Extra_Benchmark
@@ -240,6 +258,50 @@ If you want to run the **WatchPanel** benchmark, please uncomment the macro `RTE
    ```
 
    As you can see, when we define the macro `RTE_Acceleration_Arm_2D_Extra_Benchmark`, the function `arm_2d_run_benchmark` (defined in `arm_2d_benchmark.h`) will be called. 
+
+
+
+### 3.5 How to simulate the MCU level of performance
+
+It is possible to simulate the MCU-level performance by reducing the PFB size on a PC. The typical configurations are:
+
+* Set the compiler optimisation level to `-O0` without the Link-Time-Optimization in the `Makefile` as shown below:
+
+```makefile
+ifeq ($(OS),Windows_NT)
+	# Windows GCC has known compilation issue for -O0
+	CCFLAG  +=  -Ofast
+	CCFLAG  +=  -flto
+	LDFLAG  +=  -flto
+else
+	# For other platform, we are allowed to set the optimization level
+	CCFLAG  +=  -O0
+	#CCFLAG  +=  -flto
+	#LDFLAG  +=  -flto
+endif
+```
+
+* Set the PFB size to 8x8 or even smaller depends on your PC condition, for example:
+
+```c
+// <o>Width of the PFB block
+// <i> The width of your PFB block size used in disp0
+#ifndef __DISP0_CFG_PFB_BLOCK_WIDTH__
+#   define __DISP0_CFG_PFB_BLOCK_WIDTH__           8 //__DISP0_CFG_SCEEN_WIDTH__
+#endif
+
+// <o>Height of the PFB block
+// <i> The height of your PFB block size used in disp0
+#ifndef __DISP0_CFG_PFB_BLOCK_HEIGHT__
+#   define __DISP0_CFG_PFB_BLOCK_HEIGHT__          8 //(__DISP0_CFG_SCEEN_HEIGHT__ / 10)
+#endif
+```
+
+With such a configuration, we can optimise the Arm-2D GUI application without downloading the firmware to an MCU, and the optimisation methods usually work well on the MCU as well. 
+
+> [!WARNING]
+>
+> The performance data obtained or observed on the aforementioned PC platform configuration can only be used as a reference. 
 
 
 

@@ -147,12 +147,12 @@ LDFLAG  +=  -lpthread
 CC_DEF  += __ARM_2D_DEBUG__
 
 ifeq ($(OS),Windows_NT)
-	# Windows GCC has known compilation issue for -O0
+	# Windows GCC has a known compilation issue for -O0
 	CCFLAG  +=  -Ofast
 	CCFLAG  +=  -flto
 	LDFLAG  +=  -flto
 else
-	# For other platform, we are allowed to set the optimization level
+	# For other platforms, we are allowed to set the optimisation level
 	CCFLAG  +=  -O0
 	#CCFLAG  +=  -flto
 	#LDFLAG  +=  -flto

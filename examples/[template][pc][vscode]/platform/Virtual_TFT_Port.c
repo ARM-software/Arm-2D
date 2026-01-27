@@ -13,11 +13,16 @@
 
 
 
-//#define monochrome_2_RGB888(color)                (color < 128 ? 0x00000000 : __RGB32(0xFF, 0xA5, 0x00))             /* nixie tube */
-//#define monochrome_2_RGB888(color)                (color < 128 ? 0x00000000 : __RGB32(0x00, 200, 0x00))             /* green screen inverse */
-#define monochrome_2_RGB888(color)                (color < 128 ? 0x76837a : 0x1e1a17)             /* gray screen */
-//#   define monochrome_2_RGB888(color)                (color < 128 ? 0x7bd01b : 0x003700)             /* green screen 2 */
-//#   define monochrome_2_RGB888(color)                (color < 128 ? 0xb6c7e7 : 0x2043a4)             /* blue screen */
+/* nixie tube */
+//#define monochrome_2_RGB888(color)     (color < 128 ? 0x00000000 : __RGB32(0xFF, 0xA5, 0x00))
+/* green screen inverse */
+//#define monochrome_2_RGB888(color)     (color < 128 ? 0x00000000 : __RGB32(0x00, 200, 0x00))   
+/* gray screen */
+#define monochrome_2_RGB888(color)       (color < 128 ? 0x76837a : 0x1e1a17)  
+/* green screen normal */
+//#   define monochrome_2_RGB888(color)  (color < 128 ? 0x7bd01b : 0x003700)  
+/* blue screen */
+//#   define monochrome_2_RGB888(color)  (color < 128 ? 0xb6c7e7 : 0x2043a4)      
 
 #define GRAY8_2_RGB888(color)                     (((color&0xFF)<<16)+((color&0xFF)<<8)+((color&0xFF)))
 #define RGB565_2_RGB888(color)                    (((color&0xF800)<<8)+((color&0x7E0)<<5)+((color&0x1F)<<3))
