@@ -398,7 +398,7 @@ bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
 
         if (0 == this.ptWorking->hwTail) {
             /* failed to fill the buffer, try next time */
-            return 0;
+            return false;
         }
 
         this.ptWorking->tPosition = tNewPosition;
@@ -418,7 +418,9 @@ bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize
     //assert(NULL != ptThis);
     //assert(NULL != pchBuffer);
     //assert(0 != tSize);
-
+#if 0 == ARM_QOI_IO_BUFF_SIZE 
+    return __arm_qoi_dec_io_read(ptThis, pchBuffer, tSize);
+#else
     do {
         size_t tActualRead = __arm_qoi_dec_io_read(ptThis, pchBuffer, tSize);
         if (tSize == tActualRead) {
@@ -432,6 +434,7 @@ bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize
     } while(tSize);
 
     return true;
+#endif
 }
 
 ARM_NONNULL(1,2) 
@@ -441,7 +444,9 @@ bool __arm_qoi_read_word(arm_qoi_dec_t *ptThis, uint32_t *pwBuffer)
     //assert(NULL != ptThis);
     //assert(NULL != pchBuffer);
     //assert(0 != tSize);
-
+#if 0 == ARM_QOI_IO_BUFF_SIZE 
+    return __arm_qoi_read_data(ptThis, (uint8_t *)pwBuffer, 4);
+#else
     size_t tActualRead = __arm_qoi_dec_io_try_to_read_word(ptThis, (uint8_t *)pwBuffer);
     if (4 == tActualRead) {
         return true;
@@ -452,7 +457,7 @@ bool __arm_qoi_read_word(arm_qoi_dec_t *ptThis, uint32_t *pwBuffer)
     return __arm_qoi_read_data( ptThis, 
                                 ((uint8_t *)pwBuffer) + tActualRead,
                                 4 - tActualRead);
-
+#endif
 }
 
 __STATIC_INLINE
