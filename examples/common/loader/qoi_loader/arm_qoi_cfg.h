@@ -9,10 +9,10 @@
 
 //-------- <<< Use Configuration Wizard in Context Menu >>> -----------------
 //
-// <h>Qoi System Configurations
+// <h>QOI System Configurations
 // =======================
 
-// <o>Width of the screen <0-65535>
+// <o> The QOI IO Buffer Size <0-65535>
 // <i> The size of the IO buffer
 // <i> Default: 64
 #ifndef ARM_QOI_IO_BUFF_SIZE

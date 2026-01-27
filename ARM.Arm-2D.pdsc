@@ -503,7 +503,7 @@
 
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_loader.c" />
             <file category="sourceC"     name="examples/common/loader/qoi_loader/qoi_decoder/arm_qoi_decoder.c" />
-            <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.1.0"/>
+            <file category="header"      name="examples/common/loader/qoi_loader/arm_qoi_cfg.h"           attr="config" version="1.2.0"/>
 
             <file category="sourceC"     name="examples/common/loader/zhrgb565_loader/zhrgb565_loader.c" />
             <file category="sourceC"     name="examples/common/loader/zhrgb565_loader/zhrgb565/zhRGB565_Decoder/zhRGB565_Decoder.c" />
