@@ -42,7 +42,7 @@ Finally, please open the project in VSCode. You can do this by choosing "**Open 
 
 In the "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**", or you can press "**F5**" to launch a debug session.
 
-![BuildAndRun](../../documentation/pictures/build_and_run.png) 
+<img src="../../documentation/pictures/build_and_run_for_linux.png" alt="BuildAndRun" style="zoom: 75%;" /> 
 
 
 
