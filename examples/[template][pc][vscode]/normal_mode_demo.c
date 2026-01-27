@@ -406,7 +406,7 @@ typedef struct demo_scene_t {
 
 static demo_scene_t const c_SceneLoaders[] = {
 
-#if 0
+#if 0   /* Looping playlist */
 
 #if defined(__DISP0_CFG_COLOR_SOLUTION__) && __DISP0_CFG_COLOR_SOLUTION__ == 1
     {
@@ -613,7 +613,7 @@ static demo_scene_t const c_SceneLoaders[] = {
 
 #endif
 
-#else
+#else    /* debug list */
     {
         .fnLoader = 
         scene_histogram_loader,

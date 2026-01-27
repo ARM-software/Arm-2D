@@ -305,6 +305,67 @@ With such a configuration, we can optimise the Arm-2D GUI application without do
 
 
 
+### 3.6 How to create a new scene with the Scene Template
+
+Arm-2D provides a scene template in the `Helper\template` folder, called `arm_2d_scene_template.c` and `arm_2d_scene_template.h`. You can create a new scene using this template easily with the following steps. Suppose we want to create a new scene called `my_demo`:
+
+1. Copy the two files, `arm_2d_scene_template.c` and `arm_2d_scene_template.h,` to your application folder.
+2. Rename the two files by replacing the `template` with `my_demo`, so we get. `arm_2d_scene_my_scene.c` and `arm_2d_scene_my_demo.h`.
+3. Open the `arm_2d_scene_my_demo.c` in VSCode and use the **find and replace** tool to rename all `<name>` to `my_demo` (as shown below). Please select the **Perserve Case** option shown as **AB**. Apply the same changes to the `arm_2d_scene_my_demo.h`
+
+![](../../documentation/pictures/Rename_scene_template.png) 
+
+4. Edit the `Makefile` to add the scene if required. 
+
+   > [!NOTE]
+   >
+   > If you place the new scene in the same folder as the `main.c`. You do **NOT** need to edit the Makefile, as all the C source files in the project root folder have already been added to the compilation. 
+
+
+
+There is an easy way to debug the newly added scene, and we suppose the new scene is called `arm_2d_scene_my_demo`:
+
+1. Adds the following code to the `normal_mode_demo.c`
+
+```c
+#include "arm_2d_scene_my_demo.h"
+...
+
+void scene_my_demo_loader(void) 
+{
+    arm_2d_scene_my_demo_init(&DISP0_ADAPTER);
+}
+
+```
+
+2. Disable the looping playlist and add our new scene to the debug list:
+
+```c
+static demo_scene_t const c_SceneLoaders[] = {
+
+#if 0 /* looping playlist */
+
+...
+  
+#else /* debug list */
+{
+    .fnLoader = 
+      scene_my_demo_loader,
+     // other scene loaders
+     ...
+}
+  
+#endif
+```
+
+3. Ensure that you have set the `__DISP0_CFG_NANO_ONLY__` to `0` in the `arm_2d_disp_adapter_0.h`.
+
+You can now compile and debug your new scene! 
+
+Enjoy.
+
+ 
+
 ## Appendix
 
 ### A For Native Windows (Deprecated)
@@ -313,10 +374,10 @@ With such a configuration, we can optimise the Arm-2D GUI application without do
 
 Second, please 
 
-- Download and install GCC. You **MUST** download the [latest mingw32](https://github.com/niXman/mingw-builds-binaries/releases/). For example, [i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z) Unzip the package and copy it to your desired location. 
+- Download and install GCC. You **MUST** download the [latest mingw32](https://github.com/niXman/mingw-builds-binaries/releases/). For example, [i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z](https://github.com/niXman/mingw-builds-binaries/releases/download/13.1.0-rt_v11-rev1/i686-13.1.0-release-posix-dwarf-ucrt-rt_v11-rev1.7z). Unzip the package and copy it to your desired location. 
 - [Download](https://gnuwin32.sourceforge.net/packages/make.htm) and install Make.
 
-**NOTE**: Please ensure you have correctly set the **PATH** variable in the Windows environment for GCC and Make. After installation, you may need to restart your computer to ensure the new environment variable settings take effect.
+**NOTE**: Please ensure the `PATH` variable is correctly set in Windows for GCC and Make. After installation, you may need to restart your computer to ensure the new environment variable settings take effect.
 
 ![PathforGCC](../../documentation/pictures/path_for_gcc.png) 
 
@@ -326,7 +387,7 @@ Second, please
 
 Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
-In "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**" or you can press "**F5**" to launch a debug session.
+In the "Run and Debug" panel, you can run the project via "build and run x86(32)", or you can press "**F5**" to launch a debug session.
 
-![BuildAndRun](../../documentation/pictures/build_and_run.png) 
+![BuildAndRun](../../documentation/pictures/build_and_run_for_windows.png) 
 
