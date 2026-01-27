@@ -40,7 +40,7 @@ sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-m
 
 Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
-In the "**Run and Debug**" panel, you can run the project via "**build and run x86(32)**", or you can press "**F5**" to launch a debug session.
+In the "**Run and Debug**" panel, you can run the project via "**build and run Linux**", or you can press "**F5**" to launch a debug session.
 
 <img src="../../documentation/pictures/build_and_run_for_linux.png" alt="BuildAndRun" style="zoom: 75%;" /> 
 
