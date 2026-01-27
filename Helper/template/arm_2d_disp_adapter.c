@@ -1041,13 +1041,14 @@ arm_2d_scene_t *__disp_adapter%Instance%_nano_prepare(arm_2d_scene_t *ptScene)
     if (NULL == ptScene) {
         ptScene = disp_adapter%Instance%_get_default_scene();
     }
-    s_ptCurrentScene = ptScene;
 
     ptScene->fnBackground = NULL;
     ptScene->fnScene = NULL;
     arm_2d_helper_dirty_region_depose(&ptScene->tDirtyRegionHelper);
 
 #if __DISP%Instance%_CFG_NANO_ONLY__
+    s_ptCurrentScene = ptScene;
+
     ARM_2D_HELPER_PFB_UPDATE_ON_DRAW_HANDLER(   
                 &DISP%Instance%_ADAPTER.use_as__arm_2d_helper_pfb_t,
                 __pfb_draw_scene_handler,
