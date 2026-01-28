@@ -1181,7 +1181,7 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
 
     #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
         do {
-            extern const uint16_t c_zhrgbGirlDance[56249];;
+            extern const uint16_t c_zhrgbGirlDance[56249];
 
             arm_loader_io_rom_init( &this.tAnimation[FILM_IDX_TOP_LEFT].LoaderIO.tROM, 
                                     (uintptr_t)c_zhrgbGirlDance, 

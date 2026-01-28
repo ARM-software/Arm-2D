@@ -146,6 +146,9 @@ LDFLAG  +=  -lpthread
 # debug
 CC_DEF  += __ARM_2D_DEBUG__
 
+# develop SVE2
+# CCFLAG  += -march=armv8-a+sve2 -fno-vectorize -fno-slp-vectorize -msve-vector-bits=128
+
 ifeq ($(OS),Windows_NT)
 	# Windows GCC has a known compilation issue for -O0
 	CCFLAG  +=  -Ofast
@@ -153,7 +156,7 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platforms, we are allowed to set the optimisation level
-	CCFLAG  +=  -O0
+	CCFLAG  +=  -O1
 	#CCFLAG  +=  -flto
 	#LDFLAG  +=  -flto
 endif
