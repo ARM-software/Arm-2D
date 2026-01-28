@@ -30,7 +30,7 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Extra_Loader)
 #   include "arm_2d_example_loaders.h"
 #endif
 
@@ -74,9 +74,63 @@ extern "C" {
 #   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
 #endif
 
+#ifndef ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION 0
+#endif
+
+/* NOTE: Please do NOT modify the following macro validation 
+ */
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_zhRGB565_Loader)
+#   undef ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION 0
+#endif
+
 #if !defined(ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION)                           \
- && !ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+ && !ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION                                    \
+ && !ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
 #   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      1
+#endif
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader)
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#endif
+
+
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION 0
+#endif
+
+#if ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION 0
+#endif
+
+#if ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#endif
+
+#if !ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#   undef ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
+#   define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION 0
 #endif
 
 /* OOC header, please DO NOT modify  */
@@ -87,29 +141,6 @@ extern "C" {
 #   define __ARM_2D_INHERIT__
 #endif
 #include "arm_2d_utils.h"
-
-#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
-#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
-#endif
-
-#if !ARM_2D_DEMO_RADAR_SHOW_ANIMATION
-#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
-#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
-#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
-#endif
-
-#if !defined(RTE_Acceleration_Arm_2D_Extra_ZJpgDec_Loader)
-#   undef ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
-#   define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION      0
-#endif
-
-#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
-#   undef ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
-#   define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION      0
-#endif
-
 
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -177,22 +208,23 @@ ARM_PRIVATE(
 
     foldable_panel_t    tScreen;
 
-#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
+#if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION \
+||  ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION \
+|| ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
     struct {
+    #if ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION
         arm_zjpgd_loader_t tLoader;
-        union {
-            arm_loader_io_file_t tFile;
-            arm_loader_io_binary_t tBinary;
-        } LoaderIO;
-    }tJPG[__FILM_COUNT];
-#elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
-    struct {
+    #elif ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION
         arm_qoi_loader_t tLoader;
+    #elif ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION
+        arm_zhrgb565_loader_t tLoader;
+    #endif
         union {
             arm_loader_io_file_t tFile;
             arm_loader_io_binary_t tBinary;
+            arm_loader_io_rom_t tROM;
         } LoaderIO;
-    }tQOI[__FILM_COUNT];
+    } tAnimation[__FILM_COUNT];
 #endif
 
 #if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
