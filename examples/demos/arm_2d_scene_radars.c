@@ -1190,10 +1190,14 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             arm_zhrgb565_loader_cfg_t tCFG = {
                 .ptScene = (arm_2d_scene_t *)ptThis,
 
+            #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
                 .ImageIO = {
                     .ptIO = &ARM_LOADER_IO_ROM,
                     .pTarget = (uintptr_t)&this.tAnimation[FILM_IDX_TOP_LEFT].LoaderIO.tROM,
                 },
+            #else
+                .phwLocalSource = c_zhrgbGirlDance,
+            #endif
             };
 
             arm_zhrgb565_loader_init(&this.tAnimation[FILM_IDX_TOP_LEFT].tLoader, &tCFG);
@@ -1220,12 +1224,14 @@ user_scene_radars_t *__arm_2d_scene_radars_init(
             arm_zhrgb565_loader_cfg_t tCFG = {
 
                 .ptScene = (arm_2d_scene_t *)ptThis,
-
+            #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
                 .ImageIO = {
                     .ptIO = &ARM_LOADER_IO_ROM,
                     .pTarget = (uintptr_t)&this.tAnimation[FILM_IDX_BOTTOM_RIGHT].LoaderIO.tROM,
                 },
-
+            #else
+                .phwLocalSource = c_zhrgbDogeDance,
+            #endif
             };
 
             arm_zhrgb565_loader_init(&this.tAnimation[FILM_IDX_BOTTOM_RIGHT].tLoader, &tCFG);
