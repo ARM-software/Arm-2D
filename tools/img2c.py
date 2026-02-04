@@ -165,28 +165,7 @@ const arm_2d_tile_t c_tile{0}CCCA8888 = {{
 
 """
 
-tailDatazhRGB565="""
 
-extern const arm_2d_tile_t c_tile{0}zhRGB565;
-ARM_SECTION(\"arm2d.tile.c_tile{0}zhRGB565\")
-const arm_2d_tile_t c_tile{0}zhRGB565 = {{
-    .tRegion = {{
-        .tSize = {{
-            .iWidth = {1},
-            .iHeight = {2},
-        }},
-    }},
-    .tInfo = {{
-        .bIsRoot = true,
-        .bHasEnforcedColour = true,
-        .tColourInfo = {{
-            .chScheme = ARM_2D_COLOUR_RGB565,
-        }},
-    }},
-    {3}_0_{0}_zhRGB565_zhRGB565_Data,
-}};
-
-"""
 
 tailAlpha="""
 
@@ -324,15 +303,14 @@ def main(argv):
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
 
     parser.add_argument('--name', nargs='?',type = str, required=False, help="A specified array name")
-    parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, mask, all, zhRGB565)")
+    parser.add_argument('--format', nargs='?',type = str, default="all", help="RGB Format (rgb565, rgb32, gray8, mask, zhRGB565, all)")
     parser.add_argument('--dim', nargs=2,type = int, help="Resize the image with the given width and height")
     parser.add_argument('--rot', nargs='?',type = float, default=0.0, help="Rotate the image with the given angle in degrees")
     parser.add_argument('--a1', action='store_true', help="Generate 1bit alpha-mask")
     parser.add_argument('--a2', action='store_true', help="Generate 2bit alpha-mask")
     parser.add_argument('--a4', action='store_true', help="Generate 4bit alpha-mask")
     parser.add_argument('--border', action='store_true', help="Add a 1pix border")
-    parser.add_argument('--zhRGB565', action='store_true', help="Generate compressed zhRGB565 format using RLE encoding")
-    parser.add_argument('--zhRGB565-diff', action='store_true', help="Generate compressed zhRGB565 format using RLE+DIFF encoding for better gradient compression")
+    parser.add_argument('--zhRGB565', action='store_true', help="Generate compressed zhRGB565 format using RLE+DIFF encoding for better gradient compression")
 
     args = parser.parse_args()
 
@@ -355,8 +333,8 @@ def main(argv):
         args.format != 'rgb32' and \
         args.format != 'gray8' and \
         args.format != 'mask' and \
-        args.format != 'all' and \
-        args.format != 'zhRGB565':
+        args.format != 'zhRGB565' and \
+        args.format != 'all':
         parser.print_help()
         exit(1)
 
@@ -621,7 +599,7 @@ def main(argv):
             typStr='uint16_t'
 
         # zhRGB565 compressed format
-        if args.zhRGB565 or args.zhRGB565_diff or (args.format == 'zhRGB565') or (args.format == 'all'):
+        if args.zhRGB565 or (args.format == 'zhRGB565') or (args.format == 'all'):
             if not ZHRGB565_AVAILABLE:
                 print("Warning: zhRGB565 compression library not available, skipping zhRGB565 format", file=sys.stderr)
             else:
@@ -631,15 +609,9 @@ def main(argv):
                 B = (data[...,2]>>3).astype(np.uint16)
                 RGB = R | G | B
                 
-                # Choose compression method
-                if args.zhRGB565_diff:
-                    # Use RLE+DIFF compression for better gradient compression
-                    compressed_data, compressed_size, compression_ratio = encode_rgb565_rle_diff(RGB.flatten(), row, col)
-                    compression_method = "RLE+DIFF"
-                else:
-                    # Default to pure RLE compression
-                    compressed_data, compressed_size, compression_ratio = encode_rgb565_rle_only(RGB.flatten(), row, col)
-                    compression_method = "RLE"
+                # Use RLE+DIFF compression for better gradient compression
+                compressed_data, compressed_size, compression_ratio = encode_rgb565_rle_diff(RGB.flatten(), row, col)
+                compression_method = "RLE+DIFF"
                 
                 if compressed_data is not None:
                     print('',file=o)
@@ -660,9 +632,24 @@ def main(argv):
                     for line in lines:
                         if 'const uint16_t' in line and '[' in line:
                             in_array = True
-                            # Modify the array name to indicate compression
-                            modified_line = line.replace('_Data', '_zhRGB565_Data')
-                            print(modified_line, file=o)
+                            # Add ARM_SECTION directive and extern declaration for zhRGB565
+                            # Extract the original array name and convert to ARM format
+                            import re
+                            match = re.search(r'const uint16_t (\w+)\[(.*?)\]', line)
+
+                            if match:
+                                original_name = match.group(1)
+                                # Convert to ARM format: c_zhRGB565_ + name
+                                arm_name = f'c_zhRGB565_{arr_name}'
+                                array_size = match.group(2) if match.group(2) else ''
+                                # Generate extern declaration
+                                extern_decl = f"extern const uint16_t {arm_name}[{array_size}];"
+                                print(extern_decl, file=o)
+                                print('ARM_SECTION("arm2d.asset.c_zhRGB565_%s")' % (arr_name), file=o)
+                                # Generate the actual array definition with modified name
+                                modified_line = line.replace(original_name, arm_name)
+                                print(modified_line, file=o)
+
                             continue
                         elif line.strip() == '};':
                             if in_array:
@@ -723,12 +710,7 @@ def main(argv):
             typStr='uint16_t'
             print(tailDataRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
 
-        # zhRGB565 compressed format tail
-        if args.zhRGB565 or args.zhRGB565_diff or (args.format == 'zhRGB565') or (args.format == 'all'):
-            if ZHRGB565_AVAILABLE:
-                buffStr='phwBuffer'
-                typStr='uint16_t'
-                print(tailDatazhRGB565.format(arr_name, str(row), str(col), "."+buffStr+" = ("+typStr+"*)"), file=o)
+        
 
         if args.format == 'rgb32' or args.format == 'all':
             buffStr='pwBuffer'
