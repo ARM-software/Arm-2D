@@ -28,7 +28,7 @@
 
 //</h>
 
-// <<< end of configuration section >>>
+// <<< end of configuration section >>> 
 
 #if !__ARM_QOI_USE_LOADER_IO__
 #   undef ARM_QOI_IO_BUFF_SIZE

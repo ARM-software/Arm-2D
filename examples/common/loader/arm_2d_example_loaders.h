@@ -27,6 +27,7 @@
 #include "./freetype_loader/freetype_loader.h"
 #include "./qoi_loader/qoi_loader.h"
 #include "./zhrgb565_loader/zhrgb565_loader.h"
+#include "./lmsk_loader/lmsk_loader.h"
 
 #ifdef   __cplusplus
 extern "C" {

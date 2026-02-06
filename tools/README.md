@@ -1,15 +1,15 @@
-# Image to Tile Convertor (img2c.py)
+# Image to Tile Converter (img2c.py)
 
 ## 1. Overview
 
 The `arm_2d_tile_t` descriptors are used as the standard input and output in most of the arm-2d APIs. This tool helps you to convert a given image into
 
-- A C array for pixels and (for most of time) a dedicated alpha-mask if the format contains an alpha-channel.
+- A C array for pixels and (for most of the time) a dedicated alpha-mask if the format contains an alpha-channel.
 - `arm_2d_tile_t` descriptors for the image and the alpha-mask(s).
 
 ### FEATURE
 
-- Support popular image formats, e.g. PNG, JPG, JPEG, BMP etc.
+- Support popular image formats, e.g. PNG, JPG, JPEG, BMP, etc.
 - Output formats:
   - RGB565 with an optional alpha-mask (A1, A2, A4 and A8)
   - RGBA8888 with alpha-masks, one in a separate alpha-mask and the other in `ARM_2D_CHANNEL_8in32` format.
@@ -30,10 +30,10 @@ img2c.py [-h] [--format <FORMAT>] [--name <NAME\>] [--dim <Width> <Height>] [--r
 | -i ***Input File Path***  | Input file (png, bmp, etc..)                                 |          |
 | -o ***Output File Path*** | output C file containing RGB56/RGB888 and alpha values arrays | Optional |
 | --name ***Name***         | A specified array name.                                      | Optional |
-| --format ***Format***     | RGB Format, i.e. rgb565, rgb32, all (***default***)          | Optional |
+| --format ***Format***     | RGB Format, i.e. rgb565, rgb32, zhRGB565 and all (***default***) | Optional |
 | --dim ***Width Height***  | Resize the image with the given width and height             | Optional |
 | --rot ***angle***         | Rotate the image with the given angle in degrees             | Optional |
-| --a1, --a2, --a4          | introduce extra A1 / A2 / A4 masks when it is possible.      | Optional |
+| --a1, --a2, --a4, --a8    | introduce extra A1 / A2 / A4 / A8 masks when it is possible. | Optional |
 | --border                  | Add a 1-pixel-width border to the target asset. It is necessary when the asset is used in the transform operation. | Optional |
 
 ## Example

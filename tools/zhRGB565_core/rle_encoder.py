@@ -369,10 +369,10 @@ def generate_c_array(output_data: np.ndarray, output_size: int,
     lines.append("    /* Encoded data */")
     
     # Format output by lines
-    hhcnt = 0
-    line_base = 0
-    next_line = 1
-    current_line = 0
+    hhcnt = int(0)
+    line_base = int(0)
+    next_line = int(1)
+    current_line = int(0)
     
     lines.append(f"    /* 0 */")
     line = "    "
@@ -388,8 +388,8 @@ def generate_c_array(output_data: np.ndarray, output_size: int,
                     lines.append(line.rstrip())
                     line = "    "
         else:
-            current_line_pos = output_data[row_offset_addr + current_line] + line_base
-            next_line_pos = output_data[row_offset_addr + next_line] + line_base
+            current_line_pos = int(output_data[row_offset_addr + current_line]) + line_base
+            next_line_pos = int(output_data[row_offset_addr + next_line]) + line_base
             
             if current_line_pos > next_line_pos:
                 line_base += 65536

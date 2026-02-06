@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Make",
+            "group": {
+                "kind": "build"
+                // ,"isDefault": true
+            },
+            "type": "shell",
+            "command": "make -j",
+            "windows":{
+                "command": "${workspaceFolder}/build.bat",
+            },
+            "problemMatcher": "$gcc",
+            "options": {
+                "cwd": "${workspaceFolder}",
+            }
+        },
+        {
+            "label": "Make Clean",
+            "group": "build",
+            "type": "shell",
+            "command": "make clean",
+            "windows":{
+                "command": "${workspaceFolder}/clean.bat",
+            },
+            "options": {
+                "cwd": "${workspaceFolder}",
+            }
+        }
+    ]
+}

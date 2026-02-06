@@ -1,0 +1,53 @@
+{
+    "configurations": [
+        {
+            "name": "MacOS Apple Silicon",
+            "compilerPath": "/usr/bin/clang",
+            "intelliSenseMode": "macos-clang-arm64",
+            "includePath": [
+                "${workspaceFolder}/**",
+            ],
+            "defines": [
+                "_RTE_",
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "ARM_SECTION(x)=  ",
+                "__va_list=va_list",
+                "RTE_Acceleration_Arm_2D_Helper_PFB",
+                "__ARM_2D_COMPILATION_UNIT"
+            ],
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "compilerArgs": [
+                "--include=arm_mve.h"
+            ],
+            "macFrameworkPath": ["/System/Library/Frameworks", "/Library/Frameworks"]
+          },
+          {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+            ],
+            "defines": [
+                "_RTE_",
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE",
+                "ARM_SECTION(x)=  ",
+                "__va_list=va_list",
+                "RTE_Acceleration_Arm_2D_Helper_PFB",
+                "__ARM_2D_COMPILATION_UNIT"
+            ],
+            "compilerPath": "gcc.exe",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
+            "intelliSenseMode": "windows-gcc-x86",
+            "compilerArgs": [
+                "--include=arm_mve.h"
+            ],
+            "configurationProvider": "ms-vscode.makefile-tools"
+        }
+    ],
+    "version": 4
+}

@@ -193,11 +193,11 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
     if (NULL == ptIO) {
         return true;
     }
-
+#if 0
     if (NULL == ptIO->fnOpen) {
         return true;
     }
-
+#endif
     return ptIO->fnOpen(pTarget,ptLoader);
 }
 
@@ -211,9 +211,12 @@ void arm_loader_io_close(   const arm_loader_io_t *ptIO,
         return ;
     }
 
-    ARM_2D_INVOKE_RT_VOID(ptIO->fnClose, 
-        ARM_2D_PARAM(pTarget,
-                    ptLoader));
+#if 0
+    if (NULL == ptIO->fnClose) {
+        return true;
+    }
+#endif
+    return ptIO->fnClose(pTarget,ptLoader);
 }
 
 intptr_t arm_loader_io_get_position(const arm_loader_io_t *ptIO,
@@ -225,9 +228,12 @@ intptr_t arm_loader_io_get_position(const arm_loader_io_t *ptIO,
         return -1;
     }
 
-    return ARM_2D_INVOKE(ptIO->fnGetPosition, 
-            ARM_2D_PARAM(pTarget,
-                        ptLoader));
+#if 0
+    if (NULL == ptIO->fnGetPosition) {
+        return true;
+    }
+#endif
+    return ptIO->fnGetPosition(pTarget,ptLoader);
 }
 
 bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
@@ -241,9 +247,11 @@ bool arm_loader_io_seek(const arm_loader_io_t *ptIO,
         return true;
     }
 
+#if 0
     if (NULL == ptIO->fnSeek) {
         return true;
     }
+#endif
 
     return ptIO->fnSeek(pTarget, ptLoader, offset, whence);
 }
@@ -260,11 +268,15 @@ size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
         return 0;
     }
 
-    return ARM_2D_INVOKE(   ptIO->fnRead, 
-            ARM_2D_PARAM(   pTarget, 
-                            ptLoader, 
-                            pchBuffer, 
-                            tSize));
+#if 0
+    if (NULL == ptIO->fnRead) {
+        return true;
+    }
+#endif
+    return ptIO->fnRead(pTarget, 
+                        ptLoader, 
+                        pchBuffer, 
+                        tSize);
 }
 
 

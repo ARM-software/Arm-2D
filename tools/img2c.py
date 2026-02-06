@@ -297,7 +297,7 @@ tail="""
 
 def main(argv):
 
-    parser = argparse.ArgumentParser(description='image to C array converter (v1.3.0)')
+    parser = argparse.ArgumentParser(description='image to C array converter (v1.4.0)')
 
     parser.add_argument('-i', nargs='?', type = str,  required=False, help="Input file (png, bmp, etc..)")
     parser.add_argument('-o', nargs='?', type = str,  required=False, help="output C file containing RGB56/RGB888/Gray8 and alpha values arrays")
@@ -309,8 +309,8 @@ def main(argv):
     parser.add_argument('--a1', action='store_true', help="Generate 1bit alpha-mask")
     parser.add_argument('--a2', action='store_true', help="Generate 2bit alpha-mask")
     parser.add_argument('--a4', action='store_true', help="Generate 4bit alpha-mask")
+    parser.add_argument('--a8', action='store_true', help="Generate 8bit alpha-mask")
     parser.add_argument('--border', action='store_true', help="Add a 1pix border")
-    parser.add_argument('--zhRGB565', action='store_true', help="Generate compressed zhRGB565 format using RLE+DIFF encoding for better gradient compression")
 
     args = parser.parse_args()
 
@@ -337,6 +337,18 @@ def main(argv):
         args.format != 'all':
         parser.print_help()
         exit(1)
+
+    if args.a1:
+        args.format = ''
+
+    if args.a2:
+        args.format = ''
+
+    if args.a4:
+        args.format = ''
+
+    if args.a8:
+        args.format = ''
 
     try:
         image = Image.open(inputfile)
@@ -419,23 +431,24 @@ def main(argv):
         print(hdr.format(time.asctime( time.localtime(time.time())), argv[0], resized, args.rot), file=o)
 
         if mode == "RGBA":
-            print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sAlpha\")' % (arr_name), file=o)
-            # alpha channel array available
-            print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
-            cnt = 0
-            for eachRow in data:
-                lineWidth=0
-                print("/* -%d- */" % (cnt), file=o)
-                for eachPix in eachRow:
-                    alpha = eachPix[3]
-                    if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
-                        print("0x%02x," %(alpha) ,file=o)
-                    else:
-                        print("0x%02x" %(alpha), end =", ",file=o)
-                    lineWidth+=1
-                cnt+=1
-                print('',file=o)
-            print('};\r\n', file=o)
+            if args.format == 'all' or args.format == 'mask':
+                print('ARM_ALIGN(4) ARM_SECTION(\"arm2d.asset.c_bmp%sAlpha\")' % (arr_name), file=o)
+                # alpha channel array available
+                print('static const uint8_t c_bmp%sAlpha[%d*%d] = {' % (arr_name, row, col),file=o)
+                cnt = 0
+                for eachRow in data:
+                    lineWidth=0
+                    print("/* -%d- */" % (cnt), file=o)
+                    for eachPix in eachRow:
+                        alpha = eachPix[3]
+                        if lineWidth % WIDTH_ALPHA == (WIDTH_ALPHA - 1):
+                            print("0x%02x," %(alpha) ,file=o)
+                        else:
+                            print("0x%02x" %(alpha), end =", ",file=o)
+                        lineWidth+=1
+                    cnt+=1
+                    print('',file=o)
+                print('};\r\n', file=o)
 
             # 1-bit Alpha channel
             if args.a1 or args.format == 'all' or args.format == 'mask':
@@ -599,7 +612,7 @@ def main(argv):
             typStr='uint16_t'
 
         # zhRGB565 compressed format
-        if args.zhRGB565 or (args.format == 'zhRGB565') or (args.format == 'all'):
+        if (args.format == 'zhRGB565') or (args.format == 'all'):
             if not ZHRGB565_AVAILABLE:
                 print("Warning: zhRGB565 compression library not available, skipping zhRGB565 format", file=sys.stderr)
             else:
@@ -640,12 +653,12 @@ def main(argv):
                             if match:
                                 original_name = match.group(1)
                                 # Convert to ARM format: c_zhRGB565_ + name
-                                arm_name = f'c_zhRGB565_{arr_name}'
+                                arm_name = f'c_zhrgb{arr_name}'
                                 array_size = match.group(2) if match.group(2) else ''
                                 # Generate extern declaration
                                 extern_decl = f"extern const uint16_t {arm_name}[{array_size}];"
                                 print(extern_decl, file=o)
-                                print('ARM_SECTION("arm2d.asset.c_zhRGB565_%s")' % (arr_name), file=o)
+                                print('ARM_SECTION("arm2d.asset.c_zhrgb%s")' % (arr_name), file=o)
                                 # Generate the actual array definition with modified name
                                 modified_line = line.replace(original_name, arm_name)
                                 print(modified_line, file=o)
@@ -723,7 +736,8 @@ def main(argv):
 
 
         if mode == "RGBA":
-            print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
+            if args.format == 'all' or args.format == 'mask':
+                print(tailAlpha.format(arr_name, str(row), str(col)), file=o)
 
             if args.a1 or args.format == 'all' or args.format == 'mask':
                 print(tail1BitAlpha.format(arr_name, str(row), str(col)), file=o)

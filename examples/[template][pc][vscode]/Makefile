@@ -31,6 +31,8 @@ CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/zjpgd_loader/zjpgd/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/qoi_loader/*.c)
 CC_SRC  += $(wildcard ../../examples/common/loader/qoi_loader/qoi_decoder/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/lmsk_loader/*.c)
+CC_SRC  += $(wildcard ../../examples/common/loader/lmsk_loader/lmsk/decoder/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/monochrome/*.c)
 CC_SRC  += $(wildcard ../../examples/demos/mask_generation/*.c)
@@ -65,6 +67,7 @@ CC_INC  += ../../examples/common/opcodes
 CC_INC  += ../../examples/common/loader
 CC_INC  += ../../examples/common/loader/generic_loader
 CC_INC  += ../../examples/common/loader/zhrgb565_loader
+CC_INC  += ../../examples/common/loader/lmsk_loader
 CC_INC  += ../../examples/common/loader/tjpgd_loader
 CC_INC  += ../../examples/common/loader/zjpgd_loader
 CC_INC  += ../../examples/common/loader/freetype_loader
@@ -146,7 +149,7 @@ CCFLAG  +=  -Wno-macro-redefined
 LDFLAG  +=  -lpthread
 
 # debug
-# CC_DEF  += __ARM_2D_DEBUG__
+CC_DEF  += __ARM_2D_DEBUG__
 
 # develop SVE2
 # CCFLAG  += -march=armv8-a+sve2 -fno-vectorize -fno-slp-vectorize -msve-vector-bits=128
@@ -158,9 +161,9 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platforms, we are allowed to set the optimisation level
-	CCFLAG  +=  -Ofast
-	CCFLAG  +=  -flto
-	LDFLAG  +=  -flto
+	CCFLAG  +=  -O0
+	#CCFLAG  +=  -flto
+	#LDFLAG  +=  -flto
 endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all

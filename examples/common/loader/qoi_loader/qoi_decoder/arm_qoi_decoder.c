@@ -292,66 +292,6 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
 
 ARM_NONNULL(1,2) 
 __STATIC_INLINE
-size_t __arm_qoi_dec_io_read(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize)
-{
-#if __ARM_QOI_USE_LOADER_IO__
-    //assert(NULL != ptThis);
-    //assert(NULL != pchBuffer);
-    //assert(0 != tSize);
-    //assert(NULL != this.tCFG.IO.fnRead);
-
-#if 0 == ARM_QOI_IO_BUFF_SIZE 
-    //if (0 == this.ptWorking->hwSize) {
-        /* no buffer */
-        tSize = this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, tSize);
-        this.ptWorking->tPosition += tSize;
-        return tSize;
-    //}
-#else
-
-    size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
-
-    if (0 == hwLeftToRead) {
-
-        /* calculate new postion */
-        size_t tNewPosition = this.ptWorking->tPosition + this.ptWorking->hwTail;
-
-        /* nothing to read */
-        this.ptWorking->hwTail = 
-            this.tCFG.IO.fnRead(this.tCFG.pTarget, 
-                                this.tCFG.pchWorkingMemory, 
-                                this.ptWorking->hwSize);
-        this.ptWorking->hwHead = 0;
-
-        if (0 == this.ptWorking->hwTail) {
-            /* failed to fill the buffer, try next time */
-            return 0;
-        }
-
-        this.ptWorking->tPosition = tNewPosition;
-        hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
-    }
-
-    tSize = MIN(hwLeftToRead, tSize);
-    
-    /* read memory */
-    memcpy( pchBuffer, 
-            &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
-            tSize);
-
-    /* update buffer */
-    this.ptWorking->hwHead += tSize;
-
-    return tSize;
-#endif
-#else
-    return __arm_qoi_read(ptThis, pchBuffer, tSize);
-#endif
-}
-
-
-ARM_NONNULL(1,2) 
-__STATIC_INLINE
 size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
 {
 #if __ARM_QOI_USE_LOADER_IO__
@@ -389,29 +329,9 @@ size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuff
         }
 
         this.ptWorking->tPosition = tNewPosition;
-        hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
     }
 
-    tSize = MIN(hwLeftToRead, 4);
-    
-    if (4 == tSize) {
-        /* provide sufficient information: 
-         * 1. word-aligned target address
-         * 2. 4 bytes to copy
-         * 3. byte aligned source address
-         *
-         * The compiler might generate non-aligned word LDR STR pair in some
-         * architucrue, i.e. Armv7-M etc.
-         */
-        memcpy( (uint32_t *)pchBuffer, 
-                &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
-                4);
-    } else {
-        /* read memory */
-        memcpy( pchBuffer, 
-                &this.tCFG.pchWorkingMemory[this.ptWorking->hwHead],
-                tSize);
-    }
+    *(uint32_t *)pchBuffer = *(uint32_t *)&this.tCFG.pchWorkingMemory[this.ptWorking->hwHead];
 
     /* update buffer */
     this.ptWorking->hwHead += tSize;
@@ -419,121 +339,52 @@ size_t __arm_qoi_dec_io_try_to_read_word(arm_qoi_dec_t *ptThis, uint8_t *pchBuff
     return tSize;
 #endif
 #else
-    *(uint32_t *)pchBuffer = *(uint32_t *)&this.tCFG.pchQOISource[this.ptWorking->tPosition];
+    memcpy( (uint32_t *)pchBuffer, 
+            &this.tCFG.pchQOISource[this.ptWorking->tPosition],
+            4);
+    //*(uint32_t *)pchBuffer = *(uint32_t *)&this.tCFG.pchQOISource[this.ptWorking->tPosition];
     this.ptWorking->tPosition += 4;
 
     return 4;
 #endif
 }
 
-ARM_NONNULL(1,2) 
 __STATIC_INLINE
-bool __arm_qoi_dec_io_read_byte(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer)
+ARM_NONNULL(1)
+uint32_t __arm_qoi_get_fetch_bits(arm_qoi_dec_t *ptThis, uint_fast8_t chBits)
 {
-#if __ARM_QOI_USE_LOADER_IO__
-    //assert(NULL != ptThis);
-    //assert(NULL != pchBuffer);
-    //assert(0 != tSize);
-    //assert(NULL != this.tCFG.IO.fnRead);
-
-#if 0 == ARM_QOI_IO_BUFF_SIZE 
-    //if (0 == this.ptWorking->hwSize) {
-        /* no buffer */
-        if (this.tCFG.IO.fnRead(this.tCFG.pTarget, pchBuffer, 1)) {
-            this.ptWorking->tPosition++;
-            return true;
-        } else {
-            return false;
-        }
-    //}
-#else
-    size_t hwLeftToRead = this.ptWorking->hwTail - this.ptWorking->hwHead;
-
-    if (0 == hwLeftToRead) {
-
-        /* calculate new postion */
-        size_t tNewPosition = this.ptWorking->tPosition + this.ptWorking->hwTail;
-
-        /* nothing to read */
-        this.ptWorking->hwTail = 
-            this.tCFG.IO.fnRead(this.tCFG.pTarget, 
-                                this.tCFG.pchWorkingMemory, 
-                                this.ptWorking->hwSize);
-        this.ptWorking->hwHead = 0;
-
-        if (0 == this.ptWorking->hwTail) {
-            /* failed to fill the buffer, try next time */
-            return false;
-        }
-
-        this.ptWorking->tPosition = tNewPosition;
-    }
-
-    *pchBuffer = this.tCFG.pchWorkingMemory[this.ptWorking->hwHead++];
-
-    return true;
-#endif
-#else
-    *pchBuffer = this.tCFG.pchQOISource[this.ptWorking->tPosition++];
-
-    return true;
-#endif
-    
-}
-
-
-ARM_NONNULL(1,2) 
-__STATIC_INLINE
-bool __arm_qoi_read_data(arm_qoi_dec_t *ptThis, uint8_t *pchBuffer, size_t tSize)
-{
-#if __ARM_QOI_USE_LOADER_IO__
-    //assert(NULL != ptThis);
-    //assert(NULL != pchBuffer);
-    //assert(0 != tSize);
-#if 0 == ARM_QOI_IO_BUFF_SIZE 
-    return __arm_qoi_dec_io_read(ptThis, pchBuffer, tSize);
-#else
+    uint32_t wReturn = 0;
+    uint32_t wMask;
+    uint8_t chLaterShift = 0;
     do {
-        size_t tActualRead = __arm_qoi_dec_io_read(ptThis, pchBuffer, tSize);
-        if (tSize == tActualRead) {
-            return true;
-        } else if (0 == tActualRead) {
-            return false;
-        }
+        if (this.ptWorking->chBitsAvailable >= chBits) {
 
-        tSize -= tActualRead;
-        pchBuffer += tActualRead;
-    } while(tSize);
+            wMask = (1 << chBits) - 1;
 
-    return true;
-#endif
-#else
-    __arm_qoi_read(ptThis, pchBuffer, tSize);
-    return true;
-#endif
-}
+            wReturn |= (this.ptWorking->wOPFetch & wMask) << chLaterShift;
+            this.ptWorking->chBitsAvailable -= chBits;
+            this.ptWorking->wOPFetch >>= chBits;
 
-ARM_NONNULL(1,2) 
-__STATIC_INLINE
-bool __arm_qoi_read_word(arm_qoi_dec_t *ptThis, uint32_t *pwBuffer)
-{
-    //assert(NULL != ptThis);
-    //assert(NULL != pchBuffer);
-    //assert(0 != tSize);
-#if 0 == ARM_QOI_IO_BUFF_SIZE 
-    return __arm_qoi_read_data(ptThis, (uint8_t *)pwBuffer, 4);
-#else
-    size_t tActualRead = __arm_qoi_dec_io_try_to_read_word(ptThis, (uint8_t *)pwBuffer);
-    if (4 == tActualRead) {
-        return true;
-    } else if (0 == tActualRead) {
-        return false;
-    }
+            break;
+        } 
 
-    return __arm_qoi_read_data( ptThis, 
-                                ((uint8_t *)pwBuffer) + tActualRead,
-                                4 - tActualRead);
-#endif
+        if (this.ptWorking->chBitsAvailable) {
+            wMask = (1 << this.ptWorking->chBitsAvailable) - 1; 
+
+            wReturn = this.ptWorking->wOPFetch & wMask;
+            chLaterShift = this.ptWorking->chBitsAvailable;
+            chBits -= this.ptWorking->chBitsAvailable;
+        } 
+
+        this.ptWorking->chBitsAvailable 
+            = __arm_qoi_dec_io_try_to_read_word(
+                ptThis, 
+                (uint8_t *)&this.ptWorking->wOPFetch)
+            * 8;
+        
+    } while(chBits);
+
+    return wReturn;
 }
 
 __STATIC_INLINE
@@ -552,10 +403,9 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     }
 
     __arm_qoi_op_t tChunk;
-    if (!__arm_qoi_dec_io_read_byte(ptThis, (uint8_t *)&tChunk)) {
-        /* data is not available */
-        return false;
-    }
+
+    ((uint8_t *)&tChunk)[0] = __arm_qoi_get_fetch_bits(ptThis, 8);
+
     __arm_qoi_pixel_t tPixel = { 
         .wValue = this.ptWorking->tPrevious.wValue, 
     };
@@ -563,10 +413,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
     if (ARM_QOI_OP_ID_RGBA == tChunk.chID) {
     
         /* swap blue and red */
-        if (!__arm_qoi_read_word(ptThis, &tPixel.wValue)) {
-            /* data is not available */
-            return false;
-        }
+        tPixel.wValue = __arm_qoi_get_fetch_bits(ptThis, 32);
 
         /* swap Red and Blue */
         uint32_t wValue = __rev16(tPixel.wValue);
@@ -574,10 +421,10 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
 
     } else if (ARM_QOI_OP_ID_RGB == tChunk.chID) {
 
-        if (!__arm_qoi_read_data(ptThis, (uint8_t *)&tPixel, 3)) {
-            /* data is not available */
-            return false;
-        }
+
+        tPixel.wValue = (tPixel.wValue & 0xFF000000)
+                      | (__arm_qoi_get_fetch_bits(ptThis, 24) & 0x00FFFFFF);
+
         /* swap Red and Blue */
         uint32_t wValue = __rev16(tPixel.wValue);
         tPixel.wValue = __ror(wValue, 24);
@@ -604,10 +451,7 @@ bool __arm_qoi_get_next_pixel(arm_qoi_dec_t *ptThis, __arm_qoi_pixel_t *ptPixel)
                     .tHead.chID = tChunk.chID
                 };
                 /* load params */
-                if (!__arm_qoi_dec_io_read_byte(ptThis, ((uint8_t *)&tOPLuma) + 1)) {
-                    /* data is not available */
-                    return false;
-                }
+                ((uint8_t *)&tOPLuma)[1] = __arm_qoi_get_fetch_bits(ptThis, 8);
 
                 int8_t chDG = (int8_t)tOPLuma.u6DG - 32;
 

@@ -190,8 +190,9 @@ ARM_PRIVATE(
     uint16_t hwHead;
     uint16_t hwSize;
 #endif
-
     uint8_t chRunCount;
+    uint8_t chBitsAvailable;
+    uint32_t wOPFetch;
 )
 } arm_qoi_dec_ctx_t;
 

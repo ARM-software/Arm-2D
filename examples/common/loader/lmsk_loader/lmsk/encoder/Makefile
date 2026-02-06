@@ -60,9 +60,9 @@ CCFLAG  +=  -fno-ms-extensions
 CCFLAG  +=  -Wno-macro-redefined
 CCFLAG  +=  -Wno-missing-declarations
 
-CCFLAG  += 	-Ofast
-CCFLAG  +=  -flto
-LDFLAG  +=  -flto
+CCFLAG  += 	-O0
+#CCFLAG  +=  -flto
+#LDFLAG  +=  -flto
 LDFLAG  +=  -lpthread
 
 #======================================================================================================================#

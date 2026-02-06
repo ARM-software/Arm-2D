@@ -1,25 +1,32 @@
-/****************************************************************************
-*  Copyright 2023 Gorgon Meducer (Email:embedded_zhuoran@hotmail.com)       *
-*                                                                           *
-*  Licensed under the Apache License, Version 2.0 (the "License");          *
-*  you may not use this file except in compliance with the License.         *
-*  You may obtain a copy of the License at                                  *
-*                                                                           *
-*     http://www.apache.org/licenses/LICENSE-2.0                            *
-*                                                                           *
-*  Unless required by applicable law or agreed to in writing, software      *
-*  distributed under the License is distributed on an "AS IS" BASIS,        *
-*  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. *
-*  See the License for the specific language governing permissions and      *
-*  limitations under the License.                                           *
-*                                                                           *
-****************************************************************************/
+/*
+ * Copyright (c) 2009-2026 Arm Limited. All rights reserved.
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Licensed under the Apache License, Version 2.0 (the License); you may
+ * not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an AS IS BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /*============================ INCLUDES ======================================*/
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <inttypes.h>
+
 #include "lmsk_gen.h"
+#include "lmsk_encoder.h"
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 
 
 #if defined(__clang__)
@@ -170,6 +177,8 @@ arm_2d_err_t process_args(int argc, char* argv[])
         return ARM_2D_ERR_MISSING_PARAM;
     }
 
+    SYSTEM_CFG.Input.u8AlphaMSBBits = 8;
+
     for (int n = 0; n < argc; n++) {
 
         if (0 == n) {
@@ -193,6 +202,43 @@ arm_2d_err_t process_args(int argc, char* argv[])
             continue;
         }
 
+        if (0 == strncmp(argv[n], "-o", 2)) {
+            n++;
+            if (n >= argc) {
+                bInputIsValid = false;
+                break;
+            }
+
+            if (!file_exists(argv[n], "a")) {
+                printf("ERROR: Cannot find the input picture from \"%s\".", argv[n]);
+                bInputIsValid = false;
+                break;
+            }
+
+            SYSTEM_CFG.Input.pchOutputFilePath = argv[n];
+            continue;
+        }
+
+        if (0 == strncmp(argv[n], "-a", 2)) {
+            n++;
+            if (n >= argc) {
+                bInputIsValid = false;
+                break;
+            }
+
+            int32_t iAlphaMSBBits = SDL_atoi(argv[n]);
+
+            if (iAlphaMSBBits > 0 && iAlphaMSBBits <= 8) {
+                SYSTEM_CFG.Input.u8AlphaMSBBits = iAlphaMSBBits;
+            } else {
+                printf("ERROR: Invalid alpha MSB bits count: %"PRIi32"\r\n", iAlphaMSBBits);
+                bInputIsValid = false;
+                break;
+            }
+
+            continue;
+        }
+
         if (    (0 == strncmp(argv[n], "--help", 6)) 
             ||  (0 == strncmp(argv[n], "-h", 2))) {
             bInputIsValid = false;
@@ -204,6 +250,10 @@ arm_2d_err_t process_args(int argc, char* argv[])
     if (!SYSTEM_CFG.Input.bValid) {
         return ARM_2D_ERR_INVALID_PARAM;
     } else if ((NULL == SYSTEM_CFG.Input.pchInputPicturePath)) {
+        SYSTEM_CFG.Input.bValid = false;
+        return ARM_2D_ERR_MISSING_PARAM;
+    } else if ((NULL == SYSTEM_CFG.Input.pchOutputFilePath)) {
+        SYSTEM_CFG.Input.bValid = false;
         return ARM_2D_ERR_MISSING_PARAM;
     }
 
@@ -222,10 +272,12 @@ int app_2d_main_thread (void *argument)
 
 static void print_help(void)
 {
-    printf("The lmsk is a command line tool that extracts alpha masks from PNG file and generate lossless compressed mask files.  \r\n");
+    printf("The lmsk (v0.9.0) is a command line tool that extracts alpha masks from PNG file and generate lossless compressed mask files.  \r\n");
     printf("\r\noptions:\r\n");
     printf("\t-h, --help            show this help message and exit\r\n");
     printf("\t-p <picture path>     Input picture (*.bmp, *.png etc)\r\n");
+    printf("\t-o <output file path> The file path for the compressed mask image  (*.lmsk)\r\n");
+    printf("\t-a <alpha bits>       The valid alpha MSB count (1~8) \r\n");
     printf("\r\n");
 }
 
@@ -292,6 +344,12 @@ static bool load_mask(const char *pchPath, arm_2d_tile_t *ptMask)
         if (NULL == ptMask->pchBuffer) {
             break;
         }
+
+        printf("Resolution: %"PRIi16"x%"PRId16"\r\n", 
+                ptMask->tRegion.tSize.iWidth,
+                ptMask->tRegion.tSize.iHeight);
+
+        printf("Bits per Pixel: %d\r\n", ptImage->format->BitsPerPixel);
         
         switch (ptImage->format->BitsPerPixel) {
             case 8:
@@ -306,6 +364,7 @@ static bool load_mask(const char *pchPath, arm_2d_tile_t *ptMask)
                 if (ptImage->pitch != ptMask->tRegion.tSize.iWidth * 2) {
                     return false;
                 }
+                printf("Convert to gray scale...\r\n");
                 __arm_2d_impl_rgb565_to_gray8(  (uint16_t *)ptImage->pixels,
                                                 ptMask->tRegion.tSize.iWidth,
                                                 ptMask->pchBuffer,
@@ -314,6 +373,7 @@ static bool load_mask(const char *pchPath, arm_2d_tile_t *ptMask)
                 break;
 
             case 24:
+                printf("Convert to gray scale...\r\n");
                 __ccc888_to_gray8(  ptImage->pixels,
                                     ptImage->pitch,
                                     ptMask->pchBuffer,
@@ -328,6 +388,7 @@ static bool load_mask(const char *pchPath, arm_2d_tile_t *ptMask)
                                                 ptMask->pchBuffer,
                                                 ptMask->tRegion.tSize.iWidth,
                                                 ptMask->tRegion.tSize.iHeight);
+                break;
 
             default:
                 return false;
@@ -343,7 +404,6 @@ static bool load_mask(const char *pchPath, arm_2d_tile_t *ptMask)
 
     return false;
 }
-
 
 int main(int argc, char* argv[])
 {
@@ -361,19 +421,53 @@ int main(int argc, char* argv[])
             break;
     }
 
+
     SDL_Init(SDL_INIT_VIDEO);
     
     do {
         /* load picture */
         if (!load_mask(SYSTEM_CFG.Input.pchInputPicturePath,
                        &SYSTEM_CFG.Picture.tMask)) {
-            printf("ERROR: failed to load picture, %s\n", SDL_GetError());
+            printf("ERROR: Failed to load picture, %s\n", SDL_GetError());
             ret = -1;
             break;
         };
 
 
+        printf("Encoding...\r\n");
 
+        FILE *fp = fopen(SYSTEM_CFG.Input.pchOutputFilePath, "w");
+        if (NULL == fp) {
+            printf("ERROR: Failed to write file %s...\r\n", SYSTEM_CFG.Input.pchOutputFilePath);
+            break;
+        }
+        
+        arm_lmsk_encoder_t tEncoder;
+
+        arm_lmsk_encoder_init(  &tEncoder, 
+                                SYSTEM_CFG.Picture.tMask.pchBuffer, 
+                                SYSTEM_CFG.Picture.tMask.tRegion.tSize.iWidth,
+                                SYSTEM_CFG.Picture.tMask.tRegion.tSize.iHeight);
+
+
+        int32_t iSizeWritten = arm_lmsk_write_to_file(arm_lmsk_encode(&tEncoder, SYSTEM_CFG.Input.u8AlphaMSBBits), fp);
+
+        if (iSizeWritten < 0) {
+            printf("ERROR: Failed to create file %s\r\n", SYSTEM_CFG.Input.pchOutputFilePath);
+        } else {
+            uint32_t wRawSize = SYSTEM_CFG.Picture.tMask.tRegion.tSize.iWidth *
+                                SYSTEM_CFG.Picture.tMask.tRegion.tSize.iHeight;
+            double fCompressionRate = ((double)iSizeWritten / (double)wRawSize) * 100.0f;
+            printf("\r\nRaw Mask Size: %d\r\n"
+                "Compressed Mask File Size: %"PRIu32" [%2.2f%%]\r\n",
+                    wRawSize,
+                    iSizeWritten,
+                    fCompressionRate );
+        }
+
+        arm_lmsk_encoder_depose(&tEncoder);
+
+        fclose(fp);
 
     } while(0);
 

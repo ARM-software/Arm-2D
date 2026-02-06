@@ -1,0 +1,70 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "build and run on macos (lldb)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/lmsk",
+            "args": [
+                "-p", 
+                "../../../../asset/ECGScanMask.png", 
+                "-o",
+                "Test.lmsk",
+                "-a",
+                "8",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb",
+            "preLaunchTask": "Make"
+        },
+        {
+            "name": "build and run x86(32)",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/lmsk.exe",
+            "args": [
+                "-p", 
+                "../../../../asset/ECGScanMask.png", 
+                "-o",
+                "Test.lmsk",
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "Enable gdb pretty printing",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set disassbly flavor as Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "Make"
+        },
+        {
+            "name": "build and run Linux",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/arm_2d",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb-multiarch",
+            "preLaunchTask": "Make"
+        }
+    ]
+}

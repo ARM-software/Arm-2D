@@ -1,58 +1,70 @@
-# Losslessly Compressed Mask (LMSK) Specification (1.0.0)
+# Losslessly Compressed Mask (LMSK) Specification (1.2.1)
 
 
 
 ## 1 Overview 
 
-**LMSK** is a lossless compression format optimised for alpha mask images. It employs a hybrid entropy coding strategy combining 4-bit deltas, run-length encoding, linear gradient descriptions, and random line access capabilities.
+**LMSK** is a lossless compression format optimised for alpha mask images. It employs a hybrid entropy coding strategy combining deltas, run-length encoding, linear gradient descriptions, and random line access capabilities.
 
 
 
-#### Byte Order
+#### Endiant
 - **Integers**: All multi-byte integers are stored in **Little Endian**.
 - **Bitstream**: Decoding uses **LSB First** bit ordering (Least Significant Bit consumed first).
 
 #### File Structure
 ```
 [Header: 16 bytes]
+[32 Palette]
 [Floor Table: floor_count * 2 bytes]
 [Line Index Table: height * 2 bytes]
 [Data Stream]
+[End Mark: 4 bytes]
 ```
 
 
 
 ## 2 Data Structures
 
-### Header
+### Header & End Mark
 
 ```c
 /* 16byte header */
-typedef struct arm_cm_header_t {
-    uint8_t chName[5];						  /* "LMSK": Losslessly compressed MaSK */
+typedef struct arm_lmsk_header_t {
+    uint8_t chName[5];					 /*! "LMSK": Losslessly compressed MaSK */
     struct {
-        uint8_t u4Major : 4;        /* 0x01 for now */
+        uint8_t u4Major : 4;
         uint8_t u4Minor : 4;
     } Version;
   
     int16_t iWidth;
     int16_t iHeight;
   
-    uint8_t u3AlphaMSBCount     : 3;  /* MSB alpha bits = u3AlphaBits + 1 */
-    uint8_t bRaw                : 1;  /* whether the alpha is compressed or not */
-    uint8_t u2TagSetBits        : 2;  /* must be 0x00 for now, reservef for the future */
-    uint8_t                     : 2;  /* must be 0x00 for now, reserved for the future */
+    uint8_t u3AlphaMSBCount : 3;  /*! MSB alpha bits = u3AlphaBits + 1 */
+    uint8_t bRaw          	: 1;  /*! whether the alpha is compressed or not */
+    uint8_t u2TagSetBits    : 2;  /*! must be 0x00, reservef for the future */
+    uint8_t                 : 2;  /*! must be 0x00, reserved for the future */
     uint8_t chFloorCount;
-    uint32_t                    : 32; /* reserved */
-} arm_cm_header_t;
+    uint32_t                : 32; /*! reserved */
+} arm_lmsk_header_t;
 ```
-- `u3AlphaMSBCount`: Significant alpha bits minus 1 (i.e., effective_bits = value + 1). All delta operations apply only to these significant high bits.
+- `u3AlphaMSBCount`: Significant alpha bits minus 1 (i.e., effective_bits = value + 1).  Unless otherwise specified,  all operations apply only to these significant high bits.
 - `bRaw`: 
-  - `0` - The data section contains compressed data. The Floor Table and Line Index Table are valid.
-  - `1`- The data section **ONLY** contains the raw alpha pixels. The Floor Table and the Line Index Table are removed. Hence, the `chFloorCount` should always be `0`, and the decoder should ignore the `chFloorCount` and `u3AlphaMSBCount`.
+  - `0` - The data section contains compressed data. The Palette, Floor Table and Line Index Table are valid.
+  - `1`- The data section **ONLY** contains the raw alpha pixels. The Palette, Floor Table and the Line Index Table are removed. Hence, `chFloorCount` should always be `0`, and the decoder should ignore `chFloorCount` and `u3AlphaMSBCount`.
 
+The LMSK file ends with a (**at least 4 bytes long**) marker. The content is defined by the encoder and should be ignored by the decoder. The purpose of introducing 4-byte padding is to enable the encoder to safely implement a 32-bit Tag-fetching scheme. 
+
+### Palette Table
+
+The compressed file has a 32-slot palette right after the header. The encoder can place a dedicated **INDEX** tag to use the palette. How the palette is generated is fully determined by the encoder. Some commonly used strategies are:
+
+* Places frequently used alphas. 
+* Replaces the **ALPHA_TAG**.
+* Stores patterns that are frequently used. 
 
 ### Floor Table and Line Index
+
 The **Floor Table** defines base address partitions for line data. For a line number `L` where `L >= floor_table[i]` (and `L < floor_table[i+1]` if exists), the base address for that line is `(i + 1) * (1 << (16 - u2TagSetBits))` bytes or `(i + 1) * 65536` for the current version.
 
 The **Line Index Table** stores **byte offsets** for each line relative to its **base address**. The address in the **data section** is calculated as:
@@ -75,33 +87,42 @@ The data stream (a.k.a **data section**) is organised by scanlines. Each line be
 
 ### 3.1 Tags
 
-| Tag Bits (LSB)   |    Size    | Name            | Description                                                  |
-| :--------------- | :--------: | :-------------- | :----------------------------------------------------------- |
-| `xxxx_xxxx_xxx1` | **4 bits** | **DELTA_SMALL** | Small delta. `delta = sign_extend(bits[3:1], 3)`, range **[-4, +3]**. |
-| `xxxx_xxxx_xx00` | **8 bits** | **REPEAT**      | Run-length control. `count = bits[7:2]` (6-bit):<br>• `0`: **REPEAT_START**<br>• `1–61`: **REPEAT_STOP**, run length = `count + 1`<br>• `62` (0xF8): **GRADIENT_TAG**<br>• `63` (0xFC): **ALPHA_TAG** |
-| `xxxx_xxxx_xx10` | **8 bits** | **DELTA_LARGE** | Large delta. `delta = sign_extend(bits[7:2], 6)`, range **[-32, +31]**. |
+| Tag Bits (LSB) |    Size    | Name            | Description                                                  |
+| :------------- | :--------: | :-------------- | :----------------------------------------------------------- |
+| `0b0xxx-xx00` | **8 bits** | **INDEX**       | An index for a constant Palette.                             |
+| `0b1000-0000` | **8bits** | **DO** | The start marker of the **DO / WHILE** loop. |
+| `0b1xxx-xx00` | **8bits** | **WHILE** | The end marker of the DO / WHILE loop. `count = bits[6:2]` (6-bit):<br/> repeat iteration count = `count + 1` |
+| `0bxxxx-xx01` | **8 bits** | **REPEAT**      | Run-length control. `count = bits[7:2]` (6-bit):<br>• `0–61`: **REPEAT**, run length = `count + 1`<br>• `62` (0xF9): **GRADIENT_TAG**<br>• `63` (0xFD): **ALPHA_TAG** |
+| `0bxxxx-xx10` | **8 bits** | **DELTA_SMALL** | Small delta.  Two delta encode two pixels, here`delta = sign_extend(bits[3:1], 3)`, range **[-4, +3]**. |
+| `0bxxxx-xx11` | **8 bits** | **DELTA_LARGE** | Large delta. `delta = sign_extend(bits[7:2], 6)`, range **[-32, +31]**. |
 
 ##### Special Tags Details
 
-* **ALPHA_TAG (0xFC)**  
+* **ALPHA_TAG (0xFD)**  
 
-  Followed by **1 byte** of raw alpha value, setting the current pixel directly.
+  Followed by **1 byte** of raw alpha value, setting the current pixel directly. 
 
-* **GRADIENT_TAG (0xF8)**  
+  > [!NOTE]
+  >
+  > The `u3AlphaMSBCount` does **NOT** affect **ALPHA_TAG**. It always uses 8-bit. 
 
-  Followed by **3 bytes**: `uint8_t to_alpha`, `uint16_t count`.  Linearly interpolates from current alpha to target alpha using **Q15.16 fixed-point** arithmetic over `count` pixels:
+  
+
+* **GRADIENT_TAG (0xF9)**  
+
+  Followed by **3 bytes**: `uint8_t to_alpha`, `uint16_t count`.  Linearly interpolates from current alpha to target alpha using **Q15.16 fixed-point** arithmetic over `count + 1` pixels:
 
 ```c
-q16_step = ((to_alpha - previous_alpha) << 16) / count;
-for (i = 0; i < count - 1; i++)
+q16_step = ((to_alpha - previous_alpha) << 16) / (count + 1);
+for (i = 0; i < count; i++)
     out[i] = current + ((q16_step * i) >> 16);
-out[count-1] = to_alpha;  /* Force endpoint alignment */
+out[count] = to_alpha;  /* Force endpoint alignment */
 previous_alpha = to_alpha;
 ```
 
 > [!IMPORTANT]
 >
-> When using a gradient mode, regardless of `u3AlphaMSBCount`, the start and stop alpha values **MUST** be stored and treated as 8-bit alpha. If the previous pixel is different from the actual alpha, it cannot be used as the start alpha; an **ALPHA_TAG** **MUST** be used to set the start alpha. 
+> When using a gradient mode, regardless of `u3AlphaMSBCount`, the start and stop alpha values are treated as 8-bit alpha. If the previous pixel is different from the actual alpha, an **ALPHA_TAG** **MUST**  be inserted to set the start alpha. 
 
 > [!IMPORTANT]
 >
@@ -109,32 +130,32 @@ previous_alpha = to_alpha;
 
 
 
-* **REPEAT_START / STOP**  
-  - **Standalone STOP**: If no matching **START** precedes it, repeat the **previous pixel** `count + 1` times.  
-  
-  - **Paired**: Instructions between **START** and **STOP** form a **macro**, executed `count + 1` times (initial + N repeats). Nesting is not supported.
-  - **Standalone START** (without STOP) is ignored. 
+* **DO / WHILE**  
+  - **Paired**: Instructions between **DO** and **WHILE** form a **macro**, executed `count + 1` times. **Nesting is not allowed**.
+  - **Standalone DO** (without **WHILE**) or **WHILE** (without **DO**) is ignored. 
 
 
 > [!IMPORTANT]
 >
-> The **REPEAT_START / STOP** implements a loop structure. If you want to repeat the exact same string of pixels, you have to explicitly specify the pixel alpha at the start of an iteration; otherwise, for each iteration, the start alpha (a.k.a the alpha at the end of the previous iteration) might be different, leading to a totally different string of pixels. 
+> The **DO / WHILE** implements a loop structure. If you want to repeat the exact same string of pixels, you have to explicitly specify the pixel alpha at the start of an iteration; otherwise, for each iteration, the start alpha (a.k.a the alpha at the end of the previous iteration) might be different, leading to a totally different string of pixels. 
 >
-> Please implement **REPEAT_START/STOP** as a feature, not a **BUG**. 
+> Please implement **DO / WHILE** as a feature, not a **BUG**. 
 
 
 
 ### 3.2 Decoding Procedure
 Per-line decoder state:
 1. Calculate the start address of a line based on the **Floor Table** and the **Line Index Table**.
-2. Read 1 byte as `current_alpha`.
+2. Read 1 byte as `previous_alpha`.
 3. Loop until `width` pixels are output:
    i)  Read a tag
    ii) Inspect the lowest 2 bits:
-     - If `...01`: consume 4 bits, execute **DELTA_SMALL**.
-     - If `...00`: consume 8 bits, parse **REPEAT** or **special tags**, i.e. **ALPHA_TAG** and **GRADIENT_TAG**
-     - If `...10`: consume 8 bits, execute **DELTA_LARGE**.
-4. Truncate immediately when line width is reached; discard remaining bits for that line.
+     - If `...00`: consume 8 bits, parse **INDEX** or **DO / WHILE**.
+     - If `...01`: consume 8 bits, parse **REPEAT** or **special tags**, i.e. **ALPHA_TAG** and **GRADIENT_TAG**
+     - If `...10`: consume 8 bits, execute **DELTA_SMALL**.
+     - If `...11`: consume 8 bits, execute **DELTA_LARGE**.
+4. Each Tag should update the `previous_alpha`.
+5. Truncate immediately when line width is reached; discard remaining bits for that line.
 
 
 

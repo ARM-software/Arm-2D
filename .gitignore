@@ -64,3 +64,4 @@ tools/inputstring.txt
 *.otf
 tools/asset
 examples/\[template\]\[csolution\]/arm2d.cbuild-set.yml
+examples/common/loader/lmsk_loader/lmsk/encoder/Test.lmsk
