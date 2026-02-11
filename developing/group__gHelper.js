@@ -492,6 +492,7 @@ var group__gHelper =
     [ "arm_2d_byte_fifo_init", "group__gHelper.html#gac3bdc393bc8cbb86351a7647372854d8", null ],
     [ "arm_2d_byte_fifo_drop_all", "group__gHelper.html#gae5ef53c867010fd51592debcba60441a", null ],
     [ "arm_2d_byte_fifo_enqueue", "group__gHelper.html#ga44e78d3e1990b1721c40fc6a93c78fcf", null ],
+    [ "arm_2d_byte_fifo_vomit", "group__gHelper.html#ga5fbb1d96b72bc539962d69ff1ecade1c", null ],
     [ "arm_2d_byte_fifo_squeeze", "group__gHelper.html#ga39659f1502b567be1120836a358e84cb", null ],
     [ "arm_2d_byte_fifo_get_item_count", "group__gHelper.html#gae315df9c1c2853c5cddae4f829a207c9", null ],
     [ "arm_2d_byte_fifo_get_capcity", "group__gHelper.html#gae088da98a4a858328dc2a15fb30c48b2", null ],
