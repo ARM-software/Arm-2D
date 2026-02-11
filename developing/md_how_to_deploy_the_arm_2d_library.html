@@ -111,7 +111,7 @@ $(document).ready(function(){initNavTree('md_how_to_deploy_the_arm_2d_library.ht
   <div class="headertitle"><div class="title">How to Deploy the Arm-2D Library {#deploy}  </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p >This document describes how to deploy the <b>Arm-2D</b> library to your existing MDK projects. If you are not familiar with <b>Arm-2D</b>, please start from the <b><a class="el" href="md__home_runner_work_Arm_2D_Arm_2D_README.html">README</a></b> first.</p>
+<div class="textblock"><p >This document describes how to deploy the <b>Arm-2D</b> library to your existing MDK projects. If you are not familiar with <b>Arm-2D</b>, please start with the README.</p>
 <h2><a class="anchor" id="autotoc_md79"></a>
 Table of Contents</h2>
 <ul>
@@ -138,8 +138,8 @@ Table of Contents</h2>
 1 How to get the Arm-2D</h1>
 <p >There are three methods to get Arm-2D:</p>
 <ul>
-<li><p class="startli">Cloning Arm-2D repository on Github using the following command line:</p>
-<div class="fragment"><div class="line">git clone https://github.com/ARM-software/Arm-2D.git</div>
+<li><p class="startli">Cloning the Arm-2D repository on GitHub using the following command line:</p>
+<div class="fragment"><div class="line">git clone https://github.com/ARM-software/Arm-2D.git --recursive</div>
 </div><!-- fragment --></li>
 <li>Downloading Arm-2D CMSIS-Pack from the <a href="https://github.com/ARM-software/Arm-2D/releases">release page</a>.</li>
 <li><p class="startli">Checking for Updates in pack-installer and installing the latest Arm-2D packs as shown in <b>Figure 1-1</b> and <b>Figure 1-2</b></p>
@@ -158,8 +158,8 @@ Table of Contents</h2>
 <h2><a class="anchor" id="autotoc_md82"></a>
 2.1 Deploy Using CMSIS-Pack in MDK</h2>
 <ol type="1">
-<li><p class="startli">Open the Run-Time Environment configuration dialog using menu "Project-&gt;Manage-&gt;Run-Time Environment" as shown in <b>Figure 2-6</b>.</p>
-<p class="startli"><b>Figure 2-6 Open Run-Time Environment Dialog</b> <img src="HowToDeploy2_6.png" alt="" class="inline"/>    </p>
+<li><p class="startli">Open the Run-Time Environment configuration dialogue using the menu "Project-&gt;Manage-&gt;Run-Time Environment" as shown in <b>Figure 2-6</b>.</p>
+<p class="startli"><b>Figure 2-6 Open Run-Time Environment Dialogue</b> <img src="HowToDeploy2_6.png" alt="" class="inline"/>    </p>
 </li>
 </ol>
 <ol type="1">
@@ -194,22 +194,22 @@ image-20210323171224685</div></div>
 </ol>
 <p ><img src="HowToDeploy2_8.png" alt="" class="inline"/>     <br  />
 </p>
-<p >Open the <b>Configuration Wizard</b> and check options available for Arm-2D</p>
+<p >Open the <b>Configuration Wizard</b> and check the options available for Arm-2D</p>
 <p ><b>Figure 2-9 Configuration Wizard for Arm-2D</b></p>
 <div class="image">
 <img src="HowToDeploy2_9.png" alt=""/>
 <div class="caption">
 ConfigurationWizardForArm-2D</div></div>
-    <p ><b>NOTE</b>: If you want to support <b>CCCA8888</b> (i.e. <b>RGBA8888</b>), please selet the <code>Enable support for accessing individual colour channels</code>.</p>
+    <p ><b>NOTE</b>: If you want to support <b>CCCA8888</b> (i.e. <b>RGBA8888</b>), please select the <code>Enable support for accessing individual colour channels</code>.</p>
 <h2><a class="anchor" id="autotoc_md83"></a>
 2.2 Deploy Using CMake</h2>
 <p >It is easy to deploy arm-2d as a library using CMake; for details, please check the <a href="../CMakeLists.txt">CMakeLists.txt</a>.</p>
 <h2><a class="anchor" id="autotoc_md84"></a>
 2.3 Deploy Using Makefile</h2>
-<p >It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts and hence provide a <a href="../examples/[template][pc][vscode]/Makefile">Makefile</a> used on PC as a good example.</p>
+<p >It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts, and hence provide a <a href="../examples/[template][pc][vscode]/Makefile">Makefile</a> used on PC as a good example.</p>
 <h1><a class="anchor" id="autotoc_md85"></a>
 3 Helper Services and Extras</h1>
-<p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called <b>Partial Frame Buffer (PFB)</b>. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.</p>
+<p >Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows users to refresh the entire screen using a small frame buffer called the <b>Partial Frame Buffer (PFB)</b>. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.</p>
 <h2><a class="anchor" id="autotoc_md86"></a>
 3.1 Preparation</h2>
 <p >Before we start, we have to prepare a low-level flushing function called Disp0_DrawBitmap(). Its prototype is shown below:</p>
@@ -226,7 +226,7 @@ ConfigurationWizardForArm-2D</div></div>
 </ul>
 <p ><b>Figure 3-1 The Scheme of the Low-Level Flushing Interface</b></p>
 <p ><img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" class="inline"/></p>
-<p >Suppose the display RAM of your LCD has been mapped into internal 4G memory space. An example of <code>Disp0_DrawBitmap()</code> might look like this:</p>
+<p >Suppose the display RAM of your LCD has been mapped into the internal 4G memory space. An example of <code>Disp0_DrawBitmap()</code> might look like this:</p>
 <div class="fragment"><div class="line"><span class="comment">/**</span></div>
 <div class="line"><span class="comment">  \fn          int32_t Disp0_DrawBitmap (uint32_t x, uint32_t y, uint32_t width, uint32_t height, const uint8_t *bitmap)</span></div>
 <div class="line"><span class="comment">  \brief       Draw bitmap (bitmap from BMP file without header)</span></div>
@@ -260,20 +260,20 @@ ConfigurationWizardForArm-2D</div></div>
 </ol>
 <h2><a class="anchor" id="autotoc_md87"></a>
 3.2 Add Display Adapter Service</h2>
-<p >Deploying Display Adatper service in MDK is simple:</p>
+<p >Deploying the Display Adapter service in MDK is simple:</p>
 <ol type="1">
-<li>Open RTE dialog (as shown in <b>Figure 3-2</b>)</li>
+<li>Open RTE dialogue (as shown in <b>Figure 3-2</b>)</li>
 <li>Expand <code>Acceleration::Arm-2D Helper</code></li>
-<li>Select the <b>PFB</b> and increase the number of <b>Display Adapter</b> to <code>1</code>. <b>NOTE</b>: If you have multiple screens, please set the number accordingly.</li>
-<li>If you see any warning message in yellow, please click the Resolve button. The warning should disappear.</li>
-<li>Click <b>OK</b> button to close the RTE dialog.</li>
+<li>Select the <b>PFB</b> and set the number of <b>Display Adapters</b> to <code>1</code>. <b>NOTE</b>: If you have multiple screens, please set the number accordingly.</li>
+<li>If you see any yellow warning message, please click the Resolve button. The warning should disappear.</li>
+<li>Click the <b>OK</b> button to close the RTE dialogue.</li>
 </ol>
 <p ><b>Figure 3-2 Selecting Display Adapter Service in RTE</b></p>
 <div class="image">
 <img src="DisplayAdapter.png" alt=""/>
 <div class="caption">
 AddDisplayAdapter</div></div>
-    <p >After that, you will see two files, i.e. <code>arm_2d_disp_adapter_0.c</code> and <code>arm_2d_disp_adapter_0.h</code> have been added to the project manager under the <b>Acceleration</b> group.</p>
+    <p >After that, you will see two files, i.e. <code>arm_2d_disp_adapter_0.c</code> and <code>arm_2d_disp_adapter_0.h</code>, have been added to the project manager under the <b>Acceleration</b> group.</p>
 <p ><b>IMPORTANT</b>: unless necessary, please do <b>NOT</b> modify the content of the <code>arm_2d_disp_adapter_0.c</code>, as new versions of Arm-2D often introduce new features to the Display Adatper Service, as long as you haven't modified anything in the <code>arm_2d_disp_adapter_0.c</code>, updating to the latest version would be an easy task nothing more than right-clicking the file in the project manager and updating to the latest version in the pop-up menu.</p>
 <p ><b>You have to initalise the Display Adapter service before using it</b>.</p>
 <p >Include <code>arm_2d_disp_adapters.h</code> in your c source code and add the following code to the <code>main()</code> function:</p>
