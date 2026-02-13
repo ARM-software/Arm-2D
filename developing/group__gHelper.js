@@ -131,7 +131,6 @@ var group__gHelper =
       [ "nOffset", "group__gHelper.html#a9e34e85ada15f34bb61e481d8961cc3a", null ]
     ] ],
     [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
-      [ "arm_2d_tile_t", "group__gHelper.html#a8ffcc72269b30b7e8a23e833b0e9d0f2", null ],
       [ "hwColumn", "group__gHelper.html#ad9581b76e350696b5460e8e79239ec37", null ],
       [ "hwFrameNum", "group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd", null ],
       [ "hwPeriodPerFrame", "group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010", null ],
@@ -249,7 +248,8 @@ var group__gHelper =
     [ "arm_2d_control_enumerator_t.__unnamed276__.Preorder", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed276_____8Preorder", null ],
     [ "arm_2d_control_enumerator_t.__unnamed276__.BottomUp", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed276_____8BottomUp", null ],
     [ "arm_2d_control_enumerator_t.__unnamed276__.Postorder", "group__gHelper.html#structarm__2d__control__enumerator__t_8____unnamed276_____8Postorder", null ],
-    [ "arm_2d_byte_fifo_t.__unnamed281__", "group__gHelper.html#structarm__2d__byte__fifo__t_8____unnamed281____", null ],
+    [ "arm_2d_helper_film_t.__unnamed281__", "group__gHelper.html#unionarm__2d__helper__film__t_8____unnamed281____", null ],
+    [ "arm_2d_byte_fifo_t.__unnamed283__", "group__gHelper.html#structarm__2d__byte__fifo__t_8____unnamed283____", null ],
     [ "arm_2d_scene_player_register_on_draw_navigation_event_handler", "group__gHelper.html#ga90130f1c831d7fb20db39f20a488a3e1", null ],
     [ "arm_2d_scene_player_set_switching_mode", "group__gHelper.html#ga6b9ef0f3e0f80430fc036f6d3c67c135", null ],
     [ "arm_2d_scene_player_register_before_switching_event_handler", "group__gHelper.html#ga0c896791f09bdcbb1115746844ddba2b", null ],
