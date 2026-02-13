@@ -131,7 +131,7 @@ var group__gHelper =
       [ "nOffset", "group__gHelper.html#a9e34e85ada15f34bb61e481d8961cc3a", null ]
     ] ],
     [ "arm_2d_helper_film_t", "group__gHelper.html#structarm__2d__helper__film__t", [
-      [ "implement", "group__gHelper.html#adc9eeca97d41a439c3f1800977a54a37", null ],
+      [ "arm_2d_tile_t", "group__gHelper.html#a8ffcc72269b30b7e8a23e833b0e9d0f2", null ],
       [ "hwColumn", "group__gHelper.html#ad9581b76e350696b5460e8e79239ec37", null ],
       [ "hwFrameNum", "group__gHelper.html#ad39f930095be0f78da8c8728afbc82cd", null ],
       [ "hwPeriodPerFrame", "group__gHelper.html#ac7afe838e59ecfe4d41f0ac1420ac010", null ],
