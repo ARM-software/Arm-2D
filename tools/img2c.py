@@ -40,7 +40,7 @@ if script_dir not in sys.path:
 
 # Import zhRGB565 compression modules
 try:
-    from zhRGB565_core import (
+    from zhRGB565 import (
         encode_rgb565_rle_only,
         generate_c_array as generate_rle_c_array,
         encode_rgb565_rle_diff,
