@@ -315,19 +315,66 @@ void __console_box_remove_top_line(console_box_t *ptThis)
 
     } while(true);
 
-    if (this.Console.hwCurrentRow) {
-        this.Console.hwCurrentRow--;
+    if (this.Console.tCurrent.hwRow) {
+        this.Console.tCurrent.hwRow--;
     }
 
     /* refresh the whole console */
     this.u2RTRefreshMode = REFRESH_MODE_WHOLE;
 }
 
+static
+void __console_box_remove_current_line(console_box_t *ptThis)
+{
+    /*
+     * NOTE:
+     *      The previous line always ends with '\n' if we do have one.
+     *      See reference 01 in __console_box_force_to_write_console_fifo()
+     */
+    
+    uint8_t chChar;
+
+    while(arm_2d_byte_fifo_vomit(&this.tConsoleFIFO, &chChar)) {
+
+        if ('\n' == chChar) {
+            /* put the return back */
+            arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, chChar);
+            break;
+        }
+
+        this.Console.tCurrent.hwColumn = 0;
+    }
+}
+
+
+
 ARM_NONNULL(1)
 static 
 void __console_box_force_to_write_console_fifo( console_box_t *ptThis, 
                                                 uint8_t chInputChar)
 {
+    do {
+        if (chInputChar != '\r') {
+            uint8_t chChar;
+            if (!arm_2d_byte_fifo_vomit(&this.tConsoleFIFO, &chChar)) {
+                /* EMPTY*/
+                break;
+            }
+            if ('\r' != chChar) {
+                /* send it back */
+                arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, chChar);
+                break;
+            }
+            if ('\n' == chInputChar) {
+                /* it is a new line*/
+                break;
+            }
+            
+            __console_box_remove_current_line(ptThis);
+            this.u2RTRefreshMode = REFRESH_MODE_NEW_LINES;
+        }
+    } while(0);
+
     do {
         if (arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, chInputChar)) {
             /* check the byte written */
@@ -338,37 +385,48 @@ void __console_box_force_to_write_console_fifo( console_box_t *ptThis,
                     bMoveToNextLine = true;
                     break;
                 case '\r':
-                #if 0   /* known issue: only use '\r' without '\n' will have letter-overlapping issue */
-                    if (__byte_fifo_vomit(&this.tConsoleFIFO, this.Console.hwCurrentColumn + 1)) {
-                        assert(false);
-                    }
-                #endif
-                    this.Console.hwCurrentColumn = 0;   /* move to start of the line */
+                    this.Console.tCurrent.hwColumn = 0;   /* move to start of the line */
                     break;
                 case '\b':
-                    if (this.Console.hwCurrentColumn) { /* delete one byte */
-                        this.Console.hwCurrentColumn--;
+                    if (this.Console.tCurrent.hwColumn) { /* delete one byte */
+                        uint8_t chChar;
+                        arm_2d_byte_fifo_vomit(&this.tConsoleFIFO, NULL);   // '\b'
+                        arm_2d_byte_fifo_vomit(&this.tConsoleFIFO, &chChar);   // previous char
+                        if ('\t' == chChar) {
+                            arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, '\t');
+                        }
+                        this.Console.tCurrent.hwColumn--;
+
+                        this.u2RTRefreshMode = REFRESH_MODE_NEW_LINES;
                     }
                     break;
                 case '\t':
-                    this.Console.hwCurrentColumn += 4;
-                    this.Console.hwCurrentColumn &= ~0x3;
+                    this.Console.tCurrent.hwColumn += 4;
+                    this.Console.tCurrent.hwColumn &= ~0x3;
                     break;
                 default:
-                    this.Console.hwCurrentColumn++;
+                    this.Console.tCurrent.hwColumn++;
                     break;
             }
 
-            if (this.Console.hwCurrentColumn >= this.Console.hwMaxColumn) {
+            if (this.Console.tCurrent.hwColumn >= (this.Console.hwMaxColumn - 1)) {
                 /* move to next line */
+
+                /* Reference 01: insert a return */
+                if (!arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, '\n')) {
+                    __console_box_remove_top_line(ptThis);
+                    /* try again */
+                    arm_2d_byte_fifo_enqueue(&this.tConsoleFIFO, '\n');
+                }
+
                 bMoveToNextLine = true;
             }
 
             if (bMoveToNextLine) {
-                this.Console.hwCurrentColumn = 0;
-                this.Console.hwCurrentRow++;
+                this.Console.tCurrent.hwColumn = 0;
+                this.Console.tCurrent.hwRow++;
 
-                if (this.Console.hwCurrentRow >= this.Console.hwMaxRow) {
+                if (this.Console.tCurrent.hwRow >= this.Console.hwMaxRow) {
                     __console_box_remove_top_line(ptThis);
                 } else if (this.u2RTRefreshMode < REFRESH_MODE_NEW_LINES) {
                     this.u2RTRefreshMode = REFRESH_MODE_NEW_LINES;
@@ -408,6 +466,12 @@ void console_box_clear_screen(console_box_t *ptThis)
 }
 
 ARM_NONNULL(1)
+console_position_t console_box_get_current_position(console_box_t *ptThis)
+{
+    return this.Console.tCurrent;
+}
+
+ARM_NONNULL(1)
 bool console_box_on_frame_start(console_box_t *ptThis)
 {
     assert(NULL != ptThis);
@@ -424,8 +488,8 @@ bool console_box_on_frame_start(console_box_t *ptThis)
     if (bREQClearScreen) {
         arm_2d_byte_fifo_drop_all(&this.tConsoleFIFO);
         this.u2RTRefreshMode = REFRESH_MODE_WHOLE;      /* refresh the whole screen */
-        this.Console.hwCurrentColumn = 0;
-        this.Console.hwCurrentRow = 0;
+        this.Console.tCurrent.hwColumn = 0;
+        this.Console.tCurrent.hwRow = 0;
         this.Console.hwLastRow = 0;
         this.Console.hwLastColumn = 0;
     }
@@ -461,8 +525,8 @@ bool console_box_on_frame_start(console_box_t *ptThis)
                 break;
             
             case REFRESH_MODE_NEW_CHARS: {
-                    int32_t iCharDelta = (int32_t)this.Console.hwCurrentColumn 
-                                       - (int32_t)this.Console.hwLastColumn;
+                    int32_t iCharDelta = (int32_t)this.Console.tCurrent.hwColumn 
+                                       - (int32_t)this.Console.tCurrent.hwColumn;
                     
                     /* update size */
                     this.tReDrawRegion.tSize.iHeight = tCharSize.iHeight;
@@ -491,7 +555,7 @@ bool console_box_on_frame_start(console_box_t *ptThis)
                 this.tReDrawRegion.tSize.iWidth = tCharSize.iWidth * this.Console.hwMaxColumn;
                 this.tReDrawRegion.tSize.iHeight 
                     = tCharSize.iHeight 
-                    * (this.Console.hwCurrentRow - this.Console.hwLastRow + 1);
+                    * (this.Console.tCurrent.hwRow - this.Console.hwLastRow + 1);
 
                 break;
             
@@ -511,8 +575,9 @@ bool console_box_on_frame_start(console_box_t *ptThis)
         this.Console.iDirtyRegionPreviousRowWidth = this.Console.hwMaxColumn * tCharSize.iWidth;
         arm_2d_dynamic_dirty_region_on_frame_start(&this.tDirtyRegion, CONSOLE_BOX_DIRTY_REGION_START);
 
-        this.Console.hwLastColumn = this.Console.hwCurrentColumn;
-        this.Console.hwLastRow = this.Console.hwCurrentRow;
+        this.Console.hwLastColumn = this.Console.tCurrent.hwColumn
+        ;
+        this.Console.hwLastRow = this.Console.tCurrent.hwRow;
     }
 
     return this.u2RTOneTimeRefreshMode != REFRESH_MODE_NO_UPDATE;

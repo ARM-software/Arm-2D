@@ -73,8 +73,8 @@
 #   error Unsupported colour depth!
 #endif
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-#   define RADIAL_LINE_COVER_MASK   this.tQOICover.vres.tTile
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+#   define RADIAL_LINE_COVER_MASK   this.tLMSKCover.tTile
 #else
 #   define RADIAL_LINE_COVER_MASK   c_tileRadialLineCoverMask
 #endif
@@ -182,8 +182,8 @@ static void __on_scene_knob_load(arm_2d_scene_t *ptScene)
     progress_wheel_on_load(&this.tWheel);
     meter_pointer_on_load(&this.tPointer);
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    arm_qoi_loader_on_load(&this.tQOICover);
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    arm_lmsk_loader_on_load(&this.tLMSKCover);
 #endif
 
 }
@@ -205,8 +205,8 @@ static void __on_scene_knob_depose(arm_2d_scene_t *ptScene)
     progress_wheel_depose(&this.tWheel);
     meter_pointer_depose(&this.tPointer);
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    arm_qoi_loader_depose(&this.tQOICover);
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    arm_lmsk_loader_depose(&this.tLMSKCover);
 #endif
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
@@ -285,8 +285,8 @@ static void __on_scene_knob_frame_start(arm_2d_scene_t *ptScene)
 
     progress_wheel_on_frame_start(&this.tWheel);
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    arm_qoi_loader_on_frame_start(&this.tQOICover);
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    arm_lmsk_loader_on_frame_start(&this.tLMSKCover);
 #endif
 }
 
@@ -297,8 +297,8 @@ static void __on_scene_knob_frame_complete(arm_2d_scene_t *ptScene)
 
     meter_pointer_on_frame_complete(&this.tPointer);
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    arm_qoi_loader_on_frame_complete(&this.tQOICover);
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    arm_lmsk_loader_on_frame_complete(&this.tLMSKCover);
 #endif
 }
 
@@ -326,7 +326,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_knob_handler)
 
         /* draw the radial line cover */
         arm_2d_align_centre(__top_canvas,
-                            c_tileRadialLineCoverA4Mask.tRegion.tSize) {
+                            RADIAL_LINE_COVER_MASK.tRegion.tSize) {
 
             /*!
              * \NOTE since rotation(transform) algorithm will ignore the 
@@ -632,67 +632,30 @@ user_scene_knob_t *__arm_2d_scene_knob_init(   arm_2d_scene_player_t *ptDispAdap
         ARM_2D_OP_INIT(this.tCoverRotateOP);
     }
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    /* initialize QOI loader */
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    /* initialize LMSK loader */
     do {
-    #if ARM_2D_DEMO_QOI_USE_FILE
-        arm_loader_io_file_init(&this.LoaderIO.tFile, "../common/asset/radial_line_cover.qoi");
-    #else
-        extern const uint8_t c_qoiRadialLineCover[34151];
+        extern const uint8_t c_lmskRadialLineCoverMask[11301];
 
         arm_loader_io_rom_init( &this.LoaderIO.tROM, 
-                                (uintptr_t)c_qoiRadialLineCover, 
-                                sizeof(c_qoiRadialLineCover));
-    #endif
-        arm_qoi_loader_cfg_t tCFG = {
+                                (uintptr_t)c_lmskRadialLineCoverMask, 
+                                sizeof(c_lmskRadialLineCoverMask));
+
+        arm_lmsk_loader_cfg_t tCFG = {
             //.bUseHeapForVRES = true,
             .ptScene = (arm_2d_scene_t *)ptThis,
-            .u2WorkMode = ARM_QOI_MODE_PARTIAL_DECODED,
 
-            /* you can only extract specific colour channel and use it as A8 mask */
-            .tColourInfo.chScheme = ARM_2D_COLOUR_MASK_A8,
-            //.u2ChannelIndex = ARM_QOI_MASK_CHN_GREEN,   
-
-            //.bInvertColour = true,
-            //.bForceDisablePreBlendwithBG = true,
-            .tBackgroundColour.wColour = GLCD_COLOR_WHITE,
-        #if ARM_2D_DEMO_QOI_USE_FILE
+        #if  __ARM_LMSK_USE_LOADER_IO__
             .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_FILE,
-                .pTarget = (uintptr_t)&this.LoaderIO.tFile,
-            },
-        #elif  __ARM_QOI_USE_LOADER_IO__
-            .ImageIO = {
-                .ptIO = &ARM_LOADER_IO_BINARY,
+                .ptIO = &ARM_LOADER_IO_ROM,
                 .pTarget = (uintptr_t)&this.LoaderIO.tROM,
             },
         #else
-            .pchQOISource = c_qoiRadialLineCover,
+            .pchLMSKSource = c_lmskRadialLineCoverMask,
         #endif
         };
 
-        arm_qoi_loader_init(&this.tQOICover, &tCFG);
-
-        arm_2d_align_centre(tScreen, this.tQOICover.vres.tTile.tRegion.tSize) {
-            arm_2d_location_t tReferencePoint;
-
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ == 2
-                arm_2d_align_bottom_centre(tScreen, 100, 24) {
-                    tReferencePoint = __bottom_centre_region.tLocation;
-                    tReferencePoint.iY -= 16;
-                }
-
-            #else
-                tReferencePoint.iX = 0;
-                tReferencePoint.iY = ((tScreen.tSize.iHeight + 7) / 8 - 2) * 8;
-            #endif
-
-            #if __DISP0_CFG_NAVIGATION_LAYER_MODE__ != 0            
-                arm_qoi_loader_add_reference_point( &this.tQOICover, 
-                                                    __centre_region.tLocation,
-                                                    tReferencePoint);
-            #endif
-        }
+        arm_lmsk_loader_init(&this.tLMSKCover, &tCFG);
     } while(0);
 #endif 
 

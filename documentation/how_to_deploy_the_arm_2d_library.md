@@ -1,6 +1,6 @@
 # How to Deploy the Arm-2D Library {#deploy} <!-- omit from toc -->
 
-This document describes how to deploy the **Arm-2D** library to your existing MDK projects. If you are not familiar with **Arm-2D**, please start from the **[README](../README.md)** first.
+This document describes how to deploy the **Arm-2D** library to your existing MDK projects. If you are not familiar with **Arm-2D**, please start with the README.
 
 ### Table of Contents
 
@@ -24,10 +24,10 @@ This document describes how to deploy the **Arm-2D** library to your existing MD
 
 There are three methods to get Arm-2D:
 
--  Cloning Arm-2D repository on Github using the following command line:
+-  Cloning the Arm-2D repository on GitHub using the following command line:
 
   ```shell
-  git clone https://github.com/ARM-software/Arm-2D.git
+  git clone https://github.com/ARM-software/Arm-2D.git --recursive
   ```
 
 - Downloading Arm-2D CMSIS-Pack from the [release page](https://github.com/ARM-software/Arm-2D/releases).
@@ -50,9 +50,9 @@ There are three methods to get Arm-2D:
 
 ### 2.1 Deploy Using CMSIS-Pack in MDK
 
-1. Open the Run-Time Environment configuration dialog using menu "Project->Manage->Run-Time Environment" as shown in **Figure 2-6**.
+1. Open the Run-Time Environment configuration dialogue using the menu "Project->Manage->Run-Time Environment" as shown in **Figure 2-6**.
 
-    **Figure 2-6 Open Run-Time Environment Dialog**
+    **Figure 2-6 Open Run-Time Environment Dialogue**
     ![](./pictures/HowToDeploy2_6.png)
 
 2. Expand **Acceleration** and select **Core**, **Alpha-Blending** and **Transform** under **Arm-2D** as shown below. Make sure you also select **CMSIS-CORE** and **CMSIS-DSP**.
@@ -91,13 +91,13 @@ There are three methods to get Arm-2D:
     
     
     
-    Open the **Configuration Wizard** and check options available for Arm-2D
+    Open the **Configuration Wizard** and check the options available for Arm-2D
     
     **Figure 2-9 Configuration Wizard for Arm-2D**
     
     ![ConfigurationWizardForArm-2D](./pictures/HowToDeploy2_9.png) 
     
-    **NOTE**: If you want to support **CCCA8888** (i.e. **RGBA8888**), please selet the `Enable support for accessing individual colour channels`.
+    **NOTE**: If you want to support **CCCA8888** (i.e. **RGBA8888**), please select the `Enable support for accessing individual colour channels`.
 
 
 
@@ -107,13 +107,13 @@ It is easy to deploy arm-2d as a library using CMake; for details, please check 
 
 ### 2.3 Deploy Using Makefile
 
-It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts and hence provide a [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
+It is possible to deploy arm-2d using a Makefile. We suppose you are familiar with writing Makefile scripts, and hence provide a [Makefile](../examples/[template][pc][vscode]/Makefile) used on PC as a good example. 
 
 
 
 ## 3 Helper Services and Extras
 
-Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows people to refresh the whole screen with a petite frame buffer called **Partial Frame Buffer (PFB)**. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.
+Suppose you want to develop GUI applications directly with Arm-2D. In that case, it implies that you not only use Arm-2D APIs for the framebuffer-based low-level 2D image processing but also want to display the processed result on a screen. An ordinary GUI software stack will provide a dedicated service for connecting a target screen, and users must implement a driver or adapter between the hardware and the service. Such a service usually allows users to refresh the entire screen using a small frame buffer called the **Partial Frame Buffer (PFB)**. This feature is vital for resource-constrained embedded platforms. Arm-2D provide a similar feature through a helper service called the Display Adapter Service.
 
 ### 3.1 Preparation
 
@@ -139,7 +139,7 @@ Here, as shown in **Figure 3-1**:
 
 <img src="./pictures/Disp0_DrawBitmap.png" alt="Disp0_DrawBitmap" style="zoom:70%;" /> 
 
-Suppose the display RAM of your LCD has been mapped into internal 4G memory space. An example of `Disp0_DrawBitmap()` might look like this:
+Suppose the display RAM of your LCD has been mapped into the internal 4G memory space. An example of `Disp0_DrawBitmap()` might look like this:
 
 ```c
 /**
@@ -180,16 +180,16 @@ Here, `disp_ram` points to the memory space reserved for the LCD display RAM.
 
 ### 3.2 Add Display Adapter Service
 
-Deploying Display Adatper service in MDK is simple:
+Deploying the Display Adapter service in MDK is simple:
 
-1. Open RTE dialog (as shown in **Figure 3-2**)
+1. Open RTE dialogue (as shown in **Figure 3-2**)
 2. Expand `Acceleration::Arm-2D Helper`
-3. Select the **PFB** and increase the number of **Display Adapter** to `1`. 
+3. Select the **PFB** and set the number of **Display Adapters** to `1`. 
    **NOTE**: If you have multiple screens, please set the number accordingly. 
 
-4. If you see any warning message in yellow, please click the Resolve button. The warning should disappear. 
+4. If you see any yellow warning message, please click the Resolve button. The warning should disappear. 
 
-5. Click **OK** button to close the RTE dialog. 
+5. Click the **OK** button to close the RTE dialogue. 
 
 
 
@@ -197,7 +197,7 @@ Deploying Display Adatper service in MDK is simple:
 
 ![AddDisplayAdapter](./pictures/DisplayAdapter.png)
 
-After that, you will see two files, i.e. `arm_2d_disp_adapter_0.c` and `arm_2d_disp_adapter_0.h` have been added to the project manager under the **Acceleration** group.
+After that, you will see two files, i.e. `arm_2d_disp_adapter_0.c` and `arm_2d_disp_adapter_0.h`, have been added to the project manager under the **Acceleration** group.
 
 **IMPORTANT**: unless necessary, please do **NOT** modify the content of the `arm_2d_disp_adapter_0.c`, as new versions of Arm-2D often introduce new features to the Display Adatper Service, as long as you haven't modified anything in the `arm_2d_disp_adapter_0.c`, updating to the latest version would be an easy task nothing more than right-clicking the file in the project manager and updating to the latest version in the pop-up menu. 
 

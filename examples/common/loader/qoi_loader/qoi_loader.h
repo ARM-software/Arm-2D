@@ -176,7 +176,10 @@ typedef struct arm_qoi_loader_cfg_t {
  */
 typedef struct arm_qoi_loader_t arm_qoi_loader_t;
 struct arm_qoi_loader_t {
-    inherit_ex(arm_2d_vres_t, vres);
+    union {
+        inherit_ex(arm_2d_vres_t, vres);
+        arm_2d_tile_t tTile;
+    };
 
 ARM_PRIVATE(
     arm_qoi_loader_cfg_t tCFG;

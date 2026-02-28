@@ -842,9 +842,9 @@ arm_fsm_rt_t __simple_list_show(  __simple_list_t *ptThis,
                 this.bRedrawCurrentItem = false;
             }
             
-            if (    __arm_2d_list_core_need_redraw(ptList, true)
-                ||  bRedrawList
-                ||  bRedrawCurrentItem) {
+            bRedrawList |= __arm_2d_list_core_need_redraw(ptList, true);
+
+            if (bRedrawList || bRedrawCurrentItem) {
 
                 arm_2d_tile_t *ptTargetTile 
                             = __arm_2d_list_core_get_inner_tile(

@@ -279,7 +279,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_progress_status_handler)
     arm_2d_canvas(ptTile, __canvas) {
 
     #if PROGRESS_STATUS_DEMO_SHOW_WIFI_ANIMATION
-        arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm.use_as__arm_2d_tile_t.tRegion.tSize;
+        arm_2d_size_t tWiFiLogoSize = s_tileWIFISignalFilm.tTile.tRegion.tSize;
 
         arm_2d_dock_vertical(__canvas, 
                             180 + tWiFiLogoSize.iHeight) {

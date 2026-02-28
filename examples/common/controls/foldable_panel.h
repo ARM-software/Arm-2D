@@ -90,9 +90,8 @@ ARM_PRIVATE(
     uint8_t bInnerPanelSizeChanged  : 1;
     uint8_t bOutPanelSizeChanged    : 1;
     uint8_t u8Status                : 2;
-    uint8_t                         : 2;
+    uint8_t                         : 3;
     uint8_t bUnfoldRequest          : 1;
-    uint8_t bFoldRequest            : 1;
 
     uint8_t chPT;
 

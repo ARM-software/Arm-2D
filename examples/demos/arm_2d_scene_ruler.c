@@ -192,6 +192,8 @@ static void __on_scene_ruler_frame_start(arm_2d_scene_t *ptScene)
     int16_t nStepsToMove = 1; 
     uint16_t hwMoveSpeedInMs = 300;
 
+    this.chUpdateFlagMap = 0;
+
 
     /* ---------- plesae do NOT modify code below unless you 100% sure ----- */
     uint16_t hwABSSteps = ABS(nStepsToMove);
@@ -324,6 +326,24 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_ruler_handler)
                                                             &__ruler,
                                                             &__ruler_canvas,
                                                             bIsNewFrame));
+
+                if (bIsNewFrame) {
+                    /* update the untouched dirty region items to erase 
+                     * numbers drawn last time.
+                     */
+                    
+                    uint8_t chFlagMap = this.chUpdateFlagMap;
+                    for (int_fast8_t n = 0; n < 8; n++) {
+                        if (!(chFlagMap & (1 << n))) {
+                            
+                            arm_2d_helper_dirty_region_update_item( 
+                                                        &this.tNumberDirtyRegion[n],
+                                                        (arm_2d_tile_t *)ptTile,
+                                                        NULL,
+                                                        NULL);
+                        }
+                    }
+                }
             
                 /* draw shadow */
                 arm_2d_dock_top(__ruler_canvas, 60) {
@@ -439,6 +459,9 @@ arm_fsm_rt_t __ruler_number_list_draw_list_item(
 
                 arm_2d_helper_dirty_region_item_t *ptDirtyRegionItem 
                     = &ptScene->tNumberDirtyRegion[ptItem->hwID & 0x07];
+
+                ptScene->chUpdateFlagMap |= 1 << (ptItem->hwID & 0x07);
+                
 
                 arm_2d_region_t *ptTextRegion = arm_lcd_text_get_last_display_region();
                 arm_2d_helper_dirty_region_update_item( ptDirtyRegionItem,

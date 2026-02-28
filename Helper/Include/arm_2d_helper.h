@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        23. Jan 2026
- * $Revision:    V.2.5.2
+ * $Date:        13. Feb 2026
+ * $Revision:    V.2.5.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -229,7 +229,7 @@ extern "C" {
                     __frame_count,                                              \
                     __period)                                                   \
     {                                                                           \
-        .use_as__arm_2d_tile_t =                                                \
+        .tTile =                                                                \
             impl_child_tile((__sprites_tile), 0, 0, (__width), (__height)),     \
         .hwColumn = (__column),                                                 \
         .hwFrameNum = (__frame_count),                                          \
@@ -242,7 +242,10 @@ extern "C" {
  * \brief a helper class to represent a GIF-like resource
  */
 typedef struct arm_2d_helper_film_t {
-    implement(arm_2d_tile_t);                                                   /*!< derived from arm_2d_tile_t */
+    union {
+        arm_2d_tile_t tTile;
+        implement(arm_2d_tile_t);                                               /*!< derived from arm_2d_tile_t */
+    };
     uint16_t hwColumn;                                                          /*!< number of frames per row in a sprite tile */
     uint16_t hwFrameNum;                                                        /*!< the total number of frames */
     uint16_t hwPeriodPerFrame;                                                  /*!< the period per frame (optional, used as a reference) */
@@ -509,6 +512,23 @@ extern
 ARM_NONNULL(1)
 void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex);
 
+/*!
+ * \brief get the current frame index number
+ * \param[in] ptThis the target film
+ * \return uint_fast16_t the current index
+ */
+extern
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_index(arm_2d_helper_film_t *ptThis);
+
+/*!
+ * \brief get the frame count
+ * \param[in] ptThis the target film
+ * \return uint_fast16_t the frame count
+ */
+extern
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_count(arm_2d_helper_film_t *ptThis);
 /*----------------------------------------------------------------------------*
  * FIFO Helper Service                                                        *
  *----------------------------------------------------------------------------*/
@@ -545,6 +565,17 @@ void arm_2d_byte_fifo_drop_all( arm_2d_byte_fifo_t *ptThis);
 extern
 ARM_NONNULL(1)
 bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar);
+
+/*!
+ * \brief remove a byte from the queue tail
+ * \param[in] ptThis the target FIFO control block
+ * \param[in] pchChar a buffer to store the byte, NULL means drop a byte
+ * \retval false the FIFO is EMPTY
+ * \retval true operation is successful
+ */
+extern
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar);
 
 /*!
  * \brief enter a byte to the FIFO, if the FIFO is full, drop one from the FIFO

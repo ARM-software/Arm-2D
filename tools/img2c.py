@@ -50,7 +50,15 @@ try:
 except ImportError:
     ZHRGB565_AVAILABLE = False
 
-
+# Import LMSK compression modules
+try:
+    from .lmsk import (
+        load_mask_from_image,
+        encode_lmsk,
+    )
+    LMSK_AVAILABLE = True
+except ImportError:
+    LMSK_AVAILABLE = False
 
 hdr="""
 /* Generated on {0} from {1} */

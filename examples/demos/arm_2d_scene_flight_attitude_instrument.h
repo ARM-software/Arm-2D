@@ -30,6 +30,10 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
+#if defined(RTE_Acceleration_Arm_2D_Extra_LMSK_Loader)
+#   include "arm_2d_example_loaders.h"
+#endif
+
 #ifdef   __cplusplus
 extern "C" {
 #endif
@@ -61,6 +65,16 @@ extern "C" {
 
 #ifndef ARM_2D_DEMO_FAI_SHOW_HORIZON
 #   define ARM_2D_DEMO_FAI_SHOW_HORIZON     0
+#endif
+
+#ifndef ARM_2D_DEMO_FAI_USE_LMSK
+#   define ARM_2D_DEMO_FAI_USE_LMSK         1
+#endif
+
+
+#if !defined(RTE_Acceleration_Arm_2D_Extra_LMSK_Loader)
+#   undef ARM_2D_DEMO_FAI_USE_LMSK
+#   define ARM_2D_DEMO_FAI_USE_LMSK         0
 #endif
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
@@ -111,7 +125,17 @@ ARM_PRIVATE(
 
     int16_t iRollScale;
     int16_t iPitchScale;
-    
+
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    struct {
+        arm_lmsk_loader_t tLoader;
+        union {
+            arm_loader_io_file_t tFile;
+            arm_loader_io_binary_t tBinary;
+            arm_loader_io_rom_t tROM;
+        } LoaderIO;
+    } LMSK;
+#endif
 )
     
 };

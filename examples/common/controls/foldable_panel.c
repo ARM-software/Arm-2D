@@ -466,7 +466,6 @@ void foldable_panel_on_frame_complete( foldable_panel_t *ptThis)
 
             arm_irq_safe {
                 if (this.bUnfoldRequest) {
-                    this.bUnfoldRequest = false;
                     bUnfoldRequest = true;
                 }
             }
@@ -497,8 +496,7 @@ void foldable_panel_on_frame_complete( foldable_panel_t *ptThis)
 
             bool bFoldRequest = false;
             arm_irq_safe {
-                if (this.bFoldRequest) {
-                    this.bFoldRequest = false;
+                if (!this.bUnfoldRequest) {
                     bFoldRequest = true;
                 }
             }
@@ -539,7 +537,7 @@ void foldable_panel_fold(foldable_panel_t *ptThis)
     assert(NULL != ptThis);
 
     arm_irq_safe {
-        this.bFoldRequest = true;
+        this.bUnfoldRequest = false;
     }
 }
 
@@ -572,6 +570,21 @@ void __foldable_panel_update_dirty_regions( foldable_panel_t *ptThis,
     assert(NULL!= ptTile);
     assert(NULL!= ptRegion);
 
+#if 0
+    if (bIsNewFrame && NULL == ptRegion) {
+
+        arm_foreach(this.DirtyRegion.tDirtyRegionItems) {
+            __arm_2d_helper_dirty_region_item_update(
+                        _,
+                        ptTile,
+                        NULL,
+                        NULL);
+        }
+        
+
+        return ;
+    }
+#endif
 
     if (bIsNewFrame && this.tCFG.bUseDirtyRegions) {
         arm_2d_canvas(ptTile, __canvas) {
@@ -735,6 +748,17 @@ arm_2d_tile_t * foldable_panel_show(foldable_panel_t *ptThis,
                                                                 &__centre_region,
                                                                 bIsNewFrame);
                     }
+                }
+            } else {
+                tBoarderSize.iWidth = 1;
+                tBoarderSize.iHeight = 1;
+
+                arm_2d_align_centre(__outer_panel_canvas, tBoarderSize) {
+                
+                    __foldable_panel_update_dirty_regions(  ptThis,
+                                                            &__outer_panel,
+                                                            &__centre_region,
+                                                            bIsNewFrame);
                 }
             }
         }

@@ -48,7 +48,6 @@ void arm_extra_controls_init(void)
 {
     arm_2d_helper_init();
 
-    spinning_wheel_init();
     progress_bar_drill_init();
     progress_bar_flowing_init();
     progress_bar_simple_init();

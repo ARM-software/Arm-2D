@@ -69,6 +69,11 @@ typedef struct console_box_cfg_t {
     arm_2d_region_list_item_t **ppDirtyRegionList;
 } console_box_cfg_t;
 
+typedef struct console_position_t {
+    uint16_t hwRow;
+    uint16_t hwColumn;
+} console_position_t;
+
 /*!
  * \brief a user class for user defined control
  */
@@ -89,8 +94,9 @@ ARM_PRIVATE(
         uint16_t hwMaxRow;
         uint16_t hwLastRow;
         uint16_t hwLastColumn;
-        uint16_t hwCurrentRow;
-        uint16_t hwCurrentColumn;
+        console_position_t tCurrent;
+        //uint16_t hwCurrentRow;
+        //uint16_t hwCurrentColumn;
         uint16_t hwDirtyRegionRow;
         int16_t  iDirtyRegionPreviousRowWidth;
         uint16_t hwScrollUpCount;
@@ -142,6 +148,10 @@ void console_box_show(  console_box_t *ptThis,
 extern
 ARM_NONNULL(1)
 bool console_box_on_frame_start(console_box_t *ptThis);
+
+ARM_NONNULL(1)
+console_position_t 
+console_box_get_current_position(console_box_t *ptThis);
 
 extern
 ARM_NONNULL(1,2)

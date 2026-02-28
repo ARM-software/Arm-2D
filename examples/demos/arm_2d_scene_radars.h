@@ -164,6 +164,14 @@ enum {
     __FILM_COUNT,
 };
 
+enum {
+    RADAR_LMSK_BACKGROUND,
+#if ARM_2D_DEMO_RADAR_SHOW_ANIMATION
+    RADAR_LMSK_FILM_MASK,
+#endif
+    __RADAR_LMSK_COUNT,
+};
+
 typedef struct __radar_bogey_t {
     implement(dynamic_nebula_particle_t);
     int16_t iAngle;
@@ -233,6 +241,15 @@ ARM_PRIVATE(
         spin_zoom_widget_t      tSector;
     } tFilm[__FILM_COUNT];
 #endif
+
+    struct {
+        arm_lmsk_loader_t tLoader;
+        union {
+            arm_loader_io_file_t tFile;
+            arm_loader_io_binary_t tBinary;
+            arm_loader_io_rom_t tROM;
+        } LoaderIO;
+    } LMSK[__RADAR_LMSK_COUNT];
 
 )
     /* place your public member here */

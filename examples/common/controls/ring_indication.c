@@ -17,6 +17,7 @@
  */
 
 /*============================ INCLUDES ======================================*/
+#define __SPIN_ZOOM_WIDGET_INHERIT__
 #define __RING_INDICATION_IMPLEMENT__
 
 #include "./__common.h"
@@ -80,7 +81,10 @@ void ring_indication_init( ring_indication_t *ptThis,
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
     assert(NULL != ptCFG->ptTransformMode);
-    assert(NULL != ptCFG->Foreground.ptTile);
+
+    assert( NULL != ptCFG->Foreground.ptTile 
+        ||  NULL != ptCFG->Foreground.ptMask
+        ||  NULL != ptCFG->Background.ptMask);
 
     memset(ptThis, 0, sizeof(ring_indication_t));
 
@@ -93,6 +97,7 @@ void ring_indication_init( ring_indication_t *ptThis,
             .Source = {
                 .ptMask = ptCFG->QuarterSector.ptMask,
                 .tCentreFloat = ptCFG->QuarterSector.tCentre,
+                .tColourToFill = ptCFG->Foreground.tColourToFill,
             },
             .Extra = {
                 .ptTile = ptCFG->Foreground.ptTile,
@@ -133,12 +138,18 @@ void ring_indication_init( ring_indication_t *ptThis,
     this.Foreground.ptMask = ptCFG->Foreground.ptMask;
     this.Background.ptMask = ptCFG->Background.ptMask;
 
-    int16_t iMaxDiameter = MAX( this.Foreground.ptTile->tRegion.tSize.iWidth,
-                                this.Foreground.ptTile->tRegion.tSize.iHeight);
-    int16_t iRadius = (iMaxDiameter + 1) >> 1;
-    int16_t iSectorMaskRadius = ptCFG->QuarterSector.ptMask->tRegion.tSize.iWidth - 2;
+    if (NULL != this.Foreground.ptTile) {
+        this.tAssetSize = this.Foreground.ptTile->tRegion.tSize;
+    } else if (NULL != this.Foreground.ptMask) {
+        this.tAssetSize = this.Foreground.ptMask->tRegion.tSize;
+    } else if (NULL != this.Background.ptMask) {
+        this.tAssetSize = this.Background.ptMask->tRegion.tSize;
+    }
 
-    this.iDiameter = iMaxDiameter;
+    this.iDiameter = MAX( this.tAssetSize.iWidth, this.tAssetSize.iHeight);
+
+    int16_t iRadius = (this.iDiameter + 1) >> 1;
+    int16_t iSectorMaskRadius = ptCFG->QuarterSector.ptMask->tRegion.tSize.iWidth - 2;
 
     this.fSectorScale = ((float)iRadius / (float)iSectorMaskRadius) + 0.05;
 
@@ -159,7 +170,6 @@ ARM_NONNULL(1)
 arm_2d_size_t ring_indication_get_size(ring_indication_t *ptThis)
 {
     assert(NULL != ptThis);
-    assert(NULL != this.Foreground.ptTile);
 
     return (arm_2d_size_t) {
         .iHeight = this.iDiameter,
@@ -263,7 +273,36 @@ void __ring_indication_draw_quadrant(   ring_indication_t *ptThis,
                                     &tTempCanvas,
                                     &tTemp);
 
-    if (NULL != this.Foreground.ptMask) {
+    if (NULL == this.Foreground.ptTile) {
+        __arm_2d_color_t tColour = {
+            this.tSector.use_as__spin_zoom_widget_t.tCFG.Source.tColourToFill
+        };
+
+        if (NULL != this.Foreground.ptMask) {
+            if (NULL != this.Background.ptMask) {
+                arm_2d_fill_colour_with_masks(  
+                                    ptNewTargetTile,
+                                    NULL,
+                                    this.Foreground.ptMask,
+                                    this.Background.ptMask,
+                                    tColour);
+            } else {
+                arm_2d_fill_colour_with_mask(  
+                                    ptNewTargetTile,
+                                    NULL,
+                                    this.Foreground.ptMask,
+                                    tColour);
+            }
+        } else if (NULL != this.Background.ptMask) {
+            arm_2d_fill_colour_with_mask(  
+                                    ptNewTargetTile,
+                                    NULL,
+                                    this.Background.ptMask,
+                                    tColour);
+        } else {
+            arm_2d_fill_colour(ptNewTargetTile, NULL, tColour.tValue);
+        }
+    } else if (NULL != this.Foreground.ptMask) {
         if (NULL != this.Background.ptMask) {
             arm_2d_tile_copy_with_masks(  
                                 this.Foreground.ptTile,
@@ -333,7 +372,7 @@ void ring_indication_show(  ring_indication_t *ptThis,
                             this.iDiameter) {
 
             arm_2d_align_top_centre(__centre_region, 
-                                    this.Foreground.ptTile->tRegion.tSize) {
+                                    this.tAssetSize) {
 
                 arm_2d_container(   &__visible_window, 
                                     __ring_indicator_panel, 
@@ -636,7 +675,7 @@ void ring_indication_show(  ring_indication_t *ptThis,
 
                         do {
                             /* update user dirty region item with extra areas */
-                            if (NULL != this.ptUserDirtyRegionItem && bIsNewFrame) {
+                            if (bIsNewFrame) {
 
                                 float fCurrentAngle = spin_zoom_widget_get_actual_angle(
                                                 &this.tSector.use_as__spin_zoom_widget_t);
@@ -649,12 +688,20 @@ void ring_indication_show(  ring_indication_t *ptThis,
                                     if (this.bNeedAddExtraRegion) {
                                         this.bNeedAddExtraRegion = false;
 
-                                        /* clear extra area*/
-                                        arm_2d_helper_dirty_region_item_set_extra_region(
-                                                this.ptUserDirtyRegionItem,
-                                                &__ring_indicator_panel,
-                                                NULL,
-                                                NULL);
+                                        if (NULL != this.ptUserDirtyRegionItem) {
+                                            /* clear extra area*/
+                                            arm_2d_helper_dirty_region_item_set_extra_region(
+                                                    this.ptUserDirtyRegionItem,
+                                                    &__ring_indicator_panel,
+                                                    NULL,
+                                                    NULL);
+                                        } else {
+                                            arm_2d_helper_dirty_region_item_set_extra_region(
+                                                    &this.tSector.use_as__spin_zoom_widget_t.tHelper.tItem,
+                                                    &__ring_indicator_panel,
+                                                    NULL,
+                                                    NULL);
+                                        }
                                     }
                                     break;
                                 }
@@ -699,8 +746,8 @@ void ring_indication_show(  ring_indication_t *ptThis,
                                         
                                         tExtraRegion.tLocation = c_chQuadrantEndPointTable[0][chLastQuadrant & 0x03];
 
-                                        tExtraRegion.tLocation.iX *= iRadius;
-                                        tExtraRegion.tLocation.iY *= iRadius;
+                                        tExtraRegion.tLocation.iX *= this.tAssetSize.iWidth >> 1; 
+                                        tExtraRegion.tLocation.iY *= this.tAssetSize.iHeight >> 1;
 
                                         tExtraRegion.tLocation.iX += (int16_t)tPivot.fX;
                                         tExtraRegion.tLocation.iY += (int16_t)tPivot.fY;
@@ -728,8 +775,8 @@ void ring_indication_show(  ring_indication_t *ptThis,
                                         
                                         tExtraRegion.tLocation = c_chQuadrantEndPointTable[1][chLastQuadrant & 0x03];
 
-                                        tExtraRegion.tLocation.iX *= iRadius;
-                                        tExtraRegion.tLocation.iY *= iRadius;
+                                        tExtraRegion.tLocation.iX *= this.tAssetSize.iWidth >> 1; 
+                                        tExtraRegion.tLocation.iY *= this.tAssetSize.iHeight >> 1;
 
                                         tExtraRegion.tLocation.iX += (int16_t)tPivot.fX;
                                         tExtraRegion.tLocation.iY += (int16_t)tPivot.fY;
@@ -749,11 +796,19 @@ void ring_indication_show(  ring_indication_t *ptThis,
 
                                 this.bNeedAddExtraRegion = true;
 
-                                arm_2d_helper_dirty_region_item_set_extra_region(
-                                            this.ptUserDirtyRegionItem,
-                                            &__ring_indicator_panel,
-                                            NULL,
-                                            &tFinalExtraRegion);
+                                if (NULL != this.ptUserDirtyRegionItem) {
+                                    arm_2d_helper_dirty_region_item_set_extra_region(
+                                        this.ptUserDirtyRegionItem,
+                                        &__ring_indicator_panel,
+                                        NULL,
+                                        &tFinalExtraRegion);
+                                } else {
+                                    arm_2d_helper_dirty_region_item_set_extra_region(
+                                        &this.tSector.use_as__spin_zoom_widget_t.tHelper.tItem,
+                                        &__ring_indicator_panel,
+                                        NULL,
+                                        &tFinalExtraRegion);
+                                }
                             }
                         } while(0);
 

@@ -90,8 +90,9 @@ ARM_PRIVATE(
     /* place your private member here, following two are examples */
     int64_t lTimestamp[1];
     bool bUserAllocated;
-
+    uint16_t iNumber;
     arm_zhrgb565_loader_t tAnimation;
+    
 #if __ARM_2D_ZHRGB565_USE_LOADER_IO__
     union {
         arm_loader_io_file_t tFile;

@@ -1354,7 +1354,7 @@ size_t strnlen(const char *pchString, size_t tMaxSize);
             __VA_ARGS__                                                         \
         };
 
-#elif defined(__ARM_2D_IMPL__) || defined(__IS_COMPILER_IAR__)
+#elif defined(__ARM_2D_IMPL__) //|| defined(__IS_COMPILER_IAR__)
 
 #   define ARM_PRIVATE(...)                                                     \
         struct  {                                                               \

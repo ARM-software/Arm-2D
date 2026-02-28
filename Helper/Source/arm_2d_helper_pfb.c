@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_pfb.c"
  * Description:  the pfb helper service source code
  *
- * $Date:        29. Jan 2026
- * $Revision:    V.2.4.6
+ * $Date:        10. Feb 2026
+ * $Revision:    V.2.4.7
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -4713,6 +4713,8 @@ bool __arm_2d_helper_dirty_region_item_update(
     assert(NULL != ptThis);
     assert(NULL != ptTargetTile);
 
+    bool bTryToIgnore = false;
+
     arm_2d_helper_dirty_region_t *ptHelper = this.ptHelper;
 
     if (NULL != ptHelper) {
@@ -4734,9 +4736,15 @@ bool __arm_2d_helper_dirty_region_item_update(
     }
 
     if (NULL == ptNewRegion) {
+
+    #if 0
         this.bIgnore = true;
 
         return this.bNewRegionIsDifferent;
+    #else
+        bTryToIgnore = true;
+        goto label_try_to_ignore;
+    #endif
     }
     this.bIgnore = false;
     this.bOnlyUpdateMinimalEnclosure = false;
@@ -4769,8 +4777,13 @@ bool __arm_2d_helper_dirty_region_item_update(
             if (!arm_2d_region_intersect(   &tNewRegion, 
                                             &tTargetRegion,
                                             &tNewRegion)) {
+            #if 0
                 this.bIgnore = true;
                 break;
+            #else
+                bTryToIgnore = true;
+                goto label_try_to_ignore;
+            #endif
             }
         }
 
@@ -4783,16 +4796,26 @@ bool __arm_2d_helper_dirty_region_item_update(
                                                                  NULL,
                                                                  true)) {
                 /* output visual area */
-                this.bIgnore = true;
-                break;
+                #if 0
+                    this.bIgnore = true;
+                    break;
+                #else
+                    bTryToIgnore = true;
+                    goto label_try_to_ignore;
+                #endif
             }
 
             if (!this.bForceToUseMinimalEnclosure) {
                 if (!arm_2d_region_intersect(   &tNewRegion, 
                                                 &tValidRegionOnVirtualScreen,
                                                 &tNewRegion)) {
+                #if 0
                     this.bIgnore = true;
                     break;
+                #else
+                    bTryToIgnore = true;
+                    goto label_try_to_ignore;
+                #endif
                 }
             }
         }
@@ -4850,6 +4873,20 @@ bool __arm_2d_helper_dirty_region_item_update(
             }
         }
     } while(0);
+
+label_try_to_ignore:
+    if (bTryToIgnore) {
+        /* keep the old region */
+        this.tOldRegion = this.tNewRegion;
+
+        this.tNewRegion.tSize.iHeight = 0;
+        this.tNewRegion.tSize.iWidth = 0;
+
+        if (    0 == this.tOldRegion.tSize.iHeight
+           ||   0 == this.tOldRegion.tSize.iWidth) {
+            this.bIgnore = true;
+        } 
+    }
 
     return this.bNewRegionIsDifferent;
 

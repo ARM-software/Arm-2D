@@ -86,6 +86,7 @@ typedef struct ring_indication_cfg_t {
     struct {
         const arm_2d_tile_t *ptTile;
         const arm_2d_tile_t *ptMask;
+        COLOUR_INT     tColourToFill;
     } Foreground;
 
     struct {
@@ -112,8 +113,9 @@ enum {
 
 
 struct ring_indication_t {
+    implement_ex(meter_pointer_t, tSector);
 ARM_PRIVATE(
-    meter_pointer_t tSector;
+    
     struct {
         const arm_2d_tile_t *ptTile;
         const arm_2d_tile_t *ptMask;
@@ -129,6 +131,8 @@ ARM_PRIVATE(
     int16_t iDiameter;
     uint16_t u2StartFrom                            : 2;
     uint16_t bNeedAddExtraRegion                    : 1;
+
+    arm_2d_size_t tAssetSize;
 
     arm_2d_scene_t *ptScene;
     arm_2d_helper_dirty_region_item_t *ptUserDirtyRegionItem;

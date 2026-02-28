@@ -109,7 +109,7 @@ static void __on_scene_qoi_animation_depose(arm_2d_scene_t *ptScene)
     user_scene_qoi_animation_t *ptThis = (user_scene_qoi_animation_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    arm_qoi_loader_on_load(&this.tAnimation);
+    arm_qoi_loader_depose(&this.tAnimation);
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -121,7 +121,7 @@ static void __on_scene_qoi_animation_depose(arm_2d_scene_t *ptScene)
 }
 
 /*----------------------------------------------------------------------------*
- * Scene qoi_animation                                                                    *
+ * Scene qoi_animation                                                        *
  *----------------------------------------------------------------------------*/
 
 static void __on_scene_qoi_animation_background_start(arm_2d_scene_t *ptScene)
@@ -193,7 +193,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_qoi_animation_handler)
         
 
         arm_2d_align_centre(__top_canvas, 
-                            this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize ) {
+                            this.tFilm.tTile.tRegion.tSize ) {
             
             arm_2d_tile_copy_only(  (const arm_2d_tile_t *)&this.tFilm,
                                     ptTile,
@@ -283,7 +283,7 @@ user_scene_qoi_animation_t *__arm_2d_scene_qoi_animation_init(   arm_2d_scene_pl
         extern const uint8_t c_qoiDogeDance[126958];
 
         
-    #if 0
+    #if 1
         arm_loader_io_cache_init(   &this.LoaderIO.tCache, 
                                     (uintptr_t)c_qoiDogeDance, 
                                     sizeof(c_qoiDogeDance),
@@ -310,7 +310,7 @@ user_scene_qoi_animation_t *__arm_2d_scene_qoi_animation_init(   arm_2d_scene_pl
 
         #if __ARM_QOI_USE_LOADER_IO__
             .ImageIO = {
-            #if 0
+            #if 1
                 .ptIO = &ARM_LOADER_IO_CACHE,
                 .pTarget = (uintptr_t)&this.LoaderIO.tCache,
             #else

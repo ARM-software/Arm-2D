@@ -77,7 +77,11 @@
 #undef this
 #define this (*ptThis)
 
-#define VISUAL_AREA_MASK                    c_tileRoundedSquareMask
+#if ARM_2D_DEMO_FAI_USE_LMSK
+#   define VISUAL_AREA_MASK                 this.LMSK.tLoader.tTile
+#else
+#   define VISUAL_AREA_MASK                 c_tileRoundedSquareMask
+#endif
 
 #define LAND_SKY_MASK                       c_tileSolidSquareMask
 #define LAND_SKY_MASK_SCARE_RATIO           3.6f
@@ -171,6 +175,10 @@ static void __on_scene_flight_attitude_instrument_load(arm_2d_scene_t *ptScene)
 
     spin_zoom_widget_on_load(&this.Roll.tLand);
 
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    arm_lmsk_loader_on_load(&this.LMSK.tLoader);
+#endif
+
 #if ARM_2D_DEMO_FAI_SHOW_HORIZON
     spin_zoom_widget_on_load(&this.Roll.tHorizon);
 #endif
@@ -203,6 +211,10 @@ static void __on_scene_flight_attitude_instrument_depose(arm_2d_scene_t *ptScene
 #endif
     spin_zoom_widget_depose(&this.Roll.tMarker);
     spin_zoom_widget_depose(&this.Pitch.tMarker);
+
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    arm_lmsk_loader_depose(&this.LMSK.tLoader);
+#endif
 
     /*---------------------- insert your depose code end  --------------------*/
 
@@ -239,6 +251,10 @@ static void __on_scene_flight_attitude_instrument_frame_start(arm_2d_scene_t *pt
 {
     user_scene_flight_attitude_instrument_t *ptThis = (user_scene_flight_attitude_instrument_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
+
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    arm_lmsk_loader_on_frame_start(&this.LMSK.tLoader);
+#endif
 
     /* dummy rolling */
     do {
@@ -340,6 +356,9 @@ static void __on_scene_flight_attitude_instrument_frame_complete(arm_2d_scene_t 
     user_scene_flight_attitude_instrument_t *ptThis = (user_scene_flight_attitude_instrument_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    arm_lmsk_loader_on_frame_complete(&this.LMSK.tLoader);
+#endif
 }
 
 static void __before_scene_flight_attitude_instrument_switching_out(arm_2d_scene_t *ptScene)
@@ -550,7 +569,32 @@ user_scene_flight_attitude_instrument_t *__arm_2d_scene_flight_attitude_instrume
 
     /* ------------   initialize members of user_scene_flight_attitude_instrument_t begin ---------------*/
 
-    
+#if ARM_2D_DEMO_FAI_USE_LMSK
+    /* initialize LMSK loader */
+    do {
+        extern const uint8_t c_lmskRoundedSquare[1223];
+
+        arm_loader_io_rom_init( &this.LMSK.LoaderIO.tROM, 
+                                (uintptr_t)c_lmskRoundedSquare, 
+                                sizeof(c_lmskRoundedSquare));
+
+        arm_lmsk_loader_cfg_t tCFG = {
+            //.bUseHeapForVRES = true,
+            .ptScene = (arm_2d_scene_t *)ptThis,
+
+        #if __ARM_LMSK_USE_LOADER_IO__
+            .ImageIO = {
+                .ptIO = &ARM_LOADER_IO_ROM,
+                .pTarget = (uintptr_t)&this.LMSK.LoaderIO.tROM,
+            },
+        #else
+            .pchLMSKSource = c_lmskRoundedSquare,
+        #endif
+        };
+
+        arm_lmsk_loader_init(&this.LMSK.tLoader, &tCFG);
+    } while(0);
+#endif
 
     /* initialize Land */
     do {

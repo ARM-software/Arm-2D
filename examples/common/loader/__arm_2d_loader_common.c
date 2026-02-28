@@ -193,11 +193,11 @@ bool arm_loader_io_open(const arm_loader_io_t *ptIO,
     if (NULL == ptIO) {
         return true;
     }
-#if 0
+
     if (NULL == ptIO->fnOpen) {
         return true;
     }
-#endif
+
     return ptIO->fnOpen(pTarget,ptLoader);
 }
 
@@ -211,11 +211,10 @@ void arm_loader_io_close(   const arm_loader_io_t *ptIO,
         return ;
     }
 
-#if 0
     if (NULL == ptIO->fnClose) {
-        return true;
+        return ;
     }
-#endif
+
     return ptIO->fnClose(pTarget,ptLoader);
 }
 
@@ -228,11 +227,10 @@ intptr_t arm_loader_io_get_position(const arm_loader_io_t *ptIO,
         return -1;
     }
 
-#if 0
     if (NULL == ptIO->fnGetPosition) {
-        return true;
+        return -1;
     }
-#endif
+
     return ptIO->fnGetPosition(pTarget,ptLoader);
 }
 
@@ -270,7 +268,7 @@ size_t arm_loader_io_read(  const arm_loader_io_t *ptIO,
 
 #if 0
     if (NULL == ptIO->fnRead) {
-        return true;
+        return 0;
     }
 #endif
     return ptIO->fnRead(pTarget, 

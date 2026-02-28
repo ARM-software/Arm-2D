@@ -28,17 +28,19 @@ For Windows users, due to a known **Windows-Only** GCC compilation issue, we hig
 
 #### 2.2.1 Install the required components
 
-Second, please install the required modules with the following command:
+Please install the required modules with the following command:
 
 ```sh
 sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-multiarch
 ```
 
+Please install **Visual Studio Code** and the **Microsoft C/C++ Extension**.
+
 
 
 #### 2.2.2 Open the Project
 
-Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
+Please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
 In the "**Run and Debug**" panel, you can run the project via "**build and run Linux**", or you can press "**F5**" to launch a debug session.
 
@@ -50,7 +52,7 @@ In the "**Run and Debug**" panel, you can run the project via "**build and run L
 
 #### 2.3.1 Install the homebrew and sdl2
 
-Second, please open the terminal in MacOS and [install the homebrew](https://brew.sh/) with the following command:
+Please open the terminal in MacOS and [install the homebrew](https://brew.sh/) with the following command:
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -72,11 +74,13 @@ After that, please install sdl2 with the following command:
 brew install sdl2
 ```
 
+Finally, please install **Visual Studio Code** and the **Microsoft C/C++ Extension**.
+
 
 
 #### 2.3.2 Open the Project
 
-Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
+Please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
 In the "**Run and Debug**" panel, you can run the project via "**build and run on macos (lldb)**" or you can press "**F5**" to launch a debug session.
 
@@ -301,13 +305,13 @@ With such a configuration, we can optimise the Arm-2D GUI application without do
 
 > [!WARNING]
 >
-> The performance data obtained or observed on the aforementioned PC platform configuration can only be used as a reference. 
+> The performance data obtained or observed on the aforementioned PC platform configuration are for reference only. 
 
 
 
 ### 3.6 How to create a new scene with the Scene Template
 
-Arm-2D provides a scene template in the `Helper\template` folder, called `arm_2d_scene_template.c` and `arm_2d_scene_template.h`. You can create a new scene using this template easily with the following steps. Suppose we want to create a new scene called `my_demo`:
+Arm-2D provides a scene template in the `Helper\template` folder, called `arm_2d_scene_template.c` and `arm_2d_scene_template.h`. You can easily create a new scene using this template by following these steps. Suppose we want to create a new scene called `my_demo`:
 
 1. Copy the two files, `arm_2d_scene_template.c` and `arm_2d_scene_template.h,` to your application folder.
 2. Rename the two files by replacing the `template` with `my_demo`, so we get. `arm_2d_scene_my_scene.c` and `arm_2d_scene_my_demo.h`.
@@ -370,7 +374,7 @@ Enjoy.
 
 ### A For Native Windows (Deprecated)
 
-#### A.1 Install GCC (mingw32) and Make
+#### A.1 Install GCC (mingw32), Make and Visual Studio Code
 
 Second, please 
 
@@ -381,11 +385,11 @@ Second, please
 
 ![PathforGCC](../../documentation/pictures/path_for_gcc.png) 
 
-
+Please install **Visual Studio Code** and the **Microsoft C/C++ Extension**.
 
 #### A.2 Open the Project
 
-Finally, please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
+Please open the project in VSCode. You can do this by choosing "**Open Workspace from File**"  in the File menu in VSCode and then selecting the workspace file `[template][pc][vscode].code-workspace` .
 
 In the "Run and Debug" panel, you can run the project via "build and run x86(32)", or you can press "**F5**" to launch a debug session.
 

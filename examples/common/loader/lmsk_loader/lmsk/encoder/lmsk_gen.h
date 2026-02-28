@@ -17,6 +17,8 @@
  */
 
 /*============================ INCLUDES ======================================*/
+#if defined(__ENCODER_COMPILATION__)
+
 #ifndef __LMSK_GEN_H__
 #   define __LMSK_GEN_H__
 
@@ -617,7 +619,9 @@ typedef struct system_cfg_t {
         char *pchOutputFilePath;
 
         uint32_t bValid                 : 1;
-        uint32_t                        : 7;
+        uint32_t bNoGradient            : 1;
+        uint32_t u2GradientTolerant     : 2;
+        uint32_t                        : 4;
         uint32_t u8AlphaMSBBits         : 8;
         uint32_t                        : 16;
     } Input;
@@ -671,6 +675,8 @@ static inline uint8_t __arm_2d_gray8_pack(__arm_2d_color_fast_rgb_t * ptRGB)
 
 #ifdef   __cplusplus
 }
+#endif
+
 #endif
 
 #endif

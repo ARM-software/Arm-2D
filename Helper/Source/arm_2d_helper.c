@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        23. Jan 2026
- * $Revision:    V.2.5.2
+ * $Date:        13. Feb 2026
+ * $Revision:    V.2.5.5
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -730,7 +730,7 @@ bool arm_2d_helper_film_next_frame(arm_2d_helper_film_t *ptThis)
     bool bReachTheEnd = false;
     assert(NULL != ptThis);
     
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
                 
     ptFrame->tRegion.tLocation.iX += ptFrame->tRegion.tSize.iWidth;
     if (ptFrame->tRegion.tLocation.iX >= ptFrame->tRegion.tSize.iWidth * this.hwColumn) {
@@ -752,7 +752,7 @@ ARM_NONNULL(1)
 void arm_2d_helper_film_reset(arm_2d_helper_film_t *ptThis)
 {
     assert(NULL != ptThis);
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
 
     ptFrame->tRegion.tLocation.iX = 0;
     ptFrame->tRegion.tLocation.iY = 0;
@@ -764,7 +764,7 @@ ARM_NONNULL(1)
 void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
 {
     assert(NULL != ptThis);
-    arm_2d_tile_t *ptFrame = &this.use_as__arm_2d_tile_t;
+    arm_2d_tile_t *ptFrame = &this.tTile;
 
     nIndex %= this.hwFrameNum;
     if (nIndex < 0) {
@@ -776,6 +776,22 @@ void arm_2d_helper_film_set_frame(arm_2d_helper_film_t *ptThis, int32_t nIndex)
         = (nIndex % this.hwColumn) * ptFrame->tRegion.tSize.iWidth;
     ptFrame->tRegion.tLocation.iY 
         = (nIndex / this.hwColumn) * ptFrame->tRegion.tSize.iHeight;
+}
+
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_index(arm_2d_helper_film_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.hwFrameIndex;
+}
+
+ARM_NONNULL(1)
+uint_fast16_t arm_2d_helper_film_get_frame_count(arm_2d_helper_film_t *ptThis)
+{
+    assert(NULL != ptThis);
+
+    return this.hwFrameNum;
 }
 
 #if __ARM_2D_HELPER_CFG_LAYOUT_DEBUG_MODE__
@@ -1015,6 +1031,43 @@ bool arm_2d_byte_fifo_enqueue(arm_2d_byte_fifo_t *ptThis, uint8_t chChar)
             }
             this.tHead.hwDataAvailable++;
             this.tPeek.hwDataAvailable++;
+
+            bResult = true;
+        } while(0);
+    }
+
+    return bResult;
+}
+
+ARM_NONNULL(1)
+bool arm_2d_byte_fifo_vomit(arm_2d_byte_fifo_t *ptThis, uint8_t *pchChar)
+{
+    assert(NULL != ptThis);
+    bool bResult = false;
+
+    if (NULL == this.pchBuffer) {
+        return false;
+    }
+
+    arm_irq_safe {
+        do {
+            if ((this.hwTail == this.tHead.hwPointer) 
+            &&  (this.tHead.hwDataAvailable == 0)) {
+                /* FIFO is EMPTY */
+                break;
+            }
+
+            if (this.hwTail == 0) {
+                this.hwTail = this.hwSize;
+            }
+            this.hwTail--;
+
+            if (NULL != pchChar) {
+                *pchChar = this.pchBuffer[this.hwTail];
+            }
+
+            this.tHead.hwDataAvailable--;
+            this.tPeek = this.tHead;
 
             bResult = true;
         } while(0);

@@ -21,6 +21,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
 #include <assert.h>
 
 #ifdef   __cplusplus
@@ -130,6 +132,14 @@ typedef union arm_lmsk_tag_gradient_t {
     };
     uint32_t wWord;
 } arm_lmsk_tag_gradient_t;
+
+typedef union arm_lmsk_tag_alpha_t {
+    struct {
+        uint8_t chTag;                  /* Tag: TAG_U8_ALPHA */
+        uint8_t chAlpha;
+    };
+    uint16_t hwWord;
+} arm_lmsk_tag_alpha_t;
 
 
 /*============================ GLOBAL VARIABLES ==============================*/

@@ -276,7 +276,7 @@ arm_2d_err_t arm_qoi_dec_resume_context(arm_qoi_dec_t *ptThis,
 
 
 #if __ARM_QOI_USE_LOADER_IO__ && ARM_QOI_IO_BUFF_SIZE > 0
-    if (this.ptWorking->hwSize > 0) {
+    if (this.ptWorking->hwSize > 0 && this.ptWorking->hwTail > 0) {
         /* refill the buffer */
         if (this.ptWorking->hwTail
          >  this.tCFG.IO.fnRead(this.tCFG.pTarget, 
@@ -354,12 +354,16 @@ ARM_NONNULL(1)
 uint32_t __arm_qoi_get_fetch_bits(arm_qoi_dec_t *ptThis, uint_fast8_t chBits)
 {
     uint32_t wReturn = 0;
-    uint32_t wMask;
+    uint32_t wMask = 0;
     uint8_t chLaterShift = 0;
     do {
         if (this.ptWorking->chBitsAvailable >= chBits) {
 
-            wMask = (1 << chBits) - 1;
+        #if (__ARM_ARCH_PROFILE == 'M') || defined(__TARGET_PROFILE_M)
+            wMask = ((uint32_t)1 << chBits) - 1;
+        #else
+            wMask = ((uint64_t)1 << chBits) - 1;
+        #endif
 
             wReturn |= (this.ptWorking->wOPFetch & wMask) << chLaterShift;
             this.ptWorking->chBitsAvailable -= chBits;

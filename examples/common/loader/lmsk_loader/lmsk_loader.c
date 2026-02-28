@@ -83,16 +83,25 @@ static
 size_t __lmsk_loader_read ( intptr_t pTarget,      
                             uint8_t *pchBuffer,
                             size_t tLength);
+
+static
+__arm_lmsk_floor_context_t *
+__lmsk_loader_search_context( intptr_t pTarget, int16_t iY);
+
+static
+void __lmsk_loader_report_context(
+                                intptr_t pTarget, 
+                                const __arm_lmsk_floor_context_t *ptContext);
 /*============================ LOCAL VARIABLES ===============================*/
 /*============================ IMPLEMENTATION ================================*/
 
 ARM_NONNULL(1,2)
-arm_2d_err_t lmsk_loader_init(lmsk_loader_t *ptThis,
-                                lmsk_loader_cfg_t *ptCFG)
+arm_2d_err_t arm_lmsk_loader_init(  arm_lmsk_loader_t *ptThis,
+                                    arm_lmsk_loader_cfg_t *ptCFG)
 {
     assert(NULL != ptThis);
     assert(NULL != ptCFG);
-    memset(ptThis, 0, sizeof(lmsk_loader_t));
+    memset(ptThis, 0, sizeof(arm_lmsk_loader_t));
 
 
     arm_2d_err_t tResult = ARM_2D_ERR_NONE;
@@ -110,6 +119,7 @@ arm_2d_err_t lmsk_loader_init(lmsk_loader_t *ptThis,
             tResult = ARM_2D_ERR_IO_ERROR;
             break;
         }
+        this.pchLMSKSource = ptCFG->pchLMSKSource;
     #endif
 
         arm_generic_loader_cfg_t tCFG = {
@@ -151,7 +161,7 @@ arm_2d_err_t lmsk_loader_init(lmsk_loader_t *ptThis,
 }
 
 ARM_NONNULL(1)
-void lmsk_loader_depose( lmsk_loader_t *ptThis)
+void arm_lmsk_loader_depose( arm_lmsk_loader_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -159,7 +169,7 @@ void lmsk_loader_depose( lmsk_loader_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void lmsk_loader_on_load( lmsk_loader_t *ptThis)
+void arm_lmsk_loader_on_load( arm_lmsk_loader_t *ptThis)
 {
     assert(NULL != ptThis);
     
@@ -167,15 +177,16 @@ void lmsk_loader_on_load( lmsk_loader_t *ptThis)
 }
 
 ARM_NONNULL(1)
-void lmsk_loader_on_frame_start( lmsk_loader_t *ptThis)
+void arm_lmsk_loader_on_frame_start( arm_lmsk_loader_t *ptThis)
 {
     assert(NULL != ptThis);
     
+    this.bIsNewFrame = true;
     arm_generic_loader_on_frame_start(&this.use_as__arm_generic_loader_t);
 }
 
 ARM_NONNULL(1)
-void lmsk_loader_on_frame_complete( lmsk_loader_t *ptThis)
+void arm_lmsk_loader_on_frame_complete( arm_lmsk_loader_t *ptThis)
 {
     assert(NULL != ptThis);
 
@@ -188,14 +199,22 @@ arm_2d_err_t __lmsk_loader_decoder_init(arm_generic_loader_t *ptObj)
 {
     assert(NULL != ptObj);
 
-    lmsk_loader_t *ptThis = (lmsk_loader_t *)ptObj;
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)ptObj;
 
     arm_lmsk_decoder_cfg_t tCFG = {
+    
         .IO = {
+        #if __ARM_LMSK_USE_LOADER_IO__
             .fnSeek = &__lmsk_loader_seek,
             .fnRead = &__lmsk_loader_read,
+        #endif
+            .fnSearchFloorContext = &__lmsk_loader_search_context,
+            .fnReportFloorContext = &__lmsk_loader_report_context,
             .pTarget = (uintptr_t)ptObj,
         },
+    #if !__ARM_LMSK_USE_LOADER_IO__
+        .pchLMSKSource = this.pchLMSKSource,
+    #endif
     };
 
     if (0 != arm_lmsk_decoder_init(&this.tDecoder, &tCFG)) {
@@ -217,7 +236,7 @@ arm_2d_err_t __lmsk_loader_draw(arm_generic_loader_t *ptObj,
                                 uint_fast8_t chBitsPerPixel)
 {
     assert(NULL != ptObj);
-    lmsk_loader_t *ptThis = (lmsk_loader_t *)ptObj;
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
     int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
@@ -237,19 +256,16 @@ arm_2d_err_t __lmsk_loader_draw(arm_generic_loader_t *ptObj,
     return ARM_2D_ERR_NONE;
 }
 
+#if __ARM_LMSK_USE_LOADER_IO__
 static
 bool __lmsk_loader_seek(uintptr_t pTarget, int32_t nOffset)
 {
-    lmsk_loader_t *ptThis = (lmsk_loader_t *)pTarget;
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)pTarget;
 
-#if __ARM_LMSK_USE_LOADER_IO__
+
     return arm_generic_loader_io_seek(  &this.use_as__arm_generic_loader_t, 
                                         nOffset, 
                                         SEEK_SET);
-#else
-    this.nPosition = nOffset;
-    return true;
-#endif
 }
 
 static
@@ -257,17 +273,36 @@ size_t __lmsk_loader_read ( intptr_t pTarget,
                             uint8_t *pchBuffer,
                             size_t tLength)
 {
-    lmsk_loader_t *ptThis = (lmsk_loader_t *)pTarget;
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)pTarget;
 
-#if __ARM_LMSK_USE_LOADER_IO__
     return arm_generic_loader_io_read(&this.use_as__arm_generic_loader_t, pchBuffer, tLength);
-#else
-    memcpy(pchBuffer, &this.pchLMSKSource[this.nPosition], tLength); 
-    
-    return tLength;
+}
 #endif
+
+static
+__arm_lmsk_floor_context_t *__lmsk_loader_search_context( intptr_t pTarget, int16_t iY)
+{
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)pTarget;
+
+    if (this.tContext.iCurrent <= iY) {
+        return &this.tContext;
+    }
+
+    return NULL;
 }
 
+static
+void __lmsk_loader_report_context(  intptr_t pTarget, 
+                                    const __arm_lmsk_floor_context_t *ptContext)
+{
+    arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)pTarget;
+    if (this.bIsNewFrame) {
+        if (this.tContext.iCurrent != ptContext->iCurrent) {
+            this.tContext = *ptContext;
+        }
+        this.bIsNewFrame = false;
+    }
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

@@ -109,7 +109,7 @@ static void __on_scene_zhrgb565_depose(arm_2d_scene_t *ptScene)
     user_scene_zhrgb565_t *ptThis = (user_scene_zhrgb565_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
-    arm_zhrgb565_loader_on_load(&this.tAnimation);
+    arm_zhrgb565_loader_depose(&this.tAnimation);
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -151,10 +151,17 @@ static void __on_scene_zhrgb565_frame_start(arm_2d_scene_t *ptScene)
         arm_2d_helper_dirty_region_item_suspend_update(
             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
             false);
+
     } else {
         arm_2d_helper_dirty_region_item_suspend_update(
             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
             true);
+    }
+
+    if (0 != ptScene->ptPlayer->Benchmark.wAverage) {
+        this.iNumber = MIN(( arm_2d_helper_get_reference_clock_frequency() 
+                           / ptScene->ptPlayer->Benchmark.wAverage), 
+                          999);
     }
 
     arm_zhrgb565_loader_on_frame_start(&this.tAnimation);
@@ -192,18 +199,42 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_zhrgb565_handler)
     /*-----------------------draw the foreground begin-----------------------*/
         
 
+        arm_2d_size_t tTVBoxSize = this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize;
+        tTVBoxSize.iHeight += 10;
+
         arm_2d_align_centre(__top_canvas, 
-                            this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize ) {
+                            tTVBoxSize ) {
             
-            arm_2d_tile_copy_only(  (const arm_2d_tile_t *)&this.tFilm,
+            arm_2d_layout(__centre_region) {
+
+                __item_line_dock_vertical(10, 0, 0, 0, 0) {
+
+                    arm_2d_fill_colour(ptTile, &__item_region, GLCD_COLOR_DARK_GREY);
+
+                    arm_2d_dock_vertical(__item_region, 8, 2) {
+                        arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+                        arm_lcd_text_set_draw_region(&__vertical_region);
+                        arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
+                        arm_lcd_printf("Frame:%03"PRId16" FPS:%"PRId16, 
+                                        arm_2d_helper_film_get_frame_index(&this.tFilm),
+                                        this.iNumber);
+                    }
+                }
+
+                __item_line_dock_vertical() {
+                    arm_2d_tile_copy_only(  (const arm_2d_tile_t *)&this.tFilm,
                                     ptTile,
-                                    &__centre_region);
+                                    &__item_region);
             
+                    
+                }
+            }
+
             arm_2d_helper_dirty_region_update_item( 
-                    &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
-                    (arm_2d_tile_t *)ptTile,
-                    &__top_canvas,
-                    &__centre_region);
+                            &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
+                            (arm_2d_tile_t *)ptTile,
+                            &__top_canvas,
+                            &__centre_region);
                                     
         }
 
@@ -278,7 +309,7 @@ user_scene_zhrgb565_t *__arm_2d_scene_zhrgb565_init(   arm_2d_scene_player_t *pt
 
     /* ------------   initialize members of user_scene_zhrgb565_t begin ---------------*/
 
-    /* initialize Zjpgdec loader */
+    /* initialize zhRGB565 loader */
     do {
         extern const uint16_t c_zhrgbDogeDance[51166];
 

@@ -30,7 +30,7 @@
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
 
-#if defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
+#if defined(RTE_Acceleration_Arm_2D_Extra_LMSK_Loader)
 #   include "arm_2d_example_loaders.h"
 #endif
 
@@ -63,13 +63,13 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
-#ifndef ARM_2D_SCENE_KNOB_USE_QOI
-#   define ARM_2D_SCENE_KNOB_USE_QOI    1
+#ifndef ARM_2D_SCENE_KNOB_USE_LMSK
+#   define ARM_2D_SCENE_KNOB_USE_LMSK    1
 #endif
 
-#if !defined(RTE_Acceleration_Arm_2D_Extra_QOI_Loader)
-#   undef ARM_2D_SCENE_KNOB_USE_QOI
-#   define ARM_2D_SCENE_KNOB_USE_QOI    0
+#if !defined(RTE_Acceleration_Arm_2D_Extra_LMSK_Loader)
+#   undef ARM_2D_SCENE_KNOB_USE_LMSK
+#   define ARM_2D_SCENE_KNOB_USE_LMSK    0
 #endif
 
 
@@ -113,8 +113,8 @@ ARM_PRIVATE(
 
     arm_2d_op_fill_cl_msk_opa_trans_t tCoverRotateOP;
 
-#if ARM_2D_SCENE_KNOB_USE_QOI
-    arm_qoi_loader_t tQOICover;
+#if ARM_2D_SCENE_KNOB_USE_LMSK
+    arm_lmsk_loader_t tLMSKCover;
     union {
         arm_loader_io_file_t tFile;
         arm_loader_io_binary_t tBinary;

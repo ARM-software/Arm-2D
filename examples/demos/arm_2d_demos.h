@@ -57,6 +57,7 @@
 #include "arm_2d_scene_waveform.h"
 #include "arm_2d_scene_zhrgb565.h"
 #include "arm_2d_scene_qoi_animation.h"
+#include "arm_2d_scene_warped_dial.h"
 
 #if defined(RTE_Acceleration_Arm_2D_Demos_Mask_Generator)
 #   include "arm_2d_scene_mask_generation.h"

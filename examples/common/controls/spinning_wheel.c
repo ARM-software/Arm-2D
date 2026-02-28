@@ -83,7 +83,7 @@ const arm_2d_tile_t c_tileGreenCircleQuaterMask =
 /*============================ IMPLEMENTATION ================================*/
 
 static arm_2d_op_fill_cl_msk_opa_trans_t s_tMaskRotateCB[2];
-
+static bool s_bInitialized = false;
 void spinning_wheel_init(void)
 {
     arm_foreach(arm_2d_op_fill_cl_msk_opa_trans_t, s_tMaskRotateCB, ptItem) {
@@ -93,6 +93,11 @@ void spinning_wheel_init(void)
 
 void spinning_wheel_show(const arm_2d_tile_t *ptTarget, bool bIsNewFrame)
 {
+    if (!s_bInitialized) {
+        s_bInitialized = true;
+        spinning_wheel_init();
+    }
+
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
@@ -146,11 +151,16 @@ void spinning_wheel2_show(  const arm_2d_tile_t *ptTarget,
                             COLOUR_INT Colour, 
                             bool bIsNewFrame)
 {
+
     assert(NULL != ptTarget);
     ARM_2D_UNUSED(ptTarget);
     ARM_2D_UNUSED(bIsNewFrame);
     static float s_fAngle = 0.0f;
 
+    if (!s_bInitialized) {
+        s_bInitialized = true;
+        spinning_wheel_init();
+    }
 
     arm_2d_canvas(ptTarget, __top_container) {
 

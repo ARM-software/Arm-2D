@@ -145,7 +145,8 @@ static void __on_scene_console_window_frame_start(arm_2d_scene_t *ptScene)
     if (arm_2d_helper_is_time_out(100, &this.lTimestamp[1])) {
         static uint16_t s_hwCount = 0;
 
-        console_box_printf(&this.tConsole, "Hello World! \t[%d]\r\n",s_hwCount++);
+        console_box_printf(&this.tConsole, "\rHello World! \t[%03d]",s_hwCount++);
+        //console_box_printf(&this.tConsole, "\b\b\b\b\b[%03d]",s_hwCount++);
 
         if (!(s_hwCount & 0xF)) {
             console_box_printf(&this.tConsole, "\r\nArm-2D Scene Demo: Console Windows\r\n");

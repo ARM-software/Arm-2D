@@ -2,7 +2,7 @@
  * @file     arm_2d_math.h
  * @brief    Public header file for Arm-2D Library
  * @version  V1.0.0
- * @date     16. June 2021
+ * @date     8 Feb 2026
  ******************************************************************************/
 /*
  * Copyright (c) 2010-2020 Arm Limited or its affiliates. All rights reserved.
@@ -190,6 +190,8 @@ typedef int32_t q16_t;
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
 
+#ifndef __ARM_2D_MATH_DEFINED_Q16__
+#   define __ARM_2D_MATH_DEFINED_Q16__
 __STATIC_INLINE
 q16_t
 reinterpret_q16_q31(q31_t q31In0)
@@ -309,6 +311,8 @@ qsub_q16(q16_t q16In0, q16_t q16In1)
 {
     return ((q16_t)(clip_q63_to_q31((q63_t)q16In0 - (q63_t)q16In1)));
 }
+
+#endif
 
 
 #if defined(__clang__)
