@@ -114,11 +114,8 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_REA
 <div class="textblock"><p ><img src="https://img.shields.io/github/v/release/ARM-software/Arm-2D?include_prereleases" alt="GitHub release (latest by date including pre-releases)" class="inline"/> <img src="https://img.shields.io/github/license/ARM-software/Arm-2D" alt="GitHub" class="inline"/> <a href="https://deepwiki.com/ARM-software/Arm-2D"><img src="https://deepwiki.com/badge.svg" alt="Ask DeepWiki" style="pointer-events: none;" class="inline"/></a></p>
 <h1><a class="anchor" id="autotoc_md1"></a>
 Overview</h1>
-<p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex processors.</b></p>
-<ul>
-<li>Initial target: IoT endpoint devices, white goods, handheld devices and wearables, especially those with <b>resource-constrained</b>, <b>low-power</b> requirements.</li>
-<li>Initial focus: Graphical User Interface</li>
-</ul>
+<p ><b>Arm-2D is an open-source project for 2.5D image processing on Cortex processors.</b> Since its <a href="https://github.com/ARM-software/EndpointAI/commit/e8e51c507a97accfb98758fd12fb713e3d366de0">first experimental release on March 30, 2021</a>, and <a href="https://github.com/ARM-software/Arm-2D/releases/tag/v1.1.0">the official v1.1.0 release on December 7, 2022</a>, Arm-2D has experienced a period of rapid and exciting development. Through active community engagement and extensive real-world validation across numerous open-source and commercial projects, the library has evolved into a robust and mature solution.</p>
+<p >Today, for IoT endpoint devices, white goods, handheld devices and wearables, Arm-2d provides comprehensive low-level graphics processing capabilities. Especially for resource-constrained, low-power platforms, it is one of the optimal choices for building sophisticated modernised GUI applications, delivering exceptional performance without compromising functionality.</p>
 <p ><b>Arm-2D consists of:</b></p>
 <ul>
 <li>Generic software <b>pixel pipeline</b> infrastructure for graphic processing<ul>
@@ -134,24 +131,29 @@ Overview</h1>
 <p ><b>Position in Ecosystem:</b></p>
 <ul>
 <li><b>Focuses on low-level</b> and works as <b>a hardware abstraction layer</b> for 2.5D image processing.</li>
-<li><b>Arm-2D is NOT a GUI.</b><ul>
+<li><b>Arm-2D is NOT designed as a GUI.</b><ul>
 <li>No content creation, complex shape drawing or Scalable Vector Graphics (SVG) support</li>
 </ul>
 </li>
+<li><b>Arm-2D is used as a facto GUI in the community</b><ul>
+<li>Given its high performance, low memory footprint nature and rich toolbox, it is used as an optimal (and sometimes the only) solution for resource-constrained platforms,</li>
+<li><b>With the same performance and efficiency as the built-in APIs</b>, Arm-2D enables customers to add their own shape-drawing algorithms and load customised image formats easily using a generic loader (or its derived classes).</li>
+</ul>
+</li>
 <li><b>Provide conveniences for Arm eco-partners to create value through differentiation.</b><ul>
-<li>Provide the default implementation of commonly used 2.5D operations and <b>enable 3rd-parties to accelerate application-specific algorithms.</b></li>
+<li>Provide default implementations of commonly used 2.5D operations and enable 3rd parties to accelerate application-specific algorithms.</li>
 </ul>
 </li>
 </ul>
-<p ><b>Current Focus and Objectives:</b></p>
+<p ><b>Focus and Objectives:</b></p>
 <ul>
 <li><b>Help industry partners with technology adoption</b><ul>
 <li>Guidance for the integration of Arm-2D into graphic stacks</li>
 </ul>
 </li>
 <li><b>Optimisation for ultra-small memory footprint</b><ul>
-<li>Enable existing Cortex-M processors to use a modernised GUI with no or few cost increases.</li>
-<li>Helping customers to cost-down</li>
+<li>Enable Deep Embedded microcontrollers to use modernised GUIs.</li>
+<li>Helping customers to cost down</li>
 </ul>
 </li>
 </ul>
@@ -162,23 +164,18 @@ Key Messages for You</h1>
 <li>Arm-2D maintains an ultra-low memory footprint for both ROM and RAM.</li>
 <li>Arm-2D uses standard linker features to remove unused functions and data whenever possible.<ul>
 <li>Only functions that are actually used will take up memory.</li>
-<li>Please use feature-specific APIs whenever possible.<ul>
-<li>For example, if you want to copy an rgb565 picture to a target tile with a source mask without any mirroring, please call <code>arm_2dp_rgb565_copy_with_src_mask_only()</code> rather than the generic one, i.e. <code>arm_2dp_rgb565_copy_with_src_mask()</code> which takes a mirroring mode as a parameter and keeps all low-level implementations of all possible mirroring modes.</li>
 </ul>
 </li>
 </ul>
 </li>
-</ul>
-</li>
-<li><b>Arm-2D always keeps a flat and straightforward framework, i.e. API Wrappers, Frontend and Backend.</b><ul>
+<li><b>Arm-2D always maintains a flat, straightforward framework: API Wrappers, Frontend, and Backend.</b><ul>
 <li>API wrappers take user input and generate task descriptors for the following stages.</li>
-<li>Frontend is responsible for the commonly used and necessary services,<ul>
-<li>for example, region calculation, region clipping, pre-mirroring etc. So the Backend will receive simple, validated and detailed tasks which are friendly for hardware accelerators.</li>
-<li><b>The Frontend is small.</b></li>
+<li>The frontend is responsible for the commonly used and necessary services.<ul>
+<li>The Frontend validates user tasks, then breaks them down into <b>simplified backend tasks that are friendly to hardware accelerators.</b></li>
+<li>The Frontend maintains a low memory footprint.</li>
 </ul>
 </li>
-<li>The Backend is the place of Low-level implementations for specific 2D processing algorithms.<ul>
-<li><b>Those algorithms are usually unusable if you take them out of arm-2d</b> because the data are validated in the Frontend, and tasks are simplified in the Frontend also.</li>
+<li>The Backend is the place for low-level implementations of specific 2D processing algorithms.<ul>
 <li><b>The linker will remove unused low-level implementations.</b></li>
 </ul>
 </li>
@@ -198,19 +195,19 @@ How to Get Started</h1>
 <p >Potential users of Arm-2D may have different backgrounds and purposes. Whoever you are, e.g. an application engineer from a silicon vendor who develops drivers, a GUI stack system engineer, or an application developer, based on the purposes , there are two ways to get started with Arm-2D:</p>
 <ul>
 <li><a class="el" href="md_getting_started_as_an_application_designer.html">Getting Started as a GUI Application Designer</a><ul>
-<li>In some resource-constrained systems, the Flash (ROM) and SRAM are limited (e.g. 64K Flash, 12K SRAM), or the memory space left for GUI applications is limited, such systems cannot afford the cost of a decent GUI stack. Meanwhile, these kinds of low-cost systems usually don't have a complex HMI, it is possible to use the arm-2d APIs to design applications directly .</li>
-<li>Engineers focused on embedded video processing can preprocess the frame buffer just captured from cameras with Arm-2D.</li>
+<li>In some resource-constrained systems, Flash (ROM) and SRAM are limited (e.g., 64K Flash, 8K SRAM), or the memory reserved for GUI applications is limited; such systems cannot afford the cost of a decent GUI stack. Meanwhile, these kinds of low-cost systems usually don't have a complex HMI; it is possible to use the arm-2d APIs to design applications directly.</li>
+<li>Embedded video processing can preprocess the frame buffer captured from cameras using Arm-2D.</li>
 </ul>
 </li>
 <li><a class="el" href="md_getting_started_as_a_gui_stack_developer.html">Getting Started as a GUI System Developer</a><ul>
-<li>Silicon vendors can provide drivers to <a class="el" href="md_how_to_accelerate_arm_2d.html">further accelerate Arm-2D</a> in order to take advantage of the proprietary hardware accelerators for their customers.</li>
-<li>System engineers from GUI stack providers can use the Arm-2D APIs to accelerate GUI's low-level operations.</li>
-<li>Homebrew GUI designers can create entirely-new GUI stacks faster and easier with Arm-2D.</li>
+<li>Silicon vendors can provide drivers to further accelerate Arm-2D, enabling their customers to take advantage of the proprietary hardware accelerators.</li>
+<li>GUI Stack System engineers can use the Arm-2D APIs to accelerate the low-level operations.</li>
+<li>Homebrew GUI designers can create entirely new GUI stacks faster and easier with Arm-2D.</li>
 <li>...</li>
 </ul>
 </li>
 </ul>
-<p >In general, anyone from opensource community can find something interesting from Arm-2D.</p>
+<p >We are optimistic that anyone can find something interesting in Arm-2D.</p>
 <h1><a class="anchor" id="autotoc_md4"></a>
 Table of Content</h1>
 <ul>
@@ -219,7 +216,7 @@ Table of Content</h1>
 <li>How to Get Started</li>
 <li>Table of Content</li>
 <li>Features<ul>
-<li>In this version (v1.2.5)</li>
+<li>In this version (v1.2.6)</li>
 <li>New Features Planned in the Future</li>
 </ul>
 </li>
@@ -250,8 +247,8 @@ Table of Content</h1>
 <h1><a class="anchor" id="autotoc_md5"></a>
 Features</h1>
 <h2><a class="anchor" id="autotoc_md6"></a>
-In this version (v1.2.5)</h2>
-<p >Since Arm-2D provides <b>Low-Level 2D Image Processing Services</b> that are deeply optimized in both performance and memory footprint, it has been quickly adopted in many <b>Deep Embedded Display systems</b> soon after it debuted in 2020. Now you can find its <a href="https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&amp;origin=HASH_TAG_FROM_FEED">precence</a> from the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">tiniest Cortex-M0</a> to the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">Raspberry Pi 5 powerhouse</a>. The supported features include but not limited to:</p>
+In this version (v1.2.6), A Golden Release</h2>
+<p >Since Arm-2D provides <b>Low-Level 2D Image Processing Services</b> that are deeply optimised for both performance and memory footprint, it has been quickly adopted in many Deep Embedded Display systems since it debuted in 2020. Now you can find its <a href="https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&amp;origin=HASH_TAG_FROM_FEED">presence</a> from the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">tiniest Cortex-M0</a> to the <a href="https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&amp;utm_medium=member_desktop&amp;rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg">Raspberry Pi 5 powerhouse</a>. The supported features include, but are not limited to:</p>
 <ul>
 <li><b>Alpha-Blending</b> / <b>Masks</b><ul>
 <li>With or without Colour-Keying</li>
@@ -264,7 +261,7 @@ In this version (v1.2.5)</h2>
 <li>Supports an optional Opacity</li>
 </ul>
 </li>
-<li><b>[new]</b> Supports mirroring</li>
+<li>Supports mirroring</li>
 </ul>
 </li>
 </ul>
@@ -295,9 +292,9 @@ In this version (v1.2.5)</h2>
 <li><b>Display Adapter Service for connecting LCD</b><ul>
 <li>Generic Partial Frame-buffer (PFB)<ul>
 <li>Easy to Use: transparent for applications</li>
-<li>No limitation on screen resolution **(See note 1)**</li>
+<li>No limitation on screen resolution under the common sense **(See note 1)**</li>
 <li>Flexible in PFB size and shape (it could be a line or a rectangular with any size) **(See note 2)**</li>
-<li>Supports PFB alignment for both width and height.</li>
+<li>Supports PFB pixel alignment for both width and height.</li>
 </ul>
 </li>
 </ul>
@@ -338,7 +335,7 @@ In this version (v1.2.5)</h2>
 <li>Supports specifying different scaling ratios for X and Y axes, respectively</li>
 <li>Supports using floating point numbers (i.e. <code>float</code>) to specify the pivot coordinate.</li>
 <li>Supports using negative scaling ratios for x/y mirroring</li>
-<li><b>[new]</b> Supports colour-filling / tile-copy with a transformed mask, optional source mask and target mask.</li>
+<li>Supports colour-filling / tile-copy with a transformed mask, optional source mask and target mask.</li>
 </ul>
 <p ><b>Filters</b></p>
 <ul>
@@ -367,9 +364,11 @@ In this version (v1.2.5)</h2>
 <li>Supports background-image-loading mode that requests <b>NO</b> extra PFB block.</li>
 <li><b>Example Loaders</b> for loading<ul>
 <li>JPEG images</li>
-<li><b>[new]</b> <a href="https://qoiformat.org/">QOI images</a> (a Lossless image compression format)</li>
-<li><b>[new]</b> TrueType fonts via freetype</li>
-<li><b>[new]</b> A generic loader for loading user defined image formats, or drawing shapes/masks directly.</li>
+<li><a href="https://qoiformat.org/">QOI images</a> (a Lossless image compression format)</li>
+<li>TrueType fonts via freetype</li>
+<li>A generic loader for loading user defined image formats, or drawing shapes/masks directly.</li>
+<li><b>[new]</b> A loader for losslessly compressed RGB565 images (<b>zhRGB565</b>)</li>
+<li><b>[new]</b> A loader for losslessly compressed masks (<b>LMSK</b>). <b>It is the optimal solution for mid- / large masks.</b></li>
 </ul>
 </li>
 </ul>
@@ -398,7 +397,7 @@ In this version (v1.2.5)</h2>
 <li>Demos for various scenarios</li>
 <li>A dedicated demo for Helium-ACI acceleration.</li>
 <li>A set of demos for monochrome devices</li>
-<li><b>[new]</b> A set of demos for drawing masks, waveform etc.</li>
+<li>A set of demos for drawing masks, waveform etc.</li>
 </ul>
 </li>
 <li><b>Project Templates</b><ul>
@@ -409,8 +408,9 @@ In this version (v1.2.5)</h2>
 </ul>
 <p ><b>CMSIS-Pack is available.</b></p><ul>
 <li><b>Ready and Welcome 3rd party adoption</b><ul>
-<li>Accelerating <a href="https://lvgl.io/">LVGL</a> as <a href="https://docs.lvgl.io/master/details/integration/renderers/arm2d.html">soft-GPU</a> when Helium is ready</li>
-<li>Accelerating <a href="https://www.cranksoftware.com/">CrankSoftware</a> as <a href="https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1">soft-GPU</a> when Helium is ready</li>
+<li>Accelerating <a href="https://lvgl.io/">LVGL</a> as <a href="https://docs.lvgl.io/master/details/integration/renderers/arm2d.html">soft-GPU</a></li>
+<li>Accelerating <a href="https://www.cranksoftware.com/">CrankSoftware</a> as <a href="https://info.cranksoftware.com/platforms/demo-images/renesas/ra8d1">soft-GPU</a></li>
+<li>Accelerating <a href="https://www.segger.com/products/user-interface/emwin/technology/about-emwin-technology/">emWin</a> as <a href="https://doc.segger.com/UM03001_emWin.html#GUI_GPU_Arm2D_Arm_2D_driver">soft-GPU</a></li>
 </ul>
 </li>
 </ul>
@@ -629,8 +629,8 @@ Performance Comparison among some Cortex-M processors</div></div>
 </table>
 <h1><a class="anchor" id="autotoc_md22"></a>
 7 Feedback</h1>
-<p >Arm-2D aims to bridge the gap between <b>low-cost, resource-constrained devices</b> and <b>high-performance, feature-rich embedded IoT edge devices</b> by providing <b>a unified and user-friendly programming model</b>. Our goal is to facilitate the seamless and easy migration of GUI applications across Cortex-M, Cortex-R, and Cortex-A platforms. We hope that Arm-2D will inspire more initiatives and engineering practices in this field.</p>
-<p >Your thoughts and feedback are invaluable to us. If you can spend some time trying out the library, please feel free to share your insights. It would be helpful to cover the following perspectives:</p>
+<p >Arm-2D aims to bridge the gap between <b>low-cost, resource-constrained devices</b> and <b>high-performance, feature-rich embedded IoT edge devices</b> by providing <b>a unified and user-friendly programming model</b>. Our goal is to facilitate the seamless and easy migration of GUI applications across different platforms. We hope that Arm-2D will inspire more initiatives and engineering practices in this field.</p>
+<p >Your thoughts and feedback are important to us. If you can spend some time trying out the library, please feel free to share your insights. It would be helpful to cover the following perspectives:</p>
 <ul>
 <li>The industrial segments where you plan to introduce a GUI using Cortex processors.</li>
 <li>The resources of your platform, such as the size of the RAM, ROM, system frequency, and average power consumption.</li>
@@ -646,7 +646,7 @@ Performance Comparison among some Cortex-M processors</div></div>
 </ul>
 <p >Thank you for your time.</p>
 <p ><em><b>Arm-2D Development Team.</b></em></p>
-<p >06 January 2026 </p>
+<p >18 March 2026 </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
