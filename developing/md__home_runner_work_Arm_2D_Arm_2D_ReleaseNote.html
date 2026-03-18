@@ -112,8 +112,71 @@ $(document).ready(function(){initNavTree('md__home_runner_work_Arm_2D_Arm_2D_Rel
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><h1><a class="anchor" id="autotoc_md24"></a>
-Release v1.2.5 (06 January 2026)</h1>
+Golden Release v1.2.6 (18 March 2026)</h1>
 <h2><a class="anchor" id="autotoc_md25"></a>
+Core and Library</h2>
+<ul>
+<li>Fixes some minor issues in <b>transform</b> operations.</li>
+<li>Improves the performance of <b>colour-filling</b> operations.</li>
+<li>Improves the performance of <b>copy-with-masks</b> operations.</li>
+<li>Improves the performance of <b>tile-copy-with-src-mask/target-mask</b> operations.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md26"></a>
+Helper Services</h2>
+<ul>
+<li>Enhances the PFB and the Display Adapter services.<ul>
+<li>Adds a <b>Nano-Only</b> mode for <b>resource-ultra-constraint</b> system (32K Flash, 8K RAM).</li>
+<li>Enhances the dynamic dirty region scheme.</li>
+</ul>
+</li>
+<li>Replaces <code>uint32_t</code> with <code>int64_t</code> in <code><a class="el" href="group__gHelper.html#ga164d99311f761b5a0c926c1697ae41ab" title="convert millisecond into ticks of the reference timer">arm_2d_helper_convert_ms_to_ticks()</a></code>.</li>
+<li>Adds a new API <code><a class="el" href="group__gHelper.html#ga5fbb1d96b72bc539962d69ff1ecade1c" title="remove a byte from the queue tail">arm_2d_byte_fifo_vomit()</a></code> to the byte-fifo.</li>
+<li>Fixes <b>only-redraw-current-line</b> issue in the simple list.</li>
+</ul>
+<h2><a class="anchor" id="autotoc_md27"></a>
+Examples and Templates</h2>
+<ul>
+<li>Enhances example controls<ul>
+<li>Reduces memory footprint</li>
+<li>Improves the display quality of the progress wheel</li>
+<li>Fixes the support for backspace &lsquo;&rsquo;<b></b>'<code>and</code>'\r'` in console.</li>
+<li>Fixes the dirty region support in the foldable panel.</li>
+<li>Removes the redundant flags in the foldable panel.</li>
+</ul>
+</li>
+<li>Enhances Demos<ul>
+<li>Use PFB (other than) Heap in rick-rolling.</li>
+<li>Adds a new demo for <b>zhRGB565</b>.</li>
+<li>Adds a new demo: warped Dial</li>
+<li>Replaces old loader IOs with the unified IOs.</li>
+<li>Applies LMSK to some existing demos to reduce the ROM footprint.</li>
+<li>Fixes the demo: ruler.</li>
+<li>Some minor fixes.</li>
+</ul>
+</li>
+<li>Adds a new category: <b>Render Tests</b><ul>
+<li>Adds a new render test for showing large LMSK.</li>
+<li>Adds a new render test for the LMSK decoding.</li>
+</ul>
+</li>
+<li>Enhances Loaders<ul>
+<li>Adds a loader for <b>zhRGB565</b> (Lossless compression for RGB565 images).</li>
+<li>Adds <b>ARM_LOADER_IO_CACHE</b> to introduce software caches for the slow external storage system.</li>
+<li>Adds a loader for <b>LMSK</b> (Lossless compression for masks). It is the optimal solution for mid- to large-sized masks.</li>
+<li>Improves the QOI decoder performance.</li>
+<li>Improves the IOs.</li>
+<li>Some minor fixes.</li>
+</ul>
+</li>
+<li>Updates documents.</li>
+<li>Updates scripts<ul>
+<li>Adds <b>zhRGB565</b> and <b>LMSK</b> encoding to <b>img2c.py</b></li>
+</ul>
+</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md28"></a>
+Release v1.2.5 (06 January 2026)</h1>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Core and Library</h2>
 <ul>
 <li>Enhances pixel-pipeline<ul>
@@ -143,7 +206,7 @@ Core and Library</h2>
 <li>Fixes Out-of-Boundary memory access in the colour-filling-with-alpha-gradient-and-mask operations.</li>
 <li>Fixes Alpha-Overflow issues in the colour-filling-with-alpha-gradient-and-mask helium backend.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 Helper Services</h2>
 <ul>
 <li>Fixes region calculators in the List helper.</li>
@@ -161,7 +224,7 @@ Helper Services</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 Examples and Templates</h2>
 <ul>
 <li>Update Loaders<ul>
@@ -226,9 +289,9 @@ Examples and Templates</h2>
 <li>Update example projects.</li>
 <li>Other minor fixes.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md28"></a>
+<h1><a class="anchor" id="autotoc_md32"></a>
 Release v1.2.4 (12 September 2025)</h1>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md33"></a>
 Core and Library</h2>
 <ul>
 <li>Adds new APIs: <b>tile-fill-with-source-mask-and-opacity</b> with the Helium acceleration and the implicit CCCA8888 conversions.</li>
@@ -246,7 +309,7 @@ Core and Library</h2>
 <li>Fixes potential alpha-overflow issues found in transform operations.</li>
 <li>Other minor fixes</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md34"></a>
 Helper Services</h2>
 <ul>
 <li>Enhances the PFB and the Display Adapter services.<ul>
@@ -284,7 +347,7 @@ Helper Services</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md31"></a>
+<h2><a class="anchor" id="autotoc_md35"></a>
 Examples and Templates</h2>
 <ul>
 <li>Updates example projects.<ul>
@@ -339,31 +402,31 @@ Examples and Templates</h2>
 <li>Adds prefix <code>arm_2d_asset_</code> to all assets.</li>
 <li>Updates documents</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md32"></a>
+<h1><a class="anchor" id="autotoc_md36"></a>
 Release v1.2.3 (16th May 2025)</h1>
-<h2><a class="anchor" id="autotoc_md33"></a>
+<h2><a class="anchor" id="autotoc_md37"></a>
 Core and Library</h2>
 <ul>
 <li>Fixes transform tail-prediction issue in helium backend</li>
 <li>Fixes a typo in the implicit colour conversion from ccca8888 to cccn888 transform-only operation</li>
 <li>Adds a new API: <code>arm_2d_create_region_from_corner_points()</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md34"></a>
+<h2><a class="anchor" id="autotoc_md38"></a>
 Helper Services</h2>
 <ul>
 <li>Moves <code>circle_small.c</code> from <code>examples\common\assets</code> folder to <code>Helper\source folder</code>.</li>
 <li>Improves the scene templates</li>
 <li>Improves the compatibility of the control helper service with 3rd party GUIs</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md35"></a>
+<h2><a class="anchor" id="autotoc_md39"></a>
 Examples and Templates</h2>
 <ul>
 <li>Adds a new Demo: balls</li>
 <li>Updates all scene templates and demos to improve the reliability</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md36"></a>
+<h1><a class="anchor" id="autotoc_md40"></a>
 Release v1.2.2 (1st May 2025)</h1>
-<h2><a class="anchor" id="autotoc_md37"></a>
+<h2><a class="anchor" id="autotoc_md41"></a>
 Core and Library</h2>
 <ul>
 <li>Enhances the transform operations<ul>
@@ -387,7 +450,7 @@ Core and Library</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md38"></a>
+<h2><a class="anchor" id="autotoc_md42"></a>
 Helper Services</h2>
 <ul>
 <li>Improve the Font Helper service<ul>
@@ -429,7 +492,7 @@ Helper Services</h2>
 <li>Updates the Dirty Region Transform helper serivce to support the new transform APIs</li>
 <li>Fixes stop-updating issues in dirty region helper service when any dynamic dirty region is out of visual area.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md39"></a>
+<h2><a class="anchor" id="autotoc_md43"></a>
 Examples and Templates</h2>
 <ul>
 <li>Updates <code>spin_zoom_widget_t</code> to use the new transform APIs.</li>
@@ -480,7 +543,7 @@ Examples and Templates</h2>
 <li>Adds a demo for the IIR Blur.</li>
 <li>Adds an example control, progress-bar-round, with two different styles.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md40"></a>
+<h2><a class="anchor" id="autotoc_md44"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Adds a section in <code>how_to_deploy_the_arm_2d_library.md</code> to introduce how to synchronize with the low-level display driver</li>
@@ -495,9 +558,9 @@ Documentation and Misc</h2>
 </li>
 <li>Update README.md and ReleaseNote.md</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md41"></a>
+<h1><a class="anchor" id="autotoc_md45"></a>
 Release v1.2.1 (20 December 2024)</h1>
-<h2><a class="anchor" id="autotoc_md42"></a>
+<h2><a class="anchor" id="autotoc_md46"></a>
 Core and Library</h2>
 <ul>
 <li>Introduces a dedicated data type <code>q16_t</code> and corresponding operations for Q15.16 fix point number.</li>
@@ -508,7 +571,7 @@ Core and Library</h2>
 <li>Adds a new set of filter operations that reverse the pixel colours of a user-specified region for the target tile</li>
 <li>Fixes a display issue in IIR-Helium implementation when the blur degree is zero.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md43"></a>
+<h2><a class="anchor" id="autotoc_md47"></a>
 Helper Services</h2>
 <ul>
 <li>Adds a new User-Defined-OPCODE template for drawing on the target tile</li>
@@ -557,7 +620,7 @@ Helper Services</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md44"></a>
+<h2><a class="anchor" id="autotoc_md48"></a>
 Examples and Templates</h2>
 <ul>
 <li>Removes a deprecated header file: <code>arm_2d_extra_controls.h</code>. Please use <code>arm_2d_example_controls.h</code> instead.</li>
@@ -608,16 +671,16 @@ Examples and Templates</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md45"></a>
+<h2><a class="anchor" id="autotoc_md49"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Fixes the <code>__rev16</code> in <code>arm_2d_user_arch_port.h</code></li>
 <li>Improves Python scripts in the <code>tools</code> folder.</li>
 <li>rename <code>getting_started_as_a_professional_user.md</code> to <code>getting_started_as_a_gui_stack_developer.md</code></li>
 </ul>
-<h1><a class="anchor" id="autotoc_md46"></a>
+<h1><a class="anchor" id="autotoc_md50"></a>
 Release v1.2.0 (9 September 2024)</h1>
-<h2><a class="anchor" id="autotoc_md47"></a>
+<h2><a class="anchor" id="autotoc_md51"></a>
 Core and Library</h2>
 <ul>
 <li>Adds Helium implementations for IIR-Blur operations</li>
@@ -643,7 +706,7 @@ Core and Library</h2>
 <li>Adds an experimental 2x Super-Sampling-Anti-Alias (2xSSAA) transform implementation</li>
 <li>Introduces new OOPC decorations <code>ARM_PRIVATE_METHOD()</code>, <code>ARM_PROTECTED_METHOD()</code> and <code>ARM_PUBLIC_METHOD()</code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md48"></a>
+<h2><a class="anchor" id="autotoc_md52"></a>
 Helper Services</h2>
 <ul>
 <li>Improves the Layout Assistant<ul>
@@ -676,7 +739,7 @@ Helper Services</h2>
 </li>
 <li>Improves the accuracy and behaviour of the PIHelper</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md49"></a>
+<h2><a class="anchor" id="autotoc_md53"></a>
 Examples and Templates</h2>
 <ul>
 <li>Adds a new scene template <code>animate background</code> for the new virtual resource background-image-loading mode</li>
@@ -720,7 +783,7 @@ Examples and Templates</h2>
 <li>Adds a new example control: <code>cloudy_glass_t</code></li>
 <li>Adds a new demo: watch face 01</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md50"></a>
+<h2><a class="anchor" id="autotoc_md54"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Improves Python scripts in the <code>tools</code> folder.<ul>
@@ -733,9 +796,9 @@ Documentation and Misc</h2>
 <li>Updates the copy-right</li>
 <li>Improves the support for IAR</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md51"></a>
+<h1><a class="anchor" id="autotoc_md55"></a>
 Release v1.1.6 (23 May 2024)</h1>
-<h2><a class="anchor" id="autotoc_md52"></a>
+<h2><a class="anchor" id="autotoc_md56"></a>
 Core and Library</h2>
 <ul>
 <li>Improves the compatibility with IAR and GCC</li>
@@ -753,7 +816,7 @@ Core and Library</h2>
 <li>Uses jinja scripts for generating source files</li>
 <li>Improves pixel-pipeline for processing masks</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md53"></a>
+<h2><a class="anchor" id="autotoc_md57"></a>
 Helper Services</h2>
 <ul>
 <li>Improves performance statistics<ul>
@@ -800,7 +863,7 @@ Helper Services</h2>
 <li>Adds helper services for dirty regions</li>
 <li>Adds a code template for adding user defined OPCODE</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md54"></a>
+<h2><a class="anchor" id="autotoc_md58"></a>
 Examples and Templates</h2>
 <ul>
 <li>Improves the compatibility with CMSIS6</li>
@@ -835,15 +898,15 @@ Examples and Templates</h2>
 <li>Reduces the memory footprint of example controls.</li>
 <li>Improves the performance of example controls</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md55"></a>
+<h2><a class="anchor" id="autotoc_md59"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Improves python scripts in the <code>tools</code> folder.</li>
 <li>Adds a document for how-to-use-jinja-script-for-code-generation</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md56"></a>
+<h1><a class="anchor" id="autotoc_md60"></a>
 Release v1.1.5 (01 Dec 2023)</h1>
-<h2><a class="anchor" id="autotoc_md57"></a>
+<h2><a class="anchor" id="autotoc_md61"></a>
 Core and Library</h2>
 <ul>
 <li>Improves the support for masks in the pixel-pipeline.</li>
@@ -856,7 +919,7 @@ Core and Library</h2>
 <li>Adds the support for trace log</li>
 <li>Adds a new API: <code><a class="el" href="group__Tile.html#ga77b64272065500911f7e8c6734019106" title="check whether a given region is inside the target region">arm_2d_is_region_inside_target()</a></code></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md58"></a>
+<h2><a class="anchor" id="autotoc_md62"></a>
 Helper Services</h2>
 <ul>
 <li>Updates <code>ttf2c.py</code> for generating <b>A1</b>, <b>A2</b> and <b>A4</b> fonts.</li>
@@ -884,7 +947,7 @@ Helper Services</h2>
 </ul>
 </li>
 </ul>
-<h2><a class="anchor" id="autotoc_md59"></a>
+<h2><a class="anchor" id="autotoc_md63"></a>
 Examples and Templates</h2>
 <ul>
 <li>Adds a new example scene to demonstrate a curve-list-view.</li>
@@ -905,7 +968,7 @@ Examples and Templates</h2>
 </li>
 <li>Improve PC template</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md60"></a>
+<h2><a class="anchor" id="autotoc_md64"></a>
 Documentation and Misc</h2>
 <ul>
 <li>Adds an initial support for CMake.</li>
