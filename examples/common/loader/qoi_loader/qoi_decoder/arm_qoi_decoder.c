@@ -130,7 +130,7 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     ptContext->hwSize = MIN(__UINT16_MAX__, tBufferSize);
 #endif
 
-    struct __arm_qoi_header tQOIHeader;
+    struct __arm_qoi_header tQOIHeader = {0};
 
 #if 0
     /* move to the head */
