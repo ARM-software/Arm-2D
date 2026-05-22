@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        05 Jan 2026
- * $Revision:    V.2.2.1
+ * $Date:        22 May 2026
+ * $Revision:    V.2.3.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -160,42 +160,42 @@ void __arm_2d_rgb565_pixel_blend_sw(uint16_t * phwSource,
         __arm_2d_rgb565_pixel_blend_sw((__SRC_ADDR), (__DES_ADDR), 256 - (__TRANS))
 #endif
 
+__STATIC_INLINE 
+void __arm_2d_ccca8888_pixel_blend_to_rgb565_sw(uint32_t *pwSource,
+                                                uint16_t *hwTarget,
+                                                uint16_t hwOpacity)
+{
+    uint32_t wSourcePixel = *pwSource;
+    
+    uint32_t wOpacity = ((wSourcePixel >> 24) * hwOpacity) >> (8 + 3);
+
+    if (wOpacity) {
+        if (wOpacity == (0xFF >> 3)) {
+            *hwTarget = (uint16_t)( (wSourcePixel >> 8 & 0xf800) 
+                                  + (wSourcePixel >> 5 & 0x7e0) 
+                                  + (wSourcePixel >> 3  & 0x1f));
+        } else {
+            uint32_t wTargetPixel = *hwTarget;
+
+            wSourcePixel = ((wSourcePixel & 0xfc00) << 11) 
+                         + (wSourcePixel >> 8 & 0xf800) 
+                         + (wSourcePixel >> 3 & 0x1f);
+
+            wTargetPixel = (wTargetPixel | wTargetPixel << 16) & 0x07e0f81f;
+            wTargetPixel += (wSourcePixel - wTargetPixel) * wOpacity >> 5;
+            wTargetPixel &= 0x07e0f81f;
+            *hwTarget = (uint16_t)(wTargetPixel | wTargetPixel >> 16);
+        }
+    }
+}
+
 #ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565
 #   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565(  __SRC_ADDR,             \
                                                         __DES_ADDR,             \
                                                         __TRANS)                \
-    do {                                                                        \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tSrcPix);                    \
-        __arm_2d_color_fast_rgb_t ARM_2D_SAFE_NAME(tTargetPix);                 \
-        __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));    \
-        uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \
-        ARM_2D_SAFE_NAME(hwOPA) += (ARM_2D_SAFE_NAME(hwOPA) == 255);            \
-        ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(hwOPA) * ((__TRANS) == 0)    \
-                +   (   (   ARM_2D_SAFE_NAME(hwOPA)                             \
-                        *   (256 - (__TRANS)) >> 8)                             \
-                    *   ((__TRANS) != 0));                                      \
-        uint16_t ARM_2D_SAFE_NAME(hwTRANS) = 256 - ARM_2D_SAFE_NAME(hwOPA);     \
-                                                                                \
-        uint16_t *ARM_2D_SAFE_NAME(phwTargetPixel) = (__DES_ADDR);              \
-        __arm_2d_rgb565_unpack(*ARM_2D_SAFE_NAME(phwTargetPixel),               \
-                                &ARM_2D_SAFE_NAME(tTargetPix));                 \
-                                                                                \
-        for (   int ARM_2D_SAFE_NAME(i) = 0;                                    \
-                ARM_2D_SAFE_NAME(i) < 3;                                        \
-                ARM_2D_SAFE_NAME(i)++) {                                        \
-            uint16_t ARM_2D_SAFE_NAME(hwTemp) =                                 \
-                    (   ARM_2D_SAFE_NAME(tSrcPix).BGRA[ARM_2D_SAFE_NAME(i)]     \
-                    *   ARM_2D_SAFE_NAME(hwOPA))                                \
-                +   (   ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)]  \
-                    *   (ARM_2D_SAFE_NAME(hwTRANS)));                           \
-            ARM_2D_SAFE_NAME(tTargetPix).BGRA[ARM_2D_SAFE_NAME(i)] =            \
-                (uint16_t) (ARM_2D_SAFE_NAME(hwTemp) >> 8);                     \
-        }                                                                       \
-                                                                                \
-        /* pack merged stream */                                                \
-        *ARM_2D_SAFE_NAME(phwTargetPixel)                                       \
-            = __arm_2d_rgb565_pack(&ARM_2D_SAFE_NAME(tTargetPix));              \
-    } while(0)
+        __arm_2d_ccca8888_pixel_blend_to_rgb565_sw( (__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    256 - (__TRANS))
 #endif
 
 #ifndef __ARM_2D_PIXEL_BLENDING_CCCN888
