@@ -52,16 +52,16 @@
 #   include __ARM_2D_HAS_USER_HEADER__
 #endif
 
-#undef __IS_SUPPORTED_ARM_ARCH__
+#undef __IS_SUPPORTED_ARM_ARCH_M__
 #if (__ARM_ARCH_PROFILE == 'M') || defined(__TARGET_PROFILE_M)
-#   define __IS_SUPPORTED_ARM_ARCH__        1
+#   define __IS_SUPPORTED_ARM_ARCH_M__        1
 #else
-#   define __IS_SUPPORTED_ARM_ARCH__        0
+#   define __IS_SUPPORTED_ARM_ARCH_M__        0
 #endif
 
 /*! \note arm-2d relies on CMSIS 5.8.0 and above.
  */
-#if __IS_SUPPORTED_ARM_ARCH__
+#if __IS_SUPPORTED_ARM_ARCH_M__
 
 #   include "cmsis_compiler.h"
 #   include "cmsis_version.h"
@@ -210,7 +210,7 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Intrinsics Patch                                                           *
  *----------------------------------------------------------------------------*/
-#if __IS_SUPPORTED_ARM_ARCH__ && (__IS_COMPILER_GCC__ || __CM_CMSIS_VERSION_MAIN < 6)
+#if __IS_SUPPORTED_ARM_ARCH_M__ && (__IS_COMPILER_GCC__ || __CM_CMSIS_VERSION_MAIN < 6)
 
 #   define __rev16      __REV16
 #   define __rev        __REV 
@@ -714,7 +714,7 @@ extern "C" {
 
    \endcode
  */
-#if __IS_SUPPORTED_ARM_ARCH__
+#if __IS_SUPPORTED_ARM_ARCH_M__
 #   undef arm_irq_safe
 #   undef arm_exit_irq_safe
 #   define arm_irq_safe                                                         \

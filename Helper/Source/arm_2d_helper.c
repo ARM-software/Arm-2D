@@ -168,7 +168,7 @@ void arm_2d_helper_init(void)
 
 /* NOTE: for non-arm architecture, you have to implement those functions.
  */
-#if __IS_SUPPORTED_ARM_ARCH__
+#if __IS_SUPPORTED_ARM_ARCH_M__
 __WEAK 
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
@@ -206,6 +206,16 @@ int64_t arm_2d_helper_convert_ms_to_ticks(int64_t lMS)
     return lResult ? lResult : 1;
 }
 
+__WEAK
+uint32_t arm_2d_helper_get_system_frequency(void)
+{
+#if __IS_SUPPORTED_ARM_ARCH_M__
+    extern uint32_t SystemCoreClock;
+    return SystemCoreClock;
+#else
+    return 0;
+#endif
+}
 
 ARM_NONNULL(2)
 bool __arm_2d_helper_is_time_out(int64_t lPeriod, int64_t *plTimestamp)

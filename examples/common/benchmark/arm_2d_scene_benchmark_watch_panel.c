@@ -84,8 +84,6 @@
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
-
 /*============================ PROTOTYPES ====================================*/
 extern
 void benchmark_watch_panel_init(arm_2d_region_t tScreen);
@@ -217,7 +215,7 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
             BENCHMARK.fFPS30Freq = (float)
                 ((      (double)(BENCHMARK.wAverage * 30) 
                     /   (double)arm_2d_helper_get_reference_clock_frequency()) 
-                 * ((double)SystemCoreClock / 1000000.0f));
+                 * ((double)arm_2d_helper_get_system_frequency() / 1000000.0f));
 #endif
 
             do {
@@ -247,7 +245,7 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     tScreen.tSize.iWidth, 
                     tScreen.tSize.iHeight,
                 #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
-                    SystemCoreClock / 1000000ul,
+                    arm_2d_helper_get_system_frequency() / 1000000ul,
                 #endif
                     BENCHMARK.wAverage
                 #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
@@ -310,7 +308,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
 #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
-            arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", SystemCoreClock / 1000000ul);
+            arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", arm_2d_helper_get_system_frequency() / 1000000ul);
 #endif
             arm_lcd_puts( "Benchmark Report:\r\n");
             

@@ -329,6 +329,12 @@ ARM_NONNULL(1)
 int64_t __arm_2d_helper_time_elapsed(int64_t *plTimestamp);
 
 /*!
+ * \brief get the system frequency
+ */
+extern
+uint32_t arm_2d_helper_get_system_frequency(void);
+
+/*!
  * \brief set an alarm with given period and check the status
  * 
  * \param[in] lPeriod a time period in ticks
