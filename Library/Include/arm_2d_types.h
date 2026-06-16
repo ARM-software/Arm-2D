@@ -21,8 +21,8 @@
  * Title:        arm_2d_types.h
  * Description:  Public header file to contain the Arm-2D structs
  *
- * $Date:        02. Jan 2026
- * $Revision:    V.1.4.1
+ * $Date:        16 June 2026
+ * $Revision:    V.1.4.2
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -141,10 +141,12 @@ extern "C" {
 #define __UINT8_MAX__   UINT8_MAX
 #define __UINT16_MAX__  UINT16_MAX
 #define __UINT32_MAX__  UINT32_MAX
+#define __UINT64_MAX__  UINT64_MAX
 
 #define __INT8_MAX__    INT8_MAX
 #define __INT16_MAX__   INT16_MAX
 #define __INT32_MAX__   INT32_MAX
+#define __INT64_MAX__   INT64_MAX
 
 #endif
 
@@ -1336,5 +1338,3 @@ typedef struct arm_2d_rot_linear_regr_t {
 #endif
 
 #endif // __ARM_2D_TYPES_H__
-
-
