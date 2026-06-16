@@ -210,7 +210,7 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Intrinsics Patch                                                           *
  *----------------------------------------------------------------------------*/
-#if __IS_SUPPORTED_ARM_ARCH_M__ && (__IS_COMPILER_GCC__ || __CM_CMSIS_VERSION_MAIN < 6)
+#if __IS_SUPPORTED_ARM_ARCH_M__ && (__IS_COMPILER_GCC__ || __IS_COMPILER_ARM_COMPILER_5__)
 
 #   define __rev16      __REV16
 #   define __rev        __REV 
