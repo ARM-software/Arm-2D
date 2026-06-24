@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_scene.h"
  * Description:  Public header file for the scene service
  *
- * $Date:        09. September 2025
- * $Revision:    V.2.0.0
+ * $Date:        24 June 2026
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -233,13 +233,14 @@ typedef struct arm_2d_scene_player_t arm_2d_scene_player_t;
 /*!
  * \brief scene switching mode descriptor
  */
-typedef const struct {
+struct __arm_2d_scene_switch_mode_t {
     uint8_t                         chEffects;                                  //!< switching effects
     arm_2d_helper_draw_handler_t    *fnSwitchDrawer;                            //!< switching algorithm
 
     void (*fnOnRequestChangeSwitchingStatus)(arm_2d_scene_player_t *ptThis);    //!< on request change-switch-status event handler
     void (*fnOnSwitchComplete)              (arm_2d_scene_player_t *ptThis);    //!< on request switch complete event handler
-} arm_2d_scene_switch_mode_t;
+};
+typedef const struct __arm_2d_scene_switch_mode_t arm_2d_scene_switch_mode_t;
 
 /*!
  * \brief a class for describing scenes which are the combination of a
