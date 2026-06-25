@@ -284,7 +284,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 2.2 Dependency
 
-- The library depends on **CMSIS 5.7.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.8.0 is required).
+- The library depends on **CMSIS 5.9.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.9.0 is required).
 - The library is developed with the **C11** standard and depends on some **widely adopted GCC extensions**.
   - See **section 3.2** for details.
 - The library supports **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
@@ -420,4 +420,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-06 April 2026
+25 June 2026
