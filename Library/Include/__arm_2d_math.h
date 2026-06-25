@@ -74,10 +74,6 @@ typedef float float16_t;
 #   include "armdsp.h"
 #endif
 
-#if defined(__IS_COMPILER_ARM_COMPILER_6__) && __IS_COMPILER_ARM_COMPILER_6__
-#   include <arm_acle.h>
-#endif
-
 #include "arm_math.h"
 
 
