@@ -411,7 +411,7 @@ int32_t __arm_lmsk_decoder_get_line_start_postion(  arm_lmsk_decoder_t *ptThis,
 }
 
 __attribute__((always_inline))
-static uint8_t __arm_lsmk_decode_fetch_byte(arm_lmsk_decoder_t *ptThis)
+static inline uint8_t __arm_lsmk_decode_fetch_byte(arm_lmsk_decoder_t *ptThis)
 {
     uint8_t chByte;
     if (0 == this.chTagFetchByteLeft) {
@@ -731,7 +731,7 @@ int __arm_lmsk_decode_line( arm_lmsk_decoder_t *ptThis,
 
     if (this.tSetting.u3AlphaMSBCount == 7) {
         do {
-            uint8_t chCurrent;
+            //uint8_t chCurrent;
             bool bExact = false;
             __arm_lmsk_get_next_alpha(ptThis, pchBuffer++, 0, &bExact);
             (void)bExact;
