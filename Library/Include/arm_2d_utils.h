@@ -207,7 +207,9 @@ extern "C" {
 /*----------------------------------------------------------------------------*
  * Intrinsics Patch                                                           *
  *----------------------------------------------------------------------------*/
-#if __IS_SUPPORTED_ARM_ARCH_M__ && (__IS_COMPILER_GCC__ || __IS_COMPILER_ARM_COMPILER_5__)
+#if __IS_SUPPORTED_ARM_ARCH_M__                                                 \
+ && (   __IS_COMPILER_ARM_COMPILER_5__                                          \
+    ||  (__IS_COMPILER_GCC__ && (__GNUC__ < 14)))
 
 #   define __rev16      __REV16
 #   define __rev        __REV 
