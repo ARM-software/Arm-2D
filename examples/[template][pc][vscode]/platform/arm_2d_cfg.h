@@ -201,7 +201,7 @@ extern "C" {
 //     <32=>    32Bits
 // <i> The colour depth of your LCD
 // <i> Default: 16
-#   define __GLCD_CFG_COLOUR_DEPTH__                                    16
+#   define __GLCD_CFG_COLOUR_DEPTH__                                    32
 #endif
 
 // <o> The size of the LCD printf text buffer <16-65535>
@@ -291,8 +291,8 @@ extern "C" {
 #define ARM_2D_DEMO_RADAR_DEBUG                         1
 #define ARM_2D_DEMO_RADAR_SHOW_ANIMATION                1
 #define ARM_2D_DEMO_RADAR_USE_QOI_FOR_ANIMATION         0
-#define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION    1
-#define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION         0
+#define ARM_2D_DEMO_RADAR_USE_ZHRGB565_FOR_ANIMATION    0
+#define ARM_2D_DEMO_RADAR_USE_JPG_FOR_ANIMATION         1
 
 //#define ARM_2D_DEMO_USE_ZJPGD                       0
 
