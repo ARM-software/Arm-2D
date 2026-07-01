@@ -83,7 +83,6 @@
 
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 
 extern 
 const arm_2d_tile_t c_tileBackground;
@@ -215,7 +214,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
 #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
-            arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", SystemCoreClock / 1000000ul);
+            arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", arm_2d_helper_get_system_frequency() / 1000000ul);
 #endif
             arm_lcd_puts( "Testing...\r\n\r\n");
         } while(0);

@@ -77,16 +77,18 @@ typedef struct arm_lmsk_decoder_t {
     size_t nPosition;
 #endif
 
-    arm_lsmk_setting_t tSetting;
     uint8_t chPalette[32];
 
-    __arm_lmsk_floor_context_t tFloorContext;
-
+    arm_lsmk_setting_t tSetting;
     uint16_t u15Repeat          : 15;
     uint16_t bValid             : 1;
 
-    uint8_t chTagFetchByteLeft;
     uint32_t wTagFetchBuffer;
+    uint8_t chTagFetchByteLeft;
+    uint8_t                     : 8;
+    uint16_t                    : 16;
+
+    __arm_lmsk_floor_context_t tFloorContext;
 
 #if __ARM_LMSK_LSB_COMPENSATION_POLICY__ == 2
     q16_t   q16LSBCompensation;

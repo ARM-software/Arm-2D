@@ -183,10 +183,20 @@ void image_box_show(image_box_t *ptThis,
 
             if (bRegionChanged && bAutoFit && (NULL != this.tCFG.ptilePhoto || NULL != this.tCFG.ptilePhotoMask)) {
 
-                float fXRatio = (float)__image_box_canvas.tSize.iWidth
-                              / this.tCFG.ptilePhoto->tRegion.tSize.iWidth;
-                float fYRatio = (float)__image_box_canvas.tSize.iHeight
-                              / this.tCFG.ptilePhoto->tRegion.tSize.iHeight;
+                float fXRatio = 0;
+                float fYRatio = 0;
+
+                if (NULL != this.tCFG.ptilePhoto) {
+                    fXRatio = (float)__image_box_canvas.tSize.iWidth
+                                / this.tCFG.ptilePhoto->tRegion.tSize.iWidth;
+                    fYRatio = (float)__image_box_canvas.tSize.iHeight
+                                / this.tCFG.ptilePhoto->tRegion.tSize.iHeight;
+                } else if (NULL != this.tCFG.ptilePhotoMask) {
+                    fXRatio = (float)__image_box_canvas.tSize.iWidth
+                                / this.tCFG.ptilePhotoMask->tRegion.tSize.iWidth;
+                    fYRatio = (float)__image_box_canvas.tSize.iHeight
+                                / this.tCFG.ptilePhotoMask->tRegion.tSize.iHeight;
+                }
                 
                 if (this.tCFG.u2Mode == IMG_BOX_MODE_STRETCH) {
                     this.tCFG.fXRatio = fXRatio;
@@ -318,8 +328,8 @@ void image_box_show(image_box_t *ptThis,
         #if defined(RTE_Acceleration_Arm_2D_Transform)
             } else {
                 arm_2d_point_float_t tCentre = {
-                        .fX = this.tCFG.ptilePhoto->tRegion.tSize.iWidth / 2.0,
-                        .fY = this.tCFG.ptilePhoto->tRegion.tSize.iHeight / 2.0,
+                        .fX = this.tCFG.ptilePhotoMask->tRegion.tSize.iWidth / 2.0,
+                        .fY = this.tCFG.ptilePhotoMask->tRegion.tSize.iHeight / 2.0,
                     };
 
                 arm_2dp_fill_colour_with_mask_opacity_and_transform_xy(

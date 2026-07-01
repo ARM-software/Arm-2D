@@ -22,8 +22,8 @@
  * Description:  Public header file for porting Arm-2D to an non-supported
  *               Architecture. 
  *
- * $Date:        20 Sept 2024
- * $Revision:    V.1.1.0
+ * $Date:        25 June 2026
+ * $Revision:    V.1.2.0
  *
  * -------------------------------------------------------------------- */
 
@@ -66,6 +66,8 @@
 #define arm_exit_irq_safe    continue
 
 
+#if !__IS_ARCH_ARM__
+
 /*!
  * \brief   Reverse byte order (16 bit)
  * \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 0x34127856.
@@ -105,6 +107,8 @@ __STATIC_FORCEINLINE uint32_t __ror(uint32_t x, uint32_t n)
     n &= 0x1F;
     return (x >> n) | (x << (32 - n));
 }
+
+#endif
 
 
 extern void VT_enter_global_mutex(void);

@@ -130,7 +130,7 @@ arm_2d_err_t __arm_qoi_reset_context(   arm_qoi_dec_t *ptThis,
     ptContext->hwSize = MIN(__UINT16_MAX__, tBufferSize);
 #endif
 
-    struct __arm_qoi_header tQOIHeader;
+    struct __arm_qoi_header tQOIHeader = {0};
 
 #if 0
     /* move to the head */
@@ -749,28 +749,12 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
             }
 
             uint16_t hwOpa= tPixel.tColour.chAlpha;
-            if (hwOpa == 255) {
-                arm_2d_color_rgb565_t tPixelRGB565 = {
-                    .u5B = tPixel.tColour.chBlue >> 3,
-                    .u6G = tPixel.tColour.chGreen >> 2,
-                    .u5R = tPixel.tColour.chRed >> 3,
-                };
-
-                *phwTarget++ = tPixelRGB565.tValue;
-            } else if (hwOpa == 0) {
+            if (hwOpa == 0) {
                 phwTarget++;
             } else {
-                hwOpa += (hwOpa == 255);
-                uint16_t hwTrans = 256 - hwOpa;
-
-                __arm_2d_color_fast_rgb_t tColour;
-                __arm_2d_rgb565_unpack(*phwTarget, &tColour);
-
-                tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
-                tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
-                tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
-
-                *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565( &tPixel.wValue, 
+                                                            phwTarget++, 
+                                                            0);
             }
         } while(--tLength);
     } else {
@@ -784,28 +768,12 @@ arm_2d_err_t __arm_qoi_decode_stride_rgb565_with_background(
             }
 
             uint16_t hwOpa= tPixel.tColour.chAlpha;
-            if (hwOpa == 255) {
-                arm_2d_color_rgb565_t tPixelRGB565 = {
-                    .u5B = tPixel.tColour.chBlue >> 3,
-                    .u6G = tPixel.tColour.chGreen >> 2,
-                    .u5R = tPixel.tColour.chRed >> 3,
-                };
-
-                *phwTarget++ = tPixelRGB565.tValue;
-            } else if (hwOpa == 0) {
+            if (hwOpa == 0) {
                 phwTarget++;
             } else {
-                hwOpa += (hwOpa == 255);
-                uint16_t hwTrans = 256 - hwOpa;
-
-                __arm_2d_color_fast_rgb_t tColour;
-                __arm_2d_rgb565_unpack(*phwTarget, &tColour);
-
-                tColour.BGRA[0] = (tColour.BGRA[0] * hwTrans + (uint16_t)tPixel.tColour.chChannel[0] * hwOpa) >> 8;
-                tColour.BGRA[1] = (tColour.BGRA[1] * hwTrans + (uint16_t)tPixel.tColour.chChannel[1] * hwOpa) >> 8;
-                tColour.BGRA[2] = (tColour.BGRA[2] * hwTrans + (uint16_t)tPixel.tColour.chChannel[2] * hwOpa) >> 8;
-
-                *phwTarget++ = __arm_2d_rgb565_pack(&tColour);
+                __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565( &tPixel.wValue, 
+                                                            phwTarget++, 
+                                                            0);
             }
 
             ptLocation->iX++;

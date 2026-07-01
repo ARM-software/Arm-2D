@@ -268,7 +268,7 @@
   -->
 
     <components>
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cversion="1.2.6" condition="CMSIS-DSP">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Core" Cversion="1.3.0-dev" condition="CMSIS-DSP">
           <description>A 2D image processing library for Cortex-M processors</description>
           <files>
             <file category="include"     name="Library/Include/" />
@@ -316,7 +316,7 @@
           
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.2.6" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Alpha-Blending" Cversion="1.3.0-dev" condition="Arm-2D-CORE">
           <description>Alpha-blending related APIs for Arm-2D</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_alpha_blending.c" />
@@ -328,7 +328,7 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cversion="1.2.6" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Transform" Cversion="1.3.0-dev" condition="Arm-2D-CORE">
           <description>Transform (rotation and zooming)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_transform.c"           condition="CMSIS-DSP"/>
@@ -340,7 +340,7 @@
           </RTE_Components_h>
         </component>
         
-        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cversion="1.2.6" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D" Csub="Filter" Cversion="1.3.0-dev" condition="Arm-2D-CORE">
           <description>Filters (Blur etc)</description>
           <files>
             <file category="sourceC"     name="Library/Source/arm_2d_filter.c"/>
@@ -352,7 +352,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.2.9" condition="Arm-2D-CORE">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="PFB" Cversion="3.3.0" condition="Arm-2D-CORE">
           <description>Helper services for LCD adaptor(s), e.g. Generic Partial Framebuffer, Scene Player etc.</description>
           <files>
             <file category="include"     name="Helper/Include/" />
@@ -454,11 +454,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="4.4.3" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Helper" Csub="Display Adapter" Cversion="4.4.4" condition="Arm-2D-Displayer-Adapter" maxInstances="8">
           <description>The Display Adapter.</description>
           <files>
-            <file category="sourceC"     name="Helper/template/arm_2d_disp_adapter.c" attr="config" version="4.4.3" />
-            <file category="header"      name="Helper/template/arm_2d_disp_adapter.h" attr="config" version="4.4.3" />
+            <file category="sourceC"     name="Helper/template/arm_2d_disp_adapter.c" attr="config" version="4.4.4" />
+            <file category="header"      name="Helper/template/arm_2d_disp_adapter.h" attr="config" version="4.4.4" />
           </files>
           <RTE_Components_h>
     #define RTE_Acceleration_Arm_2D_Helper_Disp_Adapter%Instance%
@@ -492,7 +492,7 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.6.11" condition="Arm-2D-Loaders">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Loaders" Cversion="5.6.13" condition="Arm-2D-Loaders">
           <description>A helper service for loading various resource, e.g. loading baseline jpg files using TJpgDec, ZJpgDec, loading Lossless Compressed images (*.QOI) and loading font files using FreeType etc.</description>
           <files>
             <file category="include"     name="examples/common/loader/" />
@@ -556,7 +556,7 @@
           </Pre_Include_Global_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.16.2" condition="Arm-2D-Controls">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Extras" Csub="Controls" Cversion="2.16.3" condition="Arm-2D-Controls">
           <description>A set of example controls, e.g. round-corner-box, spinning-wheels etc</description>
           <files>
             <!-- example control source files -->
@@ -1220,11 +1220,11 @@
           </RTE_Components_h>
         </component>
 
-        <component Cclass="Acceleration" Cgroup="Arm-2D Render Test" Csub="Large LMSK" Cversion="1.4.1" condition="Arm-2D-Render-Test">
+        <component Cclass="Acceleration" Cgroup="Arm-2D Render Test" Csub="Large LMSK" Cversion="1.5.2" condition="Arm-2D-Render-Test">
           <description>A demo for the tile filling rendering test.</description>
           <files>
-            <file category="sourceC"     name="examples/render_tests/arm_2d_scene_large_lmsk.c"     attr="config" version="1.4.1" />
-            <file category="header"      name="examples/render_tests/arm_2d_scene_large_lmsk.h"     attr="config" version="1.4.1" />
+            <file category="sourceC"     name="examples/render_tests/arm_2d_scene_large_lmsk.c"     attr="config" version="1.5.2" />
+            <file category="header"      name="examples/render_tests/arm_2d_scene_large_lmsk.h"     attr="config" version="1.5.2" />
 
             <file category="sourceC"     name="examples/render_tests/bad_apple.c"                   attr="config" version="1.1.0" />
           </files>

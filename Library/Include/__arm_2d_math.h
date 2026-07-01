@@ -68,14 +68,10 @@ Arm Compiler 5 instead. If you insist using Arm Compiler 5,\
 typedef float float16_t;
 #endif
 
-#if __ARM_2D_HAS_DSP__
-
-#if defined(__IS_COMPILER_ARM_COMPILER_5__)
+#if __ARM_2D_HAS_DSP__                                                      \
+ && defined(__IS_COMPILER_ARM_COMPILER_5__)                                 \
+ && __IS_COMPILER_ARM_COMPILER_5__
 #   include "armdsp.h"
-#else
-#   include <arm_acle.h>
-#endif
-
 #endif
 
 #include "arm_math.h"

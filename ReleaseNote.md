@@ -1,5 +1,6 @@
 # Release Note
 
+## Release v1.3.0
 
 
 ## Golden Release v1.2.6 (18 March 2026) 

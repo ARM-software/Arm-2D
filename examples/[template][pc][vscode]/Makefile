@@ -125,7 +125,7 @@ else ifeq ($(shell uname), Darwin)
 app: $(OUT)
 
 else
-	CC      := $(CROSS)gcc
+	CC      := $(CROSS)clang
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
@@ -152,7 +152,7 @@ LDFLAG  +=  -lpthread
 #CC_DEF  += __ARM_2D_DEBUG__
 
 # develop SVE2
-# CCFLAG  += -march=armv8-a+sve2 -fno-vectorize -fno-slp-vectorize -msve-vector-bits=128
+# CCFLAG  += -march=armv8-a+sve2 #-fno-vectorize -fno-slp-vectorize #-msve-vector-bits=128
 
 ifeq ($(OS),Windows_NT)
 	# Windows GCC has a known compilation issue for -O0
@@ -161,9 +161,9 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platforms, we are allowed to set the optimisation level
-	CCFLAG  +=  -Ofast
-	CCFLAG  +=  -flto
-	LDFLAG  +=  -flto
+	CCFLAG  +=  -O0
+	#CCFLAG  +=  -flto
+	#LDFLAG  +=  -flto
 endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all

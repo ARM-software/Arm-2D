@@ -205,8 +205,8 @@ arm_2d_err_t __arm_zhrgb565_loader_draw(arm_generic_loader_t *ptObj,
     arm_zhrgb565_loader_t *ptThis = (arm_zhrgb565_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
-    int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
-    int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
+    //int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
+    //int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
 
     uint_fast8_t chBytesPerPixel = chBitsPerPixel >> 3;
     assert(0 == (chBitsPerPixel & 0x07));

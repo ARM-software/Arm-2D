@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper_list.h"
  * Description:  Public header file for list core related services
  *
- * $Date:        21 Oct 2025
- * $Revision:    V.2.4.2
+ * $Date:        24 June 2026
+ * $Revision:    V.2.4.3
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -201,7 +201,7 @@ typedef struct __arm_2d_list_work_area_t {
  * \param[in] iOffset the offset in the list core
  * \return __arm_2d_list_core_target_area_t* the working area for a target list core item
  */
-typedef const struct arm_2d_i_list_region_calculator_t {
+struct __arm_2d_i_list_region_calculator_t {
     __arm_2d_list_work_area_t *(*fnCalculator)(
                                     __arm_2d_list_core_t *ptThis,
                                     __arm_2d_list_item_iterator *fnIterator,
@@ -210,7 +210,8 @@ typedef const struct arm_2d_i_list_region_calculator_t {
     int16_t (*fnSelectionCompensation)(__arm_2d_list_core_t *ptThis,
                                        arm_2d_list_item_t *ptItem);
     arm_2d_list_dir_t tDirection;
-} arm_2d_i_list_region_calculator_t;
+};
+typedef const struct __arm_2d_i_list_region_calculator_t arm_2d_i_list_region_calculator_t;
 
 /*!
  *  \brief list core configuration structure

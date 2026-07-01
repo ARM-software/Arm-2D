@@ -239,8 +239,8 @@ arm_2d_err_t __lmsk_loader_draw(arm_generic_loader_t *ptObj,
     arm_lmsk_loader_t *ptThis = (arm_lmsk_loader_t *)ptObj;
     ARM_2D_UNUSED(ptThis);
 
-    int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
-    int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
+    //int_fast16_t iXLimit = ptROI->tSize.iWidth + ptROI->tLocation.iX; 
+    //int_fast16_t iYLimit = ptROI->tSize.iHeight + ptROI->tLocation.iY; 
 
     /* decode */
     if (0 != arm_lmsk_decode(   &this.tDecoder, 

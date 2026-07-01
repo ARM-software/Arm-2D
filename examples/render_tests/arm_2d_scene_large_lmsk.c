@@ -110,6 +110,9 @@ static void __on_scene_large_lmsk_load(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
 
     arm_lmsk_loader_on_load(&this.tAnimation);
+#if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+    image_box_on_load(&this.tImage);
+#endif
 }
 
 static void __after_scene_large_lmsk_switching(arm_2d_scene_t *ptScene)
@@ -125,6 +128,10 @@ static void __on_scene_large_lmsk_depose(arm_2d_scene_t *ptScene)
     ARM_2D_UNUSED(ptThis);
     
     arm_lmsk_loader_depose(&this.tAnimation);
+
+#if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+    image_box_depose(&this.tImage);
+#endif
 
     arm_foreach(int64_t,this.lTimestamp, ptItem) {
         *ptItem = 0;
@@ -212,6 +219,9 @@ static void __on_scene_large_lmsk_frame_start(arm_2d_scene_t *ptScene)
     }
 
     arm_lmsk_loader_on_frame_start(&this.tAnimation);
+#if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+    image_box_on_frame_start(&this.tImage);
+#endif
 }
 
 static void __on_scene_large_lmsk_frame_complete(arm_2d_scene_t *ptScene)
@@ -221,6 +231,9 @@ static void __on_scene_large_lmsk_frame_complete(arm_2d_scene_t *ptScene)
 
     arm_lmsk_loader_on_frame_complete(&this.tAnimation);
 
+#if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+    image_box_on_frame_complete(&this.tImage);
+#endif
 }
 
 static void __before_scene_large_lmsk_switching_out(arm_2d_scene_t *ptScene)
@@ -245,11 +258,15 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_large_lmsk_handler)
     arm_2d_canvas(ptTile, __top_canvas) {
     /*-----------------------draw the foreground begin-----------------------*/
         
+    #if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+        arm_2d_align_centre(__top_canvas, 
+                            160, 120 + 10 ) {
+    #else
         arm_2d_size_t tTVBoxSize = this.tFilm.use_as__arm_2d_tile_t.tRegion.tSize;
         tTVBoxSize.iHeight += 10;
 
-        arm_2d_align_centre(__top_canvas, 
-                            tTVBoxSize ) {
+        arm_2d_align_centre(__top_canvas, tTVBoxSize ) {
+    #endif
             
                 arm_2d_dock_top(__centre_region, 10) {
 
@@ -259,16 +276,20 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_large_lmsk_handler)
                         arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
                         arm_lcd_text_set_draw_region(&__vertical_region);
                         arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_WHITE);
-                        arm_lcd_printf("Frame:%04"PRId16"\tFPS:%"PRId16, 
+                        arm_lcd_printf("[%04"PRId16"]\tFPS:%"PRId16, 
                                         arm_2d_helper_film_get_frame_index(&this.tFilm),
                                         this.iNumber);
                     }
                 }
 
+            #if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+                image_box_show(&this.tImage, ptTile, &__centre_region, 255, bIsNewFrame);
+            #else
                 arm_2d_fill_colour_with_mask(   ptTile, 
                                         &__centre_region, 
                                         (const arm_2d_tile_t *)&this.tFilm, 
                                         (__arm_2d_color_t){this.tColour});
+            #endif
 
             arm_2d_helper_dirty_region_update_item( 
                             &this.use_as__arm_2d_scene_t.tDirtyRegionHelper.tDefaultItem,
@@ -366,8 +387,8 @@ user_scene_large_lmsk_t *__arm_2d_scene_large_lmsk_init(   arm_2d_scene_player_t
         
     #   if 1
         arm_loader_io_cache_init(   &this.LoaderIO.tCache, 
-                                    (uintptr_t)c_lmskBadApple160x120col20a4, 
-                                    sizeof(c_lmskBadApple160x120col20a4),
+                                    (uintptr_t)c_lmskBadApple100x75col16a4, 
+                                    sizeof(c_lmskBadApple100x75col16a4),
                                     this.tCachelines,
                                     dimof(this.tCachelines));
     #   else
@@ -394,7 +415,7 @@ user_scene_large_lmsk_t *__arm_2d_scene_large_lmsk_init(   arm_2d_scene_player_t
             #endif
             },
         #else
-            .pchLMSKSource = c_lmskBadApple160x120col20a4,
+            .pchLMSKSource = c_lmskBadApple100x75col16a4,
         #endif
         };
 
@@ -403,11 +424,22 @@ user_scene_large_lmsk_t *__arm_2d_scene_large_lmsk_init(   arm_2d_scene_player_t
 
     this.tFilm = (arm_2d_helper_film_t)
                     impl_film(  this.tAnimation, 
-                        160, 
-                        120, 
-                        20, 
+                        100, 
+                        75, 
+                        16, 
                         3110, 
                         33);
+
+#if ARM_2D_DEMO_LARGE_LMSK_USE_IMAGE_BOX
+    do {
+        image_box_cfg_t tCFG = {
+            .ptilePhotoMask = &this.tFilm.tTile,
+        };
+
+        image_box_init(&this.tImage, &tCFG);
+
+    } while(0);
+#endif
 
     /* ------------   initialize members of user_scene_large_lmsk_t end   ---------------*/
 

@@ -295,7 +295,7 @@ void __arm_2d_log_printf(int32_t nIndentLevel,
 
             __ARM_2D_PORT_PRINTF__("%s", pchStringBuffer);
 
-            free(pchStringBuffer);
+            __arm_2d_free_scratch_memory(ARM_2D_MEM_TYPE_FAST,pchStringBuffer);
         } else {
             __ARM_2D_PORT_PRINTF__("[Insufficient memory for logging]%s", pchFormatString);
         }

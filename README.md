@@ -84,7 +84,7 @@ We are optimistic that anyone can find something interesting in Arm-2D.
 - [How to Get Started](#how-to-get-started)
 - [Table of Content](#table-of-content)
 - [Features](#features)
-  - [In this version (v1.2.6)](#in-this-version-v126-a-golden-release)
+  - [In this version (v1.3.0-dev)](#in-this-version-v130-dev-a-golden-release)
   - [New Features Planned in the Future](#new-features-planned-in-the-future)
 - [1 Introduction](#1-introduction)
   - [1.1 The Background](#11-the-background)
@@ -104,7 +104,7 @@ We are optimistic that anyone can find something interesting in Arm-2D.
 
 ## Features
 
-### In this version (v1.2.6), A Golden Release
+### In this version (v1.3.0-dev), A Golden Release
 
 Since Arm-2D provides **Low-Level 2D Image Processing Services** that are deeply optimised for both performance and memory footprint, it has been quickly adopted in many Deep Embedded Display systems since it debuted in 2020.  Now you can find its [presence](https://www.linkedin.com/search/results/all/?keywords=%23amazingarm2d&origin=HASH_TAG_FROM_FEED) from the [tiniest Cortex-M0](https://www.linkedin.com/posts/gabriel-wang-554523167_amazingarm2d-activity-7239115506102726658-CKhE?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg) to the [Raspberry Pi 5 powerhouse](https://www.linkedin.com/posts/gabriel-wang-554523167_embeddedworld-activity-7305214952544391170-WkLP?utm_source=share&utm_medium=member_desktop&rcm=ACoAACfEJVABu43psSmn3fAYP2dptCi3QU4o0Yg).  The supported features include, but are not limited to:
 
@@ -284,7 +284,7 @@ When we look at the traditionally embedded  GUI architecture(as shown in **Figur
 
 ### 2.2 Dependency
 
-- The library depends on **CMSIS 5.7.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.8.0 is required).
+- The library depends on **CMSIS 5.9.0 and above** (If you want to use Arm-2D with Cortex-M55, CMSIS 5.9.0 is required).
 - The library is developed with the **C11** standard and depends on some **widely adopted GCC extensions**.
   - See **section 3.2** for details.
 - The library supports **Arm Compiler 6**, **GCC**, **LLVM** and **IAR**
@@ -420,4 +420,4 @@ Thank you for your time.
 
 ***Arm-2D Development Team.***
 
-18 March 2026
+25 June 2026

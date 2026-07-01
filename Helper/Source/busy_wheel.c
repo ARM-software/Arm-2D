@@ -73,7 +73,6 @@
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
-extern uint32_t SystemCoreClock;
 extern
 const arm_2d_tile_t c_tileWhiteDot;
 extern
