@@ -2,9 +2,9 @@ name: Build documentation and pack
 on:
   workflow_dispatch:
   push:
-    branches: [ main, developing ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ main, developing ]
+    branches: [ main, develop ]
   release:
     types: [published]
 jobs:
