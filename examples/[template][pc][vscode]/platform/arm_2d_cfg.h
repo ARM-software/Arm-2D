@@ -242,7 +242,7 @@ extern "C" {
 // <i> The algorithm for benchmark evaluation.
 // <i> NOTE: the FPS30Frq requires the CPU cycle information (e.g. for Cortex-M). If it is not available, please choose the FPS30Score mode (e.g. for Cortex-A).
 #ifndef __ARM_2D_CFG_BENCHMARK_EVL__
-#   define __ARM_2D_CFG_BENCHMARK_EVL__                                0
+#   define __ARM_2D_CFG_BENCHMARK_EVL__                                 1
 #endif
 
 // <q>Use Tiny mode to run benchmark

@@ -102,7 +102,10 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
-    float fFPS30Freq;
+    union {
+        float fFPS30Freq;
+        uint32_t wFPS30Score;
+    };
     uint32_t wIterations;
     uint32_t wLCDLatency;
 } BENCHMARK;
@@ -209,7 +212,7 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
 
             arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
 
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             BENCHMARK.fFPS30Freq = 0.0f;
 #else
             BENCHMARK.fFPS30Freq = (float)
