@@ -307,7 +307,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", arm_2d_helper_get_system_frequency() / 1000000ul);
@@ -315,7 +315,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_handler)
             arm_lcd_puts( "Benchmark Report:\r\n");
             
             arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "FPS30Freq: N/A\r\n");
 #else
             arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
