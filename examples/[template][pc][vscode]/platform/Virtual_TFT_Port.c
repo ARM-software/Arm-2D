@@ -234,8 +234,8 @@ static void monitor_sdl_init(void)
     renderer = SDL_CreateRenderer(window, -1, 0);
 #endif
     texture = SDL_CreateTexture(renderer,
-                                SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STATIC, VT_WIDTH, VT_HEIGHT);
-    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+                                SDL_PIXELFORMAT_XRGB8888, SDL_TEXTUREACCESS_STATIC, VT_WIDTH, VT_HEIGHT);
+    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_NONE);
 
     SDL_RenderSetLogicalSize(renderer, VT_WIDTH, VT_HEIGHT);
 
