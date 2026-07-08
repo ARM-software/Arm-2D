@@ -59,6 +59,13 @@
 #   define __IS_SUPPORTED_ARM_ARCH_M__        0
 #endif
 
+#undef __IS_SUPPORTED_ARM_ARCH_A__
+#if (__ARM_ARCH_PROFILE == 'A') || defined(__TARGET_PROFILE_A)
+#   define __IS_SUPPORTED_ARM_ARCH_A__        1
+#else
+#   define __IS_SUPPORTED_ARM_ARCH_A__        0
+#endif
+
 #undef __IS_ARCH_ARM__
 #if ((__ARM_ARCH_PROFILE == 'A') || defined(__TARGET_PROFILE_A)) \
  || ((__ARM_ARCH_PROFILE == 'R') || defined(__TARGET_PROFILE_R)) \

@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        13. Feb 2026
- * $Revision:    V.2.5.5
+ * $Date:        8. July 2026
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -138,6 +138,7 @@ void arm_2d_helper_init(void)
     if (s_tHelper.wMSUnit == 0) {
         s_tHelper.wMSUnit = 1;
     }
+
 #if __ARM_2D_HAS_ASYNC__
     /*! \note create a event flag and attach it to the default OP */
     arm_2d_op_attach_semaphore(NULL, arm_2d_port_new_semaphore());
@@ -168,18 +169,27 @@ void arm_2d_helper_init(void)
 
 /* NOTE: for non-arm architecture, you have to implement those functions.
  */
-#if __IS_SUPPORTED_ARM_ARCH_M__
+#if __IS_SUPPORTED_ARM_ARCH_M__ || __IS_SUPPORTED_ARM_ARCH_A__
 __WEAK 
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
-    int64_t iOriginTimestamp = 
+    int64_t iOriginTimestamp = 0;
 #if defined(__PERF_COUNTER__)
-    get_system_ticks();
+    iOriginTimestamp = get_system_ticks();
+#elif defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
+    struct timespec timestamp;
+    clock_gettime(CLOCK_REALTIME, &timestamp);
+
+    return (1000000ll * timestamp.tv_sec) + (timestamp.tv_nsec / 1000ll);
+#elif __IS_SUPPORTED_ARM_ARCH_A__ && defined(__aarch64__)
+    __asm volatile("mrs %0, cntvct_el0" : "=r" (iOriginTimestamp));
 #else
     0;
 #endif
 
+#if !(defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__))
     return iOriginTimestamp + s_tHelper.lTimestampInit;
+#endif
 }
 
 __WEAK 
@@ -188,6 +198,12 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 #if defined(__PERF_COUNTER__) && __PER_COUNTER_VER__ >= 20300
     extern uint32_t perfc_port_get_system_timer_freq(void);
     return perfc_port_get_system_timer_freq();
+#elif defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
+    return 1000000ul;
+#elif __IS_SUPPORTED_ARM_ARCH_A__ && defined(__aarch64__)
+    uint64_t dwFrequency;
+    __asm volatile("mrs %0, cntvct_el0" : "=r" (dwFrequency));
+    return (uint32_t)dwFrequency;
 #else
     extern uint32_t SystemCoreClock;
     return SystemCoreClock;

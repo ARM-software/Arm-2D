@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        13. Feb 2026
- * $Revision:    V.2.5.5
+ * $Date:        8. July 2026
+ * $Revision:    V.2.6.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */

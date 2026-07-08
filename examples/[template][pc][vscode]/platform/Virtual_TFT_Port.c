@@ -398,32 +398,15 @@ bool VT_sdl_vsync(void)
     return bResult;
 }
 
-
-#if defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
 int64_t arm_2d_helper_get_system_timestamp(void)
 {
-    struct timespec timestamp;
-    clock_gettime(CLOCK_REALTIME, &timestamp);
-
-    return (1000000ll * timestamp.tv_sec) + (timestamp.tv_nsec / 1000ll);
+    return (int64_t)SDL_GetPerformanceCounter();
 }
 
 uint32_t arm_2d_helper_get_reference_clock_frequency(void)
 {
-    return 1000000ul;
+    return (uint32_t)SDL_GetPerformanceFrequency();
 }
-#else
-
-int64_t arm_2d_helper_get_system_timestamp(void)
-{
-    return (int64_t)clock();
-}
-
-uint32_t arm_2d_helper_get_reference_clock_frequency(void)
-{
-    return CLOCKS_PER_SEC;
-}
-#endif
 
 void VT_init(void)
 {
