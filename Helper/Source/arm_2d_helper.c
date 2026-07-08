@@ -181,7 +181,7 @@ int64_t arm_2d_helper_get_system_timestamp(void)
    clock_gettime(CLOCK_REALTIME, &timestamp);
 
     return (1000000ll * timestamp.tv_sec) + (timestamp.tv_nsec / 1000ll);
-#elif __IS_SUPPORTED_ARM_ARCH_A__ && defined(__aarch64__)
+#elif defined(__aarch64__)
     __asm volatile("mrs %0, cntvct_el0" : "=r" (iOriginTimestamp));
 #else
     0;
@@ -200,7 +200,7 @@ uint32_t arm_2d_helper_get_reference_clock_frequency(void)
     return perfc_port_get_system_timer_freq();
 #elif defined(_POSIX_VERSION) || defined(CLOCK_REALTIME) || defined(__APPLE__)
     return 1000000ul;
-#elif __IS_SUPPORTED_ARM_ARCH_A__ && defined(__aarch64__)
+#elif defined(__aarch64__)
     uint64_t dwFrequency;
     __asm volatile("mrs %0, cntfrq_el0" : "=r" (dwFrequency));
     return (uint32_t)dwFrequency;
