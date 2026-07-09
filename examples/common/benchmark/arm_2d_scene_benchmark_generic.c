@@ -222,11 +222,9 @@ static void __on_scene_benchmark_generic_frame_complete(arm_2d_scene_t *ptScene)
                  * ((double)arm_2d_helper_get_system_frequency() / 1000000.0f));
 #endif
 #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
-            do {
-                int64_t lFPS30TimeInMs = arm_2d_helper_convert_ticks_to_ms((int64_t)BENCHMARK.wAverage * 30);
-
-                BENCHMARK.wFPS30Score = (uint32_t)((double)(1000ul * 10000ul) / (double)lFPS30TimeInMs);
-            } while(0);
+            BENCHMARK.wFPS30Score 
+                = __arm_2d_helper_benchmark_calculate_fps30score(   (int64_t)BENCHMARK.dwTotal, 
+                                                                    ITERATION_CNT);
 #endif
 
             do {

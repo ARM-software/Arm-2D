@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  Public header file for the all helper services
  *
- * $Date:        8. July 2026
- * $Revision:    V.2.6.0
+ * $Date:        9. July 2026
+ * $Revision:    V.2.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -707,6 +707,15 @@ void __arm_2d_helper_layout_debug_print_label(const arm_2d_tile_t *ptTile,
                                               arm_2d_region_t *ptRegion,
                                               const char *pchString);
 #endif
+
+__STATIC_INLINE 
+uint32_t __arm_2d_helper_benchmark_calculate_fps30score(int64_t dwTotal, 
+                                                        size_t uIterationCount)
+{
+    int64_t lFPS30TimeInMs = arm_2d_helper_convert_ticks_to_ms(dwTotal);
+    return (uint32_t)(  ((double)(1000ul * 10000ul * uIterationCount) / 30.0f)
+                     /  (double)lFPS30TimeInMs);
+}
 
 /*! @} */
 

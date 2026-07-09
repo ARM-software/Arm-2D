@@ -21,8 +21,8 @@
  * Title:        #include "arm_2d_helper.h"
  * Description:  The source code for arm-2d helper utilities
  *
- * $Date:        8. July 2026
- * $Revision:    V.2.6.0
+ * $Date:        9. July 2026
+ * $Revision:    V.2.6.1
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
