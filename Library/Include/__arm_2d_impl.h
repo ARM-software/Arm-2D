@@ -139,6 +139,15 @@ extern "C" {
     } while(0)
 #endif
 
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8_OPA(   __SRC_ADDR,         \
+                                                            __DES_ADDR,         \
+                                                            __OPA)              \
+            __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_GRAY8(  (__SRC_ADDR),           \
+                                                        (__DES_ADDR),           \
+                                                        256 - (__OPA))
+#endif
+
 __STATIC_INLINE 
 void __arm_2d_rgb565_pixel_blend_sw(uint16_t * phwSource,
                                     uint16_t * phwTarget,
@@ -198,6 +207,15 @@ void __arm_2d_ccca8888_pixel_blend_to_rgb565_sw(uint32_t *pwSource,
                                                     256 - (__TRANS))
 #endif
 
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_RGB565_OPA(  __SRC_ADDR,         \
+                                                        __DES_ADDR,             \
+                                                        __OPA)                  \
+        __arm_2d_ccca8888_pixel_blend_to_rgb565_sw( (__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    (__OPA))
+#endif
+
 __STATIC_INLINE 
 void __arm_2d_cccn888_pixel_blend_sw(uint32_t * pwSource,
                                      uint32_t * pwTarget,
@@ -243,6 +261,15 @@ void __arm_2d_ccca8888_pixel_blend_to_cccn888_sw(uint32_t * pwSource,
         __arm_2d_ccca8888_pixel_blend_to_cccn888_sw( (__SRC_ADDR),              \
                                                     (__DES_ADDR),               \
                                                     256 - (__TRANS))
+#endif
+
+#ifndef __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888_OPA
+#   define __ARM_2D_PIXEL_BLENDING_CCCA8888_TO_CCCN888_OPA(  __SRC_ADDR,        \
+                                                        __DES_ADDR,             \
+                                                        __OPA)                  \
+        __arm_2d_ccca8888_pixel_blend_to_cccn888_sw((__SRC_ADDR),               \
+                                                    (__DES_ADDR),               \
+                                                    (__OPA))
 #endif
 
 #ifndef __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
