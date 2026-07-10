@@ -226,7 +226,7 @@ void __arm_2d_cccn888_pixel_blend_sw(uint32_t * pwSource,
 
     dwSourcePixel = (dwSourcePixel | dwSourcePixel << 32) & 0x0000FF0000FF00FF;
     dwTargetPixel = (dwTargetPixel | dwTargetPixel << 32) & 0x0000FF0000FF00FF;
-    dwTargetPixel += (dwSourcePixel - dwTargetPixel) * hwOpacity >> 8;
+    dwTargetPixel += ((dwSourcePixel - dwTargetPixel) * hwOpacity) >> 8;
     dwTargetPixel &= 0x0000FF0000FF00FF;
     *pwTarget = (uint32_t)(dwTargetPixel | (dwTargetPixel >> 32) | 0xFF000000);
 }
@@ -248,7 +248,7 @@ void __arm_2d_ccca8888_pixel_blend_to_cccn888_sw(uint32_t * pwSource,
         uint32_t wOpacity = ((*pwSource >> 24) * hwOpacity) >> 8;
         dwSourcePixel = (dwSourcePixel | dwSourcePixel << 32) & 0x0000FF0000FF00FF;
         dwTargetPixel = (dwTargetPixel | dwTargetPixel << 32) & 0x0000FF0000FF00FF;
-        dwTargetPixel += (dwSourcePixel - dwTargetPixel) * wOpacity >> 8;
+        dwTargetPixel += ((dwSourcePixel - dwTargetPixel) * hwOpacity) >> 8;
         dwTargetPixel &= 0x0000FF0000FF00FF;
         *pwTarget = (uint32_t)(dwTargetPixel | (dwTargetPixel >> 32) | 0xFF000000);
     }
