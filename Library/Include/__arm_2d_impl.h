@@ -120,7 +120,7 @@ extern "C" {
         __arm_2d_ccca8888_unpack(*(__SRC_ADDR), &ARM_2D_SAFE_NAME(tSrcPix));    \
         uint16_t ARM_2D_SAFE_NAME(hwOPA) = ARM_2D_SAFE_NAME(tSrcPix).BGRA[3];   \
         ARM_2D_SAFE_NAME(hwOPA)                                                 \
-            = arm_2d_helper_alpha_mix(ARM_2D_SAFE_NAME(hwOPA), (__TRANS));      \
+            = arm_2d_helper_opacity_mix(ARM_2D_SAFE_NAME(hwOPA), (__TRANS));    \
                                                                                 \
         uint8_t *ARM_2D_SAFE_NAME(pchTargetPixel) = (__DES_ADDR);               \
         uint8_t ARM_2D_SAFE_NAME(chSrcPixel)                                    \
@@ -238,7 +238,8 @@ void __arm_2d_ccca8888_pixel_blend_to_cccn888_sw(uint32_t * pwSource,
         uint64_t dwSourcePixel = *pwSource;
         uint64_t dwTargetPixel = *pwTarget;
 
-        uint32_t wOpacity = arm_2d_helper_alpha_mix((*pwSource >> 24), hwOpacity);
+        uint32_t wOpacity = arm_2d_helper_opacity_mix((*pwSource >> 24), hwOpacity);
+
         dwSourcePixel = (dwSourcePixel | dwSourcePixel << 32) & 0x0000FF0000FF00FF;
         dwTargetPixel = (dwTargetPixel | dwTargetPixel << 32) & 0x0000FF0000FF00FF;
         dwTargetPixel += ((dwSourcePixel - dwTargetPixel) * hwOpacity) >> 8;

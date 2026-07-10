@@ -123,7 +123,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
 
                     if (hwAlpha == 0) {
                         pchSrc++;
@@ -183,7 +183,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_chn_mask_and_opacity(
         uint32_t *pwSourceMask = pwSourceMaskBase; 
     
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
+        hwOpacity += hwOpacity == 255;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint8_t *__RESTRICT pchTarget = pchTargetBase;     
@@ -201,7 +201,7 @@ void __arm_2d_impl_gray8_tile_fill_with_src_chn_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     if (hwAlpha == 0) {
                         pchSrc++;
                         pchTarget++;
@@ -275,7 +275,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_mask_and_opacity(
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++;
@@ -426,7 +426,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_gray8_with_src_chn_mask_and_opacity(
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++; 
@@ -797,7 +797,7 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
 
                     if (hwAlpha == 0) {
                         phwSrc++;
@@ -857,7 +857,7 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
         uint32_t *pwSourceMask = pwSourceMaskBase; 
     
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
+        hwOpacity += hwOpacity == 255;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint16_t *__RESTRICT phwTarget = phwTargetBase;     
@@ -875,7 +875,7 @@ void __arm_2d_impl_rgb565_tile_fill_with_src_chn_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     if (hwAlpha == 0) {
                         phwSrc++;
                         phwTarget++;
@@ -949,7 +949,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_mask_and_opacity(
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++;
@@ -1100,7 +1100,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_rgb565_with_src_chn_mask_and_opacity(
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++; 
@@ -1471,7 +1471,7 @@ void __arm_2d_impl_cccn888_tile_fill_with_src_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
 
                     if (hwAlpha == 0) {
                         pwSrc++;
@@ -1531,7 +1531,7 @@ void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
         uint32_t *pwSourceMask = pwSourceMaskBase; 
     
         int_fast16_t iSourceMaskY = 0;
-        hwOpacity += (hwOpacity == 255);
+        hwOpacity += hwOpacity == 255;
 
         for (int_fast16_t iSourceY = 0; iSourceY < ptSourceSize->iHeight; iSourceY++) {
             uint32_t *__RESTRICT pwTarget = pwTargetBase;     
@@ -1549,7 +1549,7 @@ void __arm_2d_impl_cccn888_tile_fill_with_src_chn_mask_and_opacity(
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
 
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     if (hwAlpha == 0) {
                         pwSrc++;
                         pwTarget++;
@@ -1623,7 +1623,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_mask_and_opacity(
                 uint8_t *__RESTRICT pchSrcMsk = pchSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*pchSrcMsk++));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*pchSrcMsk++), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++;
@@ -1774,7 +1774,7 @@ void __arm_2d_impl_ccca8888_tile_fill_to_cccn888_with_src_chn_mask_and_opacity(
                 uint32_t *__RESTRICT pwSrcMsk = pwSourceMask;
 
                 for (int_fast16_t x = 0; x < wLength; x++) {
-                    uint16_t hwAlpha = arm_2d_helper_alpha_mix(hwOpacity, (*(uint8_t *)(pwSrcMsk++)));
+                    uint16_t hwAlpha = arm_2d_helper_opacity_mix((*(uint8_t *)(pwSrcMsk++)), hwOpacity);
                     
                     if (hwAlpha == 0) {
                         pwSrc++; 
