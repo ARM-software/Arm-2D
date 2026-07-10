@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_mask_and_opacity.h
  * Description:  APIs for Tile-Fill-with-Source-Mask-and-Opacity operations
  *
- * $Date:        09. July 2026
- * $Revision:    V.2.0.0
+ * $Date:        10. July 2026
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *

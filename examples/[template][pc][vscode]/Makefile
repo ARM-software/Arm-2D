@@ -112,7 +112,7 @@ app: build/SDL2.dll $(OUT)
 
 else ifeq ($(shell uname), Darwin)
     # Code for OS X
-	CC      := $(CROSS)clang
+	CC      := $(CROSS)gcc
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d

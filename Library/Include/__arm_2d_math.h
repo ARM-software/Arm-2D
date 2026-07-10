@@ -1,11 +1,5 @@
-/******************************************************************************
- * @file     arm_2d_math.h
- * @brief    Public header file for Arm-2D Library
- * @version  V1.0.0
- * @date     8 Feb 2026
- ******************************************************************************/
 /*
- * Copyright (c) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2026 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,6 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        arm_2d_math.h
+ * Description:  Public header file for Arm-2D Library
+ *
+ * $Date:        10 July 2026
+ * $Revision:    V1.1.0
+ *
+ * -------------------------------------------------------------------- */
 
 #ifndef __ARM_2D_MATH_H__
 #define __ARM_2D_MATH_H__
@@ -310,6 +313,24 @@ qsub_q16(q16_t q16In0, q16_t q16In1)
 
 #endif
 
+__STATIC_INLINE
+uint8_t arm_2d_helper_alpha_mix(uint_fast16_t hwAlpha1, 
+                                uint_fast16_t hwAlpha2)
+{
+    uint32_t wAlpha = hwAlpha1 * hwAlpha2 + 0x80;
+    wAlpha += wAlpha >> 8;
+    return (uint8_t)(wAlpha >> 8); 
+}
+
+__STATIC_INLINE
+uint8_t arm_2d_helper_blend_chn(uint8_t chSource, 
+                                uint8_t chTarget, 
+                                uint_fast16_t hwAlpha)
+{
+    uint32_t wTarget = chTarget;
+    wTarget += ((uint32_t)chSource - wTarget) * hwAlpha >> 8;
+    return (uint8_t)wTarget;
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop
