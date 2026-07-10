@@ -112,20 +112,20 @@ app: build/SDL2.dll $(OUT)
 
 else ifeq ($(shell uname), Darwin)
     # Code for OS X
-	CC      := $(CROSS)gcc
+	CC      := $(CROSS)clang
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
 	RM      := rm -rf
 	CCFLAG  += -D_THREAD_SAFE
-	CCFLAG  += -ffast-math -Wno-deprecated-ofast -Wno-unknown-warning-option
+	CCFLAG  += -ffast-math -Wno-deprecated-ofast -Wno-unknown-warning-option -fno-vectorize -fno-slp-vectorize
 	CC_INC  += /opt/homebrew/include
 	LD_INC  += /opt/homebrew/lib
 	LD_LIB  := SDL2 SDL2main
 app: $(OUT)
 
 else
-	CC      := $(CROSS)clang
+	CC      := $(CROSS)gcc
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
@@ -152,7 +152,7 @@ LDFLAG  +=  -lpthread
 #CC_DEF  += __ARM_2D_DEBUG__
 
 # develop SVE2
-# CCFLAG  += -march=armv8-a+sve2 #-fno-vectorize -fno-slp-vectorize #-msve-vector-bits=128
+ CCFLAG  +=  #-march=armv8-a+sve2 # #-msve-vector-bits=128
 
 ifeq ($(OS),Windows_NT)
 	# Windows GCC has a known compilation issue for -O0
