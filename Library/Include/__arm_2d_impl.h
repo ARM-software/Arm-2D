@@ -21,8 +21,8 @@
  * Title:        __arm_2d_impl.h
  * Description:  header files for internal users or professional developers
  *
- * $Date:        25 June 2026
- * $Revision:    V.2.4.0
+ * $Date:        10 July 2026
+ * $Revision:    V.2.5.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -150,11 +150,11 @@ void __arm_2d_rgb565_pixel_blend_sw(uint16_t * phwSource,
     uint32_t wTargetPixel = *phwTarget;
     uint32_t wOpacity = hwOpacity >> 3;
 
-    wSourcePixel = (wSourcePixel | wSourcePixel << 16) & 0x07e0f81f;
-    wTargetPixel = (wTargetPixel | wTargetPixel << 16) & 0x07e0f81f;
+    wSourcePixel = (wSourcePixel | (wSourcePixel << 16)) & 0x07e0f81f;
+    wTargetPixel = (wTargetPixel | (wTargetPixel << 16)) & 0x07e0f81f;
     wTargetPixel += (wSourcePixel - wTargetPixel) * wOpacity >> 5;
     wTargetPixel &= 0x07e0f81f;
-    *phwTarget = (uint16_t)(wTargetPixel | wTargetPixel >> 16);
+    *phwTarget = (uint16_t)(wTargetPixel | (wTargetPixel >> 16));
 }
 
 #ifndef __ARM_2D_PIXEL_BLENDING_RGB565
@@ -173,20 +173,20 @@ void __arm_2d_ccca8888_pixel_blend_to_rgb565_sw(uint32_t *pwSource,
 
     if (wOpacity) {
         if (wOpacity == (0xFF >> 3)) {
-            *hwTarget = (uint16_t)( (wSourcePixel >> 8 & 0xf800) 
-                                  + (wSourcePixel >> 5 & 0x7e0) 
-                                  + (wSourcePixel >> 3  & 0x1f));
+            *hwTarget = (uint16_t)( ((wSourcePixel >> 8) & 0xf800) 
+                                  + ((wSourcePixel >> 5) & 0x7e0) 
+                                  + ((wSourcePixel >> 3) & 0x1f));
         } else {
             uint32_t wTargetPixel = *hwTarget;
 
             wSourcePixel = ((wSourcePixel & 0xfc00) << 11) 
-                         + (wSourcePixel >> 8 & 0xf800) 
-                         + (wSourcePixel >> 3 & 0x1f);
+                         + ((wSourcePixel >> 8) & 0xf800) 
+                         + ((wSourcePixel >> 3) & 0x1f);
 
-            wTargetPixel = (wTargetPixel | wTargetPixel << 16) & 0x07e0f81f;
+            wTargetPixel = (wTargetPixel | (wTargetPixel << 16)) & 0x07e0f81f;
             wTargetPixel += (wSourcePixel - wTargetPixel) * wOpacity >> 5;
             wTargetPixel &= 0x07e0f81f;
-            *hwTarget = (uint16_t)(wTargetPixel | wTargetPixel >> 16);
+            *hwTarget = (uint16_t)(wTargetPixel | (wTargetPixel >> 16));
         }
     }
 }
