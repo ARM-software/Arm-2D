@@ -21,10 +21,8 @@
  * Title:        arm_2d_alpha_blending.c
  * Description:  APIs for various alpha related operations
  *
- * $Date:        11 Dec 2025
- * $Revision:    V.1.15.1
- *
- * Target Processor:  Cortex-M cores
+ * $Date:        10 July 2026
+ * $Revision:    V.2.0.0
  *
  * -------------------------------------------------------------------- */
 
@@ -81,15 +79,26 @@ extern "C" {
 
 #define __API_COLOUR        gray8
 #define __API_INT_TYPE      uint8_t
-#define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_GRAY8
+#define __API_PIXEL_BLENDING_OPA            __ARM_2D_PIXEL_BLENDING_OPA_GRAY8
+
+#ifndef __ARM_2D_GRAY8_STRIDE_BLEND_WITH_OPACITY__
+#   define __ARM_2D_GRAY8_STRIDE_BLEND_WITH_OPACITY__  __arm_2d_sw_gray8_stride_blend_with_opacity
+#endif
+
+#define __API_STRIDE_BLEND_WITH_OPACITY__   __ARM_2D_GRAY8_STRIDE_BLEND_WITH_OPACITY__
             
 #include "__arm_2d_ll_alpha_blending.inc"
 
 
 #define __API_COLOUR        rgb565
 #define __API_INT_TYPE      uint16_t
-#define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_RGB565
-#define __PATCH_ALPHA_BLENDING
+#define __API_PIXEL_BLENDING_OPA            __ARM_2D_PIXEL_BLENDING_OPA_RGB565
+
+#ifndef __ARM_2D_RGB565_STRIDE_BLEND_WITH_OPACITY__
+#   define __ARM_2D_RGB565_STRIDE_BLEND_WITH_OPACITY__  __arm_2d_sw_rgb565_stride_blend_with_opacity
+#endif
+
+#define __API_STRIDE_BLEND_WITH_OPACITY__   __ARM_2D_RGB565_STRIDE_BLEND_WITH_OPACITY__
 
 #include "__arm_2d_ll_alpha_blending.inc"
 
@@ -97,7 +106,13 @@ extern "C" {
 /*! adding support with c code template */
 #define __API_COLOUR        cccn888
 #define __API_INT_TYPE      uint32_t
-#define __API_PIXEL_BLENDING            __ARM_2D_PIXEL_BLENDING_CCCN888
+#define __API_PIXEL_BLENDING_OPA            __ARM_2D_PIXEL_BLENDING_OPA_CCCN888
+
+#ifndef __ARM_2D_CCCN888_STRIDE_BLEND_WITH_OPACITY__
+#   define __ARM_2D_CCCN888_STRIDE_BLEND_WITH_OPACITY__  __arm_2d_sw_cccn888_stride_blend_with_opacity
+#endif
+
+#define __API_STRIDE_BLEND_WITH_OPACITY__   __ARM_2D_CCCN888_STRIDE_BLEND_WITH_OPACITY__
 
 #include "__arm_2d_ll_alpha_blending.inc"
 
@@ -504,9 +519,6 @@ arm_fsm_rt_t arm_2dp_cccn888_tile_copy_with_opacity_only( arm_2d_op_alpha_t *ptO
     }
     
     //memset(ptThis, 0, sizeof(*ptThis));
-
-
-
     OP_CORE.ptOp = &ARM_2D_OP_TILE_COPY_WITH_OPACITY_ONLY_RGB888;
 
     this.Target.ptTile = ptTarget;
@@ -885,104 +897,6 @@ arm_fsm_rt_t __arm_2d_cccn888_sw_tile_copy_with_colour_keying_and_opacity(
 /*----------------------------------------------------------------------------*
  * Accelerable Low Level APIs                                                 *
  *----------------------------------------------------------------------------*/
-
-
-__WEAK
-void __arm_2d_impl_rgb565_tile_copy_opacity(   uint16_t *__RESTRICT phwSourceBase,
-                                    int16_t iSourceStride,
-                                    uint16_t *__RESTRICT phwTargetBase,
-                                    int16_t iTargetStride,
-                                    arm_2d_size_t *__RESTRICT ptCopySize,
-                                    uint_fast16_t hwRatio)
-{
-    uint32_t iHeight = ptCopySize->iHeight;
-    uint32_t iWidth  = ptCopySize->iWidth;
-    
-    uint16_t        ratioCompl = 256 - hwRatio;
-
-    ARM_2D_UNUSED(ratioCompl);
-    
-    for (uint32_t y = 0; y < iHeight; y++) {
-
-#if (defined (__ARM_ARCH_8_1M_MAIN__) && (__ARM_ARCH_8_1M_MAIN__ == 1)) \
- && (__IS_COMPILER_LLVM__ || __IS_COMPILER_ARM__)
-        /* M55 NOMVE optimization */
-        register unsigned loopCnt  __asm("lr");
-        loopCnt = iWidth;
-
-        __asm volatile(
-            "   dls             lr, lr                                  \n"
-            ".p2align 2                                                 \n"
-            "1:                                                         \n"
-            /* read source / target pixel  */
-            "   ldrh            r4, [%[src]], #2                        \n"
-            "   ldrh            r5, [%[pTarget]]                        \n"
-
-            /* unpack R */
-            "   and             r0, r4, #31                             \n"
-            "   and             r1, r5, #31                             \n"
-
-            /* unpack B */
-            "   lsr             r2, r4, #11                             \n"
-            "   lsr             r3, r5, #11                             \n"
-
-            /* unpack G */
-            "   ubfx            r4, r4, #5, #6                          \n"
-            "   ubfx            r5, r5, #5, #6                          \n"
-
-            /* mix */
-            "   mul             r0, r0, %[ratio0]                       \n"
-            "   mul             r4, r4, %[ratio0]                       \n"
-            "   mul             r2, r2, %[ratio0]                       \n"
-
-            "   mla             r0, %[ratio1], r1, r0                   \n"
-            "   mla             r1, %[ratio1], r5, r4                   \n"
-
-            /* pack R */
-            "   ubfx            r0, r0, #8, #5                          \n"
-            /* shift & mask G */
-            "   and             r1, %[cst], r1, lsr #3                  \n"
-            /* MLA moved here to fill stall */
-            "   mla             r5, %[ratio1], r3, r2                   \n"
-
-            /* pack G */
-            "   add             r0, r0, r1                              \n"
-            /* pack R */
-            "   bic             r1, r5, #255                            \n"
-            "   orr             r0, r0, r1, lsl #3                      \n"
-
-            "   strh            r0, [%[pTarget]], #2                    \n"
-            "   le              lr, 1b                                  \n"
-
-            : [src] "+r" (phwSourceBase), [pTarget] "+r" (phwTargetBase),
-              [cnt] "+r" (loopCnt)
-            : [ratio1] "r" ((256 - (uint_fast16_t)hwRatio) ),
-              [ratio0] "r" (hwRatio), [cst] "r" (0x7e0 /* mask G */)
-            : "r0", "r1", "r2", "r3",
-              "r4", "r5", "memory"
-        );
-#else
-        
-        for (uint32_t x = 0; x < iWidth; x++) {
-            __arm_2d_color_fast_rgb_t srcPix, targetPix;
-
-            __arm_2d_rgb565_unpack(*phwSourceBase++, &srcPix);
-            __arm_2d_rgb565_unpack(*phwTargetBase, &targetPix);
-
-            for (int i = 0; i < 3; i++) {
-                uint16_t        tmp =
-                    (uint16_t) (srcPix.BGRA[i] * hwRatio) +
-                    (targetPix.BGRA[i] * ratioCompl);
-                targetPix.BGRA[i] = (uint16_t) (tmp >> 8);
-            }
-            /* pack merged stream */
-            *phwTargetBase++ = __arm_2d_rgb565_pack(&targetPix);
-        }
-#endif
-        phwSourceBase += (iSourceStride - iWidth);
-        phwTargetBase += (iTargetStride - iWidth);
-    }
-}
 
 /*----------------------------------------------------------------------------*
  * Low Level IO Interfaces                                                    *

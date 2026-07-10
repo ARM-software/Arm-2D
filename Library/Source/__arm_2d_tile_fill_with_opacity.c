@@ -596,7 +596,7 @@ arm_fsm_rt_t __arm_2d_rgb565_sw_tile_fill_with_opacity_only( __arm_2d_sub_task_t
             ptTask->Param.tFill.tTarget.pBuffer,
             ptTask->Param.tFill.tTarget.iStride,
             &ptTask->Param.tFill.tTarget.tValidRegion.tSize,
-        this.chOpacity);
+            this.chOpacity);
 
     return arm_fsm_rt_cpl;
 }
