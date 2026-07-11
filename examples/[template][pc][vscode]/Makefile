@@ -96,7 +96,7 @@ CC_DEF  += ZJD_USR_CFG=\"arm_zjpgd_cfg.h\"
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
 	CROSS   := i686-w64-mingw32-
-	CC      := $(CROSS)gcc
+	CC      := $(CROSS)clang
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d.exe
@@ -161,9 +161,9 @@ ifeq ($(OS),Windows_NT)
 	LDFLAG  +=  -flto
 else
 	# For other platforms, we are allowed to set the optimisation level
-	CCFLAG  +=  -O0
-	#CCFLAG  +=  -flto
-	#LDFLAG  +=  -flto
+	CCFLAG  +=  -Ofast
+	CCFLAG  +=  -flto
+	LDFLAG  +=  -flto
 endif
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 .DEFAULT_GOAL = all
