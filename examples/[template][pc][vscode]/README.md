@@ -20,9 +20,25 @@ You can use this project as a template for developing Arm-2D-based GUI applicati
 
 This example project supports **Windows**, **Linux** and **MacOS**. Please follow the corresponding guidance for your environment.
 
+> [!IMPORTANT]
+>
+> The arm-2d repository contains submodules (e.g. FreeType). Please make sure you have cloned the repo with submodules. You can use the following command line to clone the repo with submodules:
+>
+> ```sj
+> git clone https://github.com/ARM-software/Arm-2D.git --recursive
+> ```
+
 ### 2.1 For Windows
 
 For Windows users, due to a known **Windows-Only** GCC compilation issue, we highly recommend installing WSL and following the Linux guidance in **Chapter 2.2**. 
+
+> [!IMPORTANT]
+>
+> 1. Please install a **dedicated VS Code in the WSL (Linux)** environment, even if you already have one on Windows. 
+> 2. Please **launch VS Code** and open the arm-2d workspace **in the WSL (Linux)** environment. 
+> 3. If the guidance above doesn't align with your reality, please remember that everything should run in the WSL (Linux) environment. 
+
+
 
 ### 2.2 For Linux
 
