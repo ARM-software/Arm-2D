@@ -85,18 +85,19 @@ void disp_adapter_nano_draw_example_blocking_version(void)
     } while(0);
 }
 
+typedef struct {
+    uint8_t chPT;
+    uint8_t chHour;
+    uint8_t chMin;
+    uint8_t chSec;
+    uint8_t chTenMs;
+} example_task_cb_t;
+
 arm_fsm_rt_t disp_adapter_nano_draw_example_non_blocking_version(void)
 {
-    static uint8_t s_chPT = 0;
+    static example_task_cb_t s_tLocal;
 
-    struct {
-        uint8_t chPT;
-        uint8_t chHour;
-        uint8_t chMin;
-        uint8_t chSec;
-        uint8_t chTenMs;
-
-    }s_tLocal, *ptThis = &s_tLocal;
+    example_task_cb_t*ptThis = &s_tLocal;
 
 ARM_PT_BEGIN(this.chPT)
 
@@ -141,7 +142,7 @@ ARM_PT_BEGIN(this.chPT)
     } while(0);
 
     DISP_ADAPTER0_NANO_DRAW() {
- 
+
         extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
         arm_2d_canvas(ptTile, __top_canvas) {
@@ -167,7 +168,7 @@ ARM_PT_BEGIN(this.chPT)
                 ptTextRegion);
         }
 
-        /* You can ONLY yield here */
+        /* IMPORTANT: You can ONLY yield here */
         ARM_PT_YIELD(arm_fsm_rt_on_going);
     }
 
