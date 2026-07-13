@@ -128,7 +128,13 @@ void draw_liquid_wave(  const arm_2d_tile_t *ptTile,
                         COLOUR_INT tColour,
                         const arm_2d_tile_t *ptSinWave);
 
-
+extern
+ARM_NONNULL(1)
+void draw_battery_gasgauge_bar( const arm_2d_tile_t *ptTile, 
+                                const arm_2d_region_t *ptRegion, 
+                                int16_t iProgress,
+                                battery_status_t tStatus);
+                                
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

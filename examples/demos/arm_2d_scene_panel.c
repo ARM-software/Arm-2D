@@ -283,9 +283,9 @@ static void __on_scene_panel_frame_start(arm_2d_scene_t *ptScene)
         }
 
         if (this.i11SoC < nResult) {
-            this.i2BatteryStatus = PANEL_BATTERY_STATUS_CHARGING;
+            this.i2BatteryStatus = BATTERY_STATUS_CHARGING;
         } else if (this.i11SoC > nResult) {
-            this.i2BatteryStatus = PANEL_BATTERY_STATUS_DISCHARGING;
+            this.i2BatteryStatus = BATTERY_STATUS_DISCHARGING;
         }
         this.i11SoC = (uint16_t)nResult;
 
@@ -347,51 +347,6 @@ static void draw_buttom(const arm_2d_tile_t *ptTile,
     }
 }
 
-static void __draw_battery_status(  user_scene_panel_t *ptThis, 
-                                    const arm_2d_tile_t *ptTile, 
-                                    const arm_2d_region_t *ptRegion, 
-                                    int16_t iProgress,
-                                    panel_battery_status_t tStatus)
-{
-    arm_2d_container(ptTile, __battery, ptRegion) {
-        
-        arm_2d_dock_open(__battery_canvas, 0, 2, 2, 0) {
-            arm_2d_helper_draw_box(&__battery, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
-
-            arm_2d_dock(__dock_region, 3) {
-
-                int16_t iBarWidth = iProgress * __dock_region.tSize.iWidth / 1000;
-
-                arm_2d_region_t tBarRegion = __dock_region;
-                tBarRegion.tSize.iWidth = iBarWidth;
-
-                if (tStatus == PANEL_BATTERY_STATUS_CHARGING) {
-                    arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_GREEN);
-                } else {
-                    if (iProgress < 200) {
-                        arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_RED);
-                    } else {
-                        arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_DARK_GREY);
-                    }
-                }
-
-                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__battery);
-                arm_lcd_text_set_draw_region(&__dock_region);
-                arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
-                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
-                
-                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%"PRId16, iProgress / 10);
-            }
-
-            arm_2d_align_mid_right_open(__dock_region, 2, (__battery_canvas.tSize.iHeight >> 1)) {
-                __mid_right_region.tLocation.iX += 2;
-
-                arm_2d_fill_colour(&__battery, &__mid_right_region, GLCD_COLOR_DARK_GREY);
-            }
-        }
-    }
-}
-
 static
 IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
 {
@@ -410,11 +365,10 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_panel_handler)
 
                 __item_line_dock_horizontal(32, 2, 2, 0, 0){
 
-                    __draw_battery_status(  ptThis, 
-                                            ptTile, 
-                                            &__item_region, 
-                                            this.i11SoC, 
-                                            this.i2BatteryStatus);
+                    draw_battery_gasgauge_bar(  ptTile, 
+                                                &__item_region, 
+                                                this.i11SoC, 
+                                                this.i2BatteryStatus);
                 }
 
                 __item_line_dock_horizontal(this.tIcons.tTile.tRegion.tSize.iWidth, 2, 2, 0, 0){

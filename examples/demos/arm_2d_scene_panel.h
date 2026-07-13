@@ -82,12 +82,6 @@ enum {
 };
 #endif
 
-typedef enum {
-    PANEL_BATTERY_STATUS_DISCHARGING = -1,
-    PANEL_BATTERY_STATUS_IDLE = 0,
-    PANEL_BATTERY_STATUS_CHARGING = 1,
-} panel_battery_status_t;
-
 /*!
  * \brief a user class for scene panel
  */
