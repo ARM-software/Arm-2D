@@ -268,6 +268,7 @@ if (ARM2D_CONTROLS)
             examples/common/asset/arm_2d_asset_QuarterSector.c
             examples/common/asset/arm_2d_asset_ThreeQuarterRing.c
             examples/common/asset/arm_2d_asset_SolidSquare.c
+            examples/common/asset/arm_2d_asset_signal_strength.c
 
             examples/common/asset/arm_2d_asset_icon_automobile.c
             examples/common/asset/arm_2d_asset_icon_compute.c 

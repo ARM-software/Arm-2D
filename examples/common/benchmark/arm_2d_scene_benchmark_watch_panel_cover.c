@@ -71,7 +71,7 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCN888
 
 #else
 #   error Unsupported colour depth!
