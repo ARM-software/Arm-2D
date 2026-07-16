@@ -332,11 +332,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_generic_handler)
             
             arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
 #if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
+    #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "FPS30Freq: N/A\r\n");
-#else
+    #else
             arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
-#endif
+    #endif
 #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
             arm_lcd_printf( "FPS30Score: %"PRId32"\r\n",  BENCHMARK.wFPS30Score);
 #endif

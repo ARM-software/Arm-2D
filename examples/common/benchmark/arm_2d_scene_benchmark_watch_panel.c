@@ -211,7 +211,7 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
             BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
 
             arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
-
+#if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
 #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             BENCHMARK.fFPS30Freq = 0.0f;
 #else
@@ -220,7 +220,11 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     /   (double)arm_2d_helper_get_reference_clock_frequency()) 
                  * ((double)arm_2d_helper_get_system_frequency() / 1000000.0f));
 #endif
-
+#else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__*/
+            BENCHMARK.wFPS30Score 
+                = __arm_2d_helper_benchmark_calculate_fps30score(   (int64_t)BENCHMARK.dwTotal, 
+                                                                    ITERATION_CNT);
+#endif
             do {
                 arm_2d_helper_pfb_t *ptPFBHelper 
                     = &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t;
@@ -234,12 +238,16 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     /*------ format string -------*/
                     "Running "ARM_TO_STRING(ITERATION_CNT)" iterations, "
                     "PFB Size: %d*%d, Screen Size: %d*%d, "
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     "CPU Freq: %dMHz, "
                 #endif
                     "Average: %d, "
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+                    #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     "FPS30Freq: %4.2f MHz\r\n"
+                    #endif
+                #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+                    ,BENCHMARK.wFPS30Score
                 #endif
                     ,
                     /*------ data ----------------*/
@@ -247,12 +255,16 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     tPFBSize.iHeight,
                     tScreen.tSize.iWidth, 
                     tScreen.tSize.iHeight,
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     arm_2d_helper_get_system_frequency() / 1000000ul,
                 #endif
                     BENCHMARK.wAverage
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+                    #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     ,BENCHMARK.fFPS30Freq
+                    #endif
+                #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+                    ,BENCHMARK.wFPS30Score
                 #endif
                 );
             } while(0);
@@ -316,10 +328,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
             arm_lcd_puts( "Benchmark Report:\r\n");
             
             arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
+#if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+    #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "FPS30Freq: N/A\r\n");
-#else
+    #else
             arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
+    #endif
+#else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+            arm_lcd_printf( "FPS30Score: %"PRId32"\r\n",  BENCHMARK.wFPS30Score);
 #endif
             arm_lcd_printf(
                 "FPS: %3d:%dms   ",
