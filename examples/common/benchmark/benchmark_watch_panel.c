@@ -145,7 +145,6 @@ extern const arm_2d_tile_t c_tileStar;
 extern const arm_2d_tile_t c_tileStarMask;
 extern const arm_2d_tile_t c_tileStarMask2;
 
-extern const arm_2d_tile_t c_tileCircleBackgroundMask;
 extern const arm_2d_tile_t c_tileCMSISLogoA4Mask;
 
 /*============================ PROTOTYPES ====================================*/
@@ -213,9 +212,9 @@ demo_gears_t s_tGears[] = {
         }},
         .chOpacity = 128,
     },
+    [2] = 
 #endif
-
-    [2] = {
+    {
         //.ptTile = &c_tilePointerSec,
         .ptMask = &c_tilePointerSecMask,
     #if defined(__ARM_2D_CFG_WATCH_PANEL_STOPWATCH_MODE__)  \
@@ -252,6 +251,7 @@ static arm_2d_op_trans_msk_opa_t s_tStarOP;
 
 static void assets_table_init(void)
 {
+#if !defined(__ARM_2D_CFG_BENCHMARK_TINY_MODE__) || !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
     s_tGears[0].tCentre = (arm_2d_point_float_t){
         .fX = (float)(c_tileGear02.tRegion.tSize.iWidth - 1) / 2.0f,
         .fY = (float)(c_tileGear02.tRegion.tSize.iHeight - 1) / 2.0f,
@@ -266,6 +266,12 @@ static void assets_table_init(void)
         .fX = (float)(c_tilePointerSecMask.tRegion.tSize.iWidth - 1) / 2.0f,
         .fY = 99,
     };
+#else
+    s_tGears[0].tCentre = (arm_2d_point_float_t){
+        .fX = (float)(c_tilePointerSecMask.tRegion.tSize.iWidth - 1) / 2.0f,
+        .fY = 99,
+    };
+#endif
 }
 
 void benchmark_watch_panel_init(arm_2d_region_t tScreen)
@@ -368,7 +374,9 @@ void benchmark_watch_panel_do_events(void)
 }
 
 
-void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
+void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, 
+                                const benchmark_watchpanel_resource_table_t *ptResource, 
+                                bool bIsNewFrame)
 {
 
     arm_2d_canvas(ptTile, __top_container) {
@@ -383,7 +391,7 @@ void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame)
                 arm_2d_tile_copy_with_des_mask_only(
                                             s_ptRefreshLayers->ptTile,
                                             &__watch_bg,
-                                            &c_tileCircleBackgroundMask,
+                                            ptResource->ptWatchfaceMask,
                                             &(s_ptRefreshLayers->tRegion));
                 ARM_2D_OP_WAIT_ASYNC();
             }

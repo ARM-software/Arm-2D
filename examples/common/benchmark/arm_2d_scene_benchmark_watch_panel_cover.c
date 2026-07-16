@@ -148,8 +148,10 @@ static void __on_scene_benchmark_watch_panel_cover_frame_complete(arm_2d_scene_t
         arm_2d_scene_player_set_switching_mode( ptScene->ptPlayer,
                                                 ARM_2D_SCENE_SWITCH_MODE_NONE);
 
+    #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ >= 2 || __ARM_2D_CFG_BENCHMARK_TINY_MODE__
         /* switch to the benchmark scene */
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    #endif
     }
 }
 
@@ -189,7 +191,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
 
+        #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ < 2 && !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        arm_print_banner("Insufficient Virtual Resource!");
+        #else
         arm_print_banner("Arm-2D Benchmark Watch Panel");
+        #endif
         
 #if !defined(__USE_FVP__)
         do {

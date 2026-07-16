@@ -24,6 +24,7 @@
 #include "arm_2d.h"
 
 #include "arm_2d_helper_scene.h"
+#include "arm_2d_example_loaders.h"
 
 #ifdef   __cplusplus
 extern "C" {
@@ -77,6 +78,8 @@ struct user_scene_benchmark_watch_panel_t {
 
 ARM_PRIVATE(
     bool bUserAllocated;
+
+    ARM_LMSK_GROUP_DEF(1);
 
 )
 };

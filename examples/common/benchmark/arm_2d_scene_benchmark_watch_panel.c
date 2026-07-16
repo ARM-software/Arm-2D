@@ -22,6 +22,7 @@
 
 #define __USER_SCENE_BENCHMARK_WATCH_PANEL_IMPLEMENT__
 #include "arm_2d_scene_benchmark_watch_panel.h"
+#include "benchmark_watch_panel.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -85,15 +86,6 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-extern
-void benchmark_watch_panel_init(arm_2d_region_t tScreen);
-
-extern
-void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame);
-
-extern
-void benchmark_watch_panel_do_events(void);
-
 /*============================ LOCAL VARIABLES ===============================*/
 
 ARM_NOINIT
@@ -147,11 +139,21 @@ static void __on_scene_benchmark_watch_panel_depose(arm_2d_scene_t *ptScene)
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    ARM_LMSK_GROUP_DEPOSE();
+
     ptScene->ptPlayer = NULL;
 
     if (!this.bUserAllocated) {
         free(ptScene);
     }
+}
+
+static void __on_scene_benchmark_watch_panel_on_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+    
+    ARM_LMSK_GROUP_ON_LOAD();
 }
 
 static void __after_scene_benchmark_watch_panel_switching(arm_2d_scene_t *ptScene)
@@ -185,6 +187,8 @@ static void __on_scene_benchmark_watch_panel_frame_start(arm_2d_scene_t *ptScene
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    ARM_LMSK_GROUP_ON_FRAME_START();
+
     benchmark_watch_panel_do_events();
 }
 
@@ -193,6 +197,8 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     arm_2d_helper_pfb_t *ptHelper = &ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t;
     ARM_2D_UNUSED(ptThis);
+
+    ARM_LMSK_GROUP_ON_FRAME_COMPLETE();
 
     int32_t nTotalCyclCount = ptHelper->Statistics.nTotalCycle;
     int32_t nTotalLCDCycCount = ptHelper->Statistics.nRenderingCycle;
@@ -296,7 +302,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)pTarget;
     ARM_2D_UNUSED(ptThis);
 
-    benchmark_watch_panel_draw(ptTile, bIsNewFrame);
+
+    const benchmark_watchpanel_resource_table_t tResource = {
+    #if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        .ptWatchfaceMask = &ARM_LMSK_TILE(0),
+    #endif
+    };
+    benchmark_watch_panel_draw(ptTile, &tResource, bIsNewFrame);
 
     if (0 == BENCHMARK.wIterations) {
 
@@ -413,6 +425,7 @@ user_scene_benchmark_watch_panel_t *
             .fnAfterSwitch  = &__after_scene_benchmark_watch_panel_switching,
 
             .fnScene        = &__pfb_draw_scene_benchmark_watch_panel_handler,
+            .fnOnLoad       = &__on_scene_benchmark_watch_panel_on_load,
             //.fnOnBGStart    = &__on_scene_benchmark_watch_panel_background_start,
             //.fnOnBGComplete = &__on_scene_benchmark_watch_panel_background_complete,
             .fnOnFrameStart = &__on_scene_benchmark_watch_panel_frame_start,
@@ -434,6 +447,10 @@ user_scene_benchmark_watch_panel_t *
         /* initialize benchmark watch panel */
         benchmark_watch_panel_init(tScreen);
     } while(0);
+
+#if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+    ARM_LMSK_ITEM_INIT_WITH_BINARY(0, c_lmskCircleBackground, 24321);
+#endif
 
     memset(&BENCHMARK, 0, sizeof(BENCHMARK));
     BENCHMARK.wMin = __UINT32_MAX__;
