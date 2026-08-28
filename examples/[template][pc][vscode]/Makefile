@@ -125,7 +125,7 @@ else ifeq ($(shell uname), Darwin)
 app: $(OUT)
 
 else
-	CC      := $(CROSS)gcc
+	CC      := $(CROSS)clang
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d

@@ -48,7 +48,19 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "DEBUGINFOD_URLS",
+                    "value": ""
+                }
+            ],
+            "setupCommands": [
+                {
+                    "description": "Disable debuginfod to prevent GDB hang",
+                    "text": "set debuginfod urls ",
+                    "ignoreFailures": true
+                }
+            ],
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "/usr/bin/gdb-multiarch",
