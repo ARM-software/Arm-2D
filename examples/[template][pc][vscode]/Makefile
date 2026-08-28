@@ -96,7 +96,7 @@ CC_DEF  += ZJD_USR_CFG=\"arm_zjpgd_cfg.h\"
 #================================== DO NOT MODIFY UNLESS YOU KNOW THE CONSEQUENCES ====================================#
 ifeq ($(OS),Windows_NT)
 	CROSS   := i686-w64-mingw32-
-	CC      := $(CROSS)clang
+	CC      := $(CROSS)gcc
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d.exe
@@ -112,7 +112,7 @@ app: build/SDL2.dll $(OUT)
 
 else ifeq ($(shell uname), Darwin)
     # Code for OS X
-	CC      := $(CROSS)gcc
+	CC      := $(CROSS)clang
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
@@ -123,9 +123,21 @@ else ifeq ($(shell uname), Darwin)
 	LD_INC  += /opt/homebrew/lib
 	LD_LIB  := SDL2 SDL2main
 app: $(OUT)
-
-else
+else ifeq ($(shell uname), Linux)
+	# Code for Linux
 	CC      := $(CROSS)clang
+	STRIP   := $(CROSS)strip
+	SIZE    := $(CROSS)size
+	OUT     := build/arm_2d
+	RM      := rm -rf
+	CCFLAG  += -D_THREAD_SAFE
+	CCFLAG  += -ffast-math -Wno-deprecated-ofast -Wno-unknown-warning-option -fno-vectorize -fno-slp-vectorize
+	LD_LIB  := SDL2 m
+	LDFLAG  +=  -Wl,--warn-common
+	LDFLAG  +=  -Wl,--gc-sections -lm
+app: $(OUT)
+else
+	CC      := $(CROSS)gcc
 	STRIP   := $(CROSS)strip
 	SIZE    := $(CROSS)size
 	OUT     := build/arm_2d
