@@ -601,6 +601,51 @@ void battery_gasgauge_liquid_show(  battery_liquid_t *ptThis,
 
 }
 
+ARM_NONNULL(1)
+void draw_battery_gasgauge_bar( const arm_2d_tile_t *ptTile, 
+                                const arm_2d_region_t *ptRegion, 
+                                int16_t iProgress,
+                                battery_status_t tStatus)
+{
+    arm_2d_container(ptTile, __battery, ptRegion) {
+        
+        arm_2d_dock_open(__battery_canvas, 0, 2, 2, 0) {
+            arm_2d_helper_draw_box(&__battery, &__dock_region, 1, GLCD_COLOR_DARK_GREY, 255);
+
+            arm_2d_dock(__dock_region, 3) {
+
+                int16_t iBarWidth = iProgress * __dock_region.tSize.iWidth / 1000;
+
+                arm_2d_region_t tBarRegion = __dock_region;
+                tBarRegion.tSize.iWidth = iBarWidth;
+
+                if (tStatus == BATTERY_STATUS_CHARGING) {
+                    arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_GREEN);
+                } else {
+                    if (iProgress < 200) {
+                        arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_RED);
+                    } else {
+                        arm_2d_fill_colour(&__battery, &tBarRegion, GLCD_COLOR_DARK_GREY);
+                    }
+                }
+
+                arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)&__battery);
+                arm_lcd_text_set_draw_region(&__dock_region);
+                arm_lcd_text_set_font(&ARM_2D_FONT_6x8.use_as__arm_2d_font_t);
+                arm_lcd_text_set_colour(GLCD_COLOR_WHITE, GLCD_COLOR_BLACK);
+                
+                arm_lcd_printf_label(ARM_2D_ALIGN_CENTRE, "%"PRId16, iProgress / 10);
+            }
+
+            arm_2d_align_mid_right_open(__dock_region, 2, (__battery_canvas.tSize.iHeight >> 1)) {
+                __mid_right_region.tLocation.iX += 2;
+
+                arm_2d_fill_colour(&__battery, &__mid_right_region, GLCD_COLOR_DARK_GREY);
+            }
+        }
+    }
+}
+
 #if defined(__clang__)
 #   pragma clang diagnostic pop
 #endif

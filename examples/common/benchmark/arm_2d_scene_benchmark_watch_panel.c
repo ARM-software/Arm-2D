@@ -22,6 +22,7 @@
 
 #define __USER_SCENE_BENCHMARK_WATCH_PANEL_IMPLEMENT__
 #include "arm_2d_scene_benchmark_watch_panel.h"
+#include "benchmark_watch_panel.h"
 
 #include "arm_2d_helper.h"
 #include "arm_2d_example_controls.h"
@@ -85,15 +86,6 @@
 /*============================ TYPES =========================================*/
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
-extern
-void benchmark_watch_panel_init(arm_2d_region_t tScreen);
-
-extern
-void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, bool bIsNewFrame);
-
-extern
-void benchmark_watch_panel_do_events(void);
-
 /*============================ LOCAL VARIABLES ===============================*/
 
 ARM_NOINIT
@@ -102,7 +94,10 @@ static struct {
     uint32_t wMax;
     uint64_t dwTotal;
     uint32_t wAverage;
-    float fFPS30Freq;
+    union {
+        float fFPS30Freq;
+        uint32_t wFPS30Score;
+    };
     uint32_t wIterations;
     uint32_t wLCDLatency;
 } BENCHMARK;
@@ -144,11 +139,21 @@ static void __on_scene_benchmark_watch_panel_depose(arm_2d_scene_t *ptScene)
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
     
+    ARM_LMSK_GROUP_DEPOSE();
+
     ptScene->ptPlayer = NULL;
 
     if (!this.bUserAllocated) {
         free(ptScene);
     }
+}
+
+static void __on_scene_benchmark_watch_panel_on_load(arm_2d_scene_t *ptScene)
+{
+    user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
+    ARM_2D_UNUSED(ptThis);
+    
+    ARM_LMSK_GROUP_ON_LOAD();
 }
 
 static void __after_scene_benchmark_watch_panel_switching(arm_2d_scene_t *ptScene)
@@ -182,6 +187,8 @@ static void __on_scene_benchmark_watch_panel_frame_start(arm_2d_scene_t *ptScene
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     ARM_2D_UNUSED(ptThis);
 
+    ARM_LMSK_GROUP_ON_FRAME_START();
+
     benchmark_watch_panel_do_events();
 }
 
@@ -190,6 +197,8 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)ptScene;
     arm_2d_helper_pfb_t *ptHelper = &ptScene->ptPlayer->use_as__arm_2d_helper_pfb_t;
     ARM_2D_UNUSED(ptThis);
+
+    ARM_LMSK_GROUP_ON_FRAME_COMPLETE();
 
     int32_t nTotalCyclCount = ptHelper->Statistics.nTotalCycle;
     int32_t nTotalLCDCycCount = ptHelper->Statistics.nRenderingCycle;
@@ -208,8 +217,8 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
             BENCHMARK.wAverage = MAX(1, BENCHMARK.wAverage);
 
             arm_2d_scene_player_update_scene_background(ptScene->ptPlayer);
-
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             BENCHMARK.fFPS30Freq = 0.0f;
 #else
             BENCHMARK.fFPS30Freq = (float)
@@ -217,7 +226,11 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     /   (double)arm_2d_helper_get_reference_clock_frequency()) 
                  * ((double)arm_2d_helper_get_system_frequency() / 1000000.0f));
 #endif
-
+#else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__*/
+            BENCHMARK.wFPS30Score 
+                = __arm_2d_helper_benchmark_calculate_fps30score(   (int64_t)BENCHMARK.dwTotal, 
+                                                                    ITERATION_CNT);
+#endif
             do {
                 arm_2d_helper_pfb_t *ptPFBHelper 
                     = &this.use_as__arm_2d_scene_t.ptPlayer->use_as__arm_2d_helper_pfb_t;
@@ -231,12 +244,16 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     /*------ format string -------*/
                     "Running "ARM_TO_STRING(ITERATION_CNT)" iterations, "
                     "PFB Size: %d*%d, Screen Size: %d*%d, "
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     "CPU Freq: %dMHz, "
                 #endif
                     "Average: %d, "
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+                    #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     "FPS30Freq: %4.2f MHz\r\n"
+                    #endif
+                #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+                    ,BENCHMARK.wFPS30Score
                 #endif
                     ,
                     /*------ data ----------------*/
@@ -244,12 +261,16 @@ static void __on_scene_benchmark_watch_panel_frame_complete(arm_2d_scene_t *ptSc
                     tPFBSize.iHeight,
                     tScreen.tSize.iWidth, 
                     tScreen.tSize.iHeight,
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     arm_2d_helper_get_system_frequency() / 1000000ul,
                 #endif
                     BENCHMARK.wAverage
-                #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__))
+                #if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+                    #if !(defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__))
                     ,BENCHMARK.fFPS30Freq
+                    #endif
+                #else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+                    ,BENCHMARK.wFPS30Score
                 #endif
                 );
             } while(0);
@@ -281,7 +302,13 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
     user_scene_benchmark_watch_panel_t *ptThis = (user_scene_benchmark_watch_panel_t *)pTarget;
     ARM_2D_UNUSED(ptThis);
 
-    benchmark_watch_panel_draw(ptTile, bIsNewFrame);
+
+    const benchmark_watchpanel_resource_table_t tResource = {
+    #if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        .ptWatchfaceMask = &ARM_LMSK_TILE(0),
+    #endif
+    };
+    benchmark_watch_panel_draw(ptTile, &tResource, bIsNewFrame);
 
     if (0 == BENCHMARK.wIterations) {
 
@@ -305,7 +332,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", arm_2d_helper_get_system_frequency() / 1000000ul);
@@ -313,10 +340,14 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_handler)
             arm_lcd_puts( "Benchmark Report:\r\n");
             
             arm_lcd_printf("Average: %d ", BENCHMARK.wAverage);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30FRQ__
+    #if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "FPS30Freq: N/A\r\n");
-#else
+    #else
             arm_lcd_printf( "FPS30Freq: %4.2f MHz\r\n",  BENCHMARK.fFPS30Freq);
+    #endif
+#else /* if __ARM_2D_CFG_BENCHMARK_EVL__ == __ARM_BENCHMARK_EVL_FPS30SCORE__ */
+            arm_lcd_printf( "FPS30Score: %"PRId32"\r\n",  BENCHMARK.wFPS30Score);
 #endif
             arm_lcd_printf(
                 "FPS: %3d:%dms   ",
@@ -394,6 +425,7 @@ user_scene_benchmark_watch_panel_t *
             .fnAfterSwitch  = &__after_scene_benchmark_watch_panel_switching,
 
             .fnScene        = &__pfb_draw_scene_benchmark_watch_panel_handler,
+            .fnOnLoad       = &__on_scene_benchmark_watch_panel_on_load,
             //.fnOnBGStart    = &__on_scene_benchmark_watch_panel_background_start,
             //.fnOnBGComplete = &__on_scene_benchmark_watch_panel_background_complete,
             .fnOnFrameStart = &__on_scene_benchmark_watch_panel_frame_start,
@@ -415,6 +447,10 @@ user_scene_benchmark_watch_panel_t *
         /* initialize benchmark watch panel */
         benchmark_watch_panel_init(tScreen);
     } while(0);
+
+#if !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+    ARM_LMSK_ITEM_INIT_WITH_BINARY(0, c_lmskCircleBackground, 24321);
+#endif
 
     memset(&BENCHMARK, 0, sizeof(BENCHMARK));
     BENCHMARK.wMin = __UINT32_MAX__;

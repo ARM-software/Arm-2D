@@ -55,6 +55,10 @@ extern "C" {
 #endif
 #include "arm_2d_utils.h"
 
+#ifndef __USER_SCENE_PANEL_USE_LMSK__
+#   define __USER_SCENE_PANEL_USE_LMSK__       0
+#endif
+
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
 /*!
@@ -70,8 +74,16 @@ extern "C" {
             __arm_2d_scene_panel_init((__DISP_ADAPTER_PTR), (NULL, ##__VA_ARGS__))
 
 /*============================ TYPES =========================================*/
+
+#if __USER_SCENE_PANEL_USE_LMSK__ 
+enum {
+    PANEL_LMSK_SIGNAL_STRENGTH       = 0,
+    __PANEL_LMSK_COUNT,
+};
+#endif
+
 /*!
- * \brief a user class for scene 2
+ * \brief a user class for scene panel
  */
 typedef struct user_scene_panel_t user_scene_panel_t;
 
@@ -80,12 +92,30 @@ struct user_scene_panel_t {
 
 ARM_PRIVATE(
     /* place your private member here, following two are examples */
-    int64_t lTimestamp[5];
-    bool bUserAllocated;
+    int64_t lTimestamp[6];
+
+    uint8_t u3SignalStrength    : 3;
+    uint8_t u3WifiStrength      : 3;
+    uint8_t bIconBarChanged     : 1;
+    uint8_t bUserAllocated      : 1;
+
     uint8_t chOpacity;
     int16_t iProgress;
+
+    int16_t i2BatteryStatus : 2;
+    int16_t                 : 3;
+    int16_t i11SoC          : 11;
+    
     number_list_t tNumberList[3];
     progress_wheel_t tWheel;
+
+#if __USER_SCENE_PANEL_USE_LMSK__ 
+    /* place your public member here */
+    ARM_LMSK_GROUP_DEF(__PANEL_LMSK_COUNT);
+#endif
+
+    arm_2d_helper_film_t tIcons;
+
 )
     /* place your public member here */
     

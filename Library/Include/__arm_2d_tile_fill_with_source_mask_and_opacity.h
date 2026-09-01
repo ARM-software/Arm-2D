@@ -21,8 +21,8 @@
  * Title:        __arm_2d_tile_fill_with_mask_and_opacity.h
  * Description:  APIs for Tile-Fill-with-Source-Mask-and-Opacity operations
  *
- * $Date:        09. Jan 2026
- * $Revision:    V.1.3.0
+ * $Date:        10. July 2026
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  *
@@ -57,13 +57,13 @@ extern "C" {
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 
-#define arm_2d_gray8_tile_fill_with_src_mask_and_opacity_only(                  \
+#define arm_2d_gray8_tile_fill_with_src_mask_and_opacity_only(                 \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_gray8_tile_fill_with_src_mask_and_opacity_only(             \
+            arm_2dp_gray8_tile_fill_with_src_mask_and_opacity_only(            \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \
@@ -85,13 +85,13 @@ extern "C" {
                                         (__REGION),                             \
                                         (__OPACITY))
 
-#define arm_2d_cccn888_tile_fill_with_src_mask_and_opacity_only(                \
+#define arm_2d_cccn888_tile_fill_with_src_mask_and_opacity_only(                 \
                                     __SRC_ADDR,     /*   source tile address */ \
                                     __SRC_MSK_ADDR, /*   source mask address */ \
                                     __DES_ADDR,     /*   target tile address */ \
                                     __REGION,       /*   region address */      \
                                     __OPACITY)      /*   opacity */             \
-            arm_2dp_cccn888_tile_fill_with_src_mask_and_opacity_only(           \
+            arm_2dp_cccn888_tile_fill_with_src_mask_and_opacity_only(            \
                                         NULL,                                   \
                                         (__SRC_ADDR),                           \
                                         (__SRC_MSK_ADDR),                       \

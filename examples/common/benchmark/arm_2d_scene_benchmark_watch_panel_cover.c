@@ -71,7 +71,7 @@
 
 #elif __GLCD_CFG_COLOUR_DEPTH__ == 32
 
-#   define c_tileBackground         c_tileBackgroundSmallCCCA8888
+#   define c_tileBackground         c_tileBackgroundSmallCCCN888
 
 #else
 #   error Unsupported colour depth!
@@ -148,8 +148,10 @@ static void __on_scene_benchmark_watch_panel_cover_frame_complete(arm_2d_scene_t
         arm_2d_scene_player_set_switching_mode( ptScene->ptPlayer,
                                                 ARM_2D_SCENE_SWITCH_MODE_NONE);
 
+    #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ >= 2 || __ARM_2D_CFG_BENCHMARK_TINY_MODE__
         /* switch to the benchmark scene */
         arm_2d_scene_player_switch_to_next_scene(ptScene->ptPlayer);
+    #endif
     }
 }
 
@@ -189,7 +191,11 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
         arm_lcd_text_set_target_framebuffer((arm_2d_tile_t *)ptTile);
         arm_lcd_text_set_colour(GLCD_COLOR_GREEN, GLCD_COLOR_WHITE);
 
+        #if __DISP0_CFG_VIRTUAL_RESOURCE_HELPER__ < 2 && !__ARM_2D_CFG_BENCHMARK_TINY_MODE__
+        arm_print_banner("Insufficient Virtual Resource!");
+        #else
         arm_print_banner("Arm-2D Benchmark Watch Panel");
+        #endif
         
 #if !defined(__USE_FVP__)
         do {
@@ -211,7 +217,7 @@ IMPL_PFB_ON_DRAW(__pfb_draw_scene_benchmark_watch_panel_cover_handler)
                             tPFBSize.iHeight,
                             tScreen.tSize.iWidth, 
                             tScreen.tSize.iHeight);
-#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__)
+#if defined(__i386__) || defined(__x86_64__) || defined(__APPLE__) || defined(__aarch64__)
             arm_lcd_printf( "\r\nCPU Freq: N/A\r\n");
 #else
             arm_lcd_printf( "\r\nCPU Freq: %dMHz\r\n", arm_2d_helper_get_system_frequency() / 1000000ul);

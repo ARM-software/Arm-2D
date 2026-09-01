@@ -22,8 +22,8 @@
  * Title:        __arm_2d_meta_fill_mirror.inc
  * Description:  c code template for tile filling
  *
- * $Date:        14. Sept 2022
- * $Revision:    V.1.0.0
+ * $Date:        09. July 2026
+ * $Revision:    V.1.1.0
  *
  * -------------------------------------------------------------------- */
 
@@ -161,7 +161,14 @@ arm_fsm_rt_t __MFM_API_FUNC(tile_fill)( __API_MFM_OP_TYPE *ptOP,
     assert(NULL != ptTarget);
 
     ARM_2D_IMPL(__API_MFM_OP_TYPE, ptOP);
-    
+
+#if __ARM_2D_CFG_SUPPORT_CCCA8888_IMPLICIT_CONVERSION__                         \
+&&  defined(RTE_Acceleration_Arm_2D_Alpha_Blending) 
+    if ((ARM_CONNECT(ARM_2D_CP_MODE_, __API_MFM_MIRROR_TYPE_UPPERCASE)) != ARM_2D_CP_MODE_NO_MIRROR) {
+        return (arm_fsm_rt_t)ARM_2D_ERR_UNSUPPORTED_COLOUR;
+    }
+#endif
+
     if (!__arm_2d_op_acquire((arm_2d_op_core_t *)ptThis)) {
         return arm_fsm_rt_on_going;
     }

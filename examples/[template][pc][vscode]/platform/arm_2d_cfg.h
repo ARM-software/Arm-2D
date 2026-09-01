@@ -161,7 +161,7 @@ extern "C" {
 // <i> This option is used to improve the performance and reduce the application complexity in API selection. Disable this feature allows linker to remove unused APIs further.
 // <i> This option is enabled by default
 #ifndef __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__
-#define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         1
+#define __ARM_2D_CFG_CALL_NON_OPACITY_VERSION_IMPLICITILY_FOR_255__         0
 #endif
 
 // <q> Optimize the scaler version of transform operations for pointer-like resources
@@ -230,6 +230,19 @@ extern "C" {
 // <i> run number of iterations in arm-2d benchmark before calculating the result.
 #ifndef ITERATION_CNT
 #   define ITERATION_CNT                                                1000
+#endif
+
+
+#define __ARM_BENCHMARK_EVL_FPS30FRQ__       0
+#define __ARM_BENCHMARK_EVL_FPS30SCORE__     1
+
+// <o>Benchmark Evaluation Algorithm
+//     <0=>   FPS30Frq: The minimal Required system frequency for 30 FPS
+//     <1=>   FPS30Score: The score for 30 FPS, 10000 is the refererence line.
+// <i> The algorithm for benchmark evaluation.
+// <i> NOTE: the FPS30Frq requires the CPU cycle information (e.g. for Cortex-M). If it is not available, please choose the FPS30Score mode (e.g. for Cortex-A).
+#ifndef __ARM_2D_CFG_BENCHMARK_EVL__
+#   define __ARM_2D_CFG_BENCHMARK_EVL__                                 1
 #endif
 
 // <q>Use Tiny mode to run benchmark

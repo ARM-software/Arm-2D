@@ -7,22 +7,38 @@ You can use this project as a template for developing Arm-2D-based GUI applicati
 
 ### **Feature**
 
-- **Support Windows (via WSL2), Linux and MacOS**
-- **Develop arm-2d GUI applications in VSCode**
+- **Support Windows (via WSL2), Linux and macOS**
+- **Develop Arm-2D GUI applications in VS Code**
 - **Compile and run natively on the PC** platform (this isn't a simulation)
 - **Use the same set of methods for microcontrollers** on PC to develop Arm-2D-based GUI applications.
 - **Develop on PC and run on MCUs**
-  - The **application code and resource files can be used directly on MCUs because they are hardware-independent.
+  - You can use the application code and resource files directly on MCUs because they are hardware-independent.
 
 
 
 ## 2 How to Build
 
-This example project supports **Windows**, **Linux** and **MacOS**. Please follow the corresponding guidance for your environment.
+This example project supports **Windows**, **Linux** and **macOS**. Please follow the corresponding guidance for your environment.
+
+> [!IMPORTANT]
+>
+> The arm-2d repository contains submodules (e.g. FreeType). Please make sure you have cloned the repo with submodules. You can use the following command line to clone the repo with submodules:
+>
+> ```sj
+> git clone https://github.com/ARM-software/Arm-2D.git --recursive
+> ```
 
 ### 2.1 For Windows
 
-For Windows users, due to a known **Windows-Only** GCC compilation issue, we highly recommend installing WSL and following the Linux guidance in **Chapter 2.2**. 
+For Windows users, because of a known **Windows-only** GCC compilation issue, we highly recommend installing WSL and following the Linux guidance in **Chapter 2.2**. 
+
+> [!IMPORTANT]
+>
+> 1. Please install the Visual Studio Code WSL extension. 
+> 2. Please **launch VS Code** and open the arm-2d workspace **in the WSL (Linux)** environment. 
+> 3. If the guidance above doesn't align with your reality, please remember that everything should run in the WSL (Linux) environment. 
+
+
 
 ### 2.2 For Linux
 
@@ -31,7 +47,7 @@ For Windows users, due to a known **Windows-Only** GCC compilation issue, we hig
 Please install the required modules with the following command:
 
 ```sh
-sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-multiarch
+sudo apt-get update && sudo apt-get install -y build-essential libsdl2-dev gdb-multiarch llvm
 ```
 
 Please install **Visual Studio Code** and the **Microsoft C/C++ Extension**.
@@ -48,21 +64,21 @@ In the "**Run and Debug**" panel, when opening the workspace for the first time,
 
 
 
-### 2.3 For MacOS
+### 2.3 For macOS
 
-#### 2.3.1 Install the homebrew and sdl2
+#### 2.3.1 Install Homebrew and SDL2
 
-Please open the terminal in MacOS and [install the homebrew](https://brew.sh/) with the following command:
+Please open the Terminal in macOS and [install Homebrew](https://brew.sh/) with the following command:
 
 ```sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-After a successful installation, you should find an important message on the terminal that is similar to the following:
+After a successful installation, you should find an important message in the terminal that is similar to the following:
 
 ![HomeBrewEnv](../../documentation/pictures/homebrewenv.png)
 
-Please copy the contents of the red box and paste them into the shell to "**add Howbrew to your PATH**". 
+Please copy the contents of the red box and paste them into the shell to "**add Homebrew to your PATH**". 
 
 **NOTE**: Your command line will differ from mine because it includes the machine's username. 
 
@@ -71,7 +87,7 @@ Please copy the contents of the red box and paste them into the shell to "**add 
 After that, please install sdl2 with the following command:
 
 ```sh
-brew install sdl2
+brew install sdl2 llvm
 ```
 
 Finally, please install **Visual Studio Code** and the **Microsoft C/C++ Extension**.

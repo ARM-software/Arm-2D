@@ -1,11 +1,5 @@
-/******************************************************************************
- * @file     arm_2d_math.h
- * @brief    Public header file for Arm-2D Library
- * @version  V1.0.0
- * @date     8 Feb 2026
- ******************************************************************************/
 /*
- * Copyright (c) 2010-2020 Arm Limited or its affiliates. All rights reserved.
+ * Copyright (c) 2009-2026 Arm Limited. All rights reserved.
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -21,6 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* ----------------------------------------------------------------------
+ * Project:      Arm-2D Library
+ * Title:        arm_2d_math.h
+ * Description:  Public header file for Arm-2D Library
+ *
+ * $Date:        10 July 2026
+ * $Revision:    V1.1.0
+ *
+ * -------------------------------------------------------------------- */
 
 #ifndef __ARM_2D_MATH_H__
 #define __ARM_2D_MATH_H__
@@ -310,6 +313,51 @@ qsub_q16(q16_t q16In0, q16_t q16In1)
 
 #endif
 
+#define arm_2d_helper_alpha_mix(__alpha0, __alpha1)                             \
+        ({                                                                      \
+            int ARM_2D_SAFE_NAME(chAlpha0) = (__alpha0);                        \
+            int ARM_2D_SAFE_NAME(chAlpha1) = (__alpha1);                        \
+            assert(ARM_2D_SAFE_NAME(chAlpha0) <= 0xFF);                         \
+            assert(ARM_2D_SAFE_NAME(chAlpha1) <= 0xFF);                         \
+            __arm_2d_helper_alpha_mix(ARM_2D_SAFE_NAME(chAlpha0),               \
+                                      ARM_2D_SAFE_NAME(chAlpha1));})
+        
+__STATIC_INLINE
+uint8_t __arm_2d_helper_alpha_mix(  uint_fast8_t chAlpha1, 
+                                    uint_fast8_t chAlpha2)
+{
+    uint32_t wAlpha = chAlpha1 * chAlpha2 + 0x80;
+    wAlpha += wAlpha >> 8;
+    return (uint8_t)(wAlpha >> 8); 
+}
+
+#define arm_2d_helper_opacity_mix(__alpha0, __opacity)                          \
+        ({                                                                      \
+            int ARM_2D_SAFE_NAME(chAlpha0) = (__alpha0);                        \
+            int ARM_2D_SAFE_NAME(hwOpacity) = (__opacity);                      \
+            assert(ARM_2D_SAFE_NAME(chAlpha0) <= 0xFF);                         \
+            assert(ARM_2D_SAFE_NAME(hwOpacity) <= 0x100);                       \
+            __arm_2d_helper_opacity_mix(ARM_2D_SAFE_NAME(chAlpha0),             \
+                                        ARM_2D_SAFE_NAME(hwOpacity));})
+
+__STATIC_INLINE
+uint8_t __arm_2d_helper_opacity_mix(uint_fast8_t chAlpha0, 
+                                    uint_fast16_t hwOpacity)
+{
+    return (uint8_t)(chAlpha0 * hwOpacity >> 8);
+}
+
+
+
+__STATIC_INLINE
+uint8_t arm_2d_helper_blend_chn(uint8_t chSource, 
+                                uint8_t chTarget, 
+                                uint_fast16_t hwAlpha)
+{
+    uint32_t wTarget = chTarget;
+    wTarget += ((uint32_t)chSource - wTarget) * hwAlpha >> 8;
+    return (uint8_t)wTarget;
+}
 
 #if defined(__clang__)
 #   pragma clang diagnostic pop

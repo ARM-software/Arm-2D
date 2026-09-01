@@ -22,8 +22,8 @@
  * Description:  Public header file for the all common definitions used in 
  *               arm-2d helper services
  *
- * $Date:        06. Jan 2026
- * $Revision:    V.2.0.0
+ * $Date:        10. July 2026
+ * $Revision:    V.2.1.0
  *
  * Target Processor:  Cortex-M cores
  * -------------------------------------------------------------------- */
@@ -3621,19 +3621,6 @@ const __arm_2d_layout_align_tab_t ARM_2D_LAYOUT_ALIGN_RIGHT_TO_LEFT_BOTTOM_UP = 
 
 
 /*============================ PROTOTYPES ====================================*/
-
-__STATIC_INLINE
-uint8_t arm_2d_helper_alpha_mix(uint_fast8_t chAlpha1, 
-                                uint_fast8_t chAlpha2)
-{
-    chAlpha1 = MIN(255, chAlpha1);
-    chAlpha2 = MIN(255, chAlpha2);
-    return (uint8_t)(   (chAlpha1 == 255) 
-                    ?   chAlpha2 
-                    :   (   (chAlpha2 == 255) 
-                        ?   chAlpha1 
-                        :   ((uint16_t)chAlpha1 * (uint16_t)chAlpha2 >> 8)));
-}
 
 extern
 ARM_NONNULL(2)

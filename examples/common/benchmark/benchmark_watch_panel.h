@@ -27,8 +27,23 @@
 /*============================ MACROS ========================================*/
 /*============================ MACROFIED FUNCTIONS ===========================*/
 /*============================ TYPES =========================================*/
+typedef struct benchmark_watchpanel_resource_table_t {
+    const arm_2d_tile_t *ptWatchfaceMask;
+} benchmark_watchpanel_resource_table_t;
+
 /*============================ GLOBAL VARIABLES ==============================*/
 /*============================ PROTOTYPES ====================================*/
+
+extern
+void benchmark_watch_panel_init(arm_2d_region_t tScreen);
+
+extern
+void benchmark_watch_panel_draw(const arm_2d_tile_t *ptTile, 
+                                const benchmark_watchpanel_resource_table_t *ptResource, 
+                                bool bIsNewFrame);
+
+extern
+void benchmark_watch_panel_do_events(void);
 
 
 #endif
